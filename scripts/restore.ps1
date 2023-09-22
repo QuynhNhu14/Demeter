@@ -28,3 +28,7 @@ if (Test-Path -Path "$rootDir/src/Demeter.Web" -PathType Container) {
 
 # Return to the original directory
 Set-Location -Path $rootDir
+
+# Start Docker containers
+Write-Host "Retrieving SQL Server Docker Image"
+docker-compose up -d

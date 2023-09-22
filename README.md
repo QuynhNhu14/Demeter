@@ -45,6 +45,21 @@ To build the project (both .NET and Node.js), run:
 npm run build
 ```
 
+### Managing Docker Containers
+To manage Docker containers for the project, you can use the following commands:
+
+To start Docker containers:
+
+```bash
+npm run db:up
+```
+
+To stop Docker containers:
+
+```bash
+npm run db:down
+```
+
 ### Running Development Tasks
 
 To run development tasks (e.g., starting a development server), run:

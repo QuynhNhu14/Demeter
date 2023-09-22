@@ -27,8 +27,6 @@ for project_dir in */; do
   fi
 done
 
-
-
 # Check if it's a directory
 if [ -d "Demeter.Web" ]; then
   # Navigate to the Demeter.Web directory
@@ -40,3 +38,7 @@ fi
 
 # Return to the original directory
 cd "$root_dir"
+
+# Start Docker containers
+echo "Retrieving SQL Server Docker Image"
+docker-compose up -d

@@ -10,6 +10,14 @@ compare_versions() {
     fi
 }
 
+# Check if Docker is installed
+if command -v docker &>/dev/null; then
+  echo "Docker is installed on this system."
+else
+  echo "Error: Docker is not installed on this system."
+  exit 1
+fi
+
 # Check .NET Core version
 dotnet_version=$(dotnet --version 2>&1)
 required_dotnet_version="7"

@@ -6,6 +6,8 @@
     "restore": "bash scripts/restore.sh || powershell scripts/restore.ps1",
     "build": "bash scripts/build.sh || powershell scripts/build.ps1",
     "dev": "bash scripts/dev.sh || powershell scripts/dev.ps1",
+    "db:up": "docker-compose up -d",
+    "db:down": "docker-compose down",
     "unix:check-env": "bash scripts/env.sh",
     "unix:restore": "bash scripts/restore.sh",
     "unix:build": "bash scripts/build.sh",

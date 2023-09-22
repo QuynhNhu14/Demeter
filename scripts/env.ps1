@@ -5,6 +5,15 @@ function Compare-Version ($versionString, $requiredVersion) {
     return $version -ge $required
 }
 
+# Check if Docker is installed
+if (Test-Path -Path "C:\Program Files\Docker\Docker\docker.exe" -or (Get-Command docker -ErrorAction SilentlyContinue)) {
+  Write-Host "Docker is installed on this system."
+} else {
+  Write-Host "Error: Docker is not installed on this system."
+  exit 1
+}
+
+
 # Check if .NET Core is installed and get its version
 $dotnet_version = & dotnet --version 2>&1
 $required_dotnet_version = "7"
