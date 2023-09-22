@@ -1,0 +1,74 @@
+using System.ComponentModel.DataAnnotations;
+using Demeter.Core.Services.AppSettings;
+using Demeter.Domain;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Demeter.Web.Controllers;
+
+[ApiController]
+[Route("api/settings")]
+public class AppSettingsController: ControllerBase
+{
+    private readonly ILogger<AppSettingsController> _logger;
+    private readonly IAppSettingsService _appSettingsService;
+    
+    
+
+    public AppSettingsController(ILogger<AppSettingsController> logger, IAppSettingsService appSettingsService)
+    {
+        _logger = logger;
+        _appSettingsService = appSettingsService;
+    }
+
+    [HttpGet]
+    public async ValueTask<IActionResult> GetAllSettingsAsync()
+    {
+        try
+        {
+            var settings=  await _appSettingsService.GetAllAsync();
+            return Ok(settings);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+
+    }
+    
+    [HttpPost]
+    public async ValueTask<IActionResult> AddNewSettingAsync([FromBody] AppSettings setting)
+    {
+        try
+        {
+            await _appSettingsService.AddAsync(setting);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+    
+    [HttpPost("update")]
+    public async ValueTask<IActionResult> UpdateSettings([FromBody] ICollection<AppSettings> settings)
+    {
+        try
+        {
+            await _appSettingsService.UpdateAsync(settings);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+    
+}

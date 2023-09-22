@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <AssemblyName>Demeter.Domain</AssemblyName>
+        <RootNamespace>Demeter.Domain</RootNamespace>
+    </PropertyGroup>
+
+</Project>
