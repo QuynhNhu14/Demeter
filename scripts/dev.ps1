@@ -13,8 +13,8 @@ if (-not (Test-Path -Path $webProjectPath -PathType Container)) {
     exit 1
 }
 
-# Run the .NET solution in the background (if needed)
-Start-Process -FilePath "dotnet" -ArgumentList "run --project '$webProjectPath'" -NoNewWindow -Wait
+# Start a new terminal window and run the .NET solution in it
+Start-Process -FilePath "powershell" -ArgumentList "-NoProfile -NoExit -Command 'cd $webProjectPath\; dotnet run'" -Wait
 
 # Wait for a moment to allow the .NET application to start (you can adjust the sleep time)
 Start-Sleep -Seconds 5
