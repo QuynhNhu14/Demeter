@@ -8,6 +8,7 @@ Before you begin, ensure you have the following prerequisites installed:
 
 - Node.js (v16 or higher)
 - .NET SDK (v7 or higher)
+- Docker
 
 ## Installation
 
