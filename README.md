@@ -15,7 +15,7 @@ Before you begin, ensure you have the following prerequisites installed:
 1. Clone this repository to your local machine:
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/QuynhNhu14/Demeter.git
    ```
 
 2. Navigate to the project directory:
@@ -89,5 +89,5 @@ You can also run these commands specifically for Unix-like systems or Windows by
 
 ## License
 
-This project is licensed under the [License Name] License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
