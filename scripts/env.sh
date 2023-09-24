@@ -23,8 +23,8 @@ dotnet_version=$(dotnet --version 2>&1)
 required_dotnet_version="7"
 
 # Check Node.js version
-node_version=$(node --version)
-required_node_version="v16"
+node_version=$(node --version | cut -c 2-)
+required_node_version="16"
 
 # Check if .NET Core is installed and meets the version requirement
 if ! command -v dotnet &> /dev/null || ! compare_versions "$required_dotnet_version" "$dotnet_version"; then
@@ -32,8 +32,7 @@ if ! command -v dotnet &> /dev/null || ! compare_versions "$required_dotnet_vers
     exit 1
 fi
 
-# Check if Node.js is installed and meets the version requirement
-if ! command -v node &> /dev/null || [[ ! "$node_version" == *"$required_node_version"* ]]; then
+if ! command -v node &> /dev/null || ! compare_versions "$required_node_version" "$node_version"; then
     echo "Error: Node.js version $required_node_version or higher is required or Node.js is not installed."
     exit 1
 fi
