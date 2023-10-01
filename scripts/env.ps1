@@ -1,12 +1,14 @@
 # Function to check if a version string meets a minimum requirement
 function Compare-Version($versionString, $requiredVersion) {
-    [version]$version = $versionString
+    [version]$version = $versionString -replace "^v", ""  # Remove 'v' character
     [version]$required = $requiredVersion
-    return $version.Major -ge $required.Major -and $version.Minor -ge $required.Minor
+    return $version -ge $required
 }
 
 # Check if Docker is installed
-if (Test-Path -Path "C:\Program Files\Docker\Docker\docker.exe" -or (Get-Command docker -ErrorAction SilentlyContinue)) {
+if (Test-Path -Path "C:\Program Files\Docker\Docker\docker.exe") {
+    Write-Host "Docker is installed on this system."
+} elseif (Get-Command docker -ErrorAction SilentlyContinue) {
     Write-Host "Docker is installed on this system."
 } else {
     Write-Host "Error: Docker is not installed on this system."
