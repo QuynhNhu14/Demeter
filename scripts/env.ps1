@@ -1,26 +1,25 @@
 # Function to check if a version string meets a minimum requirement
-function Compare-Version ($versionString, $requiredVersion) {
+function Compare-Version($versionString, $requiredVersion) {
     [version]$version = $versionString
     [version]$required = $requiredVersion
-    return $version -ge $required
+    return $version.Major -ge $required.Major -and $version.Minor -ge $required.Minor
 }
 
 # Check if Docker is installed
 if (Test-Path -Path "C:\Program Files\Docker\Docker\docker.exe" -or (Get-Command docker -ErrorAction SilentlyContinue)) {
-  Write-Host "Docker is installed on this system."
+    Write-Host "Docker is installed on this system."
 } else {
-  Write-Host "Error: Docker is not installed on this system."
-  exit 1
+    Write-Host "Error: Docker is not installed on this system."
+    exit 1
 }
-
 
 # Check if .NET Core is installed and get its version
 $dotnet_version = & dotnet --version 2>&1
-$required_dotnet_version = "7"
+$required_dotnet_version = [version]"7.0"
 
 # Check if Node.js is installed and get its version
-$node_version = & node --version
-$required_node_version = "v16"
+$node_version = & node --version 2>&1
+$required_node_version = [version]"16.0"
 
 # Check if .NET Core is installed and meets the version requirement
 if ($LASTEXITCODE -ne 0 -or -not (Compare-Version $dotnet_version $required_dotnet_version)) {
@@ -29,10 +28,11 @@ if ($LASTEXITCODE -ne 0 -or -not (Compare-Version $dotnet_version $required_dotn
 }
 
 # Check if Node.js is installed and meets the version requirement
-if ($LASTEXITCODE -ne 0 -or -not ($node_version -like "*$required_node_version*")) {
+if ($LASTEXITCODE -ne 0 -or -not (Compare-Version $node_version $required_node_version)) {
     Write-Host "Error: Node.js version $required_node_version or higher is required or Node.js is not installed."
     exit 1
 }
+
 
 Write-Host "Environment check passed:"
 Write-Host "  .NET version: $dotnet_version"
