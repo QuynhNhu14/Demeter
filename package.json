@@ -16,5 +16,13 @@
     "win:restore": "powershell scripts/restore.ps1",
     "win:build": "powershell scripts/build.ps1",
     "win:dev": "powershell scripts/dev.ps1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "@types/react-dom": "^18.2.10",
+    "vite": "^4.4.11"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^4.1.0"
   }
 }

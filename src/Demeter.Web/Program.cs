@@ -1,5 +1,7 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Extensions;
+using Demeter.Infrastructure.Persistence;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +21,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Add services to the container.
 
-
+var ConnectionStrings = builder.Configuration.GetConnectionString("DemeterCon");
+builder.Services.AddDbContext<DemeterContext>(option => option.UseSqlServer(ConnectionStrings));
+builder.Services.AddControllersWithViews();
+builder.services.AddSingleton<IConfiguration>(DemeterCon.Configuration);
 
 var app = builder.Build();
 

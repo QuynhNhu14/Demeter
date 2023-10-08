@@ -24,13 +24,18 @@ public static class DependencyInjection
   {
       
 
-    services.AddDbContext<CoreDbContext>(options =>
+    // services.AddDbContext<CoreDbContext>(options =>
+    //     options.UseSqlServer(configuration.GetConnectionString(Constant.PersistenceDb),
+    //     b => b.MigrationsAssembly(typeof(CoreDbContext).Assembly.FullName)), ServiceLifetime.Transient);
+
+    services.AddDbContext<DemeterContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString(Constant.PersistenceDb),
-        b => b.MigrationsAssembly(typeof(CoreDbContext).Assembly.FullName)), ServiceLifetime.Transient);
+        b => b.MigrationsAssembly(typeof(DemeterContext).Assembly.FullName)), ServiceLifetime.Transient);
 
     Console.WriteLine(configuration.GetConnectionString(Constant.PersistenceDb));
 
     services.AddScoped<ICoreDbContext>(provider => provider.GetService<CoreDbContext>());
+    // services.AddScoped<IDemeterContext>(provider => provider.GetService<DemeterContext>());
     return services;
   }
 }
