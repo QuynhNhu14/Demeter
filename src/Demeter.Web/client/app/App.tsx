@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from '../assets/react.svg'
-import viteLogo from '../public/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import "./App.css";
+import SignInForm from "./SignIn";
+import SignUpForm from "./SignUp";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [type, setType] = useState<"signIn" | "signUp">("signIn");
+
+  const handleOnClick = (text: "signIn" | "signUp") => {
+    if (text !== type) {
+      setType(text);
+    }
+  };
+
+  const containerClass = `container ${type === "signUp" ? "right-panel-active" : ""}`;
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <div className={containerClass} id="container">
+        <SignUpForm />
+        <SignInForm />
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className={`overlay-panel overlay-left ${type === "signUp" ? "" : "hidden"}`}>
+              <h1>Welcome Back!</h1>
+              <p>To keep connected with us please login with your personal info</p>
+              <button
+                className="ghost"
+                id="signIn"
+                onClick={() => handleOnClick("signIn")}
+              >
+                Sign In
+              </button>
+            </div>
+            <div className={`overlay-panel overlay-right ${type === "signUp" ? "hidden" : ""}`}>
+              <h1>Hello, Friend!</h1>
+              <p>Enter your personal details and start your journey with us</p>
+              <button
+                className="ghost"
+                id="signUp"
+                onClick={() => handleOnClick("signUp")}
+              >
+                Sign Up
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  );
 }
-
-export default App
