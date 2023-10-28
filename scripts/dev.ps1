@@ -1,11 +1,12 @@
 # Define the root directory
 $scriptPath = $MyInvocation.MyCommand.Path
 $rootDir = (Get-Item -Path $scriptPath | Resolve-Path).Path | Split-Path -Parent
+$parentDir = Split-Path -Parent $rootDir
 
 Write-Host "Directory: $rootDir"
 
 # Define the path to the web project
-$webProjectPath = Join-Path -Path $rootDir -ChildPath "src/Demeter.Web"
+$webProjectPath = Join-Path -Path $parentDir -ChildPath "src/Demeter.Web"
 
 # Check if the web project directory exists
 if (-not (Test-Path -Path $webProjectPath -PathType Container)) {

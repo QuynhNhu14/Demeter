@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-
+import axios from "axios";
 interface SignInFormState {
   email: string;
   password: string;
@@ -23,7 +23,21 @@ const SignInForm: React.FC = () => {
     evt.preventDefault();
 
     const { email, password } = state;
-    alert(`You are logged in with email: ${email} and password: ${password}`);
+    const data = {
+      Email: email,
+      Password: password,
+    }
+    const url='https://localhost:44330/api/User/Login';
+    axios.post(url,data).then((response: { data: string; }) => {
+      if(response.data === 'User is Valid'){
+        alert('Login successfully!');
+      }
+      else{
+        alert('Login failed. Your username or password is incorrect!!!')
+      }
+    }).catch((error: any) => {
+      alert(error)
+    });
 
     const initialState: SignInFormState = {
       email: "",

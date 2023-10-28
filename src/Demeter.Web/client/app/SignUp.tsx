@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-
+import axios from "axios";
 interface SignUpFormState {
   name: string;
   email: string;
@@ -23,11 +23,19 @@ const SignUpForm: React.FC = () => {
 
   const handleOnSubmit = (evt: FormEvent) => {
     evt.preventDefault();
-
     const { name, email, password } = state;
-    alert(
-      `You are signed up with name: ${name}, email: ${email}, and password: ${password}`
-    );
+    const data = {
+      Username: name,
+      Email: email,
+      Password: password,
+    }
+    const url='https://localhost:44330/api/User/Registration';
+    axios.post(url,data).then(() => {
+      alert(`Register successfully with name: ${name}, email: ${email}, and password: ${password}`)
+    }).catch((error: any) => {
+      alert(error)
+    });
+
 
     const initialState: SignUpFormState = {
       name: "",

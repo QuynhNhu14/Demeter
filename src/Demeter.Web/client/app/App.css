@@ -1,16 +1,16 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
+
 .App {
   font-family: sans-serif;
   text-align: center;
 }
-
-@import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
 * {
   box-sizing: border-box;
 }
 
 body {
-  background: url('../assets/vegetable.jpg');
+  background: url("../assets/vegetable.jpg");
   background-size: cover;
   display: flex;
   justify-content: center;
@@ -51,8 +51,8 @@ a {
 
 button {
   border-radius: 20px;
-  border: 1px solid #4E944F;
-  background-color: #4E944F;
+  border: 1px solid #4e944f;
+  background-color: #4e944f;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -76,7 +76,7 @@ button.ghost {
 }
 
 form {
-  background: url('../assets/vegetable2.jpg');
+  background: url("../assets/vegetable2.jpg");
   background-size: cover;
   background-position-y: center;
   display: flex;
@@ -168,9 +168,9 @@ input {
 }
 
 .overlay {
-  background: #4E944F;
-  background: -webkit-linear-gradient(to right, #4E944F, #83BD75);
-  background: linear-gradient(to right, #4E944F, #83BD75);
+  background: #4e944f;
+  background: -webkit-linear-gradient(to right, #4e944f, #83bd75);
+  background: linear-gradient(to right, #4e944f, #83bd75);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -251,7 +251,7 @@ footer p {
 }
 
 footer i {
-  color: #4E944F;
+  color: #4e944f;
 }
 
 footer a {

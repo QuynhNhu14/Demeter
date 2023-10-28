@@ -1,9 +1,10 @@
 # Define the root directory
 $scriptPath = $MyInvocation.MyCommand.Path
 $rootDir = (Get-Item -Path $scriptPath | Resolve-Path).Path | Split-Path -Parent
+$parentDir = Split-Path -Parent $rootDir
 
 # Navigate to the src/ directory
-Set-Location -Path "$rootDir/src"
+Set-Location -Path "$parentDir/src"
 
 # Iterate over each directory in src/
 foreach ($projectDir in Get-ChildItem -Directory) {
@@ -18,16 +19,16 @@ foreach ($projectDir in Get-ChildItem -Directory) {
 }
 
 # Check if it's a directory
-if (Test-Path -Path "$rootDir/src/Demeter.Web" -PathType Container) {
+if (Test-Path -Path "$parentDir/src/Demeter.Web" -PathType Container) {
     # Navigate to the Demeter.Web directory
-    Set-Location -Path "$rootDir/src/Demeter.Web"
+    Set-Location -Path "$parentDir/src/Demeter.Web"
     # Run npm ci
     Write-Host "Running 'npm ci' in Demeter.Web"
     npm ci
 }
 
 # Return to the original directory
-Set-Location -Path $rootDir
+Set-Location -Path $parentDir
 
 # Start Docker containers
 Write-Host "Retrieving SQL Server Docker Image"
