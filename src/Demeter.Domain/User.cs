@@ -1,7 +1,17 @@
-﻿
-namespace Demeter.Domain;
+﻿using Microsoft.AspNetCore.Http;
 
-public class User : BaseEntity<Guid>
+namespace Demeter.Domain
 {
-    public string Name { get; set; } = string.Empty;
+        public class User
+    {
+        public int idUser { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string PhoneNo { get; set; }
+        public string Avatar { get; set; }
+        public string Address { get; set; }
+ 
+    }
+
 }
