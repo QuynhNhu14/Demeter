@@ -1,14 +1,18 @@
-namespace Demeter.Core.Extensions;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Voucher: BaseEntity<Guid>
+namespace Demeter.Core.Entities;
+
+public class Voucher
 {
-    public string Code { get; set; }
-    public string Description { get; set; }
+    [DatabaseGenerated((DatabaseGeneratedOption.Identity))]
+    public Guid Id { get; set; }
+    public string Code { get; set; } = String.Empty;
+    public string Description { get; set; } = String.Empty;
     public int Discount { get; set; }
     
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }
     public bool Active { get; set; }
     public int UsageLimit { get; set; }
-    public List<Products> AppliedProducts { get; set; }
+    public List<Products>? AppliedProducts { get; set; }
 }

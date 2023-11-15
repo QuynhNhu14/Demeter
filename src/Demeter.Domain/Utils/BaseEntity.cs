@@ -1,7 +1,7 @@
 
 namespace Demeter.Domain;
 
-public interface IBaseEntity<T> where T: IEquatable<T>
+public abstract class BaseEntity<T> where T: IEquatable<T>
 {
-  public T Id { get; set; }
+  public virtual T Id { get; set; }
 }

@@ -21,6 +21,13 @@ public class AppSettingsService : IAppSettingsService
         var entities = await _context.AppSettings.ToListAsync();
         return _mapper.Map<IList<Domain.AppSettings>>(entities);
     }
+    
+    public async ValueTask<Domain.AppSettings?> GetById(string referenceKey)
+    {
+        var entities = await _context.AppSettings.ToListAsync();
+        var result = entities.Find(t=> t.ReferenceKey == referenceKey);
+        return _mapper.Map<Domain.AppSettings>(result);
+    }
 
     public async ValueTask UpdateAsync(ICollection<Domain.AppSettings> settings)
     {

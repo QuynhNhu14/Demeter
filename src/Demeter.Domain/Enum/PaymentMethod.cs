@@ -1,6 +1,8 @@
 namespace Demeter.Domain;
 
-public enum Payment
+public enum PaymentMethod
 {
-    
+    Cash,
+    Bank,
+    EWallet
 }

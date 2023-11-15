@@ -1,6 +1,6 @@
 namespace Demeter.Domain;
 
-public abstract class JsonBase
+public abstract class JsonBaseEntity<T>: BaseEntity<T> where T: IEquatable<T>
 {
-    public virtual Dictionary<string, object> AdditionalProperties { get; set; }
+    public Dictionary<string, object> AdditionalProperties { get; set; }
 }

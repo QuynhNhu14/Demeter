@@ -1,4 +1,4 @@
-namespace Demeter.Domain.Enum;
+namespace Demeter.Domain;
 
 public enum Gender
 {

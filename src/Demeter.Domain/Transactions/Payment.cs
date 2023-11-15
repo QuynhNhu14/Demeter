@@ -1,6 +1,7 @@
-namespace Demeter.Domain.Transactions;
+namespace Demeter.Domain;
 
-public class PaymentMethod
+public class Payment: JsonBaseEntity<Guid>
 {
-    
+    public PaymentMethod PaymentMethod { get; set; }
+    public Orders Order { get; set; }
 }

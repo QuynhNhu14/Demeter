@@ -12,7 +12,6 @@ public class AppSettingsController: ControllerBase
     private readonly ILogger<AppSettingsController> _logger;
     private readonly IAppSettingsService _appSettingsService;
     
-    
 
     public AppSettingsController(ILogger<AppSettingsController> logger, IAppSettingsService appSettingsService)
     {
@@ -32,7 +31,6 @@ public class AppSettingsController: ControllerBase
         {
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
-
     }
     
     [HttpPost]

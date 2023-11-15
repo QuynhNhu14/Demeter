@@ -1,4 +1,4 @@
-namespace Demeter.Domain.Transactions;
+namespace Demeter.Domain;
 
 public class Receipt
 {

@@ -1,7 +1,8 @@
 namespace Demeter.Domain;
 
-public enum UserType
+public enum AccountType
 {
+    Undefined,
     Customer,
     Shop
 }

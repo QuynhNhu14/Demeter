@@ -1,8 +1,16 @@
-namespace Demeter.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Orders: BaseEntity<Guid>
+namespace Demeter.Core.Entities;
+
+public class Orders
 {
-    public Account Account { get; set; }
-    public List<OrderItem> Items { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public Guid OrderId { get; set; }
     public int TotalPrice { get; set; }
+    
+    [ForeignKey("Account")]
+    public Guid AccountId { get; set; }
+    public virtual Account? Account { get; set; }
+    
+    public virtual ICollection<OrderItem>? Items { get; set; }
 }

@@ -1,9 +1,16 @@
-namespace Demeter.Domain;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Prices : BaseEntity<int>
+namespace Demeter.Core.Entities;
+
+public class Prices
 {
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     public int UnitPrice { get; set; }
-    public Products Product { get; set; }
     public DateTimeOffset StartDate { get; set; }
     public DateTimeOffset EndDate { get; set; }
+    
+    [ForeignKey("Product")]
+    public Guid ProductId { get; set; }
+    public virtual Products? Product { get; set; }
 }
