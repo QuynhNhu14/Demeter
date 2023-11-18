@@ -10,6 +10,6 @@ public class Category
     public string Description { get; set; } = String.Empty;
     
     [ForeignKey("BaseCategory")]
-    public int BaseCategoryId { get; set; }
+    public int? BaseCategoryId { get; set; }
     public virtual Category? BaseCategory { get; set; }
 }

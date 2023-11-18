@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Demeter.Core.Entities;
@@ -5,6 +6,7 @@ namespace Demeter.Core.Entities;
 public class Orders
 {
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [Key]
     public Guid OrderId { get; set; }
     public int TotalPrice { get; set; }
     

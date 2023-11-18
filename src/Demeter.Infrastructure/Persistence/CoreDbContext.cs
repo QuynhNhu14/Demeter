@@ -32,7 +32,14 @@ public class CoreDbContext : DbContext, ICoreDbContext
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<AppSettings>();
+        modelBuilder.Entity<OrderItem>()
+            .HasOne<Products>(c => c.Product)
+            .WithOne()
+            .OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<Category>()
+            .HasOne<Category>(c => c.BaseCategory)
+            .WithMany()
+            .OnDelete(DeleteBehavior.NoAction);
     }
     #endregion
 }
