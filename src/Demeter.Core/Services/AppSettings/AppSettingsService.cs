@@ -55,4 +55,17 @@ public class AppSettingsService : IAppSettingsService
         _context.AppSettings.Add(_mapper.Map<Entities.AppSettings>(setting));
         await _context.SaveChangesAsync();
     }
+
+    public async ValueTask Remove(Domain.AppSettings setting)
+    {
+        var entities = await _context.AppSettings.ToListAsync();
+        var result = entities.Find(t=> t.ReferenceKey == setting.ReferenceKey);
+        if (result is null)
+        {
+            throw new ValidationException($"Invalid: {setting.ReferenceKey} is not existed.");
+        }
+
+        _context.AppSettings.Remove(result);
+        await _context.SaveChangesAsync();
+    }
 }
