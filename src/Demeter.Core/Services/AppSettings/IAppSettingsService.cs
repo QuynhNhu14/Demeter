@@ -6,4 +6,5 @@ public interface IAppSettingsService
     ValueTask UpdateAsync(ICollection<Domain.AppSettings> settings);
     ValueTask AddAsync(Domain.AppSettings setting);
     ValueTask Remove(Domain.AppSettings setting);
+    ValueTask<Domain.AppSettings?> GetById(string referenceKey);
 }
