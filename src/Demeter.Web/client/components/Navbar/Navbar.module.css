@@ -1,0 +1,49 @@
+.navbar {
+    padding: 16px 0;
+    display: flex ;
+    border-bottom: 1px solid #144832;
+    background-color: #8CAC8C;
+    align-items: center;
+    width: 100% !important;
+
+}
+.horizontal-list {
+    display: flex; 
+    list-style-type: none;     
+    padding-right: 40px;
+    padding-left: 100px;
+    flex-grow: 1;
+}
+
+.horizontal-list div {
+    padding: 0 10px;
+    color: #1F2937;
+    
+}
+
+.inputtext{
+    color: #6B7280;
+    font-size: 13px;
+}
+
+
+.navbar span {
+    padding: 0 2px;
+}
+
+.navbar a {
+    padding: 0 20px;
+}
+
+
+.itemlist{
+    display: flex; 
+    list-style-type: none; 
+    padding-right: 40px;
+    padding-left: 10px;
+    flex-grow: 1;
+}
+.itemlist li {
+    padding: 0 15px;
+}
+

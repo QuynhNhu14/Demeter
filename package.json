@@ -19,5 +19,8 @@
     "db:update": "npm run db:update --prefix ./src/Demeter.Web",
     "db:remove": "npm run db:remove --prefix ./src/Demeter.Web",
     "db:add": "npm run db:add --prefix ./src/Demeter.Web"
+  },
+  "dependencies": {
+    "antd": "^5.11.5"
   }
 }

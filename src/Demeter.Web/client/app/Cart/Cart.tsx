@@ -1,0 +1,275 @@
+import React,{useState} from 'react';
+import { Layout, Divider,Typography,Input,Tabs,Radio, Form,Button,Col, Row, Table, } from 'antd';
+import { GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@ant-design/icons';
+import './Cart.css';
+import Navbar from '../../components/Navbar/Navbar';
+import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
+
+const {Text} = Typography;
+// Định nghĩa lại 
+interface cartinfoData {
+  name: string;
+  address: string;
+  email: string;
+  phone: string;
+  link: string;
+}
+
+interface seleccartData {
+  TOTAL: number;
+  amount: number;
+  totalamount: number;
+  totalship: number;
+}
+// Đối tượng  chứa thông tin về ảnh
+const infoData: cartinfoData = {
+  name: "Infouser",
+  address: "R3 Royal City, số 72 Nguyễn Trãi, phường Thượng Đình, quận Thanh Xuân, Hà Nội.",
+  email: "tanthenh123@gmail.com",
+  phone: "0987456365",
+  link: 'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
+};
+
+const initialProducts: Product[] = [
+  {
+    id: 1,
+    name: 'Product 1',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 1,
+    shop: 'Shop A',
+    selected: false,
+  },
+  {
+    id: 2,
+    name: 'Product 2',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 2,
+    shop: 'Shop b',
+    selected: false,
+  },
+  {
+    id: 3,
+    name: 'Product 3',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 3,
+    shop: 'Shop c',
+    selected: false,
+  },
+  {
+    id: 4,
+    name: 'Product 3',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 3,
+    shop: 'Shop c',
+    selected: false,
+  },
+  {
+    id: 4,
+    name: 'Product 3',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 3,
+    shop: 'Shop c',
+    selected: false,
+  },
+  {
+    id: 5,
+    name: 'Product 3',
+    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    newPrice: 100,
+    oldPrice: 120,
+    quantity: 3,
+    shop: 'Shop c',
+    selected: false,
+  },
+  // ... Add more products as needed
+];
+
+const totaldata: seleccartData = {
+  TOTAL: 10,
+  amount: 10,
+  totalamount: 10,
+  totalship: 10,
+};
+
+const { TabPane } = Tabs;
+
+const Cart: React.FC = (Props) => {
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>(initialProducts);
+
+  // Function to update selected products
+  const updateSelectedProducts = (updatedProducts: Product[]) => {
+    setSelectedProducts(updatedProducts);
+  };
+
+  // Tính lại totaldata.amount và totaldata.totalamount dựa trên selectedProducts
+  const totalSelectedQuantity = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity : 0), 0);
+  const totalSelectedValue = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity * product.newPrice : 0), 0);
+
+  const totaldata: seleccartData = {
+    TOTAL: 10, // Giá trị TOTAL ban đầu của bạn
+    amount: totalSelectedQuantity, // Số lượng sản phẩm được chọn
+    totalamount: totalSelectedValue, // Tổng giá trị sản phẩm được chọn
+    totalship: 10, // Giá trị totalship ban đầu của bạn
+  };
+   // Hàm để tính giá trị mới của TOTAL
+   const calculateTotal = (): number => {
+    return totaldata.totalamount + totaldata.totalship;
+  };
+
+  const newTotal = calculateTotal(); // Tính giá trị mới của TOTAL
+  totaldata.TOTAL = newTotal;
+
+  const [value, setValue] = useState<number>(1);
+  const [form] = Form.useForm();
+
+  const onChange = (e: any) => {
+    setValue(e.target.value);
+  };
+
+  const handleFormSubmit = (values: any) => {
+    console.log('Submitted values:', values);
+  };
+  
+
+  const renderTabContent = (key: string | number) => {
+    switch (key) {
+      case '1':
+        return <p>Thanh toán bằng tiền mặt khi nhận hàng</p>;
+      case '2':
+        return (
+          <Form form={form} onFinish={handleFormSubmit} layout="vertical">
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Card Number" name="cardNumber">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="Expiration" name="expiration">
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={16}>
+              <Col span={12}>
+                <Form.Item label="Enter Name Card" name="cardName">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Form.Item label="CVV Code" name="cvvCode">
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Form.Item>
+            <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        );
+      case '3':
+        return (
+          <Form form={form} onFinish={handleFormSubmit}>
+            <Form.Item label="Số ví điện tử" name="eWalletNumber">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Mật khẩu" name="password">
+              <Input.Password />
+            </Form.Item>
+            <Form.Item>
+            <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return(
+  <Layout direction="vertical" style={{position: 'absolute', width: '100%' , top: '0', minHeight:'100%'}}>
+    <Navbar />
+    <Layout style={{ background: '#E9EFC0' }}>
+      <div className="horizontalSections">
+        <div className="section1">
+          <img src={infoData.link} alt="Your Image" className="centeredImage" />
+          <h4> {infoData.name}</h4>
+          <Divider style={{ margin: '8px'}}/>
+          <Text strong>Address</Text>
+          <Text type="secondary"> {infoData.address}</Text>
+          <Divider style={{ margin: '8px'}}/>
+          <Text strong>Email</Text>
+          <Text type="secondary"> {infoData.email}</Text>
+          <Divider style={{ margin: '8px'}}/>
+          <Text strong>Phone</Text>
+          <Text type="secondary"> {infoData.phone}</Text>
+
+        </div>
+        <div className="section2">
+        <ProductCart initialProducts={initialProducts} updateSelectedProducts={updateSelectedProducts} />
+        </div>
+        <div className="section3">
+          <div className="box">
+            <div className="leftColumn">
+              <Text strong type="secondary">Total Amount:</Text>
+              <Text strong type="secondary">Amount:</Text>
+              <Text strong type="secondary">Shipping Fee:</Text>
+            </div>
+            <div className="rightColumn">
+              <Text strong>{totaldata.totalamount} </Text>
+              <Text strong> ${totaldata.amount}</Text>
+              <Text strong> ${totaldata.totalship}</Text>
+            </div>
+          </div>
+
+          <div className="box" style={{padding: '10px 30px'}}>
+            <div className="leftColumn">
+              <Text strong >TOTAL:</Text>
+            </div>
+            <div className="rightColumn">
+              <Text strong> ${totaldata.TOTAL}</Text>
+            </div>
+          </div>
+
+          <Text strong> Apply Coupon </Text>
+          <Input size="large" placeholder="Enter coupon here" prefix={<GiftOutlined />} style={{ margin: '10px 0 10px 0'}} />
+          <Text strong> Select Payment Method </Text>
+          <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
+            <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
+              <TabPane tab={<Radio disabled={value !== 1} value={1}><DollarOutlined /></Radio>} key="1">
+                {renderTabContent('1')}
+              </TabPane>
+              <TabPane tab={<Radio disabled={value !== 2} value={2}><CreditCardOutlined /></Radio>} key="2">
+                {renderTabContent('2')}
+              </TabPane>
+              <TabPane tab={<Radio disabled={value !== 3} value={3}><WalletOutlined /></Radio>} key="3">
+                {renderTabContent('3')}
+              </TabPane>
+            </Tabs>
+          </div>
+          <Button style={{wight:'100%', backgroundColor:'#009F7F'}}>
+            <Text strong >TOTAL:${totaldata.TOTAL}</Text>
+          </Button>
+        </div>
+      </div>
+    </Layout>
+  </Layout>
+  );
+
+};
+
+export default Cart;
