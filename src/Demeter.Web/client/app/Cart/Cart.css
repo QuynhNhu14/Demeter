@@ -6,7 +6,7 @@
   
   .section1 {
     width: 20%;
-    border: 1px solid #ccc;
+    border: 1px solid #E5E7EB;
     padding: 25px;
     box-sizing: border-box;
     display: flex;
@@ -14,10 +14,11 @@
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
     height: fit-content;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
     
   }
   .section1 h4{
-    color: #000;
+    color: #009F7F;
     text-align: center
   }
   .section1 Text{
@@ -51,8 +52,10 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 30px;
-    border-radius: 8px;
+    border-radius: 5px;
     margin-bottom: 20px;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
   }
   
   .leftColumn {

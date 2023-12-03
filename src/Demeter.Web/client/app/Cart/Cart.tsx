@@ -21,7 +21,7 @@ interface seleccartData {
   totalamount: number;
   totalship: number;
 }
-// Đối tượng  chứa thông tin về ảnh
+// Đối tượng  chứa thông tin về user
 const infoData: cartinfoData = {
   name: "Infouser",
   address: "R3 Royal City, số 72 Nguyễn Trãi, phường Thượng Đình, quận Thanh Xuân, Hà Nội.",
@@ -203,7 +203,7 @@ const Cart: React.FC = (Props) => {
   return(
   <Layout direction="vertical" style={{position: 'absolute', width: '100%' , top: '0', minHeight:'100%'}}>
     <Navbar />
-    <Layout style={{ background: '#E9EFC0' }}>
+    <Layout style={{ background: '#F3F4F6' }}>
       <div className="horizontalSections">
         <div className="section1">
           <img src={infoData.link} alt="Your Image" className="centeredImage" />

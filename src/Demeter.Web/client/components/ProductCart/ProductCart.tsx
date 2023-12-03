@@ -172,7 +172,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
           />
           <Text strong style={{margin: '0 0 0 10px'}}>{shopName} </Text>
         </h2>
-        <Table columns={columns} dataSource={shopProducts} pagination={false} showHeader={true} />
+        <Table columns={columns} dataSource={shopProducts} pagination={false} showHeader={true} style = {{ border: '1px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)'}}/>
       </div>
     );
   });
