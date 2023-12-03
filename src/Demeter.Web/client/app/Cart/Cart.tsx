@@ -1,9 +1,12 @@
 import React,{useState} from 'react';
-import { Layout, Divider,Typography,Input,Tabs,Radio, Form,Button,Col, Row, Table, } from 'antd';
+import { Layout, Divider,Typography,Input,Tabs,Radio, Form,Button,Col, Row, Table, Modal, Select, ConfigProvider } from 'antd';
 import { GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@ant-design/icons';
 import './Cart.css';
 import Navbar from '../../components/Navbar/Navbar';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
+
+
+const { Option } = Select;
 
 const {Text} = Typography;
 // Định nghĩa lại 
@@ -20,6 +23,13 @@ interface seleccartData {
   amount: number;
   totalamount: number;
   totalship: number;
+}
+
+interface Voucher {
+  ID: string;
+  name: string;
+  CouponDetail: string;
+  Coupon: number;
 }
 // Đối tượng  chứa thông tin về user
 const infoData: cartinfoData = {
@@ -140,6 +150,43 @@ const Cart: React.FC = (Props) => {
     console.log('Submitted values:', values);
   };
   
+  //vocher
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
+  const [vouchers, setVouchers] = useState<Voucher[]>([]); // Danh sách các voucher
+
+  // Mẫu dữ liệu voucher
+  // Tạo 15 đối tượng Voucher với các giá trị khác nhau
+  const sampleVouchers: Voucher[] = Array.from({ length: 15 }, (_, index) => ({
+    ID: `ABC${index + 1}`,
+    name: `Voucher ${String.fromCharCode(65 + index)}`,
+    CouponDetail: `Giảm ${Math.floor(Math.random() * 100)}%`,
+    Coupon: Math.random() * 0.9 + 0.1, // Giá trị ngẫu nhiên từ 0.1 đến 1.0
+  }));
+
+  // Mỗi khi component được khởi chạy, ta sẽ set danh sách voucher từ mẫu dữ liệu
+  useState(() => {
+    setVouchers(sampleVouchers);
+  });
+
+  const handleApplyVoucher = () => {
+    // Xử lý khi áp dụng voucher, có thể làm gì đó với selectedVoucher ở đây
+    console.log('Voucher được áp dụng:', selectedVoucher);
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setSelectedVoucher(null);
+    setIsModalVisible(false);
+  };
+  // với select
+  // const handleVoucherChange = (value: string) => {
+  //   setSelectedVoucher(value);
+  // };
+  const handleVoucherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedVoucher(e.target.value);
+  };
+
 
   const renderTabContent = (key: string | number) => {
     switch (key) {
@@ -174,7 +221,7 @@ const Cart: React.FC = (Props) => {
             </Row>
             <Form.Item>
             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-                Submit
+                <Text strong  style={{ color: '#FFFFFF' }}>Submit</Text>
               </Button>
             </Form.Item>
           </Form>
@@ -190,7 +237,7 @@ const Cart: React.FC = (Props) => {
             </Form.Item>
             <Form.Item>
             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-                Submit
+              <Text strong  style={{ color: '#FFFFFF' }}>Submit</Text>
               </Button>
             </Form.Item>
           </Form>
@@ -203,70 +250,128 @@ const Cart: React.FC = (Props) => {
   return(
   <Layout direction="vertical" style={{position: 'absolute', width: '100%' , top: '0', minHeight:'100%'}}>
     <Navbar />
-    <Layout style={{ background: '#F3F4F6' }}>
-      <div className="horizontalSections">
-        <div className="section1">
-          <img src={infoData.link} alt="Your Image" className="centeredImage" />
-          <h4> {infoData.name}</h4>
-          <Divider style={{ margin: '8px'}}/>
-          <Text strong>Address</Text>
-          <Text type="secondary"> {infoData.address}</Text>
-          <Divider style={{ margin: '8px'}}/>
-          <Text strong>Email</Text>
-          <Text type="secondary"> {infoData.email}</Text>
-          <Divider style={{ margin: '8px'}}/>
-          <Text strong>Phone</Text>
-          <Text type="secondary"> {infoData.phone}</Text>
+    <ConfigProvider
+            theme={{
+              token: {
+                colorPrimary: '#009F7F',
+              },
+            }}
+          >
+      <Layout style={{ background: '#F3F4F6' }}>
+        <div className="horizontalSections">
+          <div className="section1">
+            <img src={infoData.link} alt="Your Image" className="centeredImage" />
+            <h4> {infoData.name}</h4>
+            <Divider style={{ margin: '8px'}}/>
+            <Text strong>Address</Text>
+            <Text type="secondary"> {infoData.address}</Text>
+            <Divider style={{ margin: '8px'}}/>
+            <Text strong>Email</Text>
+            <Text type="secondary"> {infoData.email}</Text>
+            <Divider style={{ margin: '8px'}}/>
+            <Text strong>Phone</Text>
+            <Text type="secondary"> {infoData.phone}</Text>
 
-        </div>
-        <div className="section2">
-        <ProductCart initialProducts={initialProducts} updateSelectedProducts={updateSelectedProducts} />
-        </div>
-        <div className="section3">
-          <div className="box">
-            <div className="leftColumn">
-              <Text strong type="secondary">Total Amount:</Text>
-              <Text strong type="secondary">Amount:</Text>
-              <Text strong type="secondary">Shipping Fee:</Text>
-            </div>
-            <div className="rightColumn">
-              <Text strong>{totaldata.totalamount} </Text>
-              <Text strong> ${totaldata.amount}</Text>
-              <Text strong> ${totaldata.totalship}</Text>
-            </div>
           </div>
+          <div className="section2">
+          <ProductCart initialProducts={initialProducts} updateSelectedProducts={updateSelectedProducts} />
+          </div>
+          <div className="section3">
+            <div className="box">
+              <div className="leftColumn">
+                <Text strong type="secondary">Total Amount:</Text>
+                <Text strong type="secondary">Amount:</Text>
+                <Text strong type="secondary">Shipping Fee:</Text>
+              </div>
+              <div className="rightColumn">
+                <Text strong>{totaldata.totalamount} </Text>
+                <Text strong> ${totaldata.amount}</Text>
+                <Text strong> ${totaldata.totalship}</Text>
+              </div>
+            </div>
 
-          <div className="box" style={{padding: '10px 30px'}}>
-            <div className="leftColumn">
-              <Text strong >TOTAL:</Text>
+            <div className="box" style={{padding: '10px 30px'}}>
+              <div className="leftColumn">
+                <Text strong >TOTAL:</Text>
+              </div>
+              <div className="rightColumn">
+                <Text strong> ${totaldata.TOTAL}</Text>
+              </div>
             </div>
-            <div className="rightColumn">
-              <Text strong> ${totaldata.TOTAL}</Text>
-            </div>
-          </div>
 
-          <Text strong> Apply Coupon </Text>
-          <Input size="large" placeholder="Enter coupon here" prefix={<GiftOutlined />} style={{ margin: '10px 0 10px 0'}} />
-          <Text strong> Select Payment Method </Text>
-          <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
-            <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
-              <TabPane tab={<Radio disabled={value !== 1} value={1}><DollarOutlined /></Radio>} key="1">
-                {renderTabContent('1')}
-              </TabPane>
-              <TabPane tab={<Radio disabled={value !== 2} value={2}><CreditCardOutlined /></Radio>} key="2">
-                {renderTabContent('2')}
-              </TabPane>
-              <TabPane tab={<Radio disabled={value !== 3} value={3}><WalletOutlined /></Radio>} key="3">
-                {renderTabContent('3')}
-              </TabPane>
-            </Tabs>
+            <Text strong > Apply voucher </Text>
+              <Button size="large" style={{ margin: '10px 0 10px 0'}} onClick={() => setIsModalVisible(true) } >
+                <Text strong style={{ color:'#009F7F' }}> Apply voucher </Text>
+              </Button>
+                <Modal
+                  title="Danh sách voucher của bạn"
+                  visible={isModalVisible}
+                  onCancel={handleCancel}
+                  footer={[
+                    <Button key="cancel" onClick={handleCancel}>
+                      Hủy
+                    </Button>,
+                    <Button key="apply" type="primary" onClick={handleApplyVoucher}>
+                      Áp dụng
+                    </Button>,
+                  ]}
+                  className="customModal"
+                >
+                  {/* <Select
+                    style={{ width: '100%' }}
+                    placeholder="Chọn voucher"
+                    onChange={handleVoucherChange}
+                    value={selectedVoucher}
+                  >
+                    {vouchers.map((voucher) => (
+                      <Option key={voucher.ID} value={voucher.name}>
+                        {voucher.name}
+                      </Option>
+                    ))}
+                  </Select> */}
+                  <Radio.Group style={{ width: '98%'}} onChange={handleVoucherChange} value={selectedVoucher}>
+                    {vouchers.map((voucher) => (
+                      <div className='box'>
+                          <div className="leftColumn">
+                            <Radio key={voucher.ID} value={voucher.name}>
+                              {voucher.name}
+                            </Radio>
+                          </div>
+                          <div className="rightColumn">
+                            <Text>{voucher.CouponDetail} </Text>
+                          </div>
+                      </div>
+                    ))}
+                  </Radio.Group>
+                </Modal>
+                {selectedVoucher && (
+                  <div>
+                    <div className='box' style={{padding: '10px 13px', margin: '0px 0 10px 0'}}>
+                      <Text strong> Voucher được áp dụng: {selectedVoucher}</Text>
+                    </div>
+                  </div>
+                )}
+            <Text strong> Select Payment Method </Text>
+            <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
+              <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
+                <TabPane tab={<Radio disabled={value !== 1} value={1}><DollarOutlined /></Radio>} key="1">
+                  {renderTabContent('1')}
+                </TabPane>
+                <TabPane tab={<Radio disabled={value !== 2} value={2}><CreditCardOutlined /></Radio>} key="2">
+                  {renderTabContent('2')}
+                </TabPane>
+                <TabPane tab={<Radio disabled={value !== 3} value={3}><WalletOutlined /></Radio>} key="3">
+                  {renderTabContent('3')}
+                </TabPane>
+              </Tabs>
+            </div>
+            <Button size="large" style={{ backgroundColor:'#009F7F'}}>
+              <Text strong  style={{ color: '#FFFFFF' }}>TOTAL:${totaldata.TOTAL}</Text>
+            </Button>
           </div>
-          <Button style={{wight:'100%', backgroundColor:'#009F7F'}}>
-            <Text strong >TOTAL:${totaldata.TOTAL}</Text>
-          </Button>
         </div>
-      </div>
-    </Layout>
+      </Layout>
+    </ConfigProvider>
   </Layout>
   );
 
