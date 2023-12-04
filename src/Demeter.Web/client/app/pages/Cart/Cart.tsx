@@ -37,14 +37,14 @@ const infoData: cartinfoData = {
   address: "R3 Royal City, số 72 Nguyễn Trãi, phường Thượng Đình, quận Thanh Xuân, Hà Nội.",
   email: "tanthenh123@gmail.com",
   phone: "0987456365",
-  link: 'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
+  link: 'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
 };
 
 const initialProducts: Product[] = [
   {
     id: 1,
     name: 'Product 1',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 1,
@@ -54,7 +54,7 @@ const initialProducts: Product[] = [
   {
     id: 2,
     name: 'Product 2',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 2,
@@ -64,7 +64,7 @@ const initialProducts: Product[] = [
   {
     id: 3,
     name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 3,
@@ -74,7 +74,7 @@ const initialProducts: Product[] = [
   {
     id: 4,
     name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 3,
@@ -84,7 +84,7 @@ const initialProducts: Product[] = [
   {
     id: 4,
     name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 3,
@@ -94,7 +94,7 @@ const initialProducts: Product[] = [
   {
     id: 5,
     name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/2185/6114/b99ba2815e5662f5c03e58a5c26bdd6e?Expires=1701648000&Signature=kQQQqriCjqtlylS8j~V-ioYKhtPsILYBl3qxJohc5dPOhvaLliyUCOXbMMkZ-aMOWFzraEAwJtByIBp~fC5udJLgajlIgscNhtiFJPEARnm6XZANaFuhJuWTHInlPZAbPDujqJK0atVIanPVXIgu2B5w4Yml7dPJWkuS-FtaW9HO9mwk7Cvx0fMLNVD2UTfGXg~jzq5y7pclvqjtmgcOmk8kbv0yIew1DCxMjnFIoIi1A2~xqFvXqh-GdDwFQ2XI0b8hDP~nmRJmREjbbd-SVS2bOcfye3zL~tB5v24rxGq0jpKC~Ps4jB8Trgd5F71WlFGAWgsSJKDANea5Ih~O3A__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
+    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
     newPrice: 100,
     oldPrice: 120,
     quantity: 3,
