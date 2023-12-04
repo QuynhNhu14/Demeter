@@ -1,17 +1,13 @@
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   padding: 16px 0;
   display: flex;
-  /* border-bottom: 1px solid #144832; */
-  background-color: #8cac8c;
-  z-index: 1000;
+  border-bottom: 1px solid #c2e6d7;
+  background-color: #ffffff;
+  align-items: center;
+  width: 100% !important;
 }
 .horizontal-list {
   display: flex;
-  align-items: center;
   list-style-type: none;
   padding-right: 40px;
   padding-left: 100px;
@@ -38,7 +34,6 @@
 
 .itemlist {
   display: flex;
-  align-items: center;
   list-style-type: none;
   padding-right: 40px;
   padding-left: 10px;
@@ -46,17 +41,4 @@
 }
 .itemlist li {
   padding: 0 15px;
-}
-
-.navbar--link {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: #000;
-  opacity: 0.9;
-}
-
-.navbar--link:hover {
-  cursor: pointer;
-  color: var(--primary-color);
 }

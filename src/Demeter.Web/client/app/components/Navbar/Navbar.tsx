@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from './Navbar.module.css';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, ConfigProvider, InputProps, Modal } from 'antd';
-import { NavLink } from 'react-router-dom';
 
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -64,7 +63,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <NavLink to="/home" className={styles['navbar--link']}>Logo</NavLink>
+      <a> Logo </a>
       <ConfigProvider
         theme={{
           token: {
@@ -103,8 +102,8 @@ const Navbar: React.FC = () => {
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <NavLink to="/shops" className={styles['navbar--link']}>Shops</NavLink>
-        <NavLink to="/offer" className={styles['navbar--link']}>Offer</NavLink>
+        <div>Shops</div>
+        <div>Offer</div>
         <div>FAQ</div>
         <div>Contact</div>
       </div>
