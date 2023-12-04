@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./SignInSignUp.css";
+import "../../components/Navbar/Navbar.module.css";
 import SignInForm from "./SignIn";
 import SignUpForm from "./SignUp";
+import Navbar from "../../components/Navbar/NavbarTwo";
 
 const SignInSignUp: React.FC = () =>  {
   const [type, setType] = useState<"signIn" | "signUp">("signIn");
@@ -15,7 +17,7 @@ const SignInSignUp: React.FC = () =>  {
   const containerClass = `container ${type === "signUp" ? "right-panel-active" : ""}`;
 
   return (
-    <div className="App">
+    <div className="LoginPage">
       <div className={containerClass} id="container">
         <SignUpForm />
         <SignInForm />

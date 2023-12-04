@@ -3,20 +3,15 @@ import Offer1 from "../../../assets/offer-1.png";
 import Offer2 from "../../../assets/offer-2.png";
 import Offer3 from "../../../assets/offer-3.png";
 import Offer4 from "../../../assets/offer-4.png";
-import Offer5 from "../../../assets/offer-5.png";
-import productImage from "../../../assets/apple.png";
 
 import "./Home.css";
 import "../../App.css";
-import { Header } from '../../components/Header/Header';
 import { CategoryList } from '../../components/CategoryList/CategoryList';
 import { ProductList } from '../../components/ProductList/ProductList';
 import Navbar from '../../components/Navbar/Navbar';
 import { useState } from 'react';
 
-import { Input, ConfigProvider, InputProps, Modal, Button } from 'antd';
-import ProductCard from '../../components/ProductCard/ProductCard';
-import ProductCardTwo from '../../components/ProductCard/ProductCardTwo';
+import { Input, InputProps } from 'antd';
 
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;

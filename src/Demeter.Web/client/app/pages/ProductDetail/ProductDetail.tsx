@@ -48,7 +48,7 @@ const ItemDetail=[
 
 
 export const ProductDetail: React.FC<ProductDetailProps> = ({productId}) => {
-    const [selectedProduct, setSelectedProduct] = useState<string>(productId);
+    const [selectedProduct, setSelectedProduct] = useState<number>(0);
 
     return (
         <div className="ProductDetail">

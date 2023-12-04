@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import { Layout, Divider,Typography,Input,Tabs,Radio, Form,Button,Col, Row, Table, Modal, Select, ConfigProvider } from 'antd';
 import { GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@ant-design/icons';
 import './Cart.css';
+import "../../App.css";
 import Navbar from '../../components/Navbar/Navbar';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 
@@ -248,8 +249,7 @@ const Cart: React.FC = (Props) => {
   };
 
   return(
-  <Layout direction="vertical" style={{position: 'absolute', width: '100%' , top: '0', minHeight:'100%'}}>
-    <Navbar />
+  <Layout direction="vertical" style={{position: 'absolute', width: '100%', minHeight:'100%'}}>
     <ConfigProvider
             theme={{
               token: {

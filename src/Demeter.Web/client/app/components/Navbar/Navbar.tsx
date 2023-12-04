@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './Navbar.module.css';
+import '../../App.css';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, ConfigProvider, InputProps, Modal } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -63,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <a> Logo </a>
+      <NavLink to="/home" className={styles['navbar--link']}>Logo</NavLink>
       <ConfigProvider
         theme={{
           token: {
@@ -102,18 +104,18 @@ const Navbar: React.FC = () => {
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <div>Shops</div>
-        <div>Offer</div>
+        <NavLink to="/shops" className={styles['navbar--link']}>Shops</NavLink>
+        <NavLink to="/offer" className={styles['navbar--link']}>Offer</NavLink>
         <div>FAQ</div>
         <div>Contact</div>
       </div>
       <div className={styles['itemlist']}>
-        <li>
-          <ShoppingCartOutlined style={{ fontSize: '18px', color: '#144832' }} />
-        </li>
-        <li>
-          <UserOutlined style={{ fontSize: '18px', color: '#144832' }} />
-        </li>
+          <NavLink to="/cart" className={styles['navbar--link']}>
+            <ShoppingCartOutlined style={{ fontSize: '18px', color: '#144832' }} />
+          </NavLink>
+          <NavLink to="/login" className={styles['navbar--link']}>
+            <UserOutlined style={{ fontSize: '18px', color: '#144832' }} />
+          </NavLink>
       </div>
     </nav>
   );

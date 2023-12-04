@@ -24,3 +24,6 @@
   font-size: 20px;
   background-color: var(--primary-color);
 }
+.Homepage .ProductList {
+  padding: 32px;
+}

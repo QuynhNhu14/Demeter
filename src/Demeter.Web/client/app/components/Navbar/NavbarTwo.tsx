@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './Navbar.module.css';
 import { Input, ConfigProvider, InputProps, Modal, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -102,7 +103,7 @@ const Navbar: React.FC = () => {
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <div>Shops</div>
+        <NavLink to="/shops" className="ProductTitle">Shops</NavLink>
         <div>Offer</div>
         <div>FAQ</div>
         <div>Contact</div>

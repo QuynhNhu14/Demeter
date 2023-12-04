@@ -12,7 +12,7 @@ export const ShopProduct: React.FC<{shopId?: string}> = ({shopId}) => {
                 <Flex  style={{flex: '3'}}>
                     <ShopInfo shopId={shopId ? shopId : '1'}/> 
                 </Flex>
-                <Flex className="ShopProduct" vertical style={{flex: '10', padding: '24px 24px 0 0'}}>
+                <Flex className="ShopProduct" vertical gap="large" style={{flex: '10', padding: '24px 24px 0 0'}}>
                     <img src={shopBanner} alt="shop banner" className="ShopBanner" />
                     <ProductList shopId={shopId} />
                 </Flex>

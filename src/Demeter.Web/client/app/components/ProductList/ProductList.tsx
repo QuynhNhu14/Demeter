@@ -76,7 +76,7 @@ export const ProductList: React.FC<ProductListProps> = ({categoryId, shopId}) =>
             <Flex className="ProductList--products" gap="large" align="center" vertical >
                 <Flex  wrap="wrap" gap="small" justify="space-between">
                     {Products.map(item => 
-                        <CardWithModal productId={item.productId}/>
+                        <CardWithModal productId="1"/>
                     )}
                 </Flex>
                 <Button text='Load More' onClick={handleLoading}/>
