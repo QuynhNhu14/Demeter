@@ -257,7 +257,7 @@ const Cart: React.FC = (Props) => {
               },
             }}
           >
-      <Layout style={{ background: '#F3F4F6' }}>
+      <Layout style={{ background: 'c' }}>
         <div className="horizontalSections">
           <div className="section1">
             <img src={infoData.link} alt="Your Image" className="centeredImage" />
