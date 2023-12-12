@@ -1,9 +1,10 @@
 # Define the root directory
 $scriptPath = $MyInvocation.MyCommand.Path
 $rootDir = (Get-Item -Path $scriptPath | Resolve-Path).Path | Split-Path -Parent
+$parentDir = Split-Path -Parent $rootDir
 
 # Navigate to the src/Demeter.Web directory
-Set-Location -Path "$rootDir/src/Demeter.Web"
+Set-Location -Path "$parentDir/src/Demeter.Web"
 
 # Build the Vite React-TS project
 Write-Host "Building Vite React-TS project..."
@@ -14,4 +15,4 @@ Set-Location -Path $rootDir
 
 # Build the .NET solutions in the src/ directory
 Write-Host "Building .NET solutions..."
-dotnet build "$rootDir/src/Demeter.sln"
+dotnet build "D:/bt bk/thesis/Demeter/src/Demeter.sln"
