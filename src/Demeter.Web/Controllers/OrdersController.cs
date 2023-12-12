@@ -1,0 +1,155 @@
+using System.ComponentModel.DataAnnotations;
+using Demeter.Core.Services.Orders;
+using Demeter.Domain;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Demeter.Web.Controllers;
+
+[ApiController]
+[Route("api/orders")]
+public class OrdersController: ControllerBase
+{
+    private readonly ILogger<OrdersController> _logger;
+    private readonly IOrdersService _ordersService;
+    private readonly IVoucherService _voucherService;
+    private readonly IOrderItemService _orderItemService;
+    
+    public OrdersController(ILogger<AppSettingsController> logger, IOrdersService ordersService, IVoucherService voucherService, IOrderItemService orderItemService) {
+        _logger = logger;
+        _ordersService = ordersService;
+        _voucherService = voucherService;
+        _orderItemService = orderItemService;
+    }
+
+    [HttpGet]
+    public async ValueTask<IActionResult> GetAllOrdersAsync()
+    {
+        try
+        {
+            var orders = await _ordersService.GetAllAsync();
+            return Ok(orders);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpGet("voucher")]
+    public async ValueTask<IActionResult> GetVoucher()
+    {
+        try
+        {
+            var voucher = await _voucherService.GetAllAsync();
+            return Ok(voucher);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpGet("orderitems")]
+    public async ValueTask<IActionResult> GetOrderItems()
+    {
+        try
+        {
+            var orderItems = await _orderItemService.GetAllAsync();
+            return Ok(orderItems);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPost]
+    public async ValueTask<IActionResult> AddNewOrderAsync([FromBody] Domain.Orders order)
+    {
+        try
+        {
+            await _ordersService.AddAsync(order);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPost("update")]
+    public async ValueTask<IActionResult> UpdateOrdersAsync([FromBody] ICollection<Domain.Orders> orders)
+    {
+        try
+        {
+            await _ordersService.UpdateAsync(orders);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpDelete]
+    public async ValueTask<IActionResult> DeleteOrderAsync([Required] int id)
+    {
+        try
+        {
+            await _ordersService.DeleteAsync(id);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpDelete("Voucher")]
+    public async ValueTask<IActionResult> DeleteVoucherAsync([Required] int id)
+    {
+        try
+        {
+            await _voucherService.DeleteAsync(id);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpDelete("OrderItems")]
+    public async ValueTask<IActionResult> DeleteOrderItemsAsync([Required] int id)
+    {
+        try
+        {
+            await _orderItemService.DeleteAsync(id);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+}
