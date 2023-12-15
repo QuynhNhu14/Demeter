@@ -8,6 +8,7 @@ import { ProductList } from "../../components/ProductList/ProductList";
 export const ShopProduct: React.FC<{shopId?: string}> = ({shopId}) => {
     return(
         <div className="ShopProductPage">
+            <Navbar/>
             <Flex>
                 <Flex  style={{flex: '3'}}>
                     <ShopInfo shopId={shopId ? shopId : '1'}/> 

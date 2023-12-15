@@ -9,7 +9,7 @@ import { Shops } from "./pages/Shops/Shops";
 import { Offer } from "./pages/Offer/Offer";
 import Navbar from "./components/Navbar/Navbar";
 import Cart from "./pages/Cart/Cart";
-import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
+import { SignInSignUp } from "./pages/SignInSignUp/SignInSignUp";
 
 export default function App() {
   return (
@@ -23,7 +23,6 @@ export default function App() {
         <Route path='/offer' element={<Offer/>} />
         <Route path='/cart' element={<Cart/>} />
       </Routes>
-      <Navbar />
     </div>
   );
 }

@@ -57,6 +57,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({productId}) => {
 
     return(
         <div className="ProductPage">
+            <Navbar/>
             <div className="ProductDetail">
                 <NavLink to="/home" className="BackHomeButton">
                     <ArrowLeftOutlined />

@@ -66,6 +66,7 @@ export const Shops = () => {
     }
     return(
         <div className="ShopsPage">
+            <Navbar/>
             <Flex className="ShopsPage--container" vertical gap="large">
                 <span style={{fontWeight: "700", fontSize: '24px', opacity: 0.9}}>All Shops</span>
                     <Flex className="ShopsPage--ListContainer" wrap="wrap" gap="middle" justify="space-between">

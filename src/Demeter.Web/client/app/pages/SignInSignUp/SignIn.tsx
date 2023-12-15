@@ -31,6 +31,7 @@ const SignInForm: React.FC = () => {
     };
 
     setState(initialState);
+    window.location.href = "../home";   
   };
 
   return (

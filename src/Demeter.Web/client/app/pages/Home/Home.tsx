@@ -71,6 +71,7 @@ export const HomePage = () => {
   }
   return (
     <div className="Homepage">
+          <Navbar/>
         <div className="Homepage--container">
             <Flex className="Homepage--banner" vertical align="center" justify="center" gap="large">
               <span style={{fontSize: '50px', fontWeight: 'bold', color:'#fff'}}>Groceries Delivered in 90 Minutes</span>

@@ -250,6 +250,7 @@ const Cart: React.FC = (Props) => {
 
   return(
   <Layout direction="vertical" style={{position: 'absolute', width: '100%', minHeight:'100%'}}>
+    <Navbar/>
     <ConfigProvider
             theme={{
               token: {

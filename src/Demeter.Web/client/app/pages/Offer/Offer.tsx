@@ -6,6 +6,7 @@ import "./Offer.css";
 export const Offer = () => {
     return(
         <div className="OfferPage">
+            <Navbar/>
 
         </div>
     )

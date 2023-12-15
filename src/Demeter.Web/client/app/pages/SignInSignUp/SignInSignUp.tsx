@@ -5,7 +5,7 @@ import SignInForm from "./SignIn";
 import SignUpForm from "./SignUp";
 import Navbar from "../../components/Navbar/NavbarTwo";
 
-const SignInSignUp: React.FC = () =>  {
+export const SignInSignUp: React.FC = () =>  {
   const [type, setType] = useState<"signIn" | "signUp">("signIn");
 
   const handleOnClick = (text: "signIn" | "signUp") => {
@@ -51,4 +51,3 @@ const SignInSignUp: React.FC = () =>  {
     </div>
   );
 }
-export default SignInSignUp;
