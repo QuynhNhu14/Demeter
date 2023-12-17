@@ -68,9 +68,6 @@ type ProductListProps = {
 
 export const ProductList: React.FC<ProductListProps> = ({categoryId, shopId}) => {
     
-    const handleLoading = () => {
-        console.log('Loading');
-    }
     return (
         <div className="ProductList">
             <Flex className="ProductList--products" gap="large" align="center" vertical >
@@ -79,7 +76,6 @@ export const ProductList: React.FC<ProductListProps> = ({categoryId, shopId}) =>
                         <CardWithModal productId="1"/>
                     )}
                 </Flex>
-                <Button text='Load More' onClick={handleLoading}/>
             </Flex>
         </div>
     )

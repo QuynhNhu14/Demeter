@@ -26,23 +26,21 @@ function getItem(
   }
   
   const items: MenuItem[] = [
-    getItem('Fruits & Vegetables', 'sub1', <CiApple size={22}/>
+    getItem('Trái cây & Rau củ', 'sub1', <CiApple size={22}/>
     , [
-      getItem('Fruits', '1'),
-      getItem('Vegetables', '2'),
+      getItem('Trái cây', '1'),
+      getItem('Rau củ', '2'),
     ]),
-    getItem('Meat & Fish', 'sub2', <IoFishOutline size={20}/>
+    getItem('Thịt cá', 'sub2', <IoFishOutline size={20}/>
     , [
-      getItem('Fresh Fish', '3'),
-      getItem('Meat', '4'),
+      getItem('Cá tươi', '3'),
+      getItem('Cá đông lạnh', '4'),
+      getItem('Hải sản chế biến', '5'),
     ]),
-    getItem('Snacks', 'sub3', <VscCoffee size={20}/>, [
-      getItem('Nuts & Biscuits', '5'),
-      getItem('Chocolates', '6'),
-      getItem('Crisps', '7'),
-      getItem('Noodles & Pasta', '8'),
-      getItem('Sauce', '9'),
-      getItem('Soup', '10'),
+    getItem('Sản phẩm đồ uống', 'sub3', <VscCoffee size={20}/>, [
+      getItem('Nước trái cây', '6'),
+      getItem('Nước ép', '7'),
+      getItem('Nước giải khát tự nhiên', '8'),
     ]),
   ];
 // submenu keys of first level

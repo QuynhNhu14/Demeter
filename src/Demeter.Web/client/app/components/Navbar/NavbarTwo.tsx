@@ -73,8 +73,8 @@ const Navbar: React.FC = () => {
         }}
       >
         <Search
-          placeholder="Search your products from here"
-          enterButton="Search"
+          placeholder="Tìm kiếm sản phẩm của bạn ở đây"
+          enterButton="Tìm kiếm"
           onSearch={handleSearch}
           onChange={handleChange}
           value={searchValue}

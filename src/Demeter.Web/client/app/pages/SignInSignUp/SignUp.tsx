@@ -1,3 +1,4 @@
+import Checkbox from "antd/es/checkbox";
 import { useState, ChangeEvent, FormEvent } from "react";
 
 interface SignUpFormState {
@@ -41,7 +42,7 @@ const SignUpForm: React.FC = () => {
   return (
     <div className="form-container sign-up-container">
       <form onSubmit={handleOnSubmit}>
-        <h1>Create Account</h1>
+        <h1>Tạo tài khoản</h1>
         <div className="social-container">
           <a href="#" className="social">
             <i className="fab fa-facebook-f" />
@@ -53,13 +54,13 @@ const SignUpForm: React.FC = () => {
             <i className="fab fa-linkedin-in" />
           </a>
         </div>
-        <span>or use your email for registration</span>
+        <span>hoặc sử dụng email của bạn để đăng ký</span>
         <input
           type="text"
           name="name"
           value={state.name}
           onChange={handleChange}
-          placeholder="Name"
+          placeholder="Tên tài khoản"
         />
         <input
           type="email"
@@ -73,9 +74,10 @@ const SignUpForm: React.FC = () => {
           name="password"
           value={state.password}
           onChange={handleChange}
-          placeholder="Password"
+          placeholder="Mật khẩu"
         />
-        <button>Sign Up</button>
+        <Checkbox><span className="checkbox--text">Bạn muốn trở thành chủ cửa hàng</span></Checkbox>
+        <button>Đăng ký</button>
       </form>
     </div>
   );

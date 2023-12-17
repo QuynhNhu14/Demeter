@@ -1,4 +1,4 @@
-import { Flex } from 'antd';
+import { ConfigProvider, Flex } from 'antd';
 import Offer1 from "../../../assets/offer-1.png";
 import Offer2 from "../../../assets/offer-2.png";
 import Offer3 from "../../../assets/offer-3.png";
@@ -71,18 +71,25 @@ export const HomePage = () => {
   }
   return (
     <div className="Homepage">
+        <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#009F7F',
+          },
+        }}
+      ></ConfigProvider>
           <Navbar/>
         <div className="Homepage--container">
             <Flex className="Homepage--banner" vertical align="center" justify="center" gap="large">
-              <span style={{fontSize: '50px', fontWeight: 'bold', color:'#fff'}}>Groceries Delivered in 90 Minutes</span>
-              <span style={{fontSize: '20px'}}>Get your healthy foods & snacks delivered at your doorsteps all day everyday</span>
+              <span style={{fontSize: '50px', fontWeight: 'bold', color:'#fff'}}>ĐẶT HÀNG NGAY TẠI DEMETER</span>
+              <span style={{fontSize: '20px'}}>Hãy dùng rau củ quả sạch mỗi ngày - Hàng tươi mới mỗi ngày !</span>
               <Search
-                placeholder="Search your products from here"
-                enterButton="Search"
+                className="Banner--Search"
+                placeholder="Tìm kiếm sản phẩm của bạn ở đây"
+                enterButton="Tìm kiếm"
                 onSearch={handleSearch}
                 onChange={handleChange}
                 value={searchValue}
-                style={{ width: 600 }}
                 loading={false}
               />
             </Flex>

@@ -6,9 +6,9 @@ import { FacebookFilled, FacebookOutlined, InstagramOutlined, TwitterOutlined } 
 const ShopDetails = {
     shopId: "1",
     logo: shopLogo,
-    name: " Grocery Shop",
-    description: "The grocery shop is the best shop around the city. This is being run under the store owner and our aim is to provide fresh and quality product and hassle free customer service.",
-    adress: "1986 Spinnaker Lane, Illinois, Freeport, 61032, USA",
+    name: " Cửa Hàng Nông Sản",
+    description: "Tại đây, bạn sẽ tìm thấy một đa dạng các loại rau, trái cây, thực phẩm chế biến và các sản phẩm nông nghiệp khác, đảm bảo mang đến sự hài lòng cho vị giác và sức khỏe của bạn.",
+    adress: "12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức",
     phone: "5619327220",
     website: "https://redq.io",
 }
@@ -28,18 +28,18 @@ export const ShopInfo: React.FC<{shopId: string}> = ({shopId}) => {
             </Flex>
             <Flex className="ShopInfo--details" vertical justify="center" gap="large">
                 <Flex vertical gap="small">
-                    <span style={{fontWeight: 'bold'}}>Address</span>
+                    <span style={{fontWeight: 'bold'}}>Địa chỉ</span>
                     <span style={{opacity: '0.8'}}>{ShopDetails.adress}</span>
                 </Flex>
                 <Flex vertical gap="small">
-                    <span style={{fontWeight: 'bold'}}>Phone</span>
+                    <span style={{fontWeight: 'bold'}}>SĐT</span>
                     <span style={{opacity: '0.8'}}>{ShopDetails.phone}</span>
                 </Flex>
                 <Flex vertical gap="small">
-                    <span style={{fontWeight: 'bold'}}>Website</span>
+                    <span style={{fontWeight: 'bold'}}>Trang Web</span>
                     <Flex justify="space-between">
                         <span style={{opacity: '0.8'}}>{ShopDetails.website}</span>
-                        <a href={ShopDetails.website} style={{fontWeight: 'bolder', color:'#009f7f'}}>Visit this site</a>
+                        <a href={ShopDetails.website} style={{fontWeight: 'bolder', color:'#009f7f'}}>Truy cập trang web</a>
                     </Flex>
                 </Flex>
             </Flex>

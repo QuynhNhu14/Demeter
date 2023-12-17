@@ -61,21 +61,21 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => 
                     </Flex>
                     <Flex justify="space-between">
                         <span style={{ fontSize: '14px', opacity: '0.7'}}>{unit}</span>
-                        <Tag color="#009f7f" style={{fontSize: '14px',  margin: "0"}}>{rate.rating} <StarFilled /></Tag>
+                        <Tag color="#F9C127" style={{fontSize: '14px',  margin: "0"}}>{rate.rating} <StarFilled /></Tag>
                     </Flex>
                     <span>{description}</span>
                     <Flex gap="small" align="center">
-                        <span style={{ fontWeight: '600', fontSize: '30px', color: '#009f7f' }}>${salePrice}</span>
-                        <span style={{ textDecoration: 'line-through', opacity: '0.7'}} > ${price}</span>
+                        <span style={{ fontWeight: '600', fontSize: '30px', color: '#009f7f' }}>{salePrice}</span>
+                        <span style={{ textDecoration: 'line-through', opacity: '0.7'}} > {price}</span>
                     </Flex>
                     <Flex align="center" gap="large">
-                        <Button className="AddCartButton" text="Add To Shopping Cart" onClick={handleAdd} />
-                        <span style={{ fontSize: '16px', opacity: '0.7'}} >{available} available</span>
+                        <Button className="AddCartButton" text="Thêm vào giỏ hàng" onClick={handleAdd} />
+                        <span style={{ fontSize: '16px', opacity: '0.7'}} >còn lại {available}</span>
                     </Flex>
                 </Flex>
                 <Flex vertical justify="center" gap="large">
                     <Flex align="center">
-                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }} >Categories:</span>
+                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }} >Loại:</span>
                         {categories.map((category) => {
                             return(
                                 <Tag color="cyan">{category}</Tag>
@@ -83,14 +83,14 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => 
                         })}
                     </Flex>
                     <Flex align="center">
-                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }}>Sellers:</span>
+                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }}>Người bán:</span>
                         <NavLink to="/shop-product" style={{ color: '#009f7f', textDecoration: 'underline' }}>{seller}</NavLink>
                     </Flex>
                 </Flex>
             </Flex>
         </div>
         <Flex className="ProductDetail--Detail" vertical gap="large">
-            <span style={{fontWeight: "bolder", fontSize: "20px"}}>Details</span>
+            <span style={{fontWeight: "bolder", fontSize: "20px"}}>Chi tiết</span>
             <span>{description}</span>
         </Flex> 
     </div>

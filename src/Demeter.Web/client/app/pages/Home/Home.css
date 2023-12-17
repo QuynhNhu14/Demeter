@@ -18,12 +18,16 @@
 .Homepage--banner .ant-input {
   height: 50px;
 }
-.Homepage--banner .ant-btn {
-  height: 50px;
-  width: 100px;
-  font-size: 20px;
-  background-color: var(--primary-color);
-}
 .Homepage .ProductList {
   padding: 32px;
+}
+.Banner--Search {
+  width: 600px;
+}
+.Banner--Search .ant-btn {
+  height: 50px;
+  width: 120px;
+  font-size: 20px;
+  font-weight: 400;
+  background-color: var(--primary-color);
 }

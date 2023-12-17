@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent } from "react";
 
 interface SignInFormState {
   email: string;
@@ -37,7 +37,7 @@ const SignInForm: React.FC = () => {
   return (
     <div className="form-container sign-in-container">
       <form onSubmit={handleOnSubmit}>
-        <h1>Sign in</h1>
+        <h1>Đăng nhập</h1>
         <div className="social-container">
           <a href="#" className="social">
             <i className="fab fa-facebook-f" />
@@ -49,7 +49,7 @@ const SignInForm: React.FC = () => {
             <i className="fab fa-linkedin-in" />
           </a>
         </div>
-        <span>or use your account</span>
+        <span>hoặc sử dụng tài khoản của bạn</span>
         <input
           type="email"
           name="email"
@@ -62,10 +62,10 @@ const SignInForm: React.FC = () => {
           name="password"
           value={state.password}
           onChange={handleChange}
-          placeholder="Password"
+          placeholder="Mật khẩu"
         />
-        <a href="#">Forgot your password?</a>
-        <button>Sign In</button>
+        <a href="#">Quên mật khẩu?</a>
+        <button>Đăng nhập</button>
       </form>
     </div>
   );

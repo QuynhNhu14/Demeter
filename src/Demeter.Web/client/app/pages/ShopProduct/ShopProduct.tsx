@@ -1,4 +1,4 @@
-import { Col, Flex, Row } from "antd";
+import { Flex } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import { ShopInfo } from "../../components/ShopInfo/ShopInfo";
 import "./ShopProduct.css";

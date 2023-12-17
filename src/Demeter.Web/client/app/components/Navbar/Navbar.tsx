@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <NavLink to="/home" className={styles['navbar--link']}>Logo</NavLink>
+      <NavLink to="/home" className={styles['navbar--link']}>Demeter</NavLink>
       <ConfigProvider
         theme={{
           token: {
@@ -74,8 +74,8 @@ const Navbar: React.FC = () => {
         }}
       >
         <Search
-          placeholder="Search your products from here"
-          enterButton="Search"
+          placeholder="Tìm kiếm sản phẩm của bạn ở đây"
+          enterButton="Tìm kiếm"
           onSearch={handleSearch}
           onChange={handleChange}
           value={searchValue}
@@ -104,10 +104,10 @@ const Navbar: React.FC = () => {
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <NavLink to="/shops" className={styles['navbar--link']}>Shops</NavLink>
-        <NavLink to="/offer" className={styles['navbar--link']}>Offer</NavLink>
-        <div>FAQ</div>
-        <div>Contact</div>
+        <NavLink to="/shops" className={styles['navbar--link']}>Cửa hàng</NavLink>
+        <NavLink to="/offer" className={styles['navbar--link']}>Mã giảm giá</NavLink>
+        <div className={styles['navbar--link']}>Câu hỏi thường gặp</div>
+        <div className={styles['navbar--link']}>Liên hệ</div>
       </div>
       <div className={styles['itemlist']}>
           <NavLink to="/cart" className={styles['navbar--link']}>

@@ -1,6 +1,6 @@
 .ProductDetail {
   width: 100%;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
 }
 .ProductPage {
   width: 100%;
@@ -12,7 +12,7 @@
 
 .BackHomeButton {
   position: relative;
-  top: 30px;
+  top: 20px;
   color: var(--primary-color);
   text-decoration: none;
   font-size: 16px;

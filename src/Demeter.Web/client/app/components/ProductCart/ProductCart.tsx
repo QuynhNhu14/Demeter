@@ -56,7 +56,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
       ),
     },
     {
-      title: 'Product',
+      title: 'Sản phẩm',
       dataIndex: 'name',
       key: 'name',
       render: (text: string, record: Product) => (
@@ -67,7 +67,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
       ),
     },
     {
-      title: 'Price',
+      title: 'Giá',
       dataIndex: 'price',
       key: 'price',
       align: 'center',
@@ -79,7 +79,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
       ),
     },
     {
-      title: 'Quantity',
+      title: 'Số lượng',
       dataIndex: 'quantity',
       key: 'quantity',
       align: 'center',
@@ -92,13 +92,13 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
       ),
     },
     {
-      title: 'Total',
+      title: 'Tổng cộng',
       dataIndex: 'total',
       key: 'total',
       render: (text: string, record: Product) => <span>{record.quantity * record.newPrice}</span>,
     },
     {
-      title: 'Action',
+      title: '',
       dataIndex: 'action',
       key: 'action',
       align: 'center',

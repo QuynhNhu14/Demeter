@@ -3,61 +3,60 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Shops.css";
 import shopLogo from "../../../assets/shoplogo.png";
 import { CiLocationOn } from "react-icons/ci";
-
 const shopList = [
     {
         id: '1',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '2',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '3',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '4',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '5',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '6',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '7',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '8',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
     {
         id: '9',
-        name: 'Grocery Shop',
+        name: 'Cửa Hàng Nông Sản',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: '12/24, khu phố 6, phường Linh Trung, tp. Thủ Đức',
     },
 ]
 export const Shops = () => {
@@ -68,7 +67,7 @@ export const Shops = () => {
         <div className="ShopsPage">
             <Navbar/>
             <Flex className="ShopsPage--container" vertical gap="large">
-                <span style={{fontWeight: "700", fontSize: '24px', opacity: 0.9}}>All Shops</span>
+                <span style={{fontWeight: "700", fontSize: '24px', opacity: 0.9}}>Tất cả cửa hàng</span>
                     <Flex className="ShopsPage--ListContainer" wrap="wrap" gap="middle" justify="space-between">
                 {shopList.map(shop => 
                     <div className="ShopsPage--ShopItem" onClick={handleClick}>

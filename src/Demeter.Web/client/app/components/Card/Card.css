@@ -30,6 +30,12 @@
   padding: 3px 6px;
   border-radius: 6px;
 }
+.ProductCard--price {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
 .ProductCard--button {
   width: 100%;
