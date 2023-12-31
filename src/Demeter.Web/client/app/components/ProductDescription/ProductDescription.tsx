@@ -3,7 +3,7 @@ import { Flex, Tag } from "antd";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "../Button/Button";
-import { Rating } from "../Rating/Rating";
+// import { Rating } from "../Rating/Rating";
 import "./ProductDescription.css";
 
 type ProductDescriptionProps = {

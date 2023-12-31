@@ -1,4 +1,3 @@
-import { Header } from "../../components/Header/Header";
 import "./ProductDetail.css";
 import "../../App.css";
 import { ProductDescription } from "../../components/ProductDescription/ProductDescription";
@@ -6,12 +5,11 @@ import { Flex, Pagination, Select, Tag } from "antd";
 import { ProductList } from "../../components/ProductList/ProductList";
 import { NavLink } from "react-router-dom";
 import { ArrowLeftOutlined, CheckCircleFilled, DislikeFilled, LikeFilled, StarFilled } from "@ant-design/icons";
-import Navbar from "../../components/Navbar/Navbar";
 import { Rating } from "../../components/Rating/Rating";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 type ProductPageProps = {
-    productId: string
+    productId?: string
 }
 
 const ItemDetail={

@@ -59,13 +59,13 @@ public class AccountService : IAccountService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Domain.Account user)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Accounts.ToListAsync();
-        var result = entities.Find(t => t.Name == user.Name);
+        var result = entities.Find(t => t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {user.Name} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Accounts.Remove(result);

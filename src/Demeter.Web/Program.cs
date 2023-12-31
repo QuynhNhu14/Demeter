@@ -9,6 +9,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json");
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+// Add services to the container.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,
@@ -21,10 +23,9 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add services to the container.
-
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddUserSessionContext(builder.Configuration);
 builder.Services.AddCoreServices();
 
 builder.Services.AddControllers();

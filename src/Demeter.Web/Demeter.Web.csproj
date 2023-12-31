@@ -21,4 +21,8 @@
       <ProjectReference Include="..\Demeter.Infrastructure\Demeter.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Extensions\" />
+    </ItemGroup>
+
 </Project>

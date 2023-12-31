@@ -60,13 +60,13 @@ public class CategoryService : ICategoryService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Category category)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Categories.ToListAsync();
-        var result = entities.Find(t => t.Name == category.Name);
+        var result = entities.Find(t => t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {category.Name} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Categories.Remove(result);

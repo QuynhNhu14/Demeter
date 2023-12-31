@@ -49,13 +49,13 @@ public class UsersService : IUsersService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Domain.Users user)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Users.ToListAsync();
-        var result = entities.Find(t=> t.Id == user.Id);
+        var result = entities.Find(t=> t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {user.FullName} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Users.Remove(result);

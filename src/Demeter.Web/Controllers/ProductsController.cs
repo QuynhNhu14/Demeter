@@ -100,11 +100,11 @@ public class ProductsController: ControllerBase
     }
 
     [HttpDelete]
-    public async ValueTask<IActionResult> DeleteProductAsync([Required] int id)
+    public async ValueTask<IActionResult> DeleteProductAsync([Required] string id)
     {
         try
         {
-            await _productsService.DeleteAsync(id);
+            await _productsService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
@@ -118,11 +118,11 @@ public class ProductsController: ControllerBase
     }
 
     [HttpDelete("prices")]
-    public async ValueTask<IActionResult> DeletePricesAsync([Required] int id)
+    public async ValueTask<IActionResult> DeletePricesAsync([Required] string id)
     {
         try
         {
-            await _priceService.DeleteAsync(id);
+            await _priceService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
@@ -136,11 +136,11 @@ public class ProductsController: ControllerBase
     }
 
     [HttpDelete("categories")]
-    public async ValueTask<IActionResult> DeleteCategoriesAsync([Required] int id)
+    public async ValueTask<IActionResult> DeleteCategoriesAsync([Required] string id)
     {
         try
         {
-            await _categoryService.DeleteAsync(id);
+            await _categoryService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)

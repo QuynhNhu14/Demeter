@@ -46,7 +46,7 @@ public class UsersController: ControllerBase
     }
 
     [HttpPost]
-    public async ValueTask<IActionResult> AddNewUserAsync([FromBody] User user)
+    public async ValueTask<IActionResult> AddNewUserAsync([FromBody] Users user)
     {
         try
         {
@@ -82,11 +82,11 @@ public class UsersController: ControllerBase
     }
 
     [HttpDelete]
-    public async ValueTask<IActionResult> DeleteUserAsync([Required] int id)
+    public async ValueTask<IActionResult> DeleteUserAsync([Required] string id)
     {
         try
         {
-            await _usersService.DeleteAsync(id);
+            await _usersService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
@@ -100,11 +100,11 @@ public class UsersController: ControllerBase
     }
 
     [HttpDelete("account")]
-    public async ValueTask<IActionResult> DeleteAccountAsync([Required] int id)
+    public async ValueTask<IActionResult> DeleteAccountAsync([Required] string id)
     {
         try
         {
-            await _accountService.DeleteAsync(id);
+            await _accountService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)

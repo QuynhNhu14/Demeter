@@ -51,13 +51,13 @@ public class PricesService : IPriceService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Prices price)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Prices.ToListAsync();
-        var result = entities.Find(t => t.Id == price.Id);
+        var result = entities.Find(t => t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {price.Id} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Prices.Remove(result);
