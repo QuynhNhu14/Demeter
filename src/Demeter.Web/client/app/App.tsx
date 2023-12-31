@@ -8,6 +8,7 @@ import { Offer } from "./pages/Offer/Offer";
 import Navbar from "./components/Navbar/Navbar";
 import Cart from "./pages/Cart/Cart";
 import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
+import AdminPage from "./pages/admin/AdminPage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path='/shops' element={<Shops/>} />
         <Route path='/offer' element={<Offer/>} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/admin' element={<AdminPage />} />
       </Routes>
       <Navbar />
     </div>
