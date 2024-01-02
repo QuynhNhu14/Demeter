@@ -45,15 +45,16 @@ public class AppSettingsService : IAppSettingsService
         }
     }
 
-    public async ValueTask AddAsync(Domain.AppSettings setting)
+    public async ValueTask<Domain.AppSettings> AddAsync(Domain.AppSettings setting)
     {
         if (string.IsNullOrWhiteSpace(setting.ReferenceKey))
         {
             throw new ValidationException($"Invalid: {nameof(Domain.AppSettings.ReferenceKey)} should not be empty.");
         }
             
-        _context.AppSettings.Add(_mapper.Map<Entities.AppSettings>(setting));
+        var entity = _context.AppSettings.Add(_mapper.Map<Entities.AppSettings>(setting)).Entity;
         await _context.SaveChangesAsync();
+        return _mapper.Map<Domain.AppSettings>(entity);
     }
 
     public async ValueTask Remove(Domain.AppSettings setting)

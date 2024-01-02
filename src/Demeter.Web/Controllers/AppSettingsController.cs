@@ -38,8 +38,8 @@ public class AppSettingsController: ControllerBase
     {
         try
         {
-            await _appSettingsService.AddAsync(setting);
-            return Ok();
+            var result = await _appSettingsService.AddAsync(setting);
+            return Ok(result);
         }
         catch (ValidationException ex)
         {

@@ -5,6 +5,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyName>Demeter.Domain</AssemblyName>
         <RootNamespace>Demeter.Domain</RootNamespace>
+
     </PropertyGroup>
 
 
