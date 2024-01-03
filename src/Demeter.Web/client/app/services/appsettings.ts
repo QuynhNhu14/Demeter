@@ -5,7 +5,7 @@ const baseUrl = "http://localhost:5029/api/settings";
 
 export async function getSettings() {
   try {
-    const response = await axios.get<AppSettings>(baseUrl);
+    const response = await axios.get<AppSettings[]>(baseUrl);
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

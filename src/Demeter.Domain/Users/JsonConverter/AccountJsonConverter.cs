@@ -35,40 +35,31 @@ public class AccountJsonConverter : JsonConverter
         }
 
         JToken jToken = JToken.ReadFrom(reader);
-        string propertyName = $"{nameof(Bill.Type)}";
+        string propertyName = $"{nameof(Account.Type)}";
         int? type = jToken.Value<int?>(propertyName);
 
         if (type == null)
         {
-            type = jToken.Value<int?>(propertyName.ToCamelCase());
+            type = jToken.Value<int?>(propertyName);
         }
 
-        Bill result = null;
-
-
+        Account result = null;
+        
         switch (type)
         {
             case null:
-                throw new ArgumentOutOfRangeException($"{nameof(BillTypeJsonConverter)} can't convert to activity, property {propertyName} does not have expected value");
+                throw new ArgumentOutOfRangeException($"{nameof(AccountJsonConverter)} can't convert to activity, property {propertyName} does not have expected value");
 
             case (int)AccountType.Customer:
-                result = new BillFika();
+                result = new CustomerAccount();
                 break;
 
             case (int)AccountType.Shop:
-                result = new BillTaxi();
-                break;
-
-            case (int)BillType.TechLunch:
-                result = new BillTechLunch();
-                break;
-
-            case (int)BillType.TeamBuilding:
-                result = new BillTeamBuilding();
+                result = new ShopAccount();
                 break;
 
             default:
-                throw new NotSupportedException($"{nameof(BillTypeJsonConverter)} can't convert to activity, no matching type defined for enum value {type} in {nameof(BillType)}");
+                throw new NotSupportedException($"{nameof(AccountJsonConverter)} can't convert to activity, no matching type defined for enum value {type} in {nameof(AccountType)}");
         }
         
         serializer.Populate(jToken.CreateReader(), result);

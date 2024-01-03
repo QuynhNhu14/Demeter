@@ -6,7 +6,7 @@ namespace Demeter.Domain;
 [JsonConverter(typeof(AccountJsonConverter))]
 public class Account: BaseEntity<Guid>
 {
-    private const AccountType Type = AccountType.Undefined;
+    public AccountType Type = AccountType.Undefined;
 
     protected Account()
     {
