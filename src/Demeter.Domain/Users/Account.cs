@@ -1,5 +1,9 @@
+using System.Text.Json.Serialization;
+using Demeter.Domain.JsonConverter;
+
 namespace Demeter.Domain;
 
+[JsonConverter(typeof(AccountJsonConverter))]
 public class Account: BaseEntity<Guid>
 {
     private const AccountType Type = AccountType.Undefined;
