@@ -1,4 +1,4 @@
-import { OrderItem } from "./order";
+import { OrderItem } from "./orders";
 
 export interface Account {
   id: string;
@@ -23,4 +23,12 @@ export interface Address {
   locality?: string;
   region?: string;
   postcode?: string;
+}
+
+export interface ShopAccount {
+  id: string;
+  name?: string;
+  password?: string;
+  user: User;
+  type: number
 }

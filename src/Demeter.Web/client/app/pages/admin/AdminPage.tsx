@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import { Account } from "../../models/user";
-import { getAcount } from "../../services/auth";
+import { Account } from "../../models/users";
+import { getAcount } from "../../services/users";
 
 export default function AdminPage() {
   const [account, setAccount] = useState<Account | null>(null);

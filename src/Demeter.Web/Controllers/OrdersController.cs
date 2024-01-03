@@ -49,7 +49,7 @@ public class OrdersController: ControllerBase
         }
     }
 
-    [HttpGet("order/items")]
+    [HttpGet("items")]
     public async ValueTask<IActionResult> GetOrderItems()
     {
         try
@@ -135,7 +135,7 @@ public class OrdersController: ControllerBase
         }
     }
 
-    [HttpDelete("order/items")]
+    [HttpDelete("items")]
     public async ValueTask<IActionResult> DeleteOrderItemsAsync([Required] string id)
     {
         try
