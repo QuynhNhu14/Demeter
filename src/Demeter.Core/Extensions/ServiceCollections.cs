@@ -12,18 +12,18 @@ public static class ServiceCollections
     {
         // Configure and register your core services here
         // services.AddTransient<IMyService, MyService>();
-        services.AddTransient<IAppSettingsService, AppSettingsService>();
+        services.AddScoped<IAppSettingsService, AppSettingsService>();
         
-        services.AddTransient<IOrderItemService, OrderItemService>();
-        services.AddTransient<IOrdersService, OrdersService>();
-        services.AddTransient<IVoucherService, VoucherService>();
+        services.AddScoped<IOrderItemService, OrderItemService>();
+        services.AddScoped<IOrdersService, OrdersService>();
+        services.AddScoped<IVoucherService, VoucherService>();
 
-        services.AddTransient<ICategoryService, CategoryService>();
-        services.AddTransient<IPriceService, PricesService>();
-        services.AddTransient<IProductsService, ProductsService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IPriceService, PricesService>();
+        services.AddScoped<IProductsService, ProductsService>();
 
-        services.AddTransient<IAccountService, AccountService>();
-        services.AddTransient<IUsersService, UsersService>();
+        services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IUsersService, UsersService>();
         
         // You can also configure services using the configuration parameter
         // var someConfigValue = configuration.GetValue<string>("SomeConfigKey");

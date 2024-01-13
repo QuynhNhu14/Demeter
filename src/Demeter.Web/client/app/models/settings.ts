@@ -1,7 +1,7 @@
 export interface AppSettings {
   id?: string
-  referenceKey?: string
-  value?: string
-  description?: string
-  type?: string
+  referenceKey?: string | null
+  value?: string | null
+  description?: string | null
+  type?: string | null
 }
