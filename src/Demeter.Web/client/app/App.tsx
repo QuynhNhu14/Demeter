@@ -8,7 +8,7 @@ import { Offer } from "./pages/Offer/Offer";
 import Navbar from "./components/Navbar/Navbar";
 import Cart from "./pages/Cart/Cart";
 import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
-import AdminPage from "./pages/admin/AdminPage";
+import AppSettingPage from "./pages/testapi/appsetting";
 import { Profile } from "./pages/Profile/Profile";
 import { ChangePassword } from "./pages/Profile/ChangePassword";
 import { Orders } from "./pages/Profile/Orders";
@@ -27,7 +27,7 @@ export default function App() {
         <Route path='/profile' element={<Profile/>} />
         <Route path='/change_password' element={<ChangePassword/>} />
         <Route path='/orders' element={<Orders/>} />
-        <Route path='/admin' element={<AdminPage />} />
+        <Route path='/appsetting' element={<AppSettingPage />} />
       </Routes>
       <Navbar />
     </div>

@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Demeter.Core.Extensions;
+using Demeter.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demeter.Core.Services.Users;
@@ -21,7 +22,19 @@ public class UsersService : IUsersService
         var entities = await _context.Users.ToListAsync();
         return _mapper.Map<IList<Domain.Users>>(entities);
     }
+
+    public async ValueTask<Domain.Users> GetById(Guid id)
+    {
+        var entity = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
+        return _mapper.Map<Domain.Users>(entity);
+    }
     
+    public async ValueTask<Domain.Users> GetById(BaseEntity<Guid> domain)
+    {
+        var entity = await _context.Users.FirstOrDefaultAsync(user => user.Id == domain.Id);
+        return _mapper.Map<Domain.Users>(entity);
+    }
+
     public async ValueTask UpdateAsync(ICollection<Domain.Users> users)
     {
         foreach (var user in users)
@@ -38,15 +51,16 @@ public class UsersService : IUsersService
         }
     }
 
-    public async ValueTask AddAsync(Domain.Users user)
+    public async ValueTask<Domain.Users> AddAsync(Domain.Users user)
     {
         if (string.IsNullOrWhiteSpace(user.FullName))
         {
             throw new ValidationException($"Invalid: {nameof(Domain.Users.FullName)} should not be empty.");
         }
             
-        _context.Users.Add(_mapper.Map<Entities.Users>(user));
+        var entity = _context.Users.Add(_mapper.Map<Entities.Users>(user)).Entity;
         await _context.SaveChangesAsync();
+        return _mapper.Map<Domain.Users>(entity);
     }
 
     public async ValueTask Remove(string id)

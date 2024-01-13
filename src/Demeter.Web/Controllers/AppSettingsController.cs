@@ -68,5 +68,23 @@ public class AppSettingsController: ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
+
+    [HttpDelete]
+    public async ValueTask<IActionResult> DeleteSettingAsync([Required] string id)
+    {
+        try
+        {
+            await _appSettingsService.Remove(id);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
     
 }

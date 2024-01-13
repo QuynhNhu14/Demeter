@@ -26,9 +26,7 @@ public static class DependencyInjection
     services.AddDbContext<CoreDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString(Constant.PersistenceDb),
         b => b.MigrationsAssembly(typeof(CoreDbContext).Assembly.FullName)), ServiceLifetime.Transient);
-
-    Console.WriteLine(configuration.GetConnectionString(Constant.PersistenceDb));
-
+    
     services.AddScoped<ICoreDbContext>(provider => provider.GetService<CoreDbContext>());
     return services;
   }

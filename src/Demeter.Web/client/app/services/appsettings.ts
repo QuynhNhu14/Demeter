@@ -29,7 +29,7 @@ export async function createSettings(setting: AppSettings) {
   }
 }
 
-export async function updateSettings(setting: AppSettings) {
+export async function updateSettings(setting: AppSettings[]) {
   const url = `${baseUrl}/update`;
   try {
     await axios.post(url, setting);
@@ -40,4 +40,18 @@ export async function updateSettings(setting: AppSettings) {
       console.error("Error: ", error);
     }
   }
+}
+
+export async function deleteSettings(id:string) {
+  const url = `${baseUrl}/delete`;
+  try {
+    await axios.delete(url, {data: {id}});
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
+    }
+  }
+  
 }

@@ -2,5 +2,5 @@ namespace Demeter.Domain;
 
 public class ShopAccount: Account
 {
-    public AccountType Type { get; } = AccountType.Shop;
+    public new AccountType Type => AccountType.Shop;
 }

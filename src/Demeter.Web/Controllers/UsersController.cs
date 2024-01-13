@@ -4,7 +4,8 @@ using Demeter.Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demeter.Web.Controllers;
-
+[ApiController]
+[Route("api/users")]
 public class UsersController: ControllerBase
 {
     private readonly ILogger<UsersController> _logger;
@@ -31,8 +32,22 @@ public class UsersController: ControllerBase
         }
     }
 
+    [HttpPost("update")]
+    public async ValueTask<IActionResult> UpdateUser(ICollection<Users> users)
+    {
+        try
+        {
+            await _usersService.UpdateAsync(users);
+            return Ok();
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
     [HttpGet("account")]
-    public async ValueTask<IActionResult> GetAccounts()
+    public async ValueTask<IActionResult> GetAllAccounts()
     {
         try
         {
@@ -45,60 +60,25 @@ public class UsersController: ControllerBase
         }
     }
 
-    [HttpPost]
-    public async ValueTask<IActionResult> AddNewUserAsync([FromBody] Users user)
+    [HttpPost("signup")]
+    public async ValueTask<IActionResult> Signup([FromBody] Account account)
     {
         try
         {
-            await _usersService.AddAsync(user);
-            return Ok();
+            var result = await _accountService.AddAsync(account);
+            return Ok(result);
         }
         catch (ValidationException ex)
         {
             return BadRequest(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
-
-    [HttpPost("account")]
-    public async ValueTask<IActionResult> AddNewAccountAsync([FromBody] Domain.Account account)
-    {
-        try
-        {
-            await _accountService.AddAsync(account);
-            return Ok();
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
-
-    [HttpDelete]
-    public async ValueTask<IActionResult> DeleteUserAsync([Required] string id)
-    {
-        try
-        {
-            await _usersService.Remove(id);
-            return Ok();
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
-
+    
     [HttpDelete("account")]
     public async ValueTask<IActionResult> DeleteAccountAsync([Required] string id)
     {
@@ -117,5 +97,37 @@ public class UsersController: ControllerBase
         }
     }
 
-    
+    [HttpPost("login")]
+    public async ValueTask<IActionResult> Login([Required] AccountRead account)
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPost("logout")]
+    public async ValueTask<IActionResult> Logout()
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
 }
