@@ -60,8 +60,8 @@ public class UsersController: ControllerBase
         }
     }
 
-    [HttpPost("account")]
-    public async ValueTask<IActionResult> AddNewAccountAsync([FromBody] Domain.Account account)
+    [HttpPost("signup")]
+    public async ValueTask<IActionResult> Signup([FromBody] Account account)
     {
         try
         {
@@ -97,5 +97,37 @@ public class UsersController: ControllerBase
         }
     }
 
-    
+    [HttpPost("login")]
+    public async ValueTask<IActionResult> Login([Required] AccountRead account)
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPost("logout")]
+    public async ValueTask<IActionResult> Logout()
+    {
+        try
+        {
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
 }

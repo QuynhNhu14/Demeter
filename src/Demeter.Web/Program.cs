@@ -25,7 +25,7 @@ builder.Services.AddCors(options =>
 
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddUserSessionContext(builder.Configuration);
+// builder.Services.AddUserSessionContext(builder.Configuration);
 builder.Services.AddCoreServices();
 
 builder.Services.AddControllers().AddNewtonsoftJson();

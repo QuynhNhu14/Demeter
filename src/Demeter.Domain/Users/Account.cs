@@ -14,3 +14,9 @@ public class Account: BaseEntity<Guid>
     public Users User { get; set; }
     public List<OrderItem> Carts { get; set; } = new();
 }
+
+public class AccountRead
+{
+    public string Name { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty; 
+}
