@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "./CategoryList.css";
 import { ConfigProvider, MenuProps } from 'antd';
 import { Menu } from 'antd';
@@ -7,6 +7,7 @@ import { IoFishOutline } from "react-icons/io5";
 import { VscCoffee } from "react-icons/vsc";
 
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import axios from 'axios';
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
@@ -25,31 +26,20 @@ function getItem(
     } as MenuItem;
   }
   
-  const items: MenuItem[] = [
-    getItem('Fruits & Vegetables', 'sub1', <CiApple size={22}/>
-    , [
-      getItem('Fruits', '1'),
-      getItem('Vegetables', '2'),
-    ]),
-    getItem('Meat & Fish', 'sub2', <IoFishOutline size={20}/>
-    , [
-      getItem('Fresh Fish', '3'),
-      getItem('Meat', '4'),
-    ]),
-    getItem('Snacks', 'sub3', <VscCoffee size={20}/>, [
-      getItem('Nuts & Biscuits', '5'),
-      getItem('Chocolates', '6'),
-      getItem('Crisps', '7'),
-      getItem('Noodles & Pasta', '8'),
-      getItem('Sauce', '9'),
-      getItem('Soup', '10'),
-    ]),
-  ];
+
 // submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+type CategoryDataType = {
+  id: number;
+  name: string;
+  description: string;
+  baseCategory: CategoryDataType;
+}
 
-export const CategoryList: React.FC = () => {
+export const CategoryList = () => {
     const [openKeys, setOpenKeys] = useState(['sub1']);
+    const [category, setCategory] = useState<CategoryDataType[]>([]);
+    const [items, setItems] = useState<MenuItem[]>([]);
 
     const onOpenChange: MenuProps['onOpenChange'] = (keys) => {
       const latestOpenKey = keys.find((key) => openKeys.indexOf(key) === -1);
@@ -59,6 +49,56 @@ export const CategoryList: React.FC = () => {
         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
       }
     };
+    const url = 'http://localhost:5029/api/products/categories';
+
+    useEffect(() => {
+      let isMounted = true; // Biến cờ để kiểm tra xem component đã được mount hay chưa
+    
+      axios
+        .get(url)
+        .then((response: { data: CategoryDataType[] }) => {
+          if (isMounted) {
+            // Kiểm tra nếu component vẫn còn được mount, thì mới cập nhật state
+            setCategory(response.data);
+          }
+        })
+        .catch((error: any) => {
+          // console.log(error);
+        });
+    
+      return () => {
+        isMounted = false; // Khi component bị unmount, cập nhật biến cờ thành false
+      };
+    }, []);
+
+    useEffect(() => {
+      category.map((item) => {
+        if(item.baseCategory === null) {
+
+          const childItems = category.filter((childItem) => childItem.baseCategory && childItem.baseCategory.id === item.id);
+          console.log(childItems);
+          if(childItems.length > 0){
+            setItems((prevItems) => [
+              ...prevItems,
+              {
+                label: item.name,
+                key: item.id,
+                children: childItems.map((childItem) => ({ label: childItem.name, key: childItem.id }))   
+              }
+            ])
+          }
+          else{
+            setItems((prevItems) => [
+              ...prevItems,
+              {
+                label: item.name,
+                key: item.id,
+              }
+            ])
+          }
+        }
+      });
+    }, [category]);
     return (
         <div className="CategoryList">
           <ConfigProvider

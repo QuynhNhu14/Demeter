@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <NavLink to="/home" className={styles['navbar--link']}>Logo</NavLink>
+      <NavLink to="/home" className={styles['navbar--link']}>Demeter</NavLink>
       <ConfigProvider
         theme={{
           token: {
@@ -74,7 +74,7 @@ const Navbar: React.FC = () => {
         }}
       >
         <Search
-          placeholder="Search your products from here"
+          placeholder="Tìm kiếm sản phẩm của bạn ở đây"
           enterButton="Search"
           onSearch={handleSearch}
           onChange={handleChange}
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>Please enter a search term.</p>
+          <p>Tìm kiếm sản phẩm của bạn ở đây</p>
         </Modal>
         <Modal
           title="No Data Found"
@@ -100,20 +100,20 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>No data found for the entered search term.</p>
+          <p>Không tìm thấy sản phẩm</p>
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <NavLink to="/shops" className={styles['navbar--link']}>Shops</NavLink>
-        <NavLink to="/offer" className={styles['navbar--link']}>Offer</NavLink>
-        <div>FAQ</div>
-        <div>Contact</div>
+        <NavLink to="/shops" className={styles['navbar--link']}>Cửa hàng</NavLink>
+        <NavLink to="/offer" className={styles['navbar--link']}>Mã giảm giá</NavLink>
+        <div>Câu hỏi thường gặp</div>
+        <div>Liên hệ</div>
       </div>
       <div className={styles['itemlist']}>
           <NavLink to="/cart" className={styles['navbar--link']}>
             <ShoppingCartOutlined style={{ fontSize: '18px', color: '#144832' }} />
           </NavLink>
-          <NavLink to="/login" className={styles['navbar--link']}>
+          <NavLink to="/profile" className={styles['navbar--link']}>
             <UserOutlined style={{ fontSize: '18px', color: '#144832' }} />
           </NavLink>
       </div>

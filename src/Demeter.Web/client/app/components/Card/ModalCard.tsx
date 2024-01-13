@@ -5,23 +5,24 @@ import { ProductDetail } from "../../pages/ProductDetail/ProductDetail";
 import "./Card.css";
 import * as React from "react";
 import cardImg from "../../../assets/apple.png";
+import { StarFilled } from "@ant-design/icons";
 
 const ItemDetail={
     productId: "1",
-    productName: "Apples",
-    unit: "1lb",
-    description: "An apple is a sweet, edible fruit produced by an apple tree (Malus domestica). Apple trees are ... The skin of ripe apples is generally red, yellow, green, pink, or russetted, though many bi- or tri-colored cultivars may be found.",
-    price: "2.00",
-    salePrice: "1.60",
+    productName: "Cà rốt",
+    unit: "1kg",
+    description: "Cà rốt là một loại rau quả được yêu thích với vị ngọt tự nhiên và màu sắc tươi sáng. Với hàm lượng chất xơ cao, vitamin A và các chất chống oxy hóa, cà rốt không chỉ mang lại lợi ích cho sức khỏe mà còn là nguyên liệu tuyệt vời cho các món ăn chế biến và nấu nướng.",
+    price: "20.000 đ",
+    salePrice: "16.000 đ",
     discountPercent: "20%",
-    available: "18 pieces",
-    categories: ["fruits & vegetables", "fruits"],
-    seller: "Grocery Shop",
+    available: "18 sản phẩm",
+    categories: ["Trái cây & Rau củ", "Rau củ"],
+    seller: "Cửa hàng nông sản",
     rate: {rating: 4.67, ratingStar: [2, 1, 0, 0, 0], ratingNumber: 3},
-    image: ["https://5.imimg.com/data5/AK/RA/MY-68428614/apple-500x500.jpg",
-    "https://post.healthline.com/wp-content/uploads/2020/09/health-benefits-of-apples-732x549-thumbnail-732x549.jpg", 
-    "https://assets.woolworths.com.au/images/2010/155003.jpg?impolicy=wowcdxwbjbx&w=900&h=900", 
-    "https://minchinburyfruitmarket.com.au/content/images/thumbs/0000570_apple-red-delicious-lge_400.jpeg"],
+    image: ["https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/1200/324455921873985536/2021/8/10/ava-carot-1628613142139653627209-20-0-660-1024-crop-1628613159334685556069.jpg", 
+    "https://hips.hearstapps.com/hmg-prod/images/carrots-royalty-free-image-1684505309.jpg?crop=0.68723xw:1xh;center,top&resize=640:*", 
+    "https://static-images.vnncdn.net/files/publish/2022/10/31/mua-ca-rot-nen-chon-cu-sam-mau-hay-nhat-mau-nguoi-trong-nhac-nho-5-meo-04fd1ee0880744f98a3b3677dffba535.jpg"],
 }
 
 type CardProps = {
@@ -56,24 +57,27 @@ export const CardWithModal: React.FC<CardProps> = ({productId}) => {
     return (
         <Flex className="ProductCard" vertical >
             <div className="ProductCard--Image"  onClick={showModal}>
-                {ItemDetail.discountPercent && <Tag color="#009f7f">{ItemDetail.discountPercent}</Tag>}
+                {ItemDetail.discountPercent && <Tag color="#009f7f">- {ItemDetail.discountPercent}</Tag>}
                 <img src={cardImg} alt="product image"/>
             </div>
-            <Flex vertical gap="small" align="flex-start" style={{ padding: '20px'}}>
+            <Flex vertical gap="middle" align="flex-start" style={{ padding: '20px', width: '100%'}}>
                 {
                     ItemDetail.salePrice ? 
-                    <Flex gap="small" align="center">
-                        <span style={{ fontWeight: '600', fontSize: '18px'}}>${ItemDetail.salePrice}</span>
-                        <span style={{ textDecoration: 'line-through', opacity: '0.5', fontSize: '14px'}} > ${ItemDetail.price}</span>
-                    </Flex>
-                    : <span style={{ fontWeight: '600', fontSize: '20px'}}>${ItemDetail.price}</span>
+                    <div className="ProductCard--price">
+                        <Flex gap="small" align="center">
+                        <span style={{ fontWeight: '500', fontSize: '18px'}}>{ItemDetail.salePrice}</span>
+                        <span style={{ textDecoration: 'line-through', opacity: '0.5', fontSize: '14px'}} > {ItemDetail.price}</span>
+                        </Flex>
+                        <Tag color="#F9C127" style={{ marginRight: '0'}}>{ItemDetail.rate.rating} <StarFilled /></Tag>
+                    </div>
+                    : <span style={{ fontWeight: '600', fontSize: '20px'}}>{ItemDetail.price}</span>
                 }
                 <span style={{ opacity: '0.8', fontSize: '16px'}}>{ItemDetail.productName}</span>
                 {
                     quantity === 0 ?
                     <button className="ProductCard--button" onClick={handleAddProduct}>
                         <span className="ProductCard--button__add">
-                            Add
+                            Thêm vào giỏ
                         </span>
                         <span className="ProductCard--button__addIcon">
                             +

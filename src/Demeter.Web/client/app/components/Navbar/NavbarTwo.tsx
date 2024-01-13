@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>Please enter a search term.</p>
+          <p>Tìm kiếm sản phẩm của bạn ở đây</p>
         </Modal>
         <Modal
           title="No Data Found"
@@ -99,21 +99,21 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>No data found for the entered search term.</p>
+          <p>Không tìm thấy sản phẩm</p>
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <NavLink to="/shops" className="ProductTitle">Shops</NavLink>
-        <div>Offer</div>
-        <div>FAQ</div>
-        <div>Contact</div>
+        <NavLink to="/shops" className="ProductTitle">Cửa hàng</NavLink>
+        <div>Mã giảm giá</div>
+        <div>Câu hỏi thường gặp</div>
+        <div>Liên hệ</div>
       </div>
       <div className={styles['itemlist']}>
         <li>
-            <Button type="primary">Sign in</Button>
+            <Button type="primary">Đăng nhập</Button>
         </li>
         <li>
-            <Button type="primary">Sign up</Button>
+            <Button type="primary">Đăng ký</Button>
         </li>
       </div>
     </nav>

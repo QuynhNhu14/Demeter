@@ -113,3 +113,9 @@
   justify-content: center;
   background-color: var(--primary-color);
 }
+
+.ProductCard--price {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

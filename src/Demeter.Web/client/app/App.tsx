@@ -9,6 +9,9 @@ import Navbar from "./components/Navbar/Navbar";
 import Cart from "./pages/Cart/Cart";
 import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
 import AdminPage from "./pages/admin/AdminPage";
+import { Profile } from "./pages/Profile/Profile";
+import { ChangePassword } from "./pages/Profile/ChangePassword";
+import { Orders } from "./pages/Profile/Orders";
 
 export default function App() {
   return (
@@ -21,6 +24,9 @@ export default function App() {
         <Route path='/shops' element={<Shops/>} />
         <Route path='/offer' element={<Offer/>} />
         <Route path='/cart' element={<Cart/>} />
+        <Route path='/profile' element={<Profile/>} />
+        <Route path='/change_password' element={<ChangePassword/>} />
+        <Route path='/orders' element={<Orders/>} />
         <Route path='/admin' element={<AdminPage />} />
       </Routes>
       <Navbar />
