@@ -59,13 +59,13 @@ public class ProductsService : IProductsService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Domain.Products product)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Products.ToListAsync();
-        var result = entities.Find(t => t.Name == product.Name);
+        var result = entities.Find(t => t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {product.Name} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Products.Remove(result);

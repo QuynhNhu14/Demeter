@@ -38,8 +38,8 @@ public class AppSettingsController: ControllerBase
     {
         try
         {
-            await _appSettingsService.AddAsync(setting);
-            return Ok();
+            var result = await _appSettingsService.AddAsync(setting);
+            return Ok(result);
         }
         catch (ValidationException ex)
         {
@@ -57,6 +57,24 @@ public class AppSettingsController: ControllerBase
         try
         {
             await _appSettingsService.UpdateAsync(settings);
+            return Ok();
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpDelete]
+    public async ValueTask<IActionResult> DeleteSettingAsync([Required] string id)
+    {
+        try
+        {
+            await _appSettingsService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)

@@ -9,6 +9,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json");
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+// Add services to the container.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: myAllowSpecificOrigins,
@@ -21,13 +23,12 @@ builder.Services.AddCors(options =>
         });
 });
 
-// Add services to the container.
-
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddUserSessionContext(builder.Configuration);
 builder.Services.AddCoreServices();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -46,7 +47,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader()
-    .SetIsOriginAllowed(origin => true) // allow any origin
+    .SetIsOriginAllowed(_ => true) // allow any origin
     //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
     .AllowCredentials()); // allow credentials
 

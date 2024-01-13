@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Demeter.Core.Extensions;
+using Demeter.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Demeter.Core.Services.Users;
@@ -16,22 +17,27 @@ public class AccountService : IAccountService
         _mapper = mapper;
     }
 
-    public async ValueTask<ICollection<Domain.Account>> GetAllAsync()
+    private bool ValidUser(Account account)
     {
-        var entities = await _context.Accounts.ToListAsync();
-        return _mapper.Map<IList<Domain.Account>>(entities);
+        return !_context.Users.Any(user => user.Id == account.User.Id);
     }
 
-    public async ValueTask<ICollection<Domain.Account>> GetByName(string name)
+    public async ValueTask<ICollection<Account>> GetAllAsync()
+    {
+        var entities = await _context.Accounts.ToListAsync();
+        return _mapper.Map<IList<Account>>(entities);
+    }
+
+    public async ValueTask<ICollection<Account>> GetByName(string name)
     {
         var entities = await _context.Accounts.ToListAsync();
         var result = entities
             .Where(t => t.Name.ToLower().Trim().Contains(name.ToLower().Trim()))
             .ToList();
-        return _mapper.Map<IList<Domain.Account>>(result);
+        return _mapper.Map<IList<Account>>(result);
     }
 
-    public async ValueTask UpdateAsync(ICollection<Domain.Account> accounts)
+    public async ValueTask UpdateAsync(ICollection<Account> accounts)
     {
         foreach (var account in accounts)
         {
@@ -43,29 +49,37 @@ public class AccountService : IAccountService
                 throw new ValidationException($"Invalid: {account.Name} is not existed.");
             }
 
-            _context.Accounts.Entry(entity).CurrentValues.SetValues(_mapper.Map<Entities.Account>(account));
+            _context.Accounts.Add(_mapper.Map<Entities.Account>(account));
             await _context.SaveChangesAsync();
         }
     }
 
-    public async ValueTask AddAsync(Domain.Account user)
+    public async ValueTask<Account> AddAsync(Account account)
     {
-        if (string.IsNullOrWhiteSpace(user.Name))
+        if (string.IsNullOrWhiteSpace(account.Name))
         {
-            throw new ValidationException($"Invalid: {nameof(Domain.Account.Name)} should not be empty.");
+            throw new ValidationException($"Invalid: {nameof(Account.Name)} should not be empty.");
+        }
+        
+        if (!ValidUser(account))
+        {
+            throw new ValidationException($"Invalid: {nameof(account.User)} is already existed!");
         }
 
-        _context.Accounts.Add(_mapper.Map<Entities.Account>(user));
+        account.User ??= new Domain.Users();
+
+        var entity = _context.Accounts.Add(_mapper.Map<Entities.Account>(account)).Entity;
         await _context.SaveChangesAsync();
+        return _mapper.Map<Account>(entity);
     }
 
-    public async ValueTask Remove(Domain.Account user)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Accounts.ToListAsync();
-        var result = entities.Find(t => t.Name == user.Name);
+        var result = entities.Find(t => t.Id.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {user.Name} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Accounts.Remove(result);

@@ -51,13 +51,13 @@ public class OrdersService : IOrdersService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask Remove(Domain.Orders order)
+    public async ValueTask Remove(string id)
     {
         var entities = await _context.Orders.ToListAsync();
-        var result = entities.Find(t => t.OrderId == order.Id);
+        var result = entities.Find(t => t.OrderId.ToString() == id);
         if (result is null)
         {
-            throw new ValidationException($"Invalid: {order.Id} is not existed.");
+            throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
         _context.Orders.Remove(result);

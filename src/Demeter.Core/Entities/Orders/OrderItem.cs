@@ -11,9 +11,9 @@ public class OrderItem
     
     [ForeignKey("Product")]
     public Guid ProductId { get; set; }
-    public virtual Products Product { get; set; }
+    public Products Product { get; set; }
     
     [ForeignKey("Order")]
     public Guid OrderId { get; set; }
-    public virtual Orders Order { get; set; }
+    public Orders Order { get; set; }
 }

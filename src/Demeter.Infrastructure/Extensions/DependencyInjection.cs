@@ -1,5 +1,6 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Persistence;
+using Demeter.Infrastructure.UserSession;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,15 +23,22 @@ public static class DependencyInjection
   public static IServiceCollection AddPersistence(this IServiceCollection services,
       IConfiguration configuration)
   {
-      
-
     services.AddDbContext<CoreDbContext>(options =>
         options.UseSqlServer(configuration.GetConnectionString(Constant.PersistenceDb),
         b => b.MigrationsAssembly(typeof(CoreDbContext).Assembly.FullName)), ServiceLifetime.Transient);
-
-    Console.WriteLine(configuration.GetConnectionString(Constant.PersistenceDb));
-
+    
     services.AddScoped<ICoreDbContext>(provider => provider.GetService<CoreDbContext>());
     return services;
+  }
+
+  public static IServiceCollection AddUserSessionContext(this IServiceCollection services, IConfiguration configuration)
+  {
+      // Retrieve Redis connection string from configuration
+      string redisConnectionString = configuration.GetConnectionString("Redis");
+
+      // Register UserSessionContext with a transient lifetime
+      services.AddTransient<UserSessionContext>(provider => new UserSessionContext(redisConnectionString));
+
+      return services;
   }
 }

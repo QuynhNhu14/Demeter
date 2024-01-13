@@ -5,7 +5,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <AssemblyName>Demeter.Domain</AssemblyName>
         <RootNamespace>Demeter.Domain</RootNamespace>
+
     </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 
 
 

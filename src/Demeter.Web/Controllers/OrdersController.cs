@@ -14,7 +14,7 @@ public class OrdersController: ControllerBase
     private readonly IVoucherService _voucherService;
     private readonly IOrderItemService _orderItemService;
     
-    public OrdersController(ILogger<AppSettingsController> logger, IOrdersService ordersService, IVoucherService voucherService, IOrderItemService orderItemService) {
+    public OrdersController(ILogger<OrdersController> logger, IOrdersService ordersService, IVoucherService voucherService, IOrderItemService orderItemService) {
         _logger = logger;
         _ordersService = ordersService;
         _voucherService = voucherService;
@@ -49,7 +49,7 @@ public class OrdersController: ControllerBase
         }
     }
 
-    [HttpGet("orderitems")]
+    [HttpGet("items")]
     public async ValueTask<IActionResult> GetOrderItems()
     {
         try
@@ -100,11 +100,11 @@ public class OrdersController: ControllerBase
     }
 
     [HttpDelete]
-    public async ValueTask<IActionResult> DeleteOrderAsync([Required] int id)
+    public async ValueTask<IActionResult> DeleteOrderAsync([Required] string id)
     {
         try
         {
-            await _ordersService.DeleteAsync(id);
+            await _ordersService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
@@ -117,12 +117,12 @@ public class OrdersController: ControllerBase
         }
     }
 
-    [HttpDelete("Voucher")]
-    public async ValueTask<IActionResult> DeleteVoucherAsync([Required] int id)
+    [HttpDelete("voucher")]
+    public async ValueTask<IActionResult> DeleteVoucherAsync([Required] string id)
     {
         try
         {
-            await _voucherService.DeleteAsync(id);
+            await _voucherService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
@@ -135,12 +135,12 @@ public class OrdersController: ControllerBase
         }
     }
 
-    [HttpDelete("OrderItems")]
-    public async ValueTask<IActionResult> DeleteOrderItemsAsync([Required] int id)
+    [HttpDelete("items")]
+    public async ValueTask<IActionResult> DeleteOrderItemsAsync([Required] string id)
     {
         try
         {
-            await _orderItemService.DeleteAsync(id);
+            await _orderItemService.Remove(id);
             return Ok();
         }
         catch (ValidationException ex)
