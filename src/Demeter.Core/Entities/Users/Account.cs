@@ -16,5 +16,6 @@ public class Account
     [ForeignKey("User")]
     public Guid UserId { get; set; }
     public virtual Users? User { get; set; }
-    // public List<OrderItem> Carts { get; set; }
+    public List<OrderItem> Carts { get; set; }
+    public string AdditionalPropertiesJson { get; set; } = string.Empty;
 }

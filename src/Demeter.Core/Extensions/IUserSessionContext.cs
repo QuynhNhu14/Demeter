@@ -1,14 +1,10 @@
+using Demeter.Domain;
+
 namespace Demeter.Core.Extensions;
 
 public interface IUserSessionContext
 {
-    string StartSession(string userId);
-
-    bool IsValidSession(string sessionId);
-
-    void UpdateSessionActivity(string sessionId);
-
-    void EndSession(string sessionId);
-
-    string GetUserId(string sessionId);
+    Task SetUserSessionAsync(AccountSession account, TimeSpan expirationTime);
+    ValueTask<AccountSession?> GetUserSessionAsync(Guid accountId);
+    Task RemoveUserSessionAsync(Guid accountId);
 }

@@ -9,32 +9,33 @@ namespace Demeter.Core.Services.Users;
 public class AccountService : IAccountService
 {
     private readonly ICoreDbContext _context;
+    private readonly IUserSessionContext _userSessionContext;
+    private readonly IAuthContext _authContext;
     private readonly IMapper _mapper;
 
-    public AccountService(ICoreDbContext context, IMapper mapper)
+    public AccountService(ICoreDbContext context, IUserSessionContext userSessionContext, IMapper mapper, IAuthContext authContext)
     {
         _context = context;
+        _userSessionContext = userSessionContext;
         _mapper = mapper;
+        _authContext = authContext;
     }
 
-    private bool ValidUser(Account account)
+    private bool IsUserExisted(Account account)
     {
-        return !_context.Users.Any(user => user.Id == account.User.Id);
+        return _context.Users.Any(user => user.Id == account.User.Id);
     }
 
     public async ValueTask<ICollection<Account>> GetAllAsync()
     {
-        var entities = await _context.Accounts.ToListAsync();
+        var entities = await _context.Accounts.Include(t => t.User).ToListAsync();
         return _mapper.Map<IList<Account>>(entities);
     }
 
-    public async ValueTask<ICollection<Account>> GetByName(string name)
+    public async ValueTask<Account> GetByIdAsync(Guid id)
     {
-        var entities = await _context.Accounts.ToListAsync();
-        var result = entities
-            .Where(t => t.Name.ToLower().Trim().Contains(name.ToLower().Trim()))
-            .ToList();
-        return _mapper.Map<IList<Account>>(result);
+        var entity = await _context.Accounts.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
+        return _mapper.Map<Account>(entity);
     }
 
     public async ValueTask UpdateAsync(ICollection<Account> accounts)
@@ -61,7 +62,7 @@ public class AccountService : IAccountService
             throw new ValidationException($"Invalid: {nameof(Account.Name)} should not be empty.");
         }
         
-        if (!ValidUser(account))
+        if (IsUserExisted(account))
         {
             throw new ValidationException($"Invalid: {nameof(account.User)} is already existed!");
         }
@@ -73,16 +74,49 @@ public class AccountService : IAccountService
         return _mapper.Map<Account>(entity);
     }
 
-    public async ValueTask Remove(string id)
+    public async ValueTask Remove(Guid id)
     {
-        var entities = await _context.Accounts.ToListAsync();
-        var result = entities.Find(t => t.Id.ToString() == id);
-        if (result is null)
+        var entity = await _context.Accounts.Include(t => t.User).Where(t=> t.Id == id).FirstOrDefaultAsync();
+        if (entity is null)
         {
             throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
-        _context.Accounts.Remove(result);
+        if (entity.User is not null)
+        {
+            _context.Users.Remove(entity.User);
+        }
+        
+        _context.Accounts.Remove(entity);
         await _context.SaveChangesAsync();
+    }
+
+    public async ValueTask<AccountSession> Login(AccountRead accountRead)
+    {
+        var entity = await _context.Accounts.Include(a => a.User).FirstOrDefaultAsync(a => a.Name == accountRead.Name && a.Password == accountRead.Password);
+        if (entity is null)
+        {
+            throw new ValidationException($"Invalid: {accountRead.Name} or {accountRead.Password} is incorrect.");
+        }
+
+        var userSessionData = new AccountSession
+        {
+            Account = _mapper.Map<Account>(entity),
+            IsAuthenticated = true,
+        };
+             
+        await _userSessionContext.SetUserSessionAsync(userSessionData, TimeSpan.FromMinutes(30));
+        await _authContext.SignInAsync(userSessionData.Account.Id);
+        return userSessionData;
+    }
+
+    public async ValueTask Logout()
+    {
+        var id = await _authContext.SignOutAsync();
+        if (!id.HasValue)
+        {
+            throw new ValidationException($"Invalid: No session found for user.");
+        }
+        await _userSessionContext.RemoveUserSessionAsync(id.Value);
     }
 }

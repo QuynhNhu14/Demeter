@@ -1,6 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Demeter.Core.Extensions;
 using Demeter.Core.Services.Users;
 using Demeter.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demeter.Web.Controllers;
@@ -12,7 +15,7 @@ public class UsersController: ControllerBase
     private readonly IUsersService _usersService;
     private readonly IAccountService _accountService;
 
-    public UsersController(ILogger<UsersController> logger, IUsersService usersService, IAccountService accountService) {
+    public UsersController(ILogger<UsersController> logger, IUsersService usersService, IAccountService accountService, IUserSessionContext userSessionContext) {
         _logger = logger;
         _usersService = usersService;
         _accountService = accountService;
@@ -72,15 +75,14 @@ public class UsersController: ControllerBase
         {
             return BadRequest(ex.Message);
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            _logger.LogError(ex.Message);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
     
     [HttpDelete("account")]
-    public async ValueTask<IActionResult> DeleteAccountAsync([Required] string id)
+    public async ValueTask<IActionResult> DeleteAccountAsync([Required] Guid id)
     {
         try
         {
@@ -102,6 +104,26 @@ public class UsersController: ControllerBase
     {
         try
         {
+            var result = await _accountService.Login(account);
+            return CreatedAtAction(nameof(Login), result);
+        }
+        catch (ValidationException ex)
+        {
+            return Unauthorized(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async ValueTask<IActionResult> Logout()
+    {
+        try
+        {
+            await _accountService.Logout();
             return Ok();
         }
         catch (ValidationException ex)
@@ -113,13 +135,20 @@ public class UsersController: ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
-
-    [HttpPost("logout")]
-    public async ValueTask<IActionResult> Logout()
+    
+    [Authorize]
+    [HttpPost("current")]
+    public async ValueTask<IActionResult> GetCurrent()
     {
         try
         {
-            return Ok();
+            var accountId = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if (accountId is null)
+            {
+                return Unauthorized("Invalid token");
+            }
+            var result = await _accountService.GetByIdAsync(Guid.Parse(accountId));
+            return CreatedAtAction(nameof(GetCurrent), result);
         }
         catch (ValidationException ex)
         {

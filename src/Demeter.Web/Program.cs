@@ -1,5 +1,6 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Extensions;
+using Demeter.Web.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,7 +26,8 @@ builder.Services.AddCors(options =>
 
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
-// builder.Services.AddUserSessionContext(builder.Configuration);
+builder.Services.AddUserSessionContext(builder.Configuration);
+builder.Services.AddAuthContext();
 builder.Services.AddCoreServices();
 
 builder.Services.AddControllers().AddNewtonsoftJson();
