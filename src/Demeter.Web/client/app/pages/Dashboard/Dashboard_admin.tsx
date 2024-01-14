@@ -3,7 +3,7 @@ import Summary_CardTwo from "../../components/Summary_Card/Summary_CardTwo";
 import SaleHistoryChart from "../../components/Table/TableChart";
 import RecentOrdersTable from "../../components/Table/TableRecentOrders";
 import styles from "./Dashboard.module.css";
-const Dashboard: React.FC = () => {
+const Dashboardadmin: React.FC = () => {
     // Code của thành phần Navbar ở đây
     return (
         <div className={styles.Dashboard}>
@@ -15,4 +15,4 @@ const Dashboard: React.FC = () => {
     );
   }
   
-  export default Dashboard;
+  export default Dashboardadmin;

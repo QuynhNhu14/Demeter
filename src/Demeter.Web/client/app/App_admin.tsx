@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App_Shop.css';
-import Navbar_Admin from "./components/Navbar_Shop/Navbar_Shop";
+import Navbar_Admins from "./components/Navbar_Shop/Navbar_admin";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { ConfigProvider, Input, Button} from "antd";
 import AllProduct from "./pages/Product_admin/AllProduct";
@@ -10,6 +10,9 @@ import { MenuFoldOutlined, MenuUnfoldOutlined, SearchOutlined } from '@ant-desig
 import Inventory from "./pages/Inventory/Inventory";
 import Orders from "./pages/Orders/Order";
 import ShopProfile from "./pages/ShopsPreview/ShopPreview";
+import Dashboardadmin from "./pages/Dashboard/Dashboard_admin";
+import AllShopTable from "./components/Table/TableAllShop";
+import AllShop from "./pages/ShopsPreview/Allshop";
 
 
 export default function App_Shop() {
@@ -51,7 +54,7 @@ export default function App_Shop() {
   return (
     <ConfigProvider theme={{ token: { colorPrimary: '#009F7F' } }}>
       <div className="AppAdmin">
-        {showNavbar && <Navbar_Admin />} {/* Hiển thị navbar nếu showNavbar là true */}
+        {showNavbar && <Navbar_Admins />} {/* Hiển thị navbar nếu showNavbar là true */}
         <div style={{ width: '100%' }}>
           <div style={{ backgroundColor: '#fff', height: '64px', display: 'flex', alignItems: 'center', borderBottom:'1px solid #E5E7EB' }}>
             {showNavbar ? (
@@ -69,12 +72,10 @@ export default function App_Shop() {
           </div>
           <div className={showNavbar ? 'content-with-navbar' : 'content-without-navbar'}>
             <Routes>
-              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/dashboard' element={<Dashboardadmin />} />
               <Route path='/allproduct' element={<AllProduct />} />
-              <Route path='/addproduct' element={<AddProduct />} />
-              <Route path='/inventory' element={<Inventory/>} />
               <Route path='/orders' element={<Orders/>} />
-              <Route path='/ShopProfile' element={<ShopProfile/>} />
+              <Route path='/Allshop' element={<AllShop/>} />
             </Routes>
           </div>
         </div>
