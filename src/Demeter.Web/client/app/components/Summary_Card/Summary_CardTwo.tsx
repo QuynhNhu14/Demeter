@@ -16,25 +16,25 @@ const Summary_CardTwo: React.FC = () => {
   const cardData: { [key: string]: CardData[] } = {
     Weekly: [
       {
-        title: 'Pending Order',
+        title: 'Đơn hàng đang chờ',
         value: 1,
         icon: <SolutionOutlined  style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(0, 148, 255)',
       },
       {
-        title: 'Processing Order',
+        title: 'Đơn hàng đang xử lý',
         value: 2,
         icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(40, 183, 255)',
       },
       {
-        title: 'Completed Order',
+        title: 'Đơn hàng hoàn thành',
         value: 1,
         icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(255, 141, 41)',
       },
       {
-        title: 'Cancelled Order',
+        title: 'Đơn hàng bị hủy',
         value: 5,
         icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(215, 230, 121)',
@@ -42,25 +42,25 @@ const Summary_CardTwo: React.FC = () => {
     ],
     Monthly: [
         {
-            title: 'Pending Order',
+            title: 'Đơn hàng đang chờ',
             value: 3,
             icon: <SolutionOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(0, 148, 255)',
           },
           {
-            title: 'Processing Order',
+            title: 'Đơn hàng đang xử lý',
             value: 4,
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
-            title: 'Completed Order',
+            title: 'Đơn hàng hoàn thành',
             value: 3,
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',
           },
           {
-            title: 'Cancelled Order',
+            title: 'Đơn hàng bị hủy',
             value: 8,
             icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(215, 230, 121)',
@@ -68,25 +68,25 @@ const Summary_CardTwo: React.FC = () => {
     ],
     Yearly: [
         {
-            title: 'Pending Order',
+            title: 'Đơn hàng đang chờ',
             value: 12,
             icon: <SolutionOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(0, 148, 255)',
           },
           {
-            title: 'Processing Order',
+            title: 'Đơn hàng đang xử lý',
             value: 14,
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
-            title: 'Completed Order',
+            title: 'Đơn hàng hoàn thành',
             value: 10,
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',
           },
           {
-            title: 'Cancelled Order',
+            title: 'Đơn hàng bị hủy',
             value: 10,
             icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px' }}/>,
             color: 'rgb(215, 230, 121)',
@@ -100,7 +100,7 @@ const Summary_CardTwo: React.FC = () => {
 
   return (
     <Card
-      title={<span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'sans-serif'}}>Order Status</span>}
+      title={<span style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'sans-serif'}}>Trạng thái đơn hàng</span>}
       bordered={false}
       extra={
         <Row gutter={[8, 8]} justify="end">

@@ -50,7 +50,7 @@ const ProductForm: React.FC = () => {
   return (
     <div style={{ padding: 20, fontFamily: 'sans-serif' }}>
         <div style={{ marginBottom: '16px' }}>
-            <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Thêm Sản Phẩm</Text>
+            <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Sửa Sản Phẩm</Text>
         </div>
         <Divider dashed />
         {/* form ảnh  */}

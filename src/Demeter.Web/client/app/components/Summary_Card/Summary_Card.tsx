@@ -12,25 +12,25 @@ interface CardData {
 const Summary_Card: React.FC = () => {
   const cardData: CardData[] = [
     {
-      title: 'Total Revenue',
+      title: 'Tổng doanh thu',
       value: 15,
       icon: <DollarOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(30, 174, 152)',
     },
     {
-      title: 'Total Order',
+      title: 'Tổng số đơn hàng',
       value: 20,
       icon: <ShoppingCartOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(134, 93, 255)',
     },
     {
-      title: 'Total Shops',
+      title: 'Tổng số cửa hàng',
       value: 10,
       icon: <ShopOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(215, 78, 255)',
     },
     {
-      title: 'Vendor',
+      title: 'Người bán',
       value: 50,
       icon: <UserOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(225, 87, 160)',
@@ -39,7 +39,7 @@ const Summary_Card: React.FC = () => {
 
   
   return (
-    <Card title={<span style={{fontSize: '20px', fontWeight: 'bold', fontFamily: 'sans-serif' }}>Summary</span>} bordered={false}>
+    <Card title={<span style={{fontSize: '20px', fontWeight: 'bold', fontFamily: 'sans-serif' }}>Bảng tổng quan</span>} bordered={false}>
       <Row gutter={[16, 16]} style={{ display: 'flex', flexWrap: 'wrap'}}>
         {cardData.map((data, index) => (
           <Col key={index} xs={24} sm={12} md={12} lg={6}>

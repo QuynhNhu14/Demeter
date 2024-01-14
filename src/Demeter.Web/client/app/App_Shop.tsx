@@ -1,13 +1,16 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import './App_admin.css';
-import Navbar_Admin from "./components/Navbar_Admin/Navbar_Admin";
+import './App_Shop.css';
+import Navbar_Admin from "./components/Navbar_Shop/Navbar_Shop";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { ConfigProvider, Input, Button} from "antd";
 import AllProduct from "./pages/Product_admin/AllProduct";
 import AddProduct from "./pages/Product_admin/AddProduct";
 import { MenuFoldOutlined, MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons'; // Import các biểu tượng từ Ant Design
 import Inventory from "./pages/Inventory/Inventory";
+import Orders from "./pages/Orders/Order";
+import ShopProfile from "./pages/ShopsPreview/ShopPreview";
+
 
 export default function App_admin() {
   const navigate = useNavigate();
@@ -70,6 +73,8 @@ export default function App_admin() {
               <Route path='/allproduct' element={<AllProduct />} />
               <Route path='/addproduct' element={<AddProduct />} />
               <Route path='/inventory' element={<Inventory/>} />
+              <Route path='/orders' element={<Orders/>} />
+              <Route path='/ShopProfile' element={<ShopProfile/>} />
             </Routes>
           </div>
         </div>
@@ -77,3 +82,5 @@ export default function App_admin() {
     </ConfigProvider>
   );
 }
+// quản lý đơn hàng, trang sửa thông tin shop)
+// Admin (3 Trang quản lý user, shop với đơn hàng)

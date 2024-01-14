@@ -24,7 +24,7 @@ const data: Order[] = [];
 for (let i = 1; i <= 30; i++) {
   const order: Order = {
     key: `${i}`,
-    trackingNumber: 100000000 + i,
+    trackingNumber: 100000 + i,
     customer: {
       name: `Customer ${i}`,
       email: `customer${i}@example.com`,
@@ -33,7 +33,7 @@ for (let i = 1; i <= 30; i++) {
     products: Math.floor(Math.random() * 5) + 1, // Random number of products (1-5)
     orderDate: `2023-12-${i < 10 ? '0' + i : i}`, // Order date from 1st to 30th
     total: Math.floor(Math.random() * 200) + 50, // Random total amount ($50-$250)
-    status: i % 2 === 0 ? 'Pending' : 'Completed', // Alternate between Pending and Completed status
+    status: i % 2 == 0 ? 'Đang xử lý' : 'Hoàn Thành', // Alternate between Đang xử lý and Completed status
   };
 
   data.push(order);
@@ -41,14 +41,14 @@ for (let i = 1; i <= 30; i++) {
 
 const columns: ColumnType<Order>[] = [
   {
-    title: 'Tracking Number',
+    title: 'Mã đơn hàng',
     dataIndex: 'trackingNumber',
     key: 'trackingNumber',
     width: 150,
     align: 'center', 
   },
   {
-    title: 'Customer',
+    title: 'Khách hàng',
     dataIndex: 'customer',
     key: 'customer',
     render: (customer) => (
@@ -62,36 +62,36 @@ const columns: ColumnType<Order>[] = [
     ),
   },
   {
-    title: 'Products',
+    title: 'Số lượng',
     dataIndex: 'products',
     key: 'products',
     align: 'center', 
   },
   {
-    title: 'Order Date',
+    title: 'Thời gian',
     dataIndex: 'orderDate',
     key: 'orderDate',
     width: 150,  
     align: 'center',  
   },
   {
-    title: 'Total',
+    title: 'Tổng tiền',
     dataIndex: 'total',
     key: 'total',
     width: 100,  
     align: 'center',  
   },
   {
-    title: 'Status',
+    title: 'Trạng thái',
     dataIndex: 'status',
     key: 'status',
     render: (status) => (
-      <Tag color={status === 'Pending' ? 'orange' : 'green'}>{status}</Tag>
+      <Tag color={status === 'Đang xử lý' ? 'orange' : 'green'}>{status}</Tag>
     ),
     align: 'center',  
   },
   {
-    title: 'Actions',
+    title: 'Hành động',
     key: 'actions',
     render: () => (
       <Space>

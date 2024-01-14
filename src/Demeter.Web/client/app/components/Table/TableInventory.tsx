@@ -66,7 +66,7 @@ const InventoryTable = () => {
       align: 'center',
     },
     {
-      title: 'Product',
+      title: 'Sản phẩm',
       dataIndex: 'productName',
       align: 'left',
       sorter: (a, b) => a.productName.localeCompare(b.productName),
@@ -78,25 +78,25 @@ const InventoryTable = () => {
       ),
     },
     {
-      title: 'Inventory',
+      title: 'Kho',
       dataIndex: 'Inventory',
       align: 'center',
     },
     {
-      title: 'Quantity',
+      title: 'Số lượng',
       dataIndex: 'quantity',
       align: 'center',
     },
     {
-      title: 'Sold Quantity',
+      title: 'Số lượng bán',
       dataIndex: 'soldQuantity',
       align: 'center',
     },
     {
-      title: 'Actions',
+      title: 'Hành động',
       dataIndex: 'actions',
       align: 'center',
-      render: () => <Button icon={<EditOutlined />} type="primary">Edit</Button>,
+      render: () => <Button icon={<EditOutlined />} type="primary">Sửa</Button>,
     },
   ];
 
@@ -112,13 +112,13 @@ const InventoryTable = () => {
   return (
     <div>
       <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Inventory</Text>
+        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Kho</Text>
         <div>
           <Search placeholder="Search products" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
-          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Filter</Button>
+          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Bộ lọc</Button>
           {filterVisible && (
             <Dropdown overlay={menu} placement="bottomCenter" visible={filterVisible}>
-              <Button style={{ marginLeft: 8 }}>Filter Options</Button>
+              <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
             </Dropdown>
           )}
         </div>

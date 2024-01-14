@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Space, Tag, Dropdown, Menu, Button, Input, Select, Image, Typography } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
+import ProductForm from '../Form/FormAddProduct';
+import ModalEditProduct from '../Form/ModalEditProduct';
 
 const { Text } = Typography;
 const { Search } = Input;
@@ -30,6 +32,7 @@ const FilterTable = () => {
     const [statusFilter, setStatusFilter] = useState('');
     const [typeFilter, setTypeFilter] = useState('');
     const [searchText, setSearchText] = useState('');
+    const [editModalVisible, setEditModalVisible] = useState(false);
 
     const handleStatusFilterChange = (value) => {
         setStatusFilter(value);
@@ -46,6 +49,11 @@ const FilterTable = () => {
       const handleSearch = (value) => {
         setSearchText(value);
       };
+
+      const handleEditClick = () => {
+        setEditModalVisible(true);
+      };
+      
 
   const menu = (
     <Menu>
@@ -77,7 +85,7 @@ const FilterTable = () => {
       align: 'center',
     },
     {
-      title: 'Product',
+      title: 'Sản phẩm',
       dataIndex: 'productName',
       align: 'left',
       sorter: (a, b) => a.productName.localeCompare(b.productName),
@@ -89,22 +97,22 @@ const FilterTable = () => {
       ),
     },
     {
-      title: 'Product Type',
+      title: 'Loại sản phẩm',
       dataIndex: 'productType',
       align: 'center',
     },
     {
-      title: 'Price/Unit',
+      title: 'Giá/Đơn vị',
       dataIndex: 'pricePerUnit',
       align: 'center',
     },
     {
-      title: 'Quantity',
+      title: 'Số lượng',
       dataIndex: 'quantity',
       align: 'center',
     },
     {
-      title: 'Status',
+      title: 'Trạng thái',
       dataIndex: 'status',
       align: 'center',
       filters: [
@@ -136,13 +144,15 @@ const FilterTable = () => {
       },
     },
     {
-      title: 'Actions',
+      title: 'Hành động',
       dataIndex: 'actions',
       align: 'center',
-      render: () => <Button icon={<EditOutlined />} type="primary">Edit</Button>,
+      render: () => (<Button icon={<EditOutlined />} type="primary" onClick={handleEditClick}>
+      Sửa
+    </Button>),
     },
   ];
-
+ 
   const filteredData = dataSource.filter(
     (item) =>
       (statusFilter ? item.status === statusFilter : true) &&
@@ -157,13 +167,13 @@ const FilterTable = () => {
   return (
     <div>
       <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>All Product</Text>
+        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Tất cả sản phẩm</Text>
         <div>
           <Search placeholder="Search products" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
-          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Filter</Button>
+          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Bộ lọc</Button>
           {filterVisible && (
             <Dropdown overlay={menu} placement="bottomCenter" visible={filterVisible}>
-              <Button style={{ marginLeft: 8 }}>Filter Options</Button>
+              <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
             </Dropdown>
           )}
         </div>
@@ -178,7 +188,13 @@ const FilterTable = () => {
                 showSizeChanger: false,
                 }}
             />
+
+
+
+
+            <ModalEditProduct visible={editModalVisible} onCancel={() => setEditModalVisible(false)} />
         </div>
+        
     </div>
   );
 };
