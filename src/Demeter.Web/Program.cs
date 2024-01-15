@@ -27,9 +27,9 @@ builder.Services.AddCors(options =>
 //Dependency Injection
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddUserSessionContext(builder.Configuration);
-builder.Services.AddAuthContext();
 builder.Services.AddCoreServices();
 
+builder.Services.AddAuthContext(builder.Configuration);
 builder.Services.AddControllers().AddNewtonsoftJson();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -55,6 +55,7 @@ app.UseCors(x => x
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

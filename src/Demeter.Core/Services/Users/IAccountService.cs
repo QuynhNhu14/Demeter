@@ -9,6 +9,4 @@ public interface IAccountService
     ValueTask<Domain.Account> GetByIdAsync(Guid id);
     ValueTask<Domain.Account> AddAsync(Domain.Account account);
     ValueTask Remove(Guid id);
-    ValueTask<AccountSession> Login(AccountRead accountRead);
-    ValueTask Logout();
 }

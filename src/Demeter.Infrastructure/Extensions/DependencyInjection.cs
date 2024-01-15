@@ -1,6 +1,7 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Persistence;
 using Demeter.Infrastructure.Sessions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

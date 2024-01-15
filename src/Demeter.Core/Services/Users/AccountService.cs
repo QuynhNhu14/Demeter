@@ -91,32 +91,7 @@ public class AccountService : IAccountService
         await _context.SaveChangesAsync();
     }
 
-    public async ValueTask<AccountSession> Login(AccountRead accountRead)
-    {
-        var entity = await _context.Accounts.Include(a => a.User).FirstOrDefaultAsync(a => a.Name == accountRead.Name && a.Password == accountRead.Password);
-        if (entity is null)
-        {
-            throw new ValidationException($"Invalid: {accountRead.Name} or {accountRead.Password} is incorrect.");
-        }
 
-        var userSessionData = new AccountSession
-        {
-            Account = _mapper.Map<Account>(entity),
-            IsAuthenticated = true,
-        };
-             
-        await _userSessionContext.SetUserSessionAsync(userSessionData, TimeSpan.FromMinutes(30));
-        await _authContext.SignInAsync(userSessionData.Account.Id);
-        return userSessionData;
-    }
 
-    public async ValueTask Logout()
-    {
-        var id = await _authContext.SignOutAsync();
-        if (!id.HasValue)
-        {
-            throw new ValidationException($"Invalid: No session found for user.");
-        }
-        await _userSessionContext.RemoveUserSessionAsync(id.Value);
-    }
+
 }
