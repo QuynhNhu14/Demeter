@@ -12,6 +12,7 @@ import AppSettingPage from "./pages/testapi/appsetting";
 import { Profile } from "./pages/Profile/Profile";
 import { ChangePassword } from "./pages/Profile/ChangePassword";
 import { Orders } from "./pages/Profile/Orders";
+import { Footer } from "./components/Footer/Footer";
 
 export default function App() {
   return (

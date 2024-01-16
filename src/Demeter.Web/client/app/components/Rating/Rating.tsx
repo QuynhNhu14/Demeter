@@ -15,7 +15,7 @@ export const Rating: React.FC<RatingProps> = (props) => {
         <Flex className="Rating">
             <Flex className="Rating--total" vertical justify="center" align="center">
                 <Tag color="#009f7f" style={{fontSize: '25px',  padding: "10px 15px", borderRadius: "30px"}}>{rating} <StarFilled /></Tag>
-                <span style={{fontSize: '16px', opacity: '0.6', paddingTop: '10px'}}>{ratingNumber} ratings</span>
+                <span style={{fontSize: '16px', opacity: '0.6', paddingTop: '10px'}}>{ratingNumber} đánh giá</span>
             
             </Flex>
             <Flex className="Rating--star" vertical justify="center" align="flex-start">

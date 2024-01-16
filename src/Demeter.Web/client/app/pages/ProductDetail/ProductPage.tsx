@@ -7,42 +7,44 @@ import { NavLink } from "react-router-dom";
 import { ArrowLeftOutlined, CheckCircleFilled, DislikeFilled, LikeFilled, StarFilled } from "@ant-design/icons";
 import { Rating } from "../../components/Rating/Rating";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { Footer } from "../../components/Footer/Footer";
 
 type ProductPageProps = {
     productId?: string
 }
 
-const ItemDetail={
+const ItemDetail=    {
     productId: "1",
-    title: "Apples",
-    unit: "1lb",
-    description: "An apple is a sweet, edible fruit produced by an apple tree (Malus domestica). Apple trees are ... The skin of ripe apples is generally red, yellow, green, pink, or russetted, though many bi- or tri-colored cultivars may be found.",
-    price: "2.00",
-    salePrice: "1.60",
-    available: "18 pieces",
-    categories: ["fruits & vegetables", "fruits"],
-    seller: "Grocery Shop",
+    productName: "Cà rốt",
+    unit: "1kg",
+    description: "Cà rốt là một loại rau quả được yêu thích với vị ngọt tự nhiên và màu sắc tươi sáng. Với hàm lượng chất xơ cao, vitamin A và các chất chống oxy hóa, cà rốt không chỉ mang lại lợi ích cho sức khỏe mà còn là nguyên liệu tuyệt vời cho các món ăn chế biến và nấu nướng.",
+    price: "20.000 đ",
+    salePrice: "16.000 đ",
+    discountPercent: "20%",
+    available: "18 sản phẩm",
+    categories: ["Trái cây & Rau củ", "Rau củ"],
+    seller: "Nông sản Demeter",
     rate: {rating: 4.67, ratingStar: [2, 1, 0, 0, 0], ratingNumber: 3},
-    image: ["https://assets.woolworths.com.au/images/2010/155003.jpg?impolicy=wowcdxwbjbx&w=900&h=900", 
-    "https://post.healthline.com/wp-content/uploads/2020/09/health-benefits-of-apples-732x549-thumbnail-732x549.jpg", 
-    "https://5.imimg.com/data5/AK/RA/MY-68428614/apple-500x500.jpg",
-     "https://minchinburyfruitmarket.com.au/content/images/thumbs/0000570_apple-red-delicious-lge_400.jpeg"]
+    image: ["https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/1200/324455921873985536/2021/8/10/ava-carot-1628613142139653627209-20-0-660-1024-crop-1628613159334685556069.jpg", 
+    "https://hips.hearstapps.com/hmg-prod/images/carrots-royalty-free-image-1684505309.jpg?crop=0.68723xw:1xh;center,top&resize=640:*", 
+    "https://static-images.vnncdn.net/files/publish/2022/10/31/mua-ca-rot-nen-chon-cu-sam-mau-hay-nhat-mau-nguoi-trong-nhac-nho-5-meo-04fd1ee0880744f98a3b3677dffba535.jpg"],
 }
 
 const reviews = [
     {
         rating: 5,
-        by: 'Customer1',
-        comment: 'Apple is wonderful. Shop owner is really nice',
-        date: 'March 18,2022',
+        by: 'Khách hàng 1 ',
+        comment: 'Cà rốt ở đây rất tươi. Tôi rất thích chúng!',
+        date: '18/03/2022',
         likes: '5',
         dislikes: '2',
     },
     {
         rating: 4,
-        by: 'Customer2',
-        comment: 'I really enjoy apple but wait long time for delivery',
-        date: 'March 25,2022',
+        by: 'Khách hàng 2 ',
+        comment: 'Tôi rất thích cà rốt của cửa hàng này nhưng giao hàng hơi lâu',
+        date: '25/03/2022',
         likes: '4',
         dislikes: '0',
     }
@@ -58,44 +60,44 @@ export const ProductPage: React.FC<ProductPageProps> = ({productId}) => {
             <div className="ProductDetail">
                 <NavLink to="/home" className="BackHomeButton">
                     <ArrowLeftOutlined />
-                    <span style={{paddingLeft: '8px'}}>Back</span>
+                    <span style={{paddingLeft: '8px'}}>Quay lại</span>
                 </NavLink>
                 <ProductDescription productInfo={ItemDetail}/>
                 <Flex className="ProductDetail--Rating" vertical gap="large">
-                    <span style={{fontWeight: "bolder", fontSize: "20px"}}>Ratings & Reviews of {ItemDetail.title}</span>
+                    <span style={{fontWeight: "bolder", fontSize: "20px"}}>Đánh giá & Nhận xét của {ItemDetail.productName}</span>
                     <Rating rate={ItemDetail.rate} />
                 </Flex> 
                 <Flex className="ProductDetail--Review" vertical>
                     <Flex className='ProductDetail--Review__title' align='center'>
                         <Flex flex='3' style={{fontWeight: "bolder", fontSize: "20px" , paddingLeft: '20px'}}>Product Reviews ({reviews.length})</Flex>
                         <Flex flex='1' align='center' justify="center" style={{borderLeft: '1px solid #e7e7e7', height: '100%', paddingLeft: '20px'}}>
-                            <span style={{opacity: 0.8}}>Sort By:</span>
+                            <span style={{opacity: 0.8}}>Lọc theo:</span>
                             <Select
                                 defaultValue="Recent"
                                 style={{ width: 200 }}
                                 bordered={false}
                                 onChange={handleChange}
                                 options={[
-                                    { value: 'Recent', label: 'Recent' },
-                                    { value: 'Ratings: Low to High', label: 'Ratings: Low to High' },
-                                    { value: 'Rating: High to Low', label: 'Rating: High to Low' },
+                                    { value: 'Recent', label: 'Gần đây' },
+                                    { value: 'Ratings: Low to High', label: 'Đánh giá: Thấp đến Cao' },
+                                    { value: 'Rating: High to Low', label: 'Đánh giá: Cao đến Thấp' },
                                 ]}
                                 />
                         </Flex>
                         <Flex flex='1' align='center' justify="center" style={{borderLeft: '1px solid #e7e7e7', height: '100%', paddingLeft: '20px'}}>
-                            <span style={{opacity: 0.8}}>Sort By:</span>
+                            <span style={{opacity: 0.8}}>Lọc theo:</span>
                             <Select
-                                defaultValue="Filter:"
+                                defaultValue="All Star"
                                 style={{ width: 200 }}
                                 bordered={false}
                                 onChange={handleChange}
                                 options={[
-                                    { value: 'All Star', label: 'All Star' },
-                                    { value: '5 Star', label: '5 Star' },
-                                    { value: '4 Star', label: '4 Star' },
-                                    { value: '3 Star', label: '3 Star' },
-                                    { value: '2 Star', label: '2 Star' },
-                                    { value: '1 Star', label: '1 Star' },
+                                    { value: 'All Star', label: 'Tất cả' },
+                                    { value: '5 Star', label: '5 Sao' },
+                                    { value: '4 Star', label: '4 Sao' },
+                                    { value: '3 Star', label: '3 Sao' },
+                                    { value: '2 Star', label: '2 Sao' },
+                                    { value: '1 Star', label: '1 Sao' },
                                 ]}
                                 />
                         </Flex>
@@ -106,11 +108,11 @@ export const ProductPage: React.FC<ProductPageProps> = ({productId}) => {
                                 <Flex className="ProductDetail--comments__left" vertical gap="small">
                                     <Tag color="#009f7f" style={{fontSize: '16px',  padding: "5px 10px", width: 'fit-content', borderRadius: '20px'}}>{review.rating} <StarFilled /></Tag>
                                     <span style={{fontSize: '12px', opacity: 0.8}}>
-                                        by {review.by}
+                                        bởi {review.by}
                                         <CheckCircleFilled />
                                     </span>
                                     <span style={{padding: '10px 0', fontSize: '16px'}}>{review.comment}</span>
-                                    <span style={{fontSize: '12px', opacity: 0.8}}>Date: {review.date}</span>
+                                    <span style={{fontSize: '12px', opacity: 0.8}}>Ngày: {review.date}</span>
                                 </Flex>
                                 <Flex className="ProductDetail--right" align="flex-end" gap="large" style={{opacity: 0.6}}>
                                     <Flex className="ProductDetail--right--icon" align="center" gap="small"><LikeFilled />{review.likes}</Flex>
@@ -120,16 +122,17 @@ export const ProductPage: React.FC<ProductPageProps> = ({productId}) => {
                             </Flex>
                         )}
                         <Flex align="center" justify="space-between">
-                            <span style={{fontSize: '12px', opacity: 0.6, padding: '20px'}}>Page 1 of 1</span>
+                            <span style={{fontSize: '12px', opacity: 0.6, padding: '20px'}}>Trang 1 trên 1</span>
                             <Pagination defaultCurrent={1} total={1} />
                         </Flex>
                     </Flex>
                 </Flex> 
                 <Flex className="ProductDetail--Related" vertical gap="large">
-                    <span style={{fontWeight: "bolder", fontSize: "20px"}}>Related Products</span>
+                    <span style={{fontWeight: "bolder", fontSize: "20px"}}>Sản phẩm tương tự</span>
                 <ProductList categoryId={"1"} />
             </Flex> 
         </div>
+        <Footer />
         </div>
     );
 }

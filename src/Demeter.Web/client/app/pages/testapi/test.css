@@ -1,9 +1,9 @@
-
-table{
-    border-collapse: collapse;
-    border-radius: 5%;
+.test table {
+  border-collapse: collapse;
+  border-radius: 5%;
 }
-th, td {
-    border: 1px solid black;
-    padding: 5px;
-  }
+.test th,
+.test td {
+  border: 1px solid black;
+  padding: 5px;
+}

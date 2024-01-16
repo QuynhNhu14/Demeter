@@ -34,10 +34,13 @@
   padding: 0 2px;
 }
 
-.navbar a {
+.navbar--link {
   padding: 0 20px;
 }
-
+.navbar--logo {
+  display: flex;
+  align-items: center;
+}
 .itemlist {
   display: flex;
   align-items: center;

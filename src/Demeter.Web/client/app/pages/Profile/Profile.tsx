@@ -6,16 +6,16 @@ import shopBanner from "../../../assets/shopBanner.png";
 import { ProductList } from "../../components/ProductList/ProductList";
 import { Route, Routes } from "react-router-dom";
 import { CustomerInfo } from "./CustomerInfo";
-import UserAdmin from "../../components/CustomerNavbar/UserNavbar";
+import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 
 export const Profile: React.FC<{shopId?: string}> = () => {
     return(
         <div className="ProfilePage">
             <Flex>
                 <Flex style={{flex: '3'}}>
-                    <UserAdmin /> 
+                    <UserNavbar /> 
                 </Flex>
-                <Flex className="Profile" vertical gap="large" style={{flex: '10', padding: '24px 24px 0 0'}}>
+                <Flex className="Profile" vertical gap="large" style={{flex: '11', padding: '24px 24px 0 0'}}>
                     <CustomerInfo />
                 </Flex>
             </Flex>

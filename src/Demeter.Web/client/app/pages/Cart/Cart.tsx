@@ -5,7 +5,8 @@ import './Cart.css';
 import "../../App.css";
 import Navbar from '../../components/Navbar/Navbar';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
-
+import logo from '../../../assets/logo.png';
+import { NavLink } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -34,72 +35,72 @@ interface Voucher {
 }
 // Đối tượng  chứa thông tin về user
 const infoData: cartinfoData = {
-  name: "Infouser",
-  address: "R3 Royal City, số 72 Nguyễn Trãi, phường Thượng Đình, quận Thanh Xuân, Hà Nội.",
-  email: "tanthenh123@gmail.com",
-  phone: "0987456365",
-  link: 'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
+  name: "Nông sản Demeter",
+  address: "Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương",
+  email: "demeter_ec@gmail.com",
+  phone: "+84 1234 56789",
+  link: logo,
 };
 
 const initialProducts: Product[] = [
   {
     id: 1,
-    name: 'Product 1',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 1',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 1,
-    shop: 'Shop A',
+    shop: 'Cửa hàng A',
     selected: false,
   },
   {
     id: 2,
-    name: 'Product 2',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 2',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 2,
-    shop: 'Shop b',
+    shop: 'Cửa hàng b',
     selected: false,
   },
   {
     id: 3,
-    name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 3,
-    shop: 'Shop c',
+    shop: 'Cửa hàng c',
     selected: false,
   },
   {
     id: 4,
-    name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 3,
-    shop: 'Shop c',
+    shop: 'Cửa hàng c',
     selected: false,
   },
   {
     id: 4,
-    name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 3,
-    shop: 'Shop c',
+    shop: 'Cửa hàng c',
     selected: false,
   },
   {
     id: 5,
-    name: 'Product 3',
-    image:'https://s3-alpha-sig.figma.com/img/58a8/2d3e/65a13ebb0f427c3cebd5e573e2ca455f?Expires=1702857600&Signature=NOkkOHPGWbjPxL3F-8Va7LeJKJuJY~JuNg18WJLCYM89OCdcZivbZpCYX6mdGaxGFWGhibjT918vh~2mP0Qvg8lTTjI~3Gm-uheipf6NS8s1eu7nxGQJk~hZi9TV0QtrndYVJJktVzqc4AIFqag9avavnZMtsXltvKWiSNZO6zyMJkQzmGTy3AcJVCDVW8c~ZV~4L6KeVa3-zTo4SU6Qt92HEQJh1Vq-yadYiIBpKR~mTpKIqdmMvAcNh6tjFvqUM6TqSZ4g2CSNxS1AuTJWJyDm~vGtz7Ea73EDLLC6PjbeaJyynjiyYvKjpCE9hNhif2CtK~7ybSw~xAHyaOqA1w__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4',
-    newPrice: 100,
-    oldPrice: 120,
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
     quantity: 3,
-    shop: 'Shop c',
+    shop: 'Cửa hàng c',
     selected: false,
   },
   // ... Add more products as needed
@@ -127,10 +128,10 @@ const Cart: React.FC = (Props) => {
   const totalSelectedValue = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity * product.newPrice : 0), 0);
 
   const totaldata: seleccartData = {
-    TOTAL: 10, // Giá trị TOTAL ban đầu của bạn
+    TOTAL: 25000, // Giá trị TOTAL ban đầu của bạn
     amount: totalSelectedQuantity, // Số lượng sản phẩm được chọn
     totalamount: totalSelectedValue, // Tổng giá trị sản phẩm được chọn
-    totalship: 10, // Giá trị totalship ban đầu của bạn
+    totalship: 25000, // Giá trị totalship ban đầu của bạn
   };
    // Hàm để tính giá trị mới của TOTAL
    const calculateTotal = (): number => {
@@ -198,31 +199,31 @@ const Cart: React.FC = (Props) => {
           <Form form={form} onFinish={handleFormSubmit} layout="vertical">
             <Row gutter={16}>
               <Col span={12}>
-                <Form.Item label="Card Number" name="cardNumber">
+                <Form.Item label="Số thẻ" name="cardNumber">
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Expiration" name="expiration">
+                <Form.Item label="Ngày hết hiệu lực" name="expiration">
                   <Input />
                 </Form.Item>
               </Col>
             </Row>
             <Row gutter={16}>
               <Col span={12}>
-                <Form.Item label="Enter Name Card" name="cardName">
+                <Form.Item label="Tên trên thẻ" name="cardName">
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="CVV Code" name="cvvCode">
+                <Form.Item label="CVV" name="cvvCode">
                   <Input />
                 </Form.Item>
               </Col>
             </Row>
             <Form.Item>
             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-                <Text strong  style={{ color: '#FFFFFF' }}>Submit</Text>
+                <Text strong  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
               </Button>
             </Form.Item>
           </Form>
@@ -238,7 +239,7 @@ const Cart: React.FC = (Props) => {
             </Form.Item>
             <Form.Item>
             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-              <Text strong  style={{ color: '#FFFFFF' }}>Submit</Text>
+              <Text strong  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
               </Button>
             </Form.Item>
           </Form>
@@ -261,15 +262,15 @@ const Cart: React.FC = (Props) => {
         <div className="horizontalSections">
           <div className="section1">
             <img src={infoData.link} alt="Your Image" className="centeredImage" />
-            <h4> {infoData.name}</h4>
+            <NavLink to='/shop-product' style={{color: '#009F7F', fontWeight: 'bolder', fontSize:'16px', textAlign:'center', padding: '10px 0'}}> {infoData.name}</NavLink>
             <Divider style={{ margin: '8px'}}/>
-            <Text strong>Address</Text>
+            <Text strong>Địa chỉ</Text>
             <Text type="secondary"> {infoData.address}</Text>
             <Divider style={{ margin: '8px'}}/>
             <Text strong>Email</Text>
             <Text type="secondary"> {infoData.email}</Text>
             <Divider style={{ margin: '8px'}}/>
-            <Text strong>Phone</Text>
+            <Text strong>SĐT</Text>
             <Text type="secondary"> {infoData.phone}</Text>
 
           </div>
@@ -279,29 +280,29 @@ const Cart: React.FC = (Props) => {
           <div className="section3">
             <div className="box">
               <div className="leftColumn">
-                <Text strong type="secondary">Total Amount:</Text>
-                <Text strong type="secondary">Amount:</Text>
-                <Text strong type="secondary">Shipping Fee:</Text>
+                <Text strong type="secondary">Giá đơn hàng:</Text>
+                <Text strong type="secondary">Số lượng:</Text>
+                <Text strong type="secondary">Phí giao hàng:</Text>
               </div>
               <div className="rightColumn">
-                <Text strong>{totaldata.totalamount} </Text>
-                <Text strong> ${totaldata.amount}</Text>
-                <Text strong> ${totaldata.totalship}</Text>
+                <Text strong>{totaldata.totalamount} VNĐ</Text>
+                <Text strong> {totaldata.amount}</Text>
+                <Text strong> {totaldata.totalship} VNĐ</Text>
               </div>
             </div>
 
             <div className="box" style={{padding: '10px 30px'}}>
               <div className="leftColumn">
-                <Text strong >TOTAL:</Text>
+                <Text strong >TỔNG CỘNG:</Text>
               </div>
               <div className="rightColumn">
-                <Text strong> ${totaldata.TOTAL}</Text>
+                <Text strong> {totaldata.TOTAL} VNĐ</Text>
               </div>
             </div>
 
-            <Text strong > Apply voucher </Text>
+            <Text strong > Áp dụng voucher </Text>
               <Button size="large" style={{ margin: '10px 0 10px 0'}} onClick={() => setIsModalVisible(true) } >
-                <Text strong style={{ color:'#009F7F' }}> Apply voucher </Text>
+                <Text strong style={{ color:'#009F7F', backgroundColor: '#fff' }}> Áp dụng voucher </Text>
               </Button>
                 <Modal
                   title="Danh sách voucher của bạn"
@@ -351,7 +352,7 @@ const Cart: React.FC = (Props) => {
                     </div>
                   </div>
                 )}
-            <Text strong> Select Payment Method </Text>
+            <Text strong> Vui lòng chọn phương thức thanh toán </Text>
             <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
               <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
                 <TabPane tab={<Radio disabled={value !== 1} value={1}><DollarOutlined /></Radio>} key="1">
@@ -366,7 +367,7 @@ const Cart: React.FC = (Props) => {
               </Tabs>
             </div>
             <Button size="large" style={{ backgroundColor:'#009F7F'}}>
-              <Text strong  style={{ color: '#FFFFFF' }}>TOTAL:${totaldata.TOTAL}</Text>
+              <Text strong  style={{ color: '#FFFFFF' }}>TỔNG CỘNG: {totaldata.TOTAL}đ</Text>
             </Button>
           </div>
         </div>

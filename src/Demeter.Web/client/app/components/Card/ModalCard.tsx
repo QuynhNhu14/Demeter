@@ -58,7 +58,7 @@ export const CardWithModal: React.FC<CardProps> = ({productId}) => {
         <Flex className="ProductCard" vertical >
             <div className="ProductCard--Image"  onClick={showModal}>
                 {ItemDetail.discountPercent && <Tag color="#009f7f">- {ItemDetail.discountPercent}</Tag>}
-                <img src={cardImg} alt="product image"/>
+                <img src={ItemDetail.image[0]} alt="product image"/>
             </div>
             <Flex vertical gap="middle" align="flex-start" style={{ padding: '20px', width: '100%'}}>
                 {

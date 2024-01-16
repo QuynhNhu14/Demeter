@@ -1,0 +1,43 @@
+/* .OrderDetail {
+  position: fixed;
+  top: 88px;
+} */
+
+.OrderDetail {
+  padding: 20px;
+}
+
+.OrderDetail--Status {
+  background-color: var(--background-gray-color);
+  padding: 20px 10px;
+}
+.OrderDetail--Progress__dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+.OrderDetail--Progress__done {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  background-color: var(--primary-color);
+  color: #fff;
+  position: absolute;
+  z-index: 1;
+}
+
+.OrderDetail--Progress__pending {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  border: 1px Dashed var(--primary-color);
+  color: var(--primary-color);
+  background-color: var(#fff);
+  position: absolute;
+  z-index: 1;
+}
+
+.OrderDetail--Progress .ant-progress {
+  margin: 0 0px;
+  border-radius: 0;
+}

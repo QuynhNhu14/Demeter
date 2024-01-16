@@ -29,7 +29,7 @@ function getItem(
     const keysToNavLink = ['1','2','3','4','5','6','7','8','9'];
     if (keysToNavLink.includes(String(key))) {
       menuItem.label = (
-        <NavLink to={to} activeClassName="active">
+        <NavLink to={to} activeClassName="active" style={{color: label === 'Đăng xuất' ? '#dc0f0f' : undefined}}>
           {label}
         </NavLink>
       );
@@ -61,7 +61,7 @@ const items: MenuProps['items'] = [
 
 ];
 
-const UserAdmin: React.FC = () => {
+const UserNavbar: React.FC = () => {
   const [selectedMenuKey, setSelectedMenuKey] = useState<string>(
     localStorage.getItem('selectedMenuKey') || '1'
   );
@@ -105,4 +105,4 @@ const UserAdmin: React.FC = () => {
   );
 };
 
-export default UserAdmin;
+export default UserNavbar;

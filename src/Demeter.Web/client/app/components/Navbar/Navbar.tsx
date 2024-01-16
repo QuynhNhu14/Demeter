@@ -4,7 +4,7 @@ import '../../App.css';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, ConfigProvider, InputProps, Modal } from 'antd';
 import { NavLink } from 'react-router-dom';
-
+import headerLogo from '../../../assets/header_logo.jpg';
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
   onSearch?: (
@@ -65,7 +65,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <NavLink to="/home" className={styles['navbar--link']}>Demeter</NavLink>
+      <NavLink to="/home" className={styles['navbar--logo']}><img src={headerLogo} style={{width: '100px', height: '20px', padding: '0 10px'}}/></NavLink>
       <ConfigProvider
         theme={{
           token: {
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
       >
         <Search
           placeholder="Tìm kiếm sản phẩm của bạn ở đây"
-          enterButton="Search"
+          enterButton="Tìm kiếm"
           onSearch={handleSearch}
           onChange={handleChange}
           value={searchValue}

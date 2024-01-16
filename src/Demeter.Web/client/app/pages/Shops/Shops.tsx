@@ -1,63 +1,64 @@
 import { Flex } from "antd";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Shops.css";
-import shopLogo from "../../../assets/shoplogo.png";
+import shopLogo from "../../../assets/logo.png";
 import { CiLocationOn } from "react-icons/ci";
+import { Footer } from "../../components/Footer/Footer";
 
 const shopList = [
     {
         id: '1',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '2',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '3',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '4',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '5',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '6',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '7',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '8',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
     {
         id: '9',
-        name: 'Grocery Shop',
+        name: 'Nông sản Demeter',
         logo: shopLogo,
-        address: '1986 Spinnaker Lane, Illinois, Freeport, 61032, USA',
+        address: 'Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương',
     },
 ]
 export const Shops = () => {
@@ -67,7 +68,7 @@ export const Shops = () => {
     return(
         <div className="ShopsPage">
             <Flex className="ShopsPage--container" vertical gap="large">
-                <span style={{fontWeight: "700", fontSize: '24px', opacity: 0.9}}>All Shops</span>
+                <span style={{fontWeight: "700", fontSize: '24px', opacity: 0.9}}>Tất cả cửa hàng</span>
                     <Flex className="ShopsPage--ListContainer" wrap="wrap" gap="middle" justify="space-between">
                 {shopList.map(shop => 
                     <div className="ShopsPage--ShopItem" onClick={handleClick}>
@@ -83,6 +84,7 @@ export const Shops = () => {
                 )}
                 </Flex>
             </Flex>
+            <Footer />
         </div>
     )
 }

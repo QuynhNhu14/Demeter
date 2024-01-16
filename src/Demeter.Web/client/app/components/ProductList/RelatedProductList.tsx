@@ -23,8 +23,6 @@ export const RelatedProductList: React.FC<RelatedProductListProps> = ({productId
             <Card productId='6'/>
             <Card productId='7'/>
             <Card productId='8'/>
-            <Card productId='9'/>
-            <Card productId='10'/>
         </Flex>
     )
 }

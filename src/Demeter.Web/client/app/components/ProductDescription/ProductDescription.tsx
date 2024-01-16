@@ -9,7 +9,7 @@ import "./ProductDescription.css";
 type ProductDescriptionProps = {
     productInfo:{
         productId: string;
-        title: string;
+        productName: string;
         unit: string;
         description: string;
         price: string;
@@ -23,7 +23,7 @@ type ProductDescriptionProps = {
 }
 
 export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => {
-    const {productInfo: {productId, title, unit, description, price, salePrice, available, categories, seller,  rate, image}} = props;
+    const {productInfo: {productId, productName, unit, description, price, salePrice, available, categories, seller,  rate, image}} = props;
     const [imageIdx, setImageIdx] = useState<number>(0);
     const [heart, setHeart] = useState<boolean>(false);
 
@@ -56,7 +56,7 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => 
             <Flex className="ProductInfo" vertical gap="large"> 
                 <Flex className="ProductInfo--Detail" vertical gap="small"> 
                     <Flex justify="space-between" align="center">
-                        <span className="ProductTitle" onClick={handleClickTitle}>{title}</span>                   
+                        <span className="ProductTitle" onClick={handleClickTitle}>{productName}</span>                   
                         <button className="heart" onClick={handleLike} ><HeartOutlined style={{ color: '#009f7f' }} /></button>
                     </Flex>
                     <Flex justify="space-between">
@@ -65,17 +65,17 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => 
                     </Flex>
                     <span>{description}</span>
                     <Flex gap="small" align="center">
-                        <span style={{ fontWeight: '600', fontSize: '30px', color: '#009f7f' }}>${salePrice}</span>
-                        <span style={{ textDecoration: 'line-through', opacity: '0.7'}} > ${price}</span>
+                        <span style={{ fontWeight: '600', fontSize: '30px', color: '#009f7f' }}>{salePrice}</span>
+                        <span style={{ textDecoration: 'line-through', opacity: '0.7'}} > {price}</span>
                     </Flex>
                     <Flex align="center" gap="large">
-                        <Button className="AddCartButton" text="Add To Shopping Cart" onClick={handleAdd} />
-                        <span style={{ fontSize: '16px', opacity: '0.7'}} >{available} available</span>
+                        <Button className="AddCartButton" text="Thêm vào giỏ hàng" onClick={handleAdd} />
+                        <span style={{ fontSize: '16px', opacity: '0.7'}} >còn lại {available}</span>
                     </Flex>
                 </Flex>
                 <Flex vertical justify="center" gap="large">
                     <Flex align="center">
-                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }} >Categories:</span>
+                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }} >Loại:</span>
                         {categories.map((category) => {
                             return(
                                 <Tag color="cyan">{category}</Tag>
@@ -83,14 +83,14 @@ export const ProductDescription: React.FC<ProductDescriptionProps> = (props) => 
                         })}
                     </Flex>
                     <Flex align="center">
-                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }}>Sellers:</span>
+                        <span style={{ fontWeight: 'bolder', marginRight: '10px' }}>Người bán:</span>
                         <NavLink to="/shop-product" style={{ color: '#009f7f', textDecoration: 'underline' }}>{seller}</NavLink>
                     </Flex>
                 </Flex>
             </Flex>
         </div>
         <Flex className="ProductDetail--Detail" vertical gap="large">
-            <span style={{fontWeight: "bolder", fontSize: "20px"}}>Details</span>
+            <span style={{fontWeight: "bolder", fontSize: "20px"}}>Chi tiết</span>
             <span>{description}</span>
         </Flex> 
     </div>
