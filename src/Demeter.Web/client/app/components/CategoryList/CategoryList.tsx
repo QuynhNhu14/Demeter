@@ -8,6 +8,7 @@ import { VscCoffee } from "react-icons/vsc";
 
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { getCategory } from '../../services/products';
 type MenuItem = Required<MenuProps>['items'][number];
 
 function getItem(
@@ -30,10 +31,10 @@ function getItem(
 // submenu keys of first level
 const rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 type CategoryDataType = {
-  id: number;
   name: string;
   description: string;
   baseCategory: CategoryDataType;
+  id: number;
 }
 
 export const CategoryList = () => {
@@ -49,27 +50,23 @@ export const CategoryList = () => {
         setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
       }
     };
-    const url = 'http://localhost:5029/api/products/categories';
 
     useEffect(() => {
       let isMounted = true; // Biến cờ để kiểm tra xem component đã được mount hay chưa
-    
-      axios
-        .get(url)
-        .then((response: { data: CategoryDataType[] }) => {
-          if (isMounted) {
-            // Kiểm tra nếu component vẫn còn được mount, thì mới cập nhật state
-            setCategory(response.data);
-          }
-        })
-        .catch((error: any) => {
-          // console.log(error);
-        });
+      async function fetchData() {
+        const category = await getCategory();
+        if (category && isMounted) {
+          setCategory(category); 
+        }
+      }
+      
+      fetchData();
     
       return () => {
         isMounted = false; // Khi component bị unmount, cập nhật biến cờ thành false
       };
     }, []);
+
 
     useEffect(() => {
       category.map((item) => {

@@ -44,7 +44,7 @@ function getItem(
   
 
   const items: MenuProps['items'] = [
-    getItem('Chính', 'grp', null, [getItem('Tổng quan', '1', <AppstoreOutlined />, undefined, undefined, 'Dashboard')], 'group'),
+    getItem('Chính', 'grp', null, [getItem('Tổng quan', '1', <AppstoreOutlined />, undefined, undefined, 'admin')], 'group'),
     getItem('Quản lý sản phẩm', 'grp', null, [
       getItem('Sản phẩm', '2', <InboxOutlined />, undefined, undefined, 'All Product'),
       getItem('Phân loại', '3', <GoldOutlined />, undefined, undefined, 'All Product'),

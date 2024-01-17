@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { HomePage } from "./pages/Home/Home";
 import { ProductPage } from "./pages/ProductDetail/ProductPage";
 import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
@@ -24,8 +24,30 @@ import ShopProfile from "./pages/ShopsPreview/ShopPreview";
 import ShopAllProduct from "./pages/Product_admin/ShopAllProduct";
 import ShopOrders from "./pages/Orders/ShopOrders";
 import App_Shop from "./pages/ShopPage/App_Shop";
+import { useEffect, useState } from "react";
 
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    if (firstRender) {
+      if (location.pathname === '/') {
+        navigate('/home');
+      }
+      setFirstRender(false);
+    }
+  }, [firstRender, navigate, location.pathname]);
+
+  useEffect(() => {
+    // Chỉ điều hướng đến '/home' nếu không phải là lần render đầu tiên
+    if (!firstRender && location.pathname !== '/home') {
+      // Nếu đường dẫn không phải là '/home' thì không thực hiện điều hướng
+      navigate(location.pathname);
+    }
+  }, [location.pathname, firstRender, navigate]);
+
 
   return (
     <div className="App">
@@ -43,13 +65,11 @@ export default function App() {
         <Route path='/appsetting' element={<AppSettingPage />} />
         <Route path='/admin' element={<Dashboardadmin />} />
         <Route path='/shop' element={<Dashboard />} />
-        <Route path='/dashboard' element={<Dashboardadmin />} />
         <Route path='/allproduct' element={<AllProduct />} />
         <Route path='/shop_allproduct' element={<ShopAllProduct />} />
         <Route path='/manage_orders' element={<AdminOrders/>} />
         <Route path='/shop_orders' element={<ShopOrders/>} />
         <Route path='/allshop' element={<AllShop/>} />
-        <Route path='/shop_dashboard' element={<Dashboard />} />
         <Route path='/addproduct' element={<AddProduct />} />
         <Route path='/inventory' element={<Inventory/>} />
         <Route path='/ShopProfile' element={<ShopProfile/>} />

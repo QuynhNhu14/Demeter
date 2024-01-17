@@ -1,7 +1,7 @@
 import React,{useState, useEffect}from 'react';
 import { AppstoreOutlined, InboxOutlined, SettingOutlined, ProfileOutlined, RollbackOutlined, ShopOutlined, GiftOutlined, StarOutlined } from '@ant-design/icons';
 import { MenuProps, Menu, Typography, ConfigProvider } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 const {Text}=Typography;
 type MenuItem = Required<MenuProps>['items'][number];
@@ -43,7 +43,7 @@ function getItem(
   
 
   const items: MenuProps['items'] = [
-    getItem('Chính', 'grp', null, [getItem('Tổng quan', '1', <AppstoreOutlined />, undefined, undefined, 'shop_dashboard')], 'group'),
+    getItem('Chính', 'grp', null, [getItem('Tổng quan', '1', <AppstoreOutlined />, undefined, undefined, 'shop')], 'group'),
   
     getItem('Quản lý sản phẩm', 'grp', null, [
   
@@ -79,6 +79,9 @@ function getItem(
   ];
 
 const Navbar_Admin: React.FC = () => {
+  const location = useLocation();
+
+
   const [selectedMenuKey, setSelectedMenuKey] = useState<string>(
     localStorage.getItem('selectedMenuKey') || '1'
   );
@@ -90,12 +93,27 @@ const Navbar_Admin: React.FC = () => {
   };
 
   useEffect(() => {
-    const menu = document.getElementsByClassName('ant-menu')[0];
-    if (menu) {
-      menu.setAttribute('data-selectedkeys', selectedMenuKey);
+    itemsLoop:
+    for (const group of items) {
+      if (group) {
+        for (const item of group.children) {
+          if (item && (`/${item.name}`.toLowerCase().replace(/\s/g, '') === location.pathname)) {
+            localStorage.setItem('selectedMenuKey', item.key.toString());
+            setSelectedMenuKey(item.key.toString());
+            break itemsLoop; // Thoát khỏi vòng lặp ngoài
+          }
+        }
+      }
     }
-  }, [selectedMenuKey]);
+  }, [location.pathname]);
 
+  console.log({selectedMenuKey});
+  // useEffect(() => {
+  //   const menu = document.getElementsByClassName('ant-menu')[0];
+  //   if (menu) {
+  //     menu.setAttribute('data-selectedkeys', selectedMenuKey);
+  //   }
+  // }, [selectedMenuKey]);
   return (
     <ConfigProvider
     theme={{
@@ -111,7 +129,7 @@ const Navbar_Admin: React.FC = () => {
         <Menu
         onClick={onClick}
         style={{ width: 256, fontWeight: '500' }}
-        defaultSelectedKeys={[localStorage.getItem('selectedMenuKey') || '1']}
+        defaultSelectedKeys={[selectedMenuKey]}
         defaultOpenKeys={['grp']}
         mode="inline"
         items={items}
