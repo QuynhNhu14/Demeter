@@ -1,7 +1,9 @@
 import React,{useState, useEffect}from 'react';
-import { AppstoreOutlined, InboxOutlined, SettingOutlined,ShopOutlined, ProfileOutlined } from '@ant-design/icons';
-import { MenuProps, Menu, Typography } from 'antd';
+import { AppstoreOutlined, InboxOutlined, SettingOutlined,ShopOutlined, ProfileOutlined, GoldOutlined, TagsOutlined, StarOutlined, UserOutlined, UsergroupAddOutlined, GiftOutlined, RollbackOutlined } from '@ant-design/icons';
+import { MenuProps, Menu, Typography, Flex, ConfigProvider } from 'antd';
 import { NavLink } from 'react-router-dom';
+import headerLogo from '../../../assets/header_logo.jpg';
+import './Navbar_Shop.css'
 const {Text}=Typography;
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -42,23 +44,26 @@ function getItem(
   
 
   const items: MenuProps['items'] = [
-    getItem('Tổng quan', 'grp', null, [getItem('Bảng điều khiển', '1', <AppstoreOutlined />, undefined, undefined, 'Dashboard')], 'group'),
-  
+    getItem('Chính', 'grp', null, [getItem('Tổng quan', '1', <AppstoreOutlined />, undefined, undefined, 'Dashboard')], 'group'),
     getItem('Quản lý sản phẩm', 'grp', null, [
-  
-      getItem('Sản phẩm', 'sub1', <InboxOutlined />, [
-        getItem('Tất cả sản phẩm', '2', undefined, undefined, undefined, 'All Product'),
-      ]),
+      getItem('Sản phẩm', '2', <InboxOutlined />, undefined, undefined, 'All Product'),
+      getItem('Phân loại', '3', <GoldOutlined />, undefined, undefined, 'All Product'),
+      getItem('Tag', '4', <TagsOutlined />, undefined, undefined, 'All Product'),
+      getItem('Review', '5', <StarOutlined />, undefined, undefined, 'All Product'),
+      getItem('Voucher', '6', <GiftOutlined />, undefined, undefined, 'All Product'),
     ], 'group'),
 
     getItem('Quản lý đơn hàng', 'grp',null, [
 
-      getItem('Đơn hàng', '3', <ProfileOutlined />, undefined, undefined, 'Orders'),
+      getItem('Đơn hàng', '7', <ProfileOutlined />, undefined, undefined, 'manage_orders'),
+      getItem('Hoàn tiền', '8', <RollbackOutlined />, undefined, undefined, 'manage_orders'),
     ], 'group'),
 
-    getItem('Quản lý cửa hàng', 'grp',null, [
+    getItem('Quản lý tài khoản', 'grp',null, [
 
-      getItem('Tất cả cửa hàng', '4', <ShopOutlined />, undefined, undefined, 'All Shop'),
+      getItem('Cửa hàng', '9', <ShopOutlined />, undefined, undefined, 'All Shop'),
+      getItem('Khách hàng', '10', <UserOutlined />, undefined, undefined, 'All Shop'),
+      getItem('Nhân viên', '11', <UsergroupAddOutlined />, undefined, undefined, 'All Shop'),
     ], 'group'),
   
     // getItem('Navigation Three', 'sub2', <SettingOutlined />, [
@@ -90,20 +95,27 @@ const Navbar_Admins: React.FC = () => {
   }, [selectedMenuKey]);
 
   return (
-    <div>
-      <div style={{display:'flex', backgroundColor:'#fff',height:'64px', borderBottom:'1px solid #E5E7EB',borderRight:'1px solid #E5E7EB'}}>
-            <h1> logo </h1>
-      </div>    
-      <Menu
-      onClick={onClick}
-      style={{ width: 256 }}
-      defaultSelectedKeys={[localStorage.getItem('selectedMenuKey') || '1']}
-      defaultOpenKeys={['grp']}
-      mode="inline"
-      items={items}
-    />
-    </div>
-    
+    <ConfigProvider
+    theme={{
+      components: {
+        Menu: {
+          itemSelectedColor: '#009F7F',
+          itemHoverColor: '#009F7F',
+        },
+      },
+    }}
+  >
+      <div className='AdminNavbar'>
+        <Menu
+        onClick={onClick}
+        style={{ width: 256 , fontWeight: '500'}}
+        defaultSelectedKeys={[localStorage.getItem('selectedMenuKey') || '1']}
+        defaultOpenKeys={['grp']}
+        mode="inline"
+        items={items}
+      />
+      </div>
+    </ConfigProvider>
   );
 };
 

@@ -75,7 +75,7 @@ export const HomePage = () => {
     <div className="Homepage">
         <div className="Homepage--container">
             <Flex className="Homepage--banner" vertical align="center" justify="center">
-              <img src={logo} alt="logo" style={{width: '150px', height: '150px'}}/>
+              <img src={logo} alt="logo" style={{width: '180px', height: '180px'}}/>
               <span style={{fontSize: '50px', fontWeight: 'bold', margin: '0 0 10px 0'}}>ĐẶT HÀNG NGAY TẠI DEMETER</span>
               <span style={{fontSize: '25px', margin: '10px 0'}}>Hãy dùng rau củ quả sạch mỗi ngày - Hàng tươi mới mỗi ngày!</span>
               <Search

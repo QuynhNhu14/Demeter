@@ -4,7 +4,7 @@ import { Card, Row, Col, Button } from 'antd';
 
 interface CardData {
   title: string;
-  value: number;
+  value: string;
   icon: React.ReactNode;
   color: string;
 }
@@ -17,25 +17,25 @@ const Summary_CardTwo: React.FC = () => {
     Weekly: [
       {
         title: 'Đơn hàng đang chờ',
-        value: 1,
+        value: '5',
         icon: <SolutionOutlined  style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(0, 148, 255)',
       },
       {
         title: 'Đơn hàng đang xử lý',
-        value: 2,
+        value: '7',
         icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(40, 183, 255)',
       },
       {
         title: 'Đơn hàng hoàn thành',
-        value: 1,
+        value: '15',
         icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(255, 141, 41)',
       },
       {
         title: 'Đơn hàng bị hủy',
-        value: 5,
+        value: '0',
         icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(215, 230, 121)',
       },
@@ -43,25 +43,25 @@ const Summary_CardTwo: React.FC = () => {
     Monthly: [
         {
             title: 'Đơn hàng đang chờ',
-            value: 3,
+            value: '7',
             icon: <SolutionOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(0, 148, 255)',
           },
           {
             title: 'Đơn hàng đang xử lý',
-            value: 4,
+            value: '9',
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
             title: 'Đơn hàng hoàn thành',
-            value: 3,
+            value: '56',
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',
           },
           {
             title: 'Đơn hàng bị hủy',
-            value: 8,
+            value: '3',
             icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(215, 230, 121)',
           },
@@ -69,25 +69,25 @@ const Summary_CardTwo: React.FC = () => {
     Yearly: [
         {
             title: 'Đơn hàng đang chờ',
-            value: 12,
+            value: '7',
             icon: <SolutionOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(0, 148, 255)',
           },
           {
             title: 'Đơn hàng đang xử lý',
-            value: 14,
+            value: '9',
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
             title: 'Đơn hàng hoàn thành',
-            value: 10,
+            value: '325',
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',
           },
           {
             title: 'Đơn hàng bị hủy',
-            value: 10,
+            value: '26',
             icon: <FileExcelOutlined style={{ fontSize: '24px', padding: '8px' }}/>,
             color: 'rgb(215, 230, 121)',
           },
@@ -124,7 +124,7 @@ const Summary_CardTwo: React.FC = () => {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                 <div style={{ marginRight: '8px',width:'40px', height:'40px', backgroundColor:'#F3F4F5',display: 'block', borderRadius: '5px' }}>{data.icon}</div>
                 <div style={{ fontSize: '16px', fontFamily: 'sans-serif', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column' }}>
-                  <div style={{ textAlign: 'right', fontWeight: 'bold' }}> {data.title} </div>
+                  <div style={{ fontSize: '15px', textAlign: 'right', fontWeight: 'bold' }}> {data.title} </div>
                   <div style={{ fontSize: '24px', fontFamily: 'sans-serif', textAlign: 'right' }}> {data.value} </div>
                 </div>
               </div>

@@ -2,18 +2,18 @@
 import styles from './Order.module.css'
 import OrdersTable from '../../components/Table/TableOrders';
 import { Flex } from 'antd';
-import AdminHeader from '../AdminPage/AdminHeader';
-import Navbar_Admins from '../../components/Navbar_Shop/Navbar_admin';
+import ShopHeader from '../ShopPage/ShopHeader';
+import Navbar_Shops from '../../components/Navbar_Shop/Navbar_shop';
 
-const AdminOrders: React.FC = () => {
+const ShopOrders: React.FC = () => {
     // Code của thành phần Navbar ở đây
     return (
         <Flex style={{backgroundColor: '#f3f4f6'}}>
         <div style={{flex: '2', width: '100%' }}>
-            <Navbar_Admins />
+            <Navbar_Shops />
         </div>
         <div style={{flex: '9', width: '100%' }}>
-            <AdminHeader />
+            <ShopHeader />
             <div className={styles.order}>
                 <OrdersTable/>
             </div>
@@ -22,4 +22,4 @@ const AdminOrders: React.FC = () => {
     );
   }
   
-  export default AdminOrders;
+  export default ShopOrders;

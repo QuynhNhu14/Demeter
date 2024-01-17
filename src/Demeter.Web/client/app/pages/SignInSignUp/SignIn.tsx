@@ -1,5 +1,8 @@
+import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
+import { Flex } from "antd";
 import { useState, ChangeEvent, FormEvent } from "react";
-
+import { NavLink } from "react-router-dom";
+import logo from '../../../assets/logo.png';
 interface SignInFormState {
   email: string;
   password: string;
@@ -36,6 +39,9 @@ const SignInForm: React.FC = () => {
   return (
     <div className="form-container sign-in-container">
       <form onSubmit={handleOnSubmit}>
+        <NavLink to="/home" style={{margin: '0'}}>
+          <img src={logo} style={{width: '80px', height:'80px'}}/>
+        </NavLink>
         <h1>Đăng nhập</h1>
         <div className="social-container">
           <a href="#" className="social">

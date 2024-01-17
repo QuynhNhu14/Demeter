@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form } from 'antd';
+import { Flex, Form } from 'antd';
 import FormAddProduct from '../../components/Form/FormAddProduct';
 import styles from './AddProduct.module.css'
+import ShopHeader from '../ShopPage/ShopHeader';
+import Navbar_Shop from '../../components/Navbar_Shop/Navbar_Shop';
 
 const AddProduct: React.FC = () => {
   const [form] = Form.useForm();
@@ -12,9 +14,17 @@ const AddProduct: React.FC = () => {
   };
 
   return (
-    <div className={styles.AddProduct}>
-      <FormAddProduct form={form} onSubmit={handleSubmit} />
-    </div>
+    <Flex style={{backgroundColor: '#f3f4f6'}}>
+      <div style={{flex: '2', width: '100%' }}>
+          <Navbar_Shop />
+      </div>
+      <div style={{flex: '9', width: '100%' }}>
+          <ShopHeader />
+          <div className={styles.AddProduct}>
+            <FormAddProduct form={form} onSubmit={handleSubmit} />
+          </div>
+      </div>
+    </Flex>
   );
 };
 

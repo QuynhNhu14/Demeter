@@ -3,7 +3,7 @@ import styles from './Navbar.module.css';
 import '../../App.css';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, ConfigProvider, InputProps, Modal } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import headerLogo from '../../../assets/header_logo.jpg';
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -27,7 +27,13 @@ const Navbar: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showNoDataModal, setShowNoDataModal] = useState(false);
+  const location = useLocation();
+  
+  const hiddenRoutes = ['/admin', '/shop', '/dashboard', '/allproduct', '/shop_allproduct', '/allshop', '/shop_orders', '/manage_orders', '/shop_dashboard', '/addproduct', '/inventory', '/shopprofile'];
 
+  const hideNavbar = hiddenRoutes.includes(location.pathname);
+
+  if (hideNavbar) {return null;}
   const handleSearch: SearchProps['onSearch'] = (value, _event, info) => {
     console.log(info?.source, value);
     if (value.trim() !== '') {
@@ -105,9 +111,9 @@ const Navbar: React.FC = () => {
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
         <NavLink to="/shops" className={styles['navbar--link']}>Cửa hàng</NavLink>
-        <NavLink to="/offer" className={styles['navbar--link']}>Mã giảm giá</NavLink>
-        <div>Câu hỏi thường gặp</div>
-        <div>Liên hệ</div>
+        <NavLink to="/shops" className={styles['navbar--link']}>Mã giảm giá</NavLink>
+        <NavLink to="/shops" className={styles['navbar--link']}>Câu hỏi thường gặp</NavLink>
+        <NavLink to="/shops" className={styles['navbar--link']}>Liên hệ</NavLink>
       </div>
       <div className={styles['itemlist']}>
           <NavLink to="/cart" className={styles['navbar--link']}>

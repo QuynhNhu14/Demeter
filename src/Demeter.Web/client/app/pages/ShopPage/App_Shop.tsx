@@ -3,13 +3,15 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import './App_Shop.css';
 import Navbar_Admin from "./components/Navbar_Shop/Navbar_Shop";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import { ConfigProvider, Input, Button} from "antd";
+import { ConfigProvider, Input, Button, Flex} from "antd";
 import AllProduct from "./pages/Product_admin/AllProduct";
 import AddProduct from "./pages/Product_admin/AddProduct";
 import { MenuFoldOutlined, MenuUnfoldOutlined, SearchOutlined } from '@ant-design/icons'; // Import các biểu tượng từ Ant Design
 import Inventory from "./pages/Inventory/Inventory";
 import Orders from "./pages/Orders/Order";
 import ShopProfile from "./pages/ShopsPreview/ShopPreview";
+import Navbar_Shop from "../../components/Navbar_Shop/Navbar_Shop";
+import ShopHeader from "../ShopPage/ShopHeader";
 
 
 export default function App_Shop() {
@@ -37,7 +39,7 @@ export default function App_Shop() {
 
   useEffect(() => {
     // Chỉ điều hướng đến '/dashboard' nếu không phải là lần render đầu tiên
-    if (!firstRender && location.pathname !== '/dashboard') {
+    if (!firstRender && location.pathname !== '/shop_dashboard') {
       // Nếu đường dẫn không phải là '/dashboard' thì không thực hiện điều hướng
       navigate(location.pathname);
     }
@@ -50,35 +52,14 @@ export default function App_Shop() {
 
   return (
     <ConfigProvider theme={{ token: { colorPrimary: '#009F7F' } }}>
-      <div className="AppAdmin">
-        {showNavbar && <Navbar_Admin />} {/* Hiển thị navbar nếu showNavbar là true */}
-        <div style={{ width: '100%' }}>
-          <div style={{ backgroundColor: '#fff', height: '64px', display: 'flex', alignItems: 'center', borderBottom:'1px solid #E5E7EB' }}>
-            {showNavbar ? (
-              <MenuFoldOutlined onClick={toggleNavbar} style={{ color: '#009f7f',paddingLeft: '10px', fontSize: '24px', cursor: 'pointer' }} />
-            ) : (
-              <MenuUnfoldOutlined onClick={toggleNavbar} style={{ color: '#009f7f',paddingLeft: '10px', fontSize: '24px', cursor: 'pointer' }} />
-            )}
-             <Input.Search
-                placeholder="Nhập từ khóa tìm kiếm"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                style={{ width: '300px', height: '35px', marginLeft: '100px' }}
-                enterButton={<Button onClick={onSearchClick} icon={<SearchOutlined />} />} // Sử dụng Button trong Input.Search
-              />
-          </div>
-          <div className={showNavbar ? 'content-with-navbar' : 'content-without-navbar'}>
-            <Routes>
-              <Route path='/dashboard' element={<Dashboard />} />
-              <Route path='/allproduct' element={<AllProduct />} />
-              <Route path='/addproduct' element={<AddProduct />} />
-              <Route path='/inventory' element={<Inventory/>} />
-              <Route path='/orders' element={<Orders/>} />
-              <Route path='/ShopProfile' element={<ShopProfile/>} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+        <Flex style={{backgroundColor: '#f3f4f6'}}>
+            <div style={{flex: '2', width: '100%' }}>
+                <Navbar_Shop />
+            </div>
+            <div style={{flex: '9', width: '100%' }}>
+                <ShopHeader />
+            </div>
+        </Flex>
     </ConfigProvider>
   );
 }

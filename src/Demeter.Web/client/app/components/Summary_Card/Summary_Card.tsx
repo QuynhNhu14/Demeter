@@ -4,7 +4,7 @@ import { Card, Row, Col, Statistic } from 'antd';
 
 interface CardData {
   title: string;
-  value: number;
+  value: string;
   icon: React.ReactNode;
   color: string;
 }
@@ -13,25 +13,25 @@ const Summary_Card: React.FC = () => {
   const cardData: CardData[] = [
     {
       title: 'Tổng doanh thu',
-      value: 15,
+      value: '235.559.500 VNĐ',
       icon: <DollarOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(30, 174, 152)',
     },
     {
       title: 'Tổng số đơn hàng',
-      value: 20,
+      value: '520',
       icon: <ShoppingCartOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(134, 93, 255)',
     },
     {
       title: 'Tổng số cửa hàng',
-      value: 10,
+      value: '52',
       icon: <ShopOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(215, 78, 255)',
     },
     {
-      title: 'Người bán',
-      value: 50,
+      title: 'Tổng số khách hàng',
+      value: '1.180',
       icon: <UserOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(225, 87, 160)',
     },
@@ -48,7 +48,7 @@ const Summary_Card: React.FC = () => {
                 <div style={{ marginRight: '8px',width:'40px', height:'40px', backgroundColor:'#F3F4F5',display: 'block', borderRadius: '5px' }}>{data.icon}</div>
                 <div style={{ fontSize: '16px', fontFamily: 'sans-serif', display: 'flex', justifyContent: 'flex-end', flexDirection: 'column' }}>
                   <div style={{ textAlign: 'right', fontWeight: 'bold' }}> {data.title} </div>
-                  <div style={{ fontSize: '24px', fontFamily: 'sans-serif', textAlign: 'right' }}> {data.value} </div>
+                  <div style={{ fontSize: '20px', fontFamily: 'sans-serif', textAlign: 'right' }}> {data.value} </div>
                 </div>
               </div>
             </div>
