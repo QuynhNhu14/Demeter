@@ -36,7 +36,7 @@ export default function AppSettingPage() {
   
   // TODO: show data in table using antd
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", padding: "10px"}}>
+    <div className="test" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", padding: "10px"}}>
       <div >
         <h1>Appsetting Page</h1>
         <div>

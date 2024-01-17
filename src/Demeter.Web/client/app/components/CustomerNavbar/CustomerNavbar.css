@@ -1,0 +1,10 @@
+.CustomerNavbar,
+.UserNavbar {
+  background-color: #fff;
+  padding: 5px;
+  position: fixed;
+  left: 24px;
+  top: 88px;
+  border-radius: 5px;
+  border: 2px solid var(--border-color);
+}

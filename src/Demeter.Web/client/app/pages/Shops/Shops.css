@@ -4,6 +4,7 @@
   border: 1px solid var(--border-color);
   width: 400px;
   height: 100px;
+  background-color: #fff;
 }
 
 .ShopsPage--ShopItem:hover {
@@ -11,5 +12,9 @@
 }
 
 .ShopsPage--container {
-  margin: 100px 140px;
+  padding: 100px 140px;
 }
+/* 
+.ShopsPage {
+  background-color: var(--background-gray-color);
+} */

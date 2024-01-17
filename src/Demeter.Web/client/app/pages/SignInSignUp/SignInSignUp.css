@@ -263,3 +263,11 @@
 .navbar {
   background-color: red;
 }
+
+.LoginPage .BackButton {
+  text-decoration: underline;
+}
+
+.LoginPage .BackButton:hover {
+  cursor: pointer;
+}

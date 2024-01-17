@@ -14,35 +14,37 @@ type ProductDetailProps = {
 const ItemDetail=[
     {
         productId: "1",
-        title: "Apples",
-        unit: "1lb",
-        description: "An apple is a sweet, edible fruit produced by an apple tree (Malus domestica). Apple trees are ... The skin of ripe apples is generally red, yellow, green, pink, or russetted, though many bi- or tri-colored cultivars may be found.",
-        price: "2.00",
-        salePrice: "1.60",
-        available: "18 pieces",
-        categories: ["fruits & vegetables", "fruits"],
-        seller: "Grocery Shop",
+        productName: "Cà rốt",
+        unit: "1kg",
+        description: "Cà rốt là một loại rau quả được yêu thích với vị ngọt tự nhiên và màu sắc tươi sáng. Với hàm lượng chất xơ cao, vitamin A và các chất chống oxy hóa, cà rốt không chỉ mang lại lợi ích cho sức khỏe mà còn là nguyên liệu tuyệt vời cho các món ăn chế biến và nấu nướng.",
+        price: "20.000 đ",
+        salePrice: "16.000 đ",
+        discountPercent: "20%",
+        available: "18 sản phẩm",
+        categories: ["Trái cây & Rau củ", "Rau củ"],
+        seller: "Nông sản Demeter",
         rate: {rating: 4.67, ratingStar: [2, 1, 0, 0, 0], ratingNumber: 3},
-        image: ["https://5.imimg.com/data5/AK/RA/MY-68428614/apple-500x500.jpg",
-        "https://post.healthline.com/wp-content/uploads/2020/09/health-benefits-of-apples-732x549-thumbnail-732x549.jpg", 
-        "https://assets.woolworths.com.au/images/2010/155003.jpg?impolicy=wowcdxwbjbx&w=900&h=900", 
-        "https://minchinburyfruitmarket.com.au/content/images/thumbs/0000570_apple-red-delicious-lge_400.jpeg"]
+        image: ["https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+        "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/1200/324455921873985536/2021/8/10/ava-carot-1628613142139653627209-20-0-660-1024-crop-1628613159334685556069.jpg", 
+        "https://hips.hearstapps.com/hmg-prod/images/carrots-royalty-free-image-1684505309.jpg?crop=0.68723xw:1xh;center,top&resize=640:*", 
+        "https://static-images.vnncdn.net/files/publish/2022/10/31/mua-ca-rot-nen-chon-cu-sam-mau-hay-nhat-mau-nguoi-trong-nhac-nho-5-meo-04fd1ee0880744f98a3b3677dffba535.jpg"],
     },
     {
-        productId: "2",
-        title: "Spinach",
-        unit: "1lb",
-        description: "An apple is a sweet, edible fruit produced by an apple tree (Malus domestica). Apple trees are ... The skin of ripe apples is generally red, yellow, green, pink, or russetted, though many bi- or tri-colored cultivars may be found.",
-        price: "2.00",
-        salePrice: "1.60",
-        available: "18 pieces",
-        categories: ["fruits & vegetables", "fruits"],
-        seller: "Grocery Shop",
+        productId: "1",
+        productName: "Cà rốt",
+        unit: "1kg",
+        description: "Cà rốt là một loại rau quả được yêu thích với vị ngọt tự nhiên và màu sắc tươi sáng. Với hàm lượng chất xơ cao, vitamin A và các chất chống oxy hóa, cà rốt không chỉ mang lại lợi ích cho sức khỏe mà còn là nguyên liệu tuyệt vời cho các món ăn chế biến và nấu nướng.",
+        price: "20.000 đ",
+        salePrice: "16.000 đ",
+        discountPercent: "20%",
+        available: "18 sản phẩm",
+        categories: ["Trái cây & Rau củ", "Rau củ"],
+        seller: "Nông sản Demeter",
         rate: {rating: 4.67, ratingStar: [2, 1, 0, 0, 0], ratingNumber: 3},
-        image: ["https://assets.woolworths.com.au/images/2010/155003.jpg?impolicy=wowcdxwbjbx&w=900&h=900", 
-        "https://post.healthline.com/wp-content/uploads/2020/09/health-benefits-of-apples-732x549-thumbnail-732x549.jpg", 
-        "https://5.imimg.com/data5/AK/RA/MY-68428614/apple-500x500.jpg",
-         "https://minchinburyfruitmarket.com.au/content/images/thumbs/0000570_apple-red-delicious-lge_400.jpeg"]
+        image: ["https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+        "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/1200/324455921873985536/2021/8/10/ava-carot-1628613142139653627209-20-0-660-1024-crop-1628613159334685556069.jpg", 
+        "https://hips.hearstapps.com/hmg-prod/images/carrots-royalty-free-image-1684505309.jpg?crop=0.68723xw:1xh;center,top&resize=640:*", 
+        "https://static-images.vnncdn.net/files/publish/2022/10/31/mua-ca-rot-nen-chon-cu-sam-mau-hay-nhat-mau-nguoi-trong-nhac-nho-5-meo-04fd1ee0880744f98a3b3677dffba535.jpg"],
     }
 ]
 
@@ -54,7 +56,7 @@ export const ProductDetail: React.FC<ProductDetailProps> = ({productId}) => {
         <div className="ProductDetail">
             <ProductDescription productInfo={ItemDetail[parseInt(selectedProduct)]}/>
             <Flex className="ProductDetail--Related" vertical gap="large">
-                <span style={{fontWeight: "bolder", fontSize: "20px"}}>Related Products</span>
+                <span style={{fontWeight: "bolder", fontSize: "20px"}}>Sản phẩm tương tự</span>
             <RelatedProductList productId={ItemDetail[parseInt(selectedProduct)].productId} />
             </Flex> 
         </div>

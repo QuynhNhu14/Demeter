@@ -3,8 +3,8 @@ import styles from './Navbar.module.css';
 import '../../App.css';
 import { ShoppingCartOutlined, UserOutlined } from '@ant-design/icons';
 import { Input, ConfigProvider, InputProps, Modal } from 'antd';
-import { NavLink } from 'react-router-dom';
-
+import { NavLink, useLocation } from 'react-router-dom';
+import headerLogo from '../../../assets/header_logo.jpg';
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
   onSearch?: (
@@ -27,7 +27,13 @@ const Navbar: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showNoDataModal, setShowNoDataModal] = useState(false);
+  const location = useLocation();
+  
+  const hiddenRoutes = ['/admin', '/shop', '/dashboard', '/allproduct', '/shop_allproduct', '/allshop', '/shop_orders', '/manage_orders', '/shop_dashboard', '/addproduct', '/inventory', '/shopprofile'];
 
+  const hideNavbar = hiddenRoutes.includes(location.pathname);
+
+  if (hideNavbar) {return null;}
   const handleSearch: SearchProps['onSearch'] = (value, _event, info) => {
     console.log(info?.source, value);
     if (value.trim() !== '') {
@@ -65,7 +71,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className={styles['navbar']}>
-      <NavLink to="/home" className={styles['navbar--link']}>Logo</NavLink>
+      <NavLink to="/home" className={styles['navbar--logo']}><img src={headerLogo} style={{width: '100px', height: '20px', padding: '0 10px'}}/></NavLink>
       <ConfigProvider
         theme={{
           token: {
@@ -74,8 +80,8 @@ const Navbar: React.FC = () => {
         }}
       >
         <Search
-          placeholder="Search your products from here"
-          enterButton="Search"
+          placeholder="Tìm kiếm sản phẩm của bạn ở đây"
+          enterButton="Tìm kiếm"
           onSearch={handleSearch}
           onChange={handleChange}
           value={searchValue}
@@ -90,7 +96,7 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>Please enter a search term.</p>
+          <p>Tìm kiếm sản phẩm của bạn ở đây</p>
         </Modal>
         <Modal
           title="No Data Found"
@@ -100,20 +106,20 @@ const Navbar: React.FC = () => {
           okText="OK"
           cancelText="Cancel"
         >
-          <p>No data found for the entered search term.</p>
+          <p>Không tìm thấy sản phẩm</p>
         </Modal>
       </ConfigProvider>
       <div className={styles['horizontal-list']}>
-        <NavLink to="/shops" className={styles['navbar--link']}>Shops</NavLink>
-        <NavLink to="/offer" className={styles['navbar--link']}>Offer</NavLink>
-        <div>FAQ</div>
-        <div>Contact</div>
+        <NavLink to="/shops" className={styles['navbar--link']}>Cửa hàng</NavLink>
+        <NavLink to="/shops" className={styles['navbar--link']}>Mã giảm giá</NavLink>
+        <NavLink to="/shops" className={styles['navbar--link']}>Câu hỏi thường gặp</NavLink>
+        <NavLink to="/shops" className={styles['navbar--link']}>Liên hệ</NavLink>
       </div>
       <div className={styles['itemlist']}>
           <NavLink to="/cart" className={styles['navbar--link']}>
             <ShoppingCartOutlined style={{ fontSize: '18px', color: '#144832' }} />
           </NavLink>
-          <NavLink to="/login" className={styles['navbar--link']}>
+          <NavLink to="/profile" className={styles['navbar--link']}>
             <UserOutlined style={{ fontSize: '18px', color: '#144832' }} />
           </NavLink>
       </div>
