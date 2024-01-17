@@ -2,5 +2,5 @@ namespace Demeter.Domain;
 
 public class CustomerAccount: Account
 {
-    public new AccountType Type => AccountType.Customer;
+    public override AccountType Type => AccountType.Customer;
 }

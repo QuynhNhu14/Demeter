@@ -1,6 +1,7 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Persistence;
-using Demeter.Infrastructure.UserSession;
+using Demeter.Infrastructure.Sessions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,12 +34,12 @@ public static class DependencyInjection
 
   public static IServiceCollection AddUserSessionContext(this IServiceCollection services, IConfiguration configuration)
   {
-      // Retrieve Redis connection string from configuration
-      string redisConnectionString = configuration.GetConnectionString("Redis");
-
-      // Register UserSessionContext with a transient lifetime
-      services.AddTransient<UserSessionContext>(provider => new UserSessionContext(redisConnectionString));
-
+      services.AddStackExchangeRedisCache(options =>
+      {
+          options.Configuration = configuration.GetConnectionString(Constant.RedisCache);
+      });
+      services.AddScoped<IUserSessionContext, UserSessionContext>();
+      // services.AddScoped<IUserSessionContext>(provider => provider.GetService<UserSessionContext>());
       return services;
   }
 }

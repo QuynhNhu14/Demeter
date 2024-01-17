@@ -36,12 +36,12 @@ public class AccountJsonConverter : JsonConverter
 
         JToken jToken = JToken.ReadFrom(reader);
         string propertyName = $"{nameof(Account.Type)}";
-        int? type = jToken.Value<int?>(propertyName);
+        int? type = (((JObject)jToken).GetValue(propertyName, StringComparison.InvariantCultureIgnoreCase) ?? jToken).Value<int?>();
 
-        if (type == null)
-        {
-            type = jToken.Value<int?>(propertyName);
-        }
+        // if (type == null)
+        // {
+        //     type = jToken.Value<int?>(propertyName);
+        // }
 
         Account result = null;
         
