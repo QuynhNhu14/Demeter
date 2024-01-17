@@ -31,6 +31,11 @@ export default function App() {
   const location = useLocation();
   const [firstRender, setFirstRender] = useState(true);
 
+  // Automatically scrolls to top whenever pathname changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   useEffect(() => {
     if (firstRender) {
       if (location.pathname === '/') {
