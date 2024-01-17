@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using Demeter.Core.Entities.Accounts;
 
 namespace Demeter.Core.Entities;
 

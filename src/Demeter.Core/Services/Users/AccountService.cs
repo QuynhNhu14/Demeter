@@ -2,96 +2,59 @@ using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Demeter.Core.Extensions;
 using Demeter.Domain;
-using Microsoft.EntityFrameworkCore;
 
 namespace Demeter.Core.Services.Users;
 
 public class AccountService : IAccountService
 {
-    private readonly ICoreDbContext _context;
-    private readonly IUserSessionContext _userSessionContext;
-    private readonly IAuthContext _authContext;
+    private readonly IAccountContext _accountContext;
     private readonly IMapper _mapper;
 
-    public AccountService(ICoreDbContext context, IUserSessionContext userSessionContext, IMapper mapper, IAuthContext authContext)
+    public AccountService(IMapper mapper, IAccountContext accountContext)
     {
-        _context = context;
-        _userSessionContext = userSessionContext;
         _mapper = mapper;
-        _authContext = authContext;
+        _accountContext = accountContext;
     }
 
-    private bool IsUserExisted(Account account)
+    public async ValueTask UpdateAsync(Account accounts)
     {
-        return _context.Users.Any(user => user.Id == account.User.Id);
-    }
-
-    public async ValueTask<ICollection<Account>> GetAllAsync()
-    {
-        var entities = await _context.Accounts.Include(t => t.User).ToListAsync();
-        return _mapper.Map<IList<Account>>(entities);
-    }
-
-    public async ValueTask<Account> GetByIdAsync(Guid id)
-    {
-        var entity = await _context.Accounts.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
-        return _mapper.Map<Account>(entity);
-    }
-
-    public async ValueTask UpdateAsync(ICollection<Account> accounts)
-    {
-        foreach (var account in accounts)
-        {
-            var entity = await _context.Accounts
-                .FirstOrDefaultAsync(s => s.Id == account.Id);
-
-            if (entity is null)
-            {
-                throw new ValidationException($"Invalid: {account.Name} is not existed.");
-            }
-
-            _context.Accounts.Add(_mapper.Map<Entities.Account>(account));
-            await _context.SaveChangesAsync();
-        }
+        await _accountContext.UpdateAsync(_mapper.Map<Entities.Accounts.Account>(accounts));
     }
 
     public async ValueTask<Account> AddAsync(Account account)
     {
-        if (string.IsNullOrWhiteSpace(account.Name))
-        {
-            throw new ValidationException($"Invalid: {nameof(Account.Name)} should not be empty.");
-        }
-        
-        if (IsUserExisted(account))
-        {
-            throw new ValidationException($"Invalid: {nameof(account.User)} is already existed!");
-        }
-
         account.User ??= new Domain.Users();
+        var result = await _accountContext.CreateAccount(_mapper.Map<Entities.Accounts.Account>(account));
 
-        var entity = _context.Accounts.Add(_mapper.Map<Entities.Account>(account)).Entity;
-        await _context.SaveChangesAsync();
-        return _mapper.Map<Account>(entity);
+        if (!result.Succeeded)
+        {
+            throw new ValidationException(result.ToString());
+        }
+        return account;
     }
 
-    public async ValueTask Remove(Guid id)
+    public async ValueTask SignInAsync(LoginInfo loginInfo)
     {
-        var entity = await _context.Accounts.Include(t => t.User).Where(t=> t.Id == id).FirstOrDefaultAsync();
-        if (entity is null)
+        var account = await _accountContext.GetByUserName(loginInfo.Name);
+        if (account is null)
         {
-            throw new ValidationException($"Invalid: {id} is not existed.");
+            throw new ValidationException("Invalid Credentials.");
         }
 
-        if (entity.User is not null)
+        var succeed = await _accountContext.CheckPassword(account, loginInfo.Password);
+        if (!succeed)
         {
-            _context.Users.Remove(entity.User);
+            throw new ValidationException("Login failed.");
         }
-        
-        _context.Accounts.Remove(entity);
-        await _context.SaveChangesAsync();
     }
 
-
-
-
+    public async ValueTask SignOutAsync(string id)
+    {
+        var account = await _accountContext.GetByIdAsync(id);
+        if (account is null)
+        {
+            throw new ValidationException("Invalid Credentials.");
+        }
+        await _accountContext.UpdateSecurityStampAsync(account);
+    }
 }

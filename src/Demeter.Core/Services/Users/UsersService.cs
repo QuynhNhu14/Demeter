@@ -17,10 +17,16 @@ public class UsersService : IUsersService
         _mapper = mapper;
     }
 
-    public async ValueTask<ICollection<Domain.Users>> GetAllAsync()
+    public async ValueTask<ICollection<Domain.Users>> GetAllUsersAsync()
     {
         var entities = await _context.Users.ToListAsync();
         return _mapper.Map<IList<Domain.Users>>(entities);
+    }
+    
+    public async ValueTask<ICollection<Account>> GetAllAccountsAsync()
+    {
+        var entities = await _context.Accounts.Include(account => account.User).ToListAsync();
+        return _mapper.Map<IList<Account>>(entities);
     }
 
     public async ValueTask<Domain.Users> GetById(Guid id)
@@ -50,29 +56,21 @@ public class UsersService : IUsersService
             await _context.SaveChangesAsync();
         }
     }
-
-    public async ValueTask<Domain.Users> AddAsync(Domain.Users user)
+    
+    public async ValueTask RemoveAsync(Guid id)
     {
-        if (string.IsNullOrWhiteSpace(user.FullName))
-        {
-            throw new ValidationException($"Invalid: {nameof(Domain.Users.FullName)} should not be empty.");
-        }
-            
-        var entity = _context.Users.Add(_mapper.Map<Entities.Users>(user)).Entity;
-        await _context.SaveChangesAsync();
-        return _mapper.Map<Domain.Users>(entity);
-    }
-
-    public async ValueTask Remove(string id)
-    {
-        var entities = await _context.Users.ToListAsync();
-        var result = entities.Find(t=> t.Id.ToString() == id);
-        if (result is null)
+        var entity = await _context.Accounts.Include(t => t.User).Where(t => t.Id == id).FirstOrDefaultAsync();
+        if (entity is null)
         {
             throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
-        _context.Users.Remove(result);
+        if (entity.User is not null)
+        {
+            _context.Users.Remove(entity.User);
+        }
+
+        _context.Accounts.Remove(entity);
         await _context.SaveChangesAsync();
     }
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Demeter.Domain;
+using Account = Demeter.Core.Entities.Accounts.Account;
 
 namespace Demeter.Core.Entities;
 
