@@ -1,4 +1,5 @@
 using Demeter.Core.Entities;
+using Demeter.Core.Entities.Accounts;
 using Demeter.Core.Extensions;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,13 @@ public class TestDbContext : DbContext, ICoreDbContext
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Orders> Orders { get; set; }
     public DbSet<Voucher> Vouchers { get; set; }
+    public DbSet<AccountClaim> AccountClaims { get; set; }
+    public DbSet<AccountLogins> AccountLogins { get; set; }
+    public DbSet<AccountTokens> AccountTokens { get; set; }
+    public DbSet<AccountRole> AccountRoles { get; set; }
+    public DbSet<RoleClaims> RoleClaims { get; set; }
+    public DbSet<Roles> Roles { get; set; }
+
     public Task<int> SaveChangesAsync()
     {
         return base.SaveChangesAsync();
