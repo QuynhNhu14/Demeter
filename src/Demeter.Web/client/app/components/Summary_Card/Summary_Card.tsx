@@ -13,8 +13,8 @@ const Summary_Card: React.FC = () => {
   const cardData: CardData[] = [
     {
       title: 'Tổng doanh thu',
-      value: '235.559.500 VNĐ',
-      icon: <DollarOutlined style={{fontSize: '24px', padding: '8px' }}/>,
+      value: '235.559.500 Đ',
+      icon: <DollarOutlined style={{fontSize: '22px', padding: '8px' }}/>,
       color: 'rgb(30, 174, 152)',
     },
     {
@@ -30,7 +30,7 @@ const Summary_Card: React.FC = () => {
       color: 'rgb(215, 78, 255)',
     },
     {
-      title: 'Tổng số khách hàng',
+      title: 'Số khách hàng',
       value: '1.180',
       icon: <UserOutlined style={{fontSize: '24px', padding: '8px' }}/>,
       color: 'rgb(225, 87, 160)',

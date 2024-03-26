@@ -19,7 +19,7 @@ public class Products
     
     [ForeignKey("Vendor")]
     public Guid VendorId { get; set; }
-    public virtual Account? Vendor { get; set; }
+    public virtual Users? Vendor { get; set; }
 
     // public IList<Variants> Variants { get; set; }
 }

@@ -22,13 +22,13 @@ const Summary_CardTwo: React.FC = () => {
         color: 'rgb(0, 148, 255)',
       },
       {
-        title: 'Đơn hàng đang xử lý',
+        title: 'Đơn đang xử lý',
         value: '7',
         icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(40, 183, 255)',
       },
       {
-        title: 'Đơn hàng hoàn thành',
+        title: 'Đơn đã hoàn thành',
         value: '15',
         icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
         color: 'rgb(255, 141, 41)',
@@ -48,13 +48,13 @@ const Summary_CardTwo: React.FC = () => {
             color: 'rgb(0, 148, 255)',
           },
           {
-            title: 'Đơn hàng đang xử lý',
+            title: 'Đơn đang xử lý',
             value: '9',
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
-            title: 'Đơn hàng hoàn thành',
+            title: 'Đơn hoàn thành',
             value: '56',
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',
@@ -74,13 +74,13 @@ const Summary_CardTwo: React.FC = () => {
             color: 'rgb(0, 148, 255)',
           },
           {
-            title: 'Đơn hàng đang xử lý',
+            title: 'Đơn hàng xử lý',
             value: '9',
             icon: <FileSyncOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(40, 183, 255)',
           },
           {
-            title: 'Đơn hàng hoàn thành',
+            title: 'Đơn hoàn thành',
             value: '325',
             icon: <FileDoneOutlined style={{ fontSize: '24px', padding: '8px'  }}/>,
             color: 'rgb(255, 141, 41)',

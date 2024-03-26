@@ -9,7 +9,7 @@ public class Products: BaseEntity<Guid>
     public DateTimeOffset DateModified { get; set; }
     
     public Category Category { get; set; }
-    public ShopAccount Vendor { get; set; }
+    public Users Vendor { get; set; }
 
     // public IList<Variants> Variants { get; set; }
 }
