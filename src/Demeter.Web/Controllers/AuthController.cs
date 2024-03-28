@@ -36,8 +36,9 @@ public class AuthController: ControllerBase
         {
             return BadRequest(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error while creating account");
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
@@ -55,8 +56,9 @@ public class AuthController: ControllerBase
         {
             return Unauthorized(ex.Message);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Error while logging in");
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
