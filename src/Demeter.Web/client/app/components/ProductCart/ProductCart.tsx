@@ -25,8 +25,12 @@ const {Text} = Typography;
 const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts }) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
-  const handleProductCheckboxChange = (productId: number, checked: boolean) => {
+  const handleProductCheckboxChange = (productId: number, shop: string, checked: boolean) => {
+    console.log({productId})
     const updatedProducts = products.map((product) => {
+      if(product.selected && product.shop !== shop) {
+        return { ...product, selected: false } };
+
       if (product.id === productId) {
         return { ...product, selected: checked };
       }
@@ -52,7 +56,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
       dataIndex: 'check',
       key: 'check',
       render: (_: any, record: Product) => (
-        <Checkbox checked={record.selected} onChange={(e) => handleProductCheckboxChange(record.id, e.target.checked)} />
+        <Checkbox checked={record.selected} onChange={(e) => handleProductCheckboxChange(record.id,record.shop, e.target.checked)} />
       ),
     },
     {
@@ -165,14 +169,14 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
 
     return (
       <div key={shopName}>
-        <h2>
+        <h2 style={{marginTop: '0'}}>
           <Checkbox
             checked={isShopSelected}
             onChange={(e) => handleShopCheckboxChange(shopName, e.target.checked)}
           />
           <Text strong style={{margin: '0 0 0 10px'}}>{shopName} </Text>
         </h2>
-        <Table columns={columns} dataSource={shopProducts} pagination={false} showHeader={true} style = {{ border: '1px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)'}}/>
+        <Table columns={columns} dataSource={shopProducts} pagination={false} showHeader={true} style = {{ border: '1px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', marginBottom: '20px'}}/>
       </div>
     );
   });

@@ -55,7 +55,7 @@ export async function updateOrder(order: Orders) {
 }
 
 export async function getVoucher() {
-    const url = `${baseUrl}/vouchers`;
+    const url = `${baseUrl}/voucher`;
     try {
         const response = await axios.get<Vouchers>(url);
         return response.data;
@@ -69,7 +69,7 @@ export async function getVoucher() {
 }
 
 export async function deleteVoucher(id: string) {
-    const url = `${baseUrl}/vouchers`;
+    const url = `${baseUrl}/voucher`;
     try {
       await axios.delete<Vouchers>(url, {data: {id}});
     } catch (error) {

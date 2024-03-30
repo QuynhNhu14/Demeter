@@ -1,0 +1,31 @@
+.ProductDetail {
+  width: 100%;
+  padding: 20px;
+}
+.ProductPage {
+  width: 100%;
+  padding: 0 30px 10px 30px;
+}
+/* .OrderForm {
+  position: fixed;
+  top: 88px;
+} */
+
+.OrderForm {
+  padding: 20px;
+}
+
+.OrderForm--Status {
+  background-color: var(--background-gray-color);
+  padding: 20px 10px;
+}
+.OrderForm--Progress__dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+}
+
+.OrderForm--Progress .ant-progress {
+  margin: 0 0px;
+  border-radius: 0;
+}
