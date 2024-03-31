@@ -1,10 +1,5 @@
-import { Flex, Grid } from "@mantine/core";
-import Navbar from "../../components/Navbar/Navbar";
-import { CustomerNavbar } from "../../components/CustomerNavbar/CustomerNavbar";
+import { Flex } from "@mantine/core";
 import "./Profile.css";
-import shopBanner from "../../../assets/shopBanner.png";
-import { ProductList } from "../../components/ProductList/ProductList";
-import { Route, Routes } from "react-router-dom";
 import { CustomerInfo } from "./CustomerInfo";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 

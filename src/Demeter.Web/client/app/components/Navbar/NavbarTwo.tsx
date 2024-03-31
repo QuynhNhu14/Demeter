@@ -89,7 +89,7 @@ const Navbar: React.FC = () => {
         />
         <Modal
           title="Warning"
-          visible={showModal}
+          opened={showModal}
           onOk={closeModal}
           onClose={closeModal}
           okText="OK"
@@ -99,7 +99,7 @@ const Navbar: React.FC = () => {
         </Modal>
         <Modal
           title="No Data Found"
-          visible={showNoDataModal}
+          opened={showNoDataModal}
           onOk={closeModal}
           onClose={closeModal}
           okText="OK"

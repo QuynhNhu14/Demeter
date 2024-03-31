@@ -1,6 +1,7 @@
-// eslint-disable-next-line no-undef
-module.exports = {
+const config = {
   plugins: {
+    // eslint-disable-next-line no-undef
+
     'postcss-preset-mantine': {},
     'postcss-simple-vars': {
       variables: {
@@ -11,5 +12,8 @@ module.exports = {
         'mantine-breakpoint-xl': '88em',
       },
     },
+
   },
 };
+
+module.exports = config;

@@ -1,33 +1,31 @@
 // import "./App.css";
+import "@mantine/core/styles.css";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { HomePage } from "./pages/Home/Home";
-import { ProductPage } from "./pages/ProductDetail/ProductPage";
-import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
-import { Shops } from "./pages/Shops/Shops";
-import { Offer } from "./pages/Offer/Offer";
-import Navbar from "./components/Navbar/Navbar";
-import Cart from "./pages/Cart/Cart";
-import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
-import AppSettingPage from "./pages/testapi/appsetting";
-import { Profile } from "./pages/Profile/Profile";
-import { ChangePassword } from "./pages/Profile/ChangePassword";
-import { Orders } from "./pages/Profile/Orders";
-import Dashboardadmin from "./pages/Dashboard/Dashboard_admin";
-import AllProduct from "./pages/Product_admin/AllProduct";
-import AllShop from "./pages/ShopsPreview/Allshop";
-import AdminOrders from "./pages/Orders/Order";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import AddProduct from "./pages/Product_admin/AddProduct";
-import Inventory from "./pages/Inventory/Inventory";
-import ShopProfile from "./pages/ShopsPreview/ShopPreview";
-import ShopAllProduct from "./pages/Product_admin/ShopAllProduct";
-import ShopOrders from "./pages/Orders/ShopOrders";
+// import { ProductPage } from "./pages/ProductDetail/ProductPage";
+// import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
+// import { Shops } from "./pages/Shops/Shops";
+// import { Offer } from "./pages/Offer/Offer";
+// import Cart from "./pages/Cart/Cart";
+// import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
+// import AppSettingPage from "./pages/testapi/appsetting";
+// import { Profile } from "./pages/Profile/Profile";
+// import { ChangePassword } from "./pages/Profile/ChangePassword";
+// import { Orders } from "./pages/Profile/Orders";
+// import Dashboardadmin from "./pages/Dashboard/Dashboard_admin";
+// import AllProduct from "./pages/Product_admin/AllProduct";
+// import AllShop from "./pages/ShopsPreview/Allshop";
+// import AdminOrders from "./pages/Orders/Order";
+// import Dashboard from "./pages/Dashboard/Dashboard";
+// import AddProduct from "./pages/Product_admin/AddProduct";
+// import Inventory from "./pages/Inventory/Inventory";
+// import ShopProfile from "./pages/ShopsPreview/ShopPreview";
+// import ShopAllProduct from "./pages/Product_admin/ShopAllProduct";
+// import ShopOrders from "./pages/Orders/ShopOrders";
 import { useEffect, useState } from "react";
 import * as stylex from "@stylexjs/stylex";
 
 // Import styles of packages that you've installed.
 // All packages except `@mantine/hooks` require styles imports
-import "@mantine/core/styles.css";
 
 const styles = stylex.create({
   app: {
@@ -36,12 +34,17 @@ const styles = stylex.create({
   },
 });
 
-import { MantineProvider } from "@mantine/core";
+import { AppShell, MantineProvider, rem } from "@mantine/core";
+import HomePage from "./pages/Home";
+import { HeaderMegaMenu } from "./components/Navbar";
+import { defaultTheme } from "../themes";
+import { useHeadroom } from "@mantine/hooks";
 
 export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const [firstRender, setFirstRender] = useState(true);
+  const pinned = useHeadroom({ fixedAt: 120 });
 
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
@@ -66,11 +69,19 @@ export default function App() {
   }, [location.pathname, firstRender, navigate]);
 
   return (
-    <MantineProvider>
-      <div {...stylex.props(styles.app)}>
-        <Routes>
-          <Route path="/login" element={<SignInSignUp />} />
-          <Route path="/home" element={<HomePage />} />
+    <MantineProvider theme={defaultTheme} defaultColorScheme="light">
+      <AppShell
+        header={{ height: 56, collapsed: !pinned, offset: true }}
+        padding="md"
+        withBorder={false}
+      >
+        <AppShell.Header>
+          <HeaderMegaMenu />
+        </AppShell.Header>
+        <AppShell.Main>
+          <Routes>
+            <Route path="/home" element={<HomePage />} />
+            {/* <Route path="/login" element={<SignInSignUp />} />
           <Route path="/products" element={<ProductPage />} />
           <Route path="/shop-product" element={<ShopProduct />} />
           <Route path="/shops" element={<Shops />} />
@@ -89,10 +100,10 @@ export default function App() {
           <Route path="/allshop" element={<AllShop />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/ShopProfile" element={<ShopProfile />} />
-        </Routes>
-        <Navbar />
-      </div>
+          <Route path="/ShopProfile" element={<ShopProfile />} /> */}
+          </Routes>
+        </AppShell.Main>
+      </AppShell>
     </MantineProvider>
   );
 }

@@ -160,7 +160,7 @@ const InventoryTable = () => {
             <Combobox
               overlay={menu}
               placement="bottomCenter"
-              visible={filterVisible}
+              opened={filterVisible}
             >
               <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
             </Combobox>

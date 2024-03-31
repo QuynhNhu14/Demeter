@@ -22,7 +22,7 @@ import {
 } from "@tabler/icons-react";
 import "./Cart.css";
 import "../../App.css";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/HeaderMegaMenu";
 import ProductCart, { Product } from "../../components/ProductCart/ProductCart";
 import logo from "../../../assets/logo.png";
 import { NavLink } from "react-router-dom";

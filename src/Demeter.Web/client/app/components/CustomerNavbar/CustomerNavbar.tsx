@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./CustomerNavbar.css";
-import {  MenuProps } from "@mantine/core";
+import { MenuProps } from "@mantine/core";
 import { Menu } from "@mantine/core";
 
 type MenuItem = Required<MenuProps>["items"][number];
@@ -58,30 +58,19 @@ export const CustomerNavbar: React.FC = () => {
   };
   return (
     <div className="CustomerNavbar">
-      <
-        theme={{
-          components: {
-            Menu: {
-              itemSelectedColor: "#009F7F",
-              itemHoverColor: "#009F7F",
-            },
-          },
+      <Menu
+        mode="inline"
+        openKeys={openKeys}
+        onOpenChange={onOpenChange}
+        defaultSelectedKeys={["1"]}
+        style={{
+          width: 256,
+          fontWeight: "500",
+          backgroundColor: "white",
+          border: "0",
         }}
-      >
-        <Menu
-          mode="inline"
-          openKeys={openKeys}
-          onOpenChange={onOpenChange}
-          defaultSelectedKeys={["1"]}
-          style={{
-            width: 256,
-            fontWeight: "500",
-            backgroundColor: "white",
-            border: "0",
-          }}
-          items={items}
-        />
-      </>
+        items={items}
+      />
     </div>
   );
 };

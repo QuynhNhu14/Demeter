@@ -1,5 +1,5 @@
 import { Flex, Grid } from "@mantine/core";
-import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/HeaderMegaMenu";
 import { ShopInfo } from "../../components/ShopInfo/ShopInfo";
 import "./ShopProduct.css";
 import shopBanner from "../../../assets/shopBanner.png";

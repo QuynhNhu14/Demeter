@@ -4,21 +4,44 @@ import {
   IconSend,
   IconBrandTwitter,
 } from "@tabler/icons-react";
-import { Button, Flex, Input, Space } from "@mantine/core";
+import { Button, Flex, Input, Text, Title } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/logo.png";
-import "./Footer.css";
+
+const data = [
+  {
+    title: 'About',
+    links: [
+      { label: 'Features', link: '#' },
+      { label: 'Pricing', link: '#' },
+      { label: 'Support', link: '#' },
+      { label: 'Forums', link: '#' },
+    ],
+  },
+  {
+    title: 'Project',
+    links: [
+      { label: 'Contribute', link: '#' },
+      { label: 'Media assets', link: '#' },
+      { label: 'Changelog', link: '#' },
+      { label: 'Releases', link: '#' },
+    ],
+  },
+  {
+    title: 'Community',
+    links: [
+      { label: 'Join Discord', link: '#' },
+      { label: 'Follow on Twitter', link: '#' },
+      { label: 'Email newsletter', link: '#' },
+      { label: 'GitHub discussions', link: '#' },
+    ],
+  },
+];
 
 export const Footer = () => {
   return (
-    <Flex className="footer" justify="space-around">
-      <Flex
-        style={{ flex: "4" }}
-        vertical
-        justify="center"
-        align="center"
-        gap="middle"
-      >
+    <Flex justify="space-between">
+      <Flex direction="column" justify="center" align="center">
         <img
           src={logo}
           alt="logo"
@@ -43,8 +66,8 @@ export const Footer = () => {
           </span>
         </Flex>
       </Flex>
-      <Flex style={{ flex: "2" }} vertical gap="middle">
-        <span className="footer--title">Khám phá</span>
+      <Flex direction="column" wrap>
+        <Title order={4}>Khám phá</Title>
         <NavLink to="/shops" className="footer--link">
           Cửa hàng
         </NavLink>
@@ -58,31 +81,31 @@ export const Footer = () => {
           Tác giả
         </NavLink>
       </Flex>
-      <Flex style={{ flex: "3" }} vertical gap="middle">
-        <span className="footer--title">Dịch vụ khách hàng</span>
+      <Flex direction="column" wrap>
+        <Title order={4}>Dịch vụ khách hàng</Title>
         <span className="footer--link">Câu hỏi thường gặp & Trợ giúp</span>
         <span className="footer--link">Chính sách hoàn tiền</span>
         <span className="footer--link">Quy trình giải quyết khiếu nại</span>
         <span className="footer--link">Chính sách vận chuyển</span>
       </Flex>
-      <Flex style={{ flex: "3" }} vertical gap="middle">
-        <span className="footer--title">Thông tin của chúng tôi</span>
+      <Flex direction="column">
+        <Title order={4}>Thông tin của chúng tôi</Title>
         <span className="footer--link">Chính sách bảo mật</span>
         <span className="footer--link">Điều khoản và điều kiện</span>
         <span className="footer--link">Liên hệ chúng tôi</span>
       </Flex>
-      <Flex style={{ flex: "3" }} vertical gap="middle">
-        <span className="footer--title">Đăng ký ngay</span>
+      <Flex direction="column">
+        <Title order={4}>Đăng ký ngay</Title>
         <span>
           Đăng ký email của bạn để nhận ngay tin tức nổi bật dựa trên sở thích
           cá nhân
         </span>
-        <Space.Compact style={{ width: "100%" }}>
+        <Flex>
           <Input placeholder="Nhập email của bạn" />
           <Button>
             <IconSend />
           </Button>
-        </Space.Compact>
+        </Flex>
       </Flex>
     </Flex>
   );
