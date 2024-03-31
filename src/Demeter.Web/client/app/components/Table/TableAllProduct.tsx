@@ -1,10 +1,19 @@
-import React, { useState } from 'react';
-import { Table, Space, Tag, Dropdown, Menu, Button, Input, Select, Image, Typography } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
-import ProductForm from '../Form/FormAddProduct';
-import ModalEditProduct from '../Form/ModalEditProduct';
+import React, { useState } from "react";
+import {
+  Table,
+  Space,
+  Badge,
+  Menu,
+  Button,
+  Input,
+  Select,
+  Image,
+  Text,
+} from "@mantine/core";
+import { IconEdit } from "@tabler/icons-react";
+import ProductForm from "../Form/FormAddProduct";
+import ModalEditProduct from "../Form/ModalEditProduct";
 
-const { Text } = Typography;
 const { Search } = Input;
 const { Option } = Select;
 
@@ -19,7 +28,9 @@ const generateData = (count) => {
       productType: `Type ${i % 5}`,
       pricePerUnit: `$${(Math.random() * 100).toFixed(2)}`,
       quantity: Math.floor(Math.random() * 100),
-      status: ['Hết hàng', 'Đang bán', 'Bị ẩn', 'Ngừng bán'][Math.floor(Math.random() * 4)],
+      status: ["Hết hàng", "Đang bán", "Bị ẩn", "Ngừng bán"][
+        Math.floor(Math.random() * 4)
+      ],
     });
   }
   return data;
@@ -28,37 +39,40 @@ const generateData = (count) => {
 const dataSource = generateData(900);
 
 const FilterTable = () => {
-    const [filterVisible, setFilterVisible] = useState(false);
-    const [statusFilter, setStatusFilter] = useState('');
-    const [typeFilter, setTypeFilter] = useState('');
-    const [searchText, setSearchText] = useState('');
-    const [editModalVisible, setEditModalVisible] = useState(false);
+  const [filterVisible, setFilterVisible] = useState(false);
+  const [statusFilter, setStatusFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
-    const handleStatusFilterChange = (value) => {
-        setStatusFilter(value);
-      };
-    
-      const handleTypeFilterChange = (value) => {
-        setTypeFilter(value);
-      };
-    
-      const handleFilterClick = () => {
-        setFilterVisible(!filterVisible);
-      };
-    
-      const handleSearch = (value) => {
-        setSearchText(value);
-      };
+  const handleStatusFilterChange = (value) => {
+    setStatusFilter(value);
+  };
 
-      const handleEditClick = () => {
-        setEditModalVisible(true);
-      };
-      
+  const handleTypeFilterChange = (value) => {
+    setTypeFilter(value);
+  };
+
+  const handleFilterClick = () => {
+    setFilterVisible(!filterVisible);
+  };
+
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
+  const handleEditClick = () => {
+    setEditModalVisible(true);
+  };
 
   const menu = (
     <Menu>
       <Menu.Item key="status">
-        <Select style={{ width: 120 }} onChange={handleStatusFilterChange} value={statusFilter}>
+        <Select
+          style={{ width: 120 }}
+          onChange={handleStatusFilterChange}
+          value={statusFilter}
+        >
           <Option value="">All Status</Option>
           <Option value="Hết hàng">Hết hàng</Option>
           <Option value="Đang bán">Đang bán</Option>
@@ -67,27 +81,35 @@ const FilterTable = () => {
         </Select>
       </Menu.Item>
       <Menu.Item key="type">
-        <Select style={{ width: 120 }} onChange={handleTypeFilterChange} value={typeFilter}>
-            <Option value="">All Types</Option>
-            {/* Lấy các loại sản phẩm duy nhất từ dataSource */}
-            {Array.from(new Set(dataSource.map(item => item.productType))).map(type => (
-                <Option key={type} value={type}>{type}</Option>
-            ))}
-            </Select>
+        <Select
+          style={{ width: 120 }}
+          onChange={handleTypeFilterChange}
+          value={typeFilter}
+        >
+          <Option value="">All Types</Option>
+          {/* Lấy các loại sản phẩm duy nhất từ dataSource */}
+          {Array.from(new Set(dataSource.map((item) => item.productType))).map(
+            (type) => (
+              <Option key={type} value={type}>
+                {type}
+              </Option>
+            )
+          )}
+        </Select>
       </Menu.Item>
     </Menu>
   );
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      align: 'center',
+      title: "ID",
+      dataIndex: "ID",
+      align: "center",
     },
     {
-      title: 'Sản phẩm',
-      dataIndex: 'productName',
-      align: 'left',
+      title: "Sản phẩm",
+      dataIndex: "productName",
+      align: "left",
       sorter: (a, b) => a.productName.localeCompare(b.productName),
       render: (text, record) => (
         <Space>
@@ -97,107 +119,137 @@ const FilterTable = () => {
       ),
     },
     {
-      title: 'Loại sản phẩm',
-      dataIndex: 'productType',
-      align: 'center',
+      title: "Loại sản phẩm",
+      dataIndex: "productType",
+      align: "center",
     },
     {
-      title: 'Giá/Đơn vị',
-      dataIndex: 'pricePerUnit',
-      align: 'center',
+      title: "Giá/Đơn vị",
+      dataIndex: "pricePerUnit",
+      align: "center",
     },
     {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      align: 'center',
+      title: "Số lượng",
+      dataIndex: "quantity",
+      align: "center",
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'status',
-      align: 'center',
+      title: "Trạng thái",
+      dataIndex: "status",
+      align: "center",
       filters: [
-        { text: 'Hết hàng', value: 'Hết hàng' },
-        { text: 'Đang bán', value: 'Đang bán' },
-        { text: 'Bị ẩn', value: 'Bị ẩn' },
-        { text: 'Ngừng bán', value: 'Ngừng bán' },
+        { text: "Hết hàng", value: "Hết hàng" },
+        { text: "Đang bán", value: "Đang bán" },
+        { text: "Bị ẩn", value: "Bị ẩn" },
+        { text: "Ngừng bán", value: "Ngừng bán" },
       ],
       onFilter: (value, record) => record.status.indexOf(value) === 0,
       render: (status) => {
-        let color = '';
+        let color = "";
         switch (status) {
-          case 'Hết hàng':
-            color = 'red';
+          case "Hết hàng":
+            color = "red";
             break;
-          case 'Đang bán':
-            color = 'green';
+          case "Đang bán":
+            color = "green";
             break;
-          case 'Bị ẩn':
-            color = 'orange';
+          case "Bị ẩn":
+            color = "orange";
             break;
-          case 'Ngừng bán':
-            color = 'gray';
+          case "Ngừng bán":
+            color = "gray";
             break;
           default:
             break;
         }
-        return <Tag color={color}>{status}</Tag>;
+        return <Badge color={color}>{status}</Badge>;
       },
     },
     {
-      title: 'Hành động',
-      dataIndex: 'actions',
-      align: 'center',
-      render: () => (<Button icon={<EditOutlined />} type="primary" onClick={handleEditClick}>
-      Sửa
-    </Button>),
+      title: "Hành động",
+      dataIndex: "actions",
+      align: "center",
+      render: () => (
+        <Button icon={<IconEdit />} type="primary" onClick={handleEditClick}>
+          Sửa
+        </Button>
+      ),
     },
   ];
- 
+
   const filteredData = dataSource.filter(
     (item) =>
       (statusFilter ? item.status === statusFilter : true) &&
       (typeFilter ? item.productType === typeFilter : true) &&
-      (searchText ?
-        (item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.productType.toLowerCase().includes(searchText.toLowerCase()))
+      (searchText
+        ? item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.productType.toLowerCase().includes(searchText.toLowerCase())
         : true)
   );
 
-
   return (
     <div>
-      <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Tất cả sản phẩm</Text>
+      <div
+        style={{
+          padding: "20px",
+          margin: "10px 0px 30px 0px",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
+          Tất cả sản phẩm
+        </Text>
         <div>
-          <Search placeholder="Search products" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
-          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Bộ lọc</Button>
+          <Search
+            placeholder="Search products"
+            style={{ width: 300, marginRight: 10 }}
+            onSearch={handleSearch}
+          />
+          <Button onClick={handleFilterClick} style={{ marginLeft: "auto" }}>
+            Bộ lọc
+          </Button>
           {filterVisible && (
-            <Dropdown overlay={menu} placement="bottomCenter" visible={filterVisible}>
+            <Combobox
+              overlay={menu}
+              placement="bottomCenter"
+              visible={filterVisible}
+            >
               <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
-            </Dropdown>
+            </Combobox>
           )}
         </div>
       </div>
-        <div style={{backgroundColor: '#fff',margin: '10px 0px 60px 0px',border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', borderRadius: '8px',}}>
-            <Table
-                dataSource={filteredData}
-                columns={columns}
-                pagination={{
-                pageSize: 15,
-                total: filteredData.length,
-                showSizeChanger: false,
-                }}
-            />
+      <div
+        style={{
+          backgroundColor: "#fff",
+          margin: "10px 0px 60px 0px",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+          borderRadius: "8px",
+        }}
+      >
+        <Table
+          dataSource={filteredData}
+          columns={columns}
+          pagination={{
+            pageSize: 15,
+            total: filteredData.length,
+            showSizeChanger: false,
+          }}
+        />
 
-
-
-
-            <ModalEditProduct visible={editModalVisible} onCancel={() => setEditModalVisible(false)} />
-        </div>
-        
+        <ModalEditProduct
+          visible={editModalVisible}
+          onCancel={() => setEditModalVisible(false)}
+        />
+      </div>
     </div>
   );
 };
 
 export default FilterTable;
-

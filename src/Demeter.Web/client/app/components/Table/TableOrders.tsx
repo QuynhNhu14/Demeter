@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { Table, Avatar, Space, Tag, Pagination, Input, Typography } from 'antd';
-import { UserOutlined, EyeOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import {
+  Table,
+  Avatar,
+  Space,
+  Badge,
+  Pagination,
+  Input,
+  Text,
+} from "@mantine/core";
+import { IconUser, IconEye } from "@tabler/icons-react";
 
-const { Text } = Typography;
 const { Search } = Input;
 
 interface Order {
@@ -31,9 +38,9 @@ for (let i = 1; i <= 30; i++) {
       avatar: `https://example.com/avatar${i}.jpg`,
     },
     products: Math.floor(Math.random() * 5) + 1,
-    orderDate: `2023-12-${i < 10 ? '0' + i : i}`,
+    orderDate: `2023-12-${i < 10 ? "0" + i : i}`,
     total: Math.floor(Math.random() * 200) + 50,
-    status: i % 2 === 0 ? 'Đang xử lý' : 'Hoàn Thành',
+    status: i % 2 === 0 ? "Đang xử lý" : "Hoàn Thành",
   };
 
   data.push(order);
@@ -41,20 +48,20 @@ for (let i = 1; i <= 30; i++) {
 
 const columns = [
   {
-    title: 'Mã đơn hàng',
-    dataIndex: 'trackingNumber',
-    key: 'trackingNumber',
+    title: "Mã đơn hàng",
+    dataIndex: "trackingNumber",
+    key: "trackingNumber",
     width: 150,
-    align: 'center',
+    align: "center",
   },
   {
-    title: 'Khách hàng',
-    dataIndex: 'customer',
-    key: 'customer',
+    title: "Khách hàng",
+    dataIndex: "customer",
+    key: "customer",
     render: (customer) => (
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Avatar src={customer.avatar} icon={<UserOutlined />} />
-        <div style={{ marginLeft: '8px' }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <Avatar src={customer.avatar} icon={<IconUser />} />
+        <div style={{ marginLeft: "8px" }}>
           <div>{customer.name}</div>
           <div>{customer.email}</div>
         </div>
@@ -62,48 +69,50 @@ const columns = [
     ),
   },
   {
-    title: 'Số lượng',
-    dataIndex: 'products',
-    key: 'products',
-    align: 'center',
+    title: "Số lượng",
+    dataIndex: "products",
+    key: "products",
+    align: "center",
   },
   {
-    title: 'Thời gian',
-    dataIndex: 'orderDate',
-    key: 'orderDate',
+    title: "Thời gian",
+    dataIndex: "orderDate",
+    key: "orderDate",
     width: 150,
-    align: 'center',
+    align: "center",
   },
   {
-    title: 'Tổng tiền',
-    dataIndex: 'total',
-    key: 'total',
+    title: "Tổng tiền",
+    dataIndex: "total",
+    key: "total",
     width: 100,
-    align: 'center',
+    align: "center",
   },
   {
-    title: 'Trạng thái',
-    dataIndex: 'status',
-    key: 'status',
+    title: "Trạng thái",
+    dataIndex: "status",
+    key: "status",
     render: (status) => (
-      <Tag color={status === 'Đang xử lý' ? 'orange' : 'green'}>{status}</Tag>
+      <Badge color={status === "Đang xử lý" ? "orange" : "green"}>
+        {status}
+      </Badge>
     ),
-    align: 'center',
+    align: "center",
   },
   {
-    title: 'Hành động',
-    key: 'actions',
+    title: "Hành động",
+    key: "actions",
     render: () => (
       <Space>
-        <EyeOutlined style={{ color: 'green' }} />
+        <IconEye style={{ color: "green" }} />
       </Space>
     ),
-    align: 'center',
+    align: "center",
   },
 ];
 
 const OrdersTable: React.FC = () => {
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10;
 
@@ -120,27 +129,48 @@ const OrdersTable: React.FC = () => {
     setSearchText(value);
   };
 
-  const filteredData = data.filter(
-    (item) =>
-      item.trackingNumber.toString().includes(searchText)
+  const filteredData = data.filter((item) =>
+    item.trackingNumber.toString().includes(searchText)
   );
 
   return (
     <div>
-    
-      <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Đơn Hàng</Text>
+      <div
+        style={{
+          padding: "20px",
+          margin: "10px 0px 30px 0px",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
+          Đơn Hàng
+        </Text>
         <div>
-          <Search placeholder="Search tracking number" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
+          <Search
+            placeholder="Search tracking number"
+            style={{ width: 300, marginRight: 10 }}
+            onSearch={handleSearch}
+          />
         </div>
       </div>
-      
-      <div style={{ overflowX: 'auto', backgroundColor: '#FFFFFF', margin: '10px 0px 60px 0px', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', borderRadius: '8px', fontFamily: 'sans-serif' }}>
-        <Table
-          columns={columns}
-          dataSource={filteredData}
-          pagination={false}
-        />
+
+      <div
+        style={{
+          overflowX: "auto",
+          backgroundColor: "#FFFFFF",
+          margin: "10px 0px 60px 0px",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+          borderRadius: "8px",
+          fontFamily: "sans-serif",
+        }}
+      >
+        <Table columns={columns} dataSource={filteredData} pagination={false} />
         <Pagination
           type="primary"
           current={currentPage}
@@ -148,7 +178,7 @@ const OrdersTable: React.FC = () => {
           pageSize={pageSize}
           onChange={handleChangePage}
           showSizeChanger={false}
-          style={{ margin: '16px', textAlign: 'right' }}
+          style={{ margin: "16px", textAlign: "right" }}
         />
       </div>
     </div>

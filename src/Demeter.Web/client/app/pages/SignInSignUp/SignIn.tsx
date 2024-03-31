@@ -1,8 +1,8 @@
-import { ArrowLeftOutlined, HomeOutlined } from "@ant-design/icons";
-import { Flex } from "antd";
+import { IconArrowLeft, IconHome } from "@tabler/icons-react";
+import { Flex } from "@mantine/core";
 import { useState, ChangeEvent, FormEvent } from "react";
 import { NavLink } from "react-router-dom";
-import logo from '../../../assets/logo.png';
+import logo from "../../../assets/logo.png";
 interface SignInFormState {
   email: string;
   password: string;
@@ -11,14 +11,14 @@ interface SignInFormState {
 const SignInForm: React.FC = () => {
   const [state, setState] = useState<SignInFormState>({
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = evt.target;
     setState({
       ...state,
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -30,7 +30,7 @@ const SignInForm: React.FC = () => {
 
     const initialState: SignInFormState = {
       email: "",
-      password: ""
+      password: "",
     };
 
     setState(initialState);
@@ -39,8 +39,8 @@ const SignInForm: React.FC = () => {
   return (
     <div className="form-container sign-in-container">
       <form onSubmit={handleOnSubmit}>
-        <NavLink to="/home" style={{margin: '0'}}>
-          <img src={logo} style={{width: '80px', height:'80px'}}/>
+        <NavLink to="/home" style={{ margin: "0" }}>
+          <img src={logo} style={{ width: "80px", height: "80px" }} />
         </NavLink>
         <h1>Đăng nhập</h1>
         <div className="social-container">

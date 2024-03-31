@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { Table, Space, Button, Input, Image, Typography, Dropdown, Menu, Select } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import {
+  Table,
+  Space,
+  Button,
+  Input,
+  Image,
+  Text,
+  Menu,
+  Select,
+  Combobox,
+} from "@mantine/core";
+import { IconEdit } from "@tabler/icons-react";
 
-const { Text } = Typography;
 const { Search } = Input;
 const { Option } = Select;
 
@@ -26,9 +35,9 @@ const dataSource = generateData(900);
 
 const InventoryTable = () => {
   const [filterVisible, setFilterVisible] = useState(false);
-  const [statusFilter, setStatusFilter] = useState('');
-  const [typeFilter, setTypeFilter] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const [statusFilter, setStatusFilter] = useState("");
+  const [typeFilter, setTypeFilter] = useState("");
+  const [searchText, setSearchText] = useState("");
 
   const handleStatusFilterChange = (value) => {
     setStatusFilter(value);
@@ -49,11 +58,19 @@ const InventoryTable = () => {
   const menu = (
     <Menu>
       <Menu.Item key="Inventory">
-        <Select style={{ width: 120 }} onChange={handleTypeFilterChange} value={typeFilter}>
+        <Select
+          style={{ width: 120 }}
+          onChange={handleTypeFilterChange}
+          value={typeFilter}
+        >
           <Option value="">All Inventory</Option>
-          {Array.from(new Set(dataSource.map(item => item.Inventory))).map(type => (
-            <Option key={type} value={type}>{type}</Option>
-          ))}
+          {Array.from(new Set(dataSource.map((item) => item.Inventory))).map(
+            (type) => (
+              <Option key={type} value={type}>
+                {type}
+              </Option>
+            )
+          )}
         </Select>
       </Menu.Item>
     </Menu>
@@ -61,14 +78,14 @@ const InventoryTable = () => {
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      align: 'center',
+      title: "ID",
+      dataIndex: "ID",
+      align: "center",
     },
     {
-      title: 'Sản phẩm',
-      dataIndex: 'productName',
-      align: 'left',
+      title: "Sản phẩm",
+      dataIndex: "productName",
+      align: "left",
       sorter: (a, b) => a.productName.localeCompare(b.productName),
       render: (text, record) => (
         <Space>
@@ -78,52 +95,87 @@ const InventoryTable = () => {
       ),
     },
     {
-      title: 'Kho',
-      dataIndex: 'Inventory',
-      align: 'center',
+      title: "Kho",
+      dataIndex: "Inventory",
+      align: "center",
     },
     {
-      title: 'Số lượng',
-      dataIndex: 'quantity',
-      align: 'center',
+      title: "Số lượng",
+      dataIndex: "quantity",
+      align: "center",
     },
     {
-      title: 'Số lượng bán',
-      dataIndex: 'soldQuantity',
-      align: 'center',
+      title: "Số lượng bán",
+      dataIndex: "soldQuantity",
+      align: "center",
     },
     {
-      title: 'Hành động',
-      dataIndex: 'actions',
-      align: 'center',
-      render: () => <Button icon={<EditOutlined />} type="primary">Sửa</Button>,
+      title: "Hành động",
+      dataIndex: "actions",
+      align: "center",
+      render: () => (
+        <Button icon={<IconEdit />} type="primary">
+          Sửa
+        </Button>
+      ),
     },
   ];
 
   const filteredData = dataSource.filter(
     (item) =>
       (typeFilter ? item.Inventory === typeFilter : true) &&
-      (searchText ?
-        (item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.Inventory.toLowerCase().includes(searchText.toLowerCase()))
+      (searchText
+        ? item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
+          item.Inventory.toLowerCase().includes(searchText.toLowerCase())
         : true)
   );
 
   return (
     <div>
-      <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Kho</Text>
+      <div
+        style={{
+          padding: "20px",
+          margin: "10px 0px 30px 0px",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
+          Kho
+        </Text>
         <div>
-          <Search placeholder="Search products" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
-          <Button onClick={handleFilterClick} style={{ marginLeft: 'auto' }}>Bộ lọc</Button>
+          <Search
+            placeholder="Search products"
+            style={{ width: 300, marginRight: 10 }}
+            onSearch={handleSearch}
+          />
+          <Button onClick={handleFilterClick} style={{ marginLeft: "auto" }}>
+            Bộ lọc
+          </Button>
           {filterVisible && (
-            <Dropdown overlay={menu} placement="bottomCenter" visible={filterVisible}>
+            <Combobox
+              overlay={menu}
+              placement="bottomCenter"
+              visible={filterVisible}
+            >
               <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
-            </Dropdown>
+            </Combobox>
           )}
         </div>
       </div>
-      <div style={{ backgroundColor: '#fff', margin: '10px 0px 60px 0px', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', borderRadius: '8px', }}>
+      <div
+        style={{
+          backgroundColor: "#fff",
+          margin: "10px 0px 60px 0px",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+          borderRadius: "8px",
+        }}
+      >
         <Table
           dataSource={filteredData}
           columns={columns}

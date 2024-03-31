@@ -1,17 +1,34 @@
-import React,{useState} from 'react';
-import { Layout, Divider,Typography,Input,Tabs,Radio, Form,Button,Col, Row, Table, Modal, Select, ConfigProvider } from 'antd';
-import { GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@ant-design/icons';
-import './Cart.css';
+import { useState } from "react";
+import {
+  Divider,
+  Text,
+  Input,
+  Tabs,
+  Radio,
+  Button,
+  Table,
+  Modal,
+  Select,
+  Flex,
+  NumberInput,
+  TextInput,
+  Container,
+} from "@mantine/core";
+import {
+  IconGift,
+  IconCreditCard,
+  IconCurrencyDollar,
+  IconWallet,
+} from "@tabler/icons-react";
+import "./Cart.css";
 import "../../App.css";
-import Navbar from '../../components/Navbar/Navbar';
-import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
-import logo from '../../../assets/logo.png';
-import { NavLink } from 'react-router-dom';
+import Navbar from "../../components/Navbar/Navbar";
+import ProductCart, { Product } from "../../components/ProductCart/ProductCart";
+import logo from "../../../assets/logo.png";
+import { NavLink } from "react-router-dom";
+import { useForm } from "@mantine/form";
 
-const { Option } = Select;
-
-const {Text} = Typography;
-// Định nghĩa lại 
+// Định nghĩa lại
 interface cartinfoData {
   name: string;
   address: string;
@@ -45,62 +62,68 @@ const infoData: cartinfoData = {
 const initialProducts: Product[] = [
   {
     id: 1,
-    name: 'Sản phẩm 1',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 1",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 1,
-    shop: 'Cửa hàng A',
+    shop: "Cửa hàng A",
     selected: false,
   },
   {
     id: 2,
-    name: 'Sản phẩm 2',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 2",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 2,
-    shop: 'Cửa hàng b',
+    shop: "Cửa hàng b",
     selected: false,
   },
   {
     id: 3,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 3",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: 'Cửa hàng c',
+    shop: "Cửa hàng c",
     selected: false,
   },
   {
     id: 4,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 3",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: 'Cửa hàng c',
+    shop: "Cửa hàng c",
     selected: false,
   },
   {
     id: 4,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 3",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: 'Cửa hàng c',
+    shop: "Cửa hàng c",
     selected: false,
   },
   {
     id: 5,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    name: "Sản phẩm 3",
+    image:
+      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: 'Cửa hàng c',
+    shop: "Cửa hàng c",
     selected: false,
   },
   // ... Add more products as needed
@@ -113,10 +136,9 @@ const totaldata: seleccartData = {
   totalship: 10,
 };
 
-const { TabPane } = Tabs;
-
 const Cart: React.FC = (Props) => {
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>(initialProducts);
+  const [selectedProducts, setSelectedProducts] =
+    useState<Product[]>(initialProducts);
 
   // Function to update selected products
   const updateSelectedProducts = (updatedProducts: Product[]) => {
@@ -124,8 +146,15 @@ const Cart: React.FC = (Props) => {
   };
 
   // Tính lại totaldata.amount và totaldata.totalamount dựa trên selectedProducts
-  const totalSelectedQuantity = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity : 0), 0);
-  const totalSelectedValue = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity * product.newPrice : 0), 0);
+  const totalSelectedQuantity = selectedProducts.reduce(
+    (total, product) => total + (product.selected ? product.quantity : 0),
+    0
+  );
+  const totalSelectedValue = selectedProducts.reduce(
+    (total, product) =>
+      total + (product.selected ? product.quantity * product.newPrice : 0),
+    0
+  );
 
   const totaldata: seleccartData = {
     TOTAL: 25000, // Giá trị TOTAL ban đầu của bạn
@@ -133,8 +162,8 @@ const Cart: React.FC = (Props) => {
     totalamount: totalSelectedValue, // Tổng giá trị sản phẩm được chọn
     totalship: 25000, // Giá trị totalship ban đầu của bạn
   };
-   // Hàm để tính giá trị mới của TOTAL
-   const calculateTotal = (): number => {
+  // Hàm để tính giá trị mới của TOTAL
+  const calculateTotal = (): number => {
     return totaldata.totalamount + totaldata.totalship;
   };
 
@@ -142,16 +171,28 @@ const Cart: React.FC = (Props) => {
   totaldata.TOTAL = newTotal;
 
   const [value, setValue] = useState<number>(1);
-  const [form] = Form.useForm();
+  const form = useForm({
+    initialValues: { name: "", email: "", age: 0 },
+
+    // functions will be used to validate values at corresponding key
+    validate: {
+      name: (value: string) =>
+        value.length < 2 ? "Name must have at least 2 letters" : null,
+      email: (value: string) =>
+        /^\S+@\S+$/.test(value) ? null : "Invalid email",
+      age: (value: number) =>
+        value < 18 ? "You must be at least 18 to register" : null,
+    },
+  });
 
   const onChange = (e: any) => {
     setValue(e.target.value);
   };
 
   const handleFormSubmit = (values: any) => {
-    console.log('Submitted values:', values);
+    console.log("Submitted values:", values);
   };
-  
+
   //vocher
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
@@ -173,7 +214,7 @@ const Cart: React.FC = (Props) => {
 
   const handleApplyVoucher = () => {
     // Xử lý khi áp dụng voucher, có thể làm gì đó với selectedVoucher ở đây
-    console.log('Voucher được áp dụng:', selectedVoucher);
+    console.log("Voucher được áp dụng:", selectedVoucher);
     setIsModalVisible(false);
   };
 
@@ -189,100 +230,124 @@ const Cart: React.FC = (Props) => {
     setSelectedVoucher(e.target.value);
   };
 
-
   const renderTabContent = (key: string | number) => {
     switch (key) {
-      case '1':
+      case "1":
         return <p>Thanh toán bằng tiền mặt khi nhận hàng</p>;
-      case '2':
+      case "2":
         return (
-          <Form form={form} onFinish={handleFormSubmit} layout="vertical">
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item label="Số thẻ" name="cardNumber">
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="Ngày hết hiệu lực" name="expiration">
-                  <Input />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Row gutter={16}>
-              <Col span={12}>
-                <Form.Item label="Tên trên thẻ" name="cardName">
-                  <Input />
-                </Form.Item>
-              </Col>
-              <Col span={12}>
-                <Form.Item label="CVV" name="cvvCode">
-                  <Input />
-                </Form.Item>
-              </Col>
-            </Row>
-            <Form.Item>
-            <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-                <Text strong  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
+          <form onSubmit={form.onSubmit(console.log)}>
+            <Flex direction="column" align="center">
+              <TextInput label="Số thẻ" name="cardNumber">
+                <Input />
+              </TextInput>
+              <TextInput label="Ngày hết hiệu lực" name="expiration">
+                <Input />
+              </TextInput>
+            </Flex>
+            <Flex direction="column" align="center">
+              <TextInput label="Tên trên thẻ" name="cardName">
+                <Input />
+              </TextInput>
+
+              <TextInput label="CVV" name="cvvCode">
+                <Input />
+              </TextInput>
+            </Flex>
+            <TextInput>
+              <Button
+                style={{ wight: "100%", backgroundColor: "#009F7F" }}
+                htmlType="submit"
+              >
+                <Text strong style={{ color: "#FFFFFF" }}>
+                  Xác nhận
+                </Text>
               </Button>
-            </Form.Item>
-          </Form>
+            </TextInput>
+          </form>
         );
-      case '3':
+      case "3":
         return (
-          <Form form={form} onFinish={handleFormSubmit}>
-            <Form.Item label="Số ví điện tử" name="eWalletNumber">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Mật khẩu" name="password">
+          <form onSubmit={form.onSubmit(console.log)}>
+            <NumberInput
+              label="Số ví điện tử"
+              placeholder="Số ví điện tử"
+              {...form.getInputProps("eWalletNumber")}
+            />
+            <TextInput label="Mật khẩu" name="password">
               <Input.Password />
-            </Form.Item>
-            <Form.Item>
-            <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-              <Text strong  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
+            </TextInput>
+            <TextInput>
+              <Button
+                style={{ wight: "100%", backgroundColor: "#009F7F" }}
+                htmlType="submit"
+              >
+                <Text strong style={{ color: "#FFFFFF" }}>
+                  Xác nhận
+                </Text>
               </Button>
-            </Form.Item>
-          </Form>
+            </TextInput>
+          </form>
         );
       default:
         return null;
     }
   };
 
-  return(
-  <Layout direction="vertical" style={{position: 'absolute', width: '100%', minHeight:'100%'}}>
-    <ConfigProvider
-            theme={{
-              token: {
-                colorPrimary: '#009F7F',
-              },
-            }}
-          >
-      <Layout style={{ background: 'c' }}>
+  return (
+    <Container
+      direction="vertical"
+      style={{ position: "absolute", width: "100%", minHeight: "100%" }}
+    >
+      <Container style={{ background: "c" }}>
         <div className="horizontalSections">
           <div className="section1">
-            <img src={infoData.link} alt="Your Image" className="centeredImage" />
-            <NavLink to='/shop-product' style={{color: '#009F7F', fontWeight: 'bolder', fontSize:'16px', textAlign:'center', padding: '10px 0'}}> {infoData.name}</NavLink>
-            <Divider style={{ margin: '8px'}}/>
+            <img
+              src={infoData.link}
+              alt="Your Image"
+              className="centeredImage"
+            />
+            <NavLink
+              to="/shop-product"
+              style={{
+                color: "#009F7F",
+                fontWeight: "bolder",
+                fontSize: "16px",
+                textAlign: "center",
+                padding: "10px 0",
+              }}
+            >
+              {" "}
+              {infoData.name}
+            </NavLink>
+            <Divider style={{ margin: "8px" }} />
             <Text strong>Địa chỉ</Text>
             <Text type="secondary"> {infoData.address}</Text>
-            <Divider style={{ margin: '8px'}}/>
+            <Divider style={{ margin: "8px" }} />
             <Text strong>Email</Text>
             <Text type="secondary"> {infoData.email}</Text>
-            <Divider style={{ margin: '8px'}}/>
+            <Divider style={{ margin: "8px" }} />
             <Text strong>SĐT</Text>
             <Text type="secondary"> {infoData.phone}</Text>
-
           </div>
           <div className="section2">
-          <ProductCart initialProducts={initialProducts} updateSelectedProducts={updateSelectedProducts} />
+            <ProductCart
+              initialProducts={initialProducts}
+              updateSelectedProducts={updateSelectedProducts}
+            />
           </div>
           <div className="section3">
             <div className="box">
               <div className="leftColumn">
-                <Text strong type="secondary">Giá đơn hàng:</Text>
-                <Text strong type="secondary">Số lượng:</Text>
-                <Text strong type="secondary">Phí giao hàng:</Text>
+                <Text strong type="secondary">
+                  Giá đơn hàng:
+                </Text>
+                <Text strong type="secondary">
+                  Số lượng:
+                </Text>
+                <Text strong type="secondary">
+                  Phí giao hàng:
+                </Text>
               </div>
               <div className="rightColumn">
                 <Text strong>{totaldata.totalamount} VNĐ</Text>
@@ -291,34 +356,44 @@ const Cart: React.FC = (Props) => {
               </div>
             </div>
 
-            <div className="box" style={{padding: '10px 30px'}}>
+            <div className="box" style={{ padding: "10px 30px" }}>
               <div className="leftColumn">
-                <Text strong >TỔNG CỘNG:</Text>
+                <Text strong>TỔNG CỘNG:</Text>
               </div>
               <div className="rightColumn">
                 <Text strong> {totaldata.TOTAL} VNĐ</Text>
               </div>
             </div>
 
-            <Text strong > Áp dụng voucher </Text>
-              <Button size="large" style={{ margin: '10px 0 10px 0'}} onClick={() => setIsModalVisible(true) } >
-                <Text strong style={{ color:'#009F7F', backgroundColor: '#fff' }}> Áp dụng voucher </Text>
-              </Button>
-                <Modal
-                  title="Danh sách voucher của bạn"
-                  visible={isModalVisible}
-                  onCancel={handleCancel}
-                  footer={[
-                    <Button key="cancel" onClick={handleCancel}>
-                      Hủy
-                    </Button>,
-                    <Button key="apply" type="primary" onClick={handleApplyVoucher}>
-                      Áp dụng
-                    </Button>,
-                  ]}
-                  className="customModal"
-                >
-                  {/* <Select
+            <Text strong> Áp dụng voucher </Text>
+            <Button
+              size="large"
+              style={{ margin: "10px 0 10px 0" }}
+              onClick={() => setIsModalVisible(true)}
+            >
+              <Text
+                strong
+                style={{ color: "#009F7F", backgroundColor: "#fff" }}
+              >
+                {" "}
+                Áp dụng voucher{" "}
+              </Text>
+            </Button>
+            <Modal
+              title="Danh sách voucher của bạn"
+              opened={isModalVisible}
+              onClose={handleCancel}
+              footer={[
+                <Button key="cancel" onClick={handleCancel}>
+                  Hủy
+                </Button>,
+                <Button key="apply" type="primary" onClick={handleApplyVoucher}>
+                  Áp dụng
+                </Button>,
+              ]}
+              className="customModal"
+            >
+              {/* <Select
                     style={{ width: '100%' }}
                     placeholder="Chọn voucher"
                     onChange={handleVoucherChange}
@@ -330,52 +405,86 @@ const Cart: React.FC = (Props) => {
                       </Option>
                     ))}
                   </Select> */}
-                  <Radio.Group style={{ width: '98%'}} onChange={handleVoucherChange} value={selectedVoucher}>
-                    {vouchers.map((voucher) => (
-                      <div className='box'>
-                          <div className="leftColumn">
-                            <Radio key={voucher.ID} value={voucher.name}>
-                              {voucher.name}
-                            </Radio>
-                          </div>
-                          <div className="rightColumn">
-                            <Text>{voucher.CouponDetail} </Text>
-                          </div>
-                      </div>
-                    ))}
-                  </Radio.Group>
-                </Modal>
-                {selectedVoucher && (
-                  <div>
-                    <div className='box' style={{padding: '10px 13px', margin: '0px 0 10px 0'}}>
-                      <Text strong> Voucher được áp dụng: {selectedVoucher}</Text>
+              <Radio.Group
+                style={{ width: "98%" }}
+                onChange={handleVoucherChange}
+                value={selectedVoucher}
+              >
+                {vouchers.map((voucher) => (
+                  <div className="box">
+                    <div className="leftColumn">
+                      <Radio key={voucher.ID} value={voucher.name}>
+                        {voucher.name}
+                      </Radio>
+                    </div>
+                    <div className="rightColumn">
+                      <Text>{voucher.CouponDetail} </Text>
                     </div>
                   </div>
-                )}
+                ))}
+              </Radio.Group>
+            </Modal>
+            {selectedVoucher && (
+              <div>
+                <div
+                  className="box"
+                  style={{ padding: "10px 13px", margin: "0px 0 10px 0" }}
+                >
+                  <Text strong> Voucher được áp dụng: {selectedVoucher}</Text>
+                </div>
+              </div>
+            )}
             <Text strong> Vui lòng chọn phương thức thanh toán </Text>
-            <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
-              <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
-                <TabPane tab={<Radio disabled={value !== 1} value={1}><DollarOutlined /></Radio>} key="1">
-                  {renderTabContent('1')}
+            <div
+              className="box"
+              style={{ padding: "10px 13px", margin: "10px 0 10px 0" }}
+            >
+              <Tabs
+                activeKey={value.toString()}
+                onChange={(key) => setValue(parseInt(key))}
+              >
+                <TabPane
+                  tab={
+                    <Radio disabled={value !== 1} value={1}>
+                      <IconCurrencyDollar />
+                    </Radio>
+                  }
+                  key="1"
+                >
+                  {renderTabContent("1")}
                 </TabPane>
-                <TabPane tab={<Radio disabled={value !== 2} value={2}><CreditCardOutlined /></Radio>} key="2">
-                  {renderTabContent('2')}
+                <TabPane
+                  tab={
+                    <Radio disabled={value !== 2} value={2}>
+                      <IconCreditCard />
+                    </Radio>
+                  }
+                  key="2"
+                >
+                  {renderTabContent("2")}
                 </TabPane>
-                <TabPane tab={<Radio disabled={value !== 3} value={3}><WalletOutlined /></Radio>} key="3">
-                  {renderTabContent('3')}
+                <TabPane
+                  tab={
+                    <Radio disabled={value !== 3} value={3}>
+                      <IconWallet />
+                    </Radio>
+                  }
+                  key="3"
+                >
+                  {renderTabContent("3")}
                 </TabPane>
               </Tabs>
             </div>
-            <Button size="large" style={{ backgroundColor:'#009F7F'}}>
-              <Text strong  style={{ color: '#FFFFFF' }}>TỔNG CỘNG: {totaldata.TOTAL}đ</Text>
+            <Button size="large" style={{ backgroundColor: "#009F7F" }}>
+              <Text strong style={{ color: "#FFFFFF" }}>
+                TỔNG CỘNG: {totaldata.TOTAL}đ
+              </Text>
             </Button>
           </div>
         </div>
-      </Layout>
-    </ConfigProvider>
-  </Layout>
+      </Container>
+    </Container>
   );
-
 };
 
 export default Cart;

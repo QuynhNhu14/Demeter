@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
-import { Table, Space, Tag, Button, Input, Image, Typography, Avatar } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import {
+  Table,
+  Space,
+  Badge,
+  Button,
+  Input,
+  Image,
+  Text,
+  Avatar,
+} from "@mantine/core";
+import { IconEdit } from "@tabler/icons-react";
 
-const { Text } = Typography;
 const { Search } = Input;
 
 const generateData = (count) => {
@@ -16,16 +24,17 @@ const generateData = (count) => {
       Product: `${Math.floor(Math.random() * 10)}`,
       Orders: `${Math.floor(Math.random() * 10)}`,
       OwnerName: `Owner ${i}`,
-      OwnerPic: 'https://pickbazar-react-admin.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F881%2Fconversions%2Faatik-tasneem-7omHUGhhmZ0-unsplash%25402x-thumbnail.jpg&w=1920&q=75',
-      Status: ['Hoạt động', 'Ngừng hoạt động'][Math.floor(Math.random() * 2)],
+      OwnerPic:
+        "https://pickbazar-react-admin.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F881%2Fconversions%2Faatik-tasneem-7omHUGhhmZ0-unsplash%25402x-thumbnail.jpg&w=1920&q=75",
+      Status: ["Hoạt động", "Ngừng hoạt động"][Math.floor(Math.random() * 2)],
     });
   }
   return data;
 };
 
 const AllShopTable = () => {
-  const [statusFilter, setStatusFilter] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const [statusFilter, setStatusFilter] = useState("");
+  const [searchText, setSearchText] = useState("");
   const [editModalVisible, setEditModalVisible] = useState(false);
 
   const handleStatusFilterChange = (value) => {
@@ -47,14 +56,14 @@ const AllShopTable = () => {
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'ID',
-      align: 'center',
+      title: "ID",
+      dataIndex: "ID",
+      align: "center",
     },
     {
-      title: 'Cửa hàng',
-      dataIndex: 'ShopName',
-      align: 'left',
+      title: "Cửa hàng",
+      dataIndex: "ShopName",
+      align: "left",
       sorter: (a, b) => a.ShopName.localeCompare(b.ShopName),
       render: (text, record) => (
         <Space>
@@ -64,19 +73,19 @@ const AllShopTable = () => {
       ),
     },
     {
-      title: 'Số Sản phẩm',
-      dataIndex: 'Product',
-      align: 'center',
+      title: "Số Sản phẩm",
+      dataIndex: "Product",
+      align: "center",
     },
     {
-      title: 'Số Đơn hàng',
-      dataIndex: 'Orders',
-      align: 'center',
+      title: "Số Đơn hàng",
+      dataIndex: "Orders",
+      align: "center",
     },
     {
-      title: 'Chủ cửa hàng',
-      dataIndex: 'OwnerName',
-      align: 'center',
+      title: "Chủ cửa hàng",
+      dataIndex: "OwnerName",
+      align: "center",
       render: (text, record) => (
         <Space>
           <Avatar src={record.OwnerPic} size={40} shape="circle" />
@@ -85,35 +94,39 @@ const AllShopTable = () => {
       ),
     },
     {
-      title: 'Trạng thái',
-      dataIndex: 'Status',
-      align: 'center',
+      title: "Trạng thái",
+      dataIndex: "Status",
+      align: "center",
       filters: [
-        { text: 'Hoạt động', value: 'Hoạt động' },
-        { text: 'Ngừng hoạt động', value: 'Ngừng hoạt động' },
+        { text: "Hoạt động", value: "Hoạt động" },
+        { text: "Ngừng hoạt động", value: "Ngừng hoạt động" },
       ],
       onFilter: (value, record) => record.Status.indexOf(value) === 0,
       render: (status) => {
-        let color = '';
+        let color = "";
         switch (status) {
-          case 'Hoạt động':
-            color = 'green';
+          case "Hoạt động":
+            color = "green";
             break;
-          case 'Ngừng hoạt động':
-            color = 'red';
+          case "Ngừng hoạt động":
+            color = "red";
             break;
           default:
             break;
         }
-        return <Tag color={color}>{status}</Tag>;
+        return <Badge color={color}>{status}</Badge>;
       },
     },
     {
-      title: 'Hành động',
-      dataIndex: 'actions',
-      align: 'center',
+      title: "Hành động",
+      dataIndex: "actions",
+      align: "center",
       render: () => (
-        <Button icon={<EditOutlined />} type="primary" onClick={() => setEditModalVisible(true)}>
+        <Button
+          icon={<IconEdit />}
+          type="primary"
+          onClick={() => setEditModalVisible(true)}
+        >
           Sửa
         </Button>
       ),
@@ -123,18 +136,45 @@ const AllShopTable = () => {
   const dataSource = generateData(900);
 
   const filteredData = dataSource.filter(
-    (item) => (statusFilter ? item.Status === statusFilter : true) && (searchText ? customFilter(item) : true)
+    (item) =>
+      (statusFilter ? item.Status === statusFilter : true) &&
+      (searchText ? customFilter(item) : true)
   );
 
   return (
     <div>
-      <div style={{ padding: '20px', margin: '10px 0px 30px 0px', backgroundColor: '#fff', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)' }}>
-        <Text strong style={{ fontSize: '20px', fontWeight: 'bold' }}>Tất cả cửa hàng</Text>
+      <div
+        style={{
+          padding: "20px",
+          margin: "10px 0px 30px 0px",
+          backgroundColor: "#fff",
+          borderRadius: "8px",
+          display: "flex",
+          justifyContent: "space-between",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+        }}
+      >
+        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
+          Tất cả cửa hàng
+        </Text>
         <div>
-          <Search placeholder="Nhập tên cửa hàng, ID hoặc sản phẩm" style={{ width: 300, marginRight: 10 }} onSearch={handleSearch} />
+          <Search
+            placeholder="Nhập tên cửa hàng, ID hoặc sản phẩm"
+            style={{ width: 300, marginRight: 10 }}
+            onSearch={handleSearch}
+          />
         </div>
       </div>
-      <div style={{ backgroundColor: '#fff', margin: '10px 0px 60px 0px', border: '2px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', borderRadius: '8px', }}>
+      <div
+        style={{
+          backgroundColor: "#fff",
+          margin: "10px 0px 60px 0px",
+          border: "2px solid #E5E7EB",
+          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+          borderRadius: "8px",
+        }}
+      >
         <Table
           dataSource={filteredData}
           columns={columns}

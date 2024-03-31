@@ -1,19 +1,18 @@
-import { Flex } from 'antd';
+import { Flex } from "@mantine/core";
 import Offer1 from "../../../assets/offer-1.png";
 import Offer2 from "../../../assets/offer-2.png";
 import Offer3 from "../../../assets/offer-3.png";
 import Offer4 from "../../../assets/offer-4.png";
 
 import "./Home.css";
-import "../../App.css";
-import { CategoryList } from '../../components/CategoryList/CategoryList';
-import { ProductList } from '../../components/ProductList/ProductList';
-import Navbar from '../../components/Navbar/Navbar';
-import { useState } from 'react';
-import logo from '../../../assets/logo.png';
+// import "../../App.css";
+import { CategoryList } from "../../components/CategoryList/CategoryList";
+import { ProductList } from "../../components/ProductList/ProductList";
+import { useState } from "react";
+import logo from "../../../assets/logo.png";
 
-import { Input, InputProps } from 'antd';
-import { Footer } from '../../components/Footer/Footer';
+import { Input, InputProps } from "@mantine/core";
+import { Footer } from "../../components/Footer/Footer";
 
 interface SearchProps extends InputProps {
   inputPrefixCls?: string;
@@ -24,8 +23,8 @@ interface SearchProps extends InputProps {
       | React.MouseEvent<HTMLElement, MouseEvent>
       | React.KeyboardEvent<HTMLInputElement>,
     info?: {
-      source?: 'clear' | 'input';
-    },
+      source?: "clear" | "input";
+    }
   ) => void;
   enterButton?: React.ReactNode;
   loading?: boolean;
@@ -33,13 +32,13 @@ interface SearchProps extends InputProps {
 const { Search } = Input;
 
 export const HomePage = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showNoDataModal, setShowNoDataModal] = useState(false);
 
-  const handleSearch: SearchProps['onSearch'] = (value, _event, info) => {
+  const handleSearch: SearchProps["onSearch"] = (value, _event, info) => {
     console.log(info?.source, value);
-    if (value.trim() !== '') {
+    if (value.trim() !== "") {
       performSearch(value);
     } else {
       setShowModal(true);
@@ -47,7 +46,7 @@ export const HomePage = () => {
   };
 
   const performSearch = (value: string) => {
-    if (value.trim() !== '') {
+    if (value.trim() !== "") {
       // Xử lý tìm kiếm ở đây và set lại state showNoDataModal nếu không có dữ liệu
       const searchResult = []; // Giả sử không có dữ liệu tìm kiếm phù hợp
       if (searchResult.length === 0) {
@@ -59,7 +58,7 @@ export const HomePage = () => {
       }
     } else {
       setShowNoDataModal(false);
-      console.log('Displaying default search results or message');
+      console.log("Displaying default search results or message");
     }
   };
 
@@ -68,39 +67,57 @@ export const HomePage = () => {
     setSearchValue(value);
   };
 
-  const handleLoading = () => {
-    console.log('Loading');
-  }
   return (
     <div className="Homepage">
-        <div className="Homepage--container">
-            <Flex className="Homepage--banner" vertical align="center" justify="center">
-              <img src={logo} alt="logo" style={{width: '180px', height: '180px'}}/>
-              <span style={{fontSize: '50px', fontWeight: 'bold', margin: '0 0 10px 0'}}>ĐẶT HÀNG NGAY TẠI DEMETER</span>
-              <span style={{fontSize: '25px', margin: '10px 0'}}>Hãy dùng rau củ quả sạch mỗi ngày - Hàng tươi mới mỗi ngày!</span>
-              <Search
-                className="Homepage--banner__searchbutton"
-                placeholder="Tìm kiếm sản phẩm của bạn ở đây"
-                enterButton="Tìm kiếm"
-                onSearch={handleSearch}
-                onChange={handleChange}
-                value={searchValue}
-                style={{ width: 600 }}
-                loading={false}
-              />
-            </Flex>
-            <Flex className="Homepage--flashcard" justify="space-evenly">
-              <img src={Offer1} alt="Express Delivery"/>
-              <img src={Offer2} alt="Cash On Delivery"/>
-              <img src={Offer3} alt="Gift Voucher"/>
-              <img src={Offer4} alt="Free Delivery"/>
-            </Flex>
-            <Flex  className="Homepage--product">
-              <CategoryList/>
-              <ProductList categoryId='1' />
-            </Flex>
-        </div>
-        <Footer />
+      <div className="Homepage--container">
+        <Flex
+          className="Homepage--banner"
+          gap="md"
+          justify="center"
+          align="center"
+          direction="column"
+          // wrap="wrap"
+        >
+          <img
+            src={logo}
+            alt="logo"
+            style={{ width: "180px", height: "180px" }}
+          />
+          <span
+            style={{
+              fontSize: "50px",
+              fontWeight: "bold",
+              margin: "0 0 10px 0",
+            }}
+          >
+            ĐẶT HÀNG NGAY TẠI DEMETER
+          </span>
+          <span style={{ fontSize: "25px", margin: "10px 0" }}>
+            Hãy dùng rau củ quả sạch mỗi ngày - Hàng tươi mới mỗi ngày!
+          </span>
+          <Search
+            className="Homepage--banner__searchbutton"
+            placeholder="Tìm kiếm sản phẩm của bạn ở đây"
+            enterButton="Tìm kiếm"
+            onSearch={handleSearch}
+            onChange={handleChange}
+            value={searchValue}
+            style={{ width: 600 }}
+            loading={false}
+          />
+        </Flex>
+        <Flex className="Homepage--flashcard" justify="space-evenly">
+          <img src={Offer1} alt="Express Delivery" />
+          <img src={Offer2} alt="Cash On Delivery" />
+          <img src={Offer3} alt="Gift Voucher" />
+          <img src={Offer4} alt="Free Delivery" />
+        </Flex>
+        <Flex className="Homepage--product">
+          <CategoryList />
+          <ProductList categoryId="1" />
+        </Flex>
+      </div>
+      <Footer />
     </div>
   );
-}
+};
