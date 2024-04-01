@@ -40,6 +40,7 @@ import { HeaderMegaMenu } from "./components/Navbar";
 import { defaultTheme } from "../themes";
 import { useHeadroom } from "@mantine/hooks";
 import ErrorPage from "./pages/Error/error";
+import { Footer } from "./components/Footer/Footer";
 
 export default function App() {
   const navigate = useNavigate();
@@ -102,10 +103,13 @@ export default function App() {
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/ShopProfile" element={<ShopProfile />} /> */}
-          <Route path="/404" element={<ErrorPage variant="404"/>} />
-          <Route path="/503" element={<ErrorPage variant="503"/>} />
+            <Route path="/404" element={<ErrorPage variant="404" />} />
+            <Route path="/503" element={<ErrorPage variant="503" />} />
           </Routes>
         </AppShell.Main>
+        <AppShell.Footer>
+          <Footer />
+        </AppShell.Footer>
       </AppShell>
     </MantineProvider>
   );

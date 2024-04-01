@@ -50,7 +50,6 @@ export default function HomePage() {
           <ProductList categoryId="1" />
         </Flex> */}
       </div>
-      <Footer />
     </div>
   );
 }
