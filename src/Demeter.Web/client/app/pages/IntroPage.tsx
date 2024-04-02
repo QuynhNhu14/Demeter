@@ -158,7 +158,6 @@ export function IntroPage() {
       <Container align="center">
         <Button
           variant="gradient"
-          gradient={{ deg: 133, from: 'green', to: 'cyan' }}
           size="lg"
           radius="md"
           mt="20"
@@ -182,7 +181,6 @@ export function IntroPage() {
           </SimpleGrid>
       </Container>
       
-      <Footer/>
     </div>
     
   );

@@ -47,41 +47,39 @@ export default function App() {
   const navigate = useNavigate();
   const location = useLocation();
   const [firstRender, setFirstRender] = useState(true);
-  const pinned = useHeadroom({ fixedAt: 120 });
 
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
-  useEffect(() => {
-    if (firstRender) {
-      if (location.pathname === "/") {
-        navigate("/");
-      }
-      setFirstRender(false);
-    }
-  }, [firstRender, navigate, location.pathname]);
+  // useEffect(() => {
+  //   if (firstRender) {
+  //     if (location.pathname === "/") {
+  //       navigate("/");
+  //     }
+  //     setFirstRender(false);
+  //   }
+  // }, [firstRender, navigate, location.pathname]);
 
-  useEffect(() => {
-    // Chỉ điều hướng đến '/home' nếu không phải là lần render đầu tiên
-    if (!firstRender && location.pathname !== "/home") {
-      // Nếu đường dẫn không phải là '/home' thì không thực hiện điều hướng
-      navigate(location.pathname);
-    }
-  }, [location.pathname, firstRender, navigate]);
+  // useEffect(() => {
+  //   // Chỉ điều hướng đến '/home' nếu không phải là lần render đầu tiên
+  //   if (!firstRender && location.pathname !== "/home") {
+  //     // Nếu đường dẫn không phải là '/home' thì không thực hiện điều hướng
+  //     navigate(location.pathname);
+  //   }
+  // }, [location.pathname, firstRender, navigate]);
 
   return (
-    <MantineProvider theme={defaultTheme} defaultColorScheme="light">
+    <MantineProvider theme={defaultTheme} >
       <AppShell
-        header={{ height: 56, collapsed: !pinned, offset: true }}
-        padding="md"
+        header={{ height: 70, collapsed: false, offset: true }}
         withBorder={false}
       >
         <AppShell.Header>
           <HeaderMegaMenu />
         </AppShell.Header>
-        <AppShell.Main>
+        <AppShell.Main m="lg">
           <Routes>
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/login" element={<SignInSignUp />} />
@@ -106,12 +104,10 @@ export default function App() {
           <Route path="/ShopProfile" element={<ShopProfile />} /> 
           <Route path="/404" element={<ErrorPage variant="404"/>} />
           <Route path="/503" element={<ErrorPage variant="503"/>} />*/}
-          <Route path="/" element={<IntroPage/>} />
+            <Route path="/" element={<IntroPage />} />
           </Routes>
         </AppShell.Main>
-        <AppShell.Footer>
-          <Footer />
-        </AppShell.Footer>
+        <Footer />
       </AppShell>
     </MantineProvider>
   );
