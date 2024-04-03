@@ -76,10 +76,9 @@ export const Footer = () => {
   });
   return (
     <footer>
-      <Paper shadow="xs">
-        <Container py="lg">
-          <Group justify="space-between">
-            <Flex direction="column" justify="center" align="center">
+      <Paper shadow="xs" withBorder >
+          <Group justify="space-between" ml={50} mr={50} mt={30}>
+            <Flex direction="column" justify="center" align="center" gap="md">
               <img
                 src={logo}
                 alt="logo"
@@ -97,7 +96,7 @@ export const Footer = () => {
               {groups}
             </Flex>
           </Group>
-          <Group justify="space-between">
+          <Group justify="space-between" ml={50} mr={50} mt={30}>
             <Text c="dimmed" size="sm">
               © 2024 demeter.com. All rights reserved.
             </Text>
@@ -121,9 +120,20 @@ export const Footer = () => {
                   stroke={1.5}
                 />
               </ActionIcon>
+              <ActionIcon size="lg" color="gray" variant="subtle">
+                <IconBrandFacebook
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+              <ActionIcon size="lg" color="gray" variant="subtle">
+                <IconSend
+                  style={{ width: rem(18), height: rem(18) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
             </Group>
           </Group>
-        </Container>
       </Paper>
     </footer>
   );

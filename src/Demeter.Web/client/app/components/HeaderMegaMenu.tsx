@@ -41,16 +41,16 @@ export function HeaderMegaMenu() {
       >
         <Group gap={4} align="center">
           <NavLink to="/home">
-            <Image src={headerLogo} h={20} />
+            <Image src={headerLogo} h={25} />
           </NavLink>
           <FuzzySearch />
         </Group>
 
-        <Group gap={4} align="center">
+        <Group gap={4} align="center" >
           <Tabs value={tabValue} onChange={(value) => navigate(`/${value}`)}>
             <Tabs.List>
-              <Tabs.Tab value="shops">Cửa hàng</Tabs.Tab>
-              <Tabs.Tab value="voucher">Mã giảm giá</Tabs.Tab>
+              <Tabs.Tab value="shops" h={60}>Cửa hàng</Tabs.Tab>
+              <Tabs.Tab value="voucher" >Mã giảm giá</Tabs.Tab>
               <Tabs.Tab value="faq">FAQ</Tabs.Tab>
               <Tabs.Tab value="contact">Liên hệ</Tabs.Tab>
             </Tabs.List>

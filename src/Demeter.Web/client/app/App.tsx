@@ -1,5 +1,6 @@
 // import "./App.css";
 import "@mantine/core/styles.css";
+import '@mantine/carousel/styles.css';
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 // import { ProductPage } from "./pages/ProductDetail/ProductPage";
 // import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
@@ -34,14 +35,12 @@ const styles = stylex.create({
   },
 });
 
-import { AppShell, MantineProvider, rem } from "@mantine/core";
+import { AppShell, MantineProvider } from "@mantine/core";
 import HomePage from "./pages/Home";
 import { HeaderMegaMenu } from "./components/Navbar";
 import { defaultTheme } from "../themes";
-import { useHeadroom } from "@mantine/hooks";
-import ErrorPage from "./pages/Error/error";
 import { Footer } from "./components/Footer/Footer";
-import { IntroPage } from "./pages/IntroPage";
+import {IntroPage} from "./pages/IntroPage";
 
 export default function App() {
   const navigate = useNavigate();
@@ -75,11 +74,12 @@ export default function App() {
       <AppShell
         header={{ height: 70, collapsed: false, offset: true }}
         withBorder={false}
+        //appshell have position:fixed style - they are not scroll with the page.
       >
         <AppShell.Header>
           <HeaderMegaMenu />
         </AppShell.Header>
-        <AppShell.Main m="lg">
+        <AppShell.Main>
           <Routes>
             <Route path="/home" element={<HomePage />} />
             {/* <Route path="/login" element={<SignInSignUp />} />
@@ -107,8 +107,8 @@ export default function App() {
             <Route path="/" element={<IntroPage />} />
           </Routes>
         </AppShell.Main>
-        <Footer />
       </AppShell>
+      <Footer />
     </MantineProvider>
   );
 }

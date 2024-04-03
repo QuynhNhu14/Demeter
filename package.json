@@ -19,5 +19,12 @@
     "db:update": "npm run db:update --prefix ./src/Demeter.Web",
     "db:remove": "npm run db:remove --prefix ./src/Demeter.Web",
     "db:add": "npm run db:add --prefix ./src/Demeter.Web"
+  },
+  "devDependencies": {
+    "@mantine/carousel": "^7.7.1"
+  },
+  "dependencies": {
+    "embla-carousel-react": "^7.1.0",
+    "react-multi-carousel": "^2.8.5"
   }
 }
