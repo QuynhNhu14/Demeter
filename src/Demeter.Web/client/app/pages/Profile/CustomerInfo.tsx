@@ -4,20 +4,25 @@ import {
   IconPhone,
   IconUpload,
   IconUser,
+  IconPhoto,
+  IconX,
 } from "@tabler/icons-react";
 import {
   Button,
   Divider,
+  FileInput,
   Flex,
-  Form,
   Input,
   Select,
   Text,
+  Group,
+  rem,
   TextInput,
 } from "@mantine/core";
 import { useState } from "react";
-import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE, MIME_TYPES } from '@mantine/dropzone';
+import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import "./Profile.css";
+import * as stylex from "@stylexjs/stylex";
 
 type user = {
   id: string;
@@ -40,7 +45,7 @@ const userInfo = {
   gender: "male",
   dateOfBirth: "17-10-2000",
   avatarUrl:
-    "https://scontent.fsgn19-1.fna.fbcdn.net/v/t39.30808-6/216324243_105772968470959_1082507204221870375_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=iuOcB1i3pdsAX-xs5oj&_nc_ht=scontent.fsgn19-1.fna&oh=00_AfAKTB5UROiJQ1DLabJqLkYMBaXmcbYU_ZesjV3miN6kKw&oe=65A73259",
+    "https://livewiredemos.com/images/avatar.png",
   address: {
     country: "Việt Nam",
     locality:
@@ -50,24 +55,19 @@ const userInfo = {
   phone: "1234 56789",
 };
 
+const styles = stylex.create({
+  PersonalInfo: {
+    backgroundColor: "#fff",
+    padding: "30px 50px 30px 0",
+  },
+});
+
 export const CustomerInfo = () => {
-  const [featuredFileList, setFeaturedFileList] = useState<any[]>([]);
-  const handleFeaturedFileChange = (info: any) => {
-    let fileList = [...info.fileList];
-
-    // Limit to only one uploaded file
-    fileList = fileList.slice(-1);
-
-    setFeaturedFileList(fileList);
-  };
-  const featuredUploaderProps = {
-    fileList: featuredFileList,
-    beforeUpload: () => false,
-    onChange: handleFeaturedFileChange,
-  };
+  const [avatar, setAvatar] = useState<any>();
+  // console.log(avatar);
   return (
-    <Flex className="CustomerInfo" vertical gap="large">
-      <Flex className="PersonalInfo">
+    <Flex className="CustomerInfo" direction="column" gap="lg">
+      <Flex {...stylex.props(styles.PersonalInfo)}>
         <Flex style={{ flex: "2" }} justify="center" align="center">
           <img
             src={userInfo.avatarUrl}
@@ -80,72 +80,82 @@ export const CustomerInfo = () => {
             }}
           />
         </Flex>
-        <Flex vertical gap="small" style={{ flex: "3" }} align="flex-end">
+        <Flex direction="column" gap="sm" style={{ flex: "3" }} align="flex-end">
           <Flex
-            vertical
-            gap="small"
+            direction="column"
+            gap="sm"
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <span style={{ opacity: "0.7" }}>Tên</span>
-            <Input defaultValue={userInfo.fullName} prefix={<IconUser />} />
-          </Flex>
-          <Flex
-            vertical
-            gap="small"
-            align="flex-start"
-            style={{ width: "100%" }}
-          >
-            <span style={{ opacity: "0.7" }}>Ngày sinh</span>
-            <Input
-              defaultValue={userInfo.dateOfBirth}
-              prefix={<IconCalendar />}
+            <TextInput
+              leftSection={<IconUser />}
+              label="Tên"
+              defaultValue={userInfo.fullName}
+              style={{ width: "100%" }}
             />
           </Flex>
           <Flex
-            vertical
-            gap="small"
+            direction="column"
+            gap="sm"
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <TextInput style={{ width: "100%" }}>
-              <div
-                style={{
-                  backgroundColor: "#fff",
-                  width: "100%",
-                  height: "160px",
-                  padding: "15px",
-                  borderRadius: "8px",
-                  border: "2px solid #E5E7EB",
-                  boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-                }}
-              >
-                <Dropzone
-                  {...featuredUploaderProps}
-                  accept={[
-                    MIME_TYPES.png,
-                    MIME_TYPES.jpeg,
-                    MIME_TYPES.svg,
-                    MIME_TYPES.gif,
-                  ]}
-                  style={{ padding: "0 10px" }}
-                >
-                  <p className="ant-upload-drag-icon">
-                    <IconUpload />
-                  </p>
-                  <p
-                    className="ant-upload-text"
-                    style={{ fontSize: "14px", opacity: "0.7" }}
-                  >
-                    Tải ảnh lên hoặc kéo thả với PNG, JPG
-                  </p>
-                </Dropzone>
+            <TextInput
+              leftSection={<IconCalendar />}
+              label="Ngày sinh"
+              defaultValue={userInfo.dateOfBirth}
+              style={{ width: "100%" }}
+            />
+          </Flex>
+          <Flex
+            direction="column"
+            gap="sm"
+            align="flex-start"
+            style={{ width: "100%" }}
+          >
+            <span>Tải lên ảnh đại diện</span>
+          <Dropzone
+            onDrop={(files) => setAvatar(files)}
+            onReject={(files) => console.log('rejected files', files)}
+            maxSize={5 * 1024 ** 2}
+            accept={IMAGE_MIME_TYPE}
+            style={{ width: "100%" }}
+          >
+            <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
+              <Dropzone.Accept>
+                <IconUpload
+                  style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
+                  stroke={1.5}
+                />
+              </Dropzone.Accept>
+              <Dropzone.Reject>
+                <IconX
+                  style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
+                  stroke={1.5}
+                />
+              </Dropzone.Reject>
+              <Dropzone.Idle>
+                <IconPhoto
+                  style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-dimmed)' }}
+                  stroke={1.5}
+                />
+              </Dropzone.Idle>
+
+              <div>
+                <Text size="xl" inline>
+                  Drag images here or click to select files
+                </Text>
+                <Text size="sm" c="dimmed" inline mt={7}>
+                  Attach as many files as you like, each file should not exceed 5mb
+                </Text>
               </div>
-            </TextInput>
+            </Group>
+          </Dropzone>
+
           </Flex>
           <Button
             style={{
-              width: "100px",
+              width: "120px", 
               backgroundColor: "#009f7f",
               color: "#fff",
             }}
@@ -156,36 +166,41 @@ export const CustomerInfo = () => {
       </Flex>
       <Flex className="Contact">
         <Flex
-          vertical
-          gap="small"
+          direction="column"
+          gap="sm"
           style={{ width: "100%", marginRight: "50px" }}
         >
           <Flex
-            vertical
-            gap="small"
+            direction="column"
+            gap="sm"
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <span style={{ opacity: "0.7" }}>E-mail</span>
-            <Input defaultValue={userInfo.email} prefix={<IconMail />} />
+            <TextInput
+              leftSection={<IconMail />}
+              label="E-mail"
+              defaultValue={userInfo.email}
+              style={{ width: "100%" }}
+            />
           </Flex>
           <Flex
-            vertical
-            gap="small"
+            direction="column"
+            gap="sm"
             align="flex-start"
             style={{ width: "100%" }}
           >
-            <span style={{ opacity: "0.7" }}>Số điện thoại</span>
-            <Input
+            <TextInput
+              leftSection={<IconPhone />}
+              label="Số điện thoại"
               defaultValue={`+84 ${userInfo.phone}`}
-              prefix={<IconPhone />}
+              style={{ width: "100%" }}
             />
           </Flex>
         </Flex>
         <Flex justify="center" align="flex-end">
           <Button
             style={{
-              width: "100px",
+              width: "120px",
               backgroundColor: "#009f7f",
               color: "#fff",
             }}
@@ -194,22 +209,22 @@ export const CustomerInfo = () => {
           </Button>
         </Flex>
       </Flex>
-      <Flex className="Address" gap="middle" vertical>
+      <Flex className="Address" gap="md" direction="column">
         <Flex justify="space-between">
-          <span style={{ opacity: "0.7" }}>Địa chỉ</span>
-          <span
+          <span>Địa chỉ</span>
+          <Button
             style={{
-              color: "#009f7f",
-              fontWeight: "bolder",
-              cursor: "pointer",
+              width: "120px",
+              backgroundColor: "#009f7f",
+              color: "#fff",
             }}
           >
             + Thêm
-          </span>
+          </Button>
         </Flex>
         <Flex
-          vertical
-          gap="small"
+          direction="column"
+          gap="sm"
           style={{
             backgroundColor: "#c4c4c4",
             width: "400px",

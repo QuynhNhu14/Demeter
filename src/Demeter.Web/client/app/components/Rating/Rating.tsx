@@ -1,6 +1,7 @@
 import { IconStarFilled } from "@tabler/icons-react";
-import { Flex, Progress, Rate, Badge } from "@mantine/core";
-import "./Rating.css";
+import { Flex, Progress, Rate, Badge, rem  } from "@mantine/core";
+// import "./Rating.css";
+import * as stylex from "@stylexjs/stylex";
 
 type RatingProps = {
   rate: {
@@ -9,14 +10,16 @@ type RatingProps = {
     ratingNumber: number;
   };
 };
+
 export const Rating: React.FC<RatingProps> = (props) => {
   const {
     rate: { rating, ratingStar, ratingNumber },
   } = props;
   return (
     <Flex className="Rating">
-      <Flex className="Rating--total" vertical justify="center" align="center">
+      <Flex {...stylex.props(styles.total)} direction="column" justify="center" align="center">
         <Badge
+          size="xl"
           color="#009f7f"
           style={{
             fontSize: "25px",
@@ -31,32 +34,31 @@ export const Rating: React.FC<RatingProps> = (props) => {
         </span>
       </Flex>
       <Flex
-        className="Rating--star"
-        vertical
+        {...stylex.props(styles.star)}
+        direction="column"
         justify="center"
         align="flex-start"
       >
         {ratingStar.map((star, index) => {
           const percent = (star / ratingNumber) * 100;
           return (
-            <Flex className="Rating--star__detail" justify="center" gap="small">
+            <Flex {...stylex.props(styles.detail)} justify="center" align="center" gap="md">
               <Flex
                 align="center"
                 gap="3px"
                 style={{
                   fontWeight: "bold",
-                  marginRight: "15px",
+                  marginRight: "10px",
                   opacity: "0.9",
                 }}
               >
-                {5 - index} <IconStarFilled />
+                {5 - index} <IconStarFilled style={{ width: rem(14), height: rem(14) }}/>
               </Flex>
               <Progress
-                percent={percent}
-                showInfo={false}
-                size="small"
-                strokeColor="#009f7f"
-                style={{ marginBottom: "0px" }}
+                size="sm"
+                value={percent}
+                color="#009f7f"
+                style={{ marginBottom: "0px", width: "200px" }}
               />
               <span>{ratingStar[index]}</span>
             </Flex>
@@ -66,3 +68,19 @@ export const Rating: React.FC<RatingProps> = (props) => {
     </Flex>
   );
 };
+
+const styles = stylex.create({
+  total: {
+    paddingRight: "50px",
+    borderRight: "1px solid #e7e7e7",
+  
+  },
+  star: {
+    width: "300px",
+    paddingLeft: "50px",
+  },
+  detail: {
+    width: "100%",
+    marginBottom: "5px",
+  },
+});

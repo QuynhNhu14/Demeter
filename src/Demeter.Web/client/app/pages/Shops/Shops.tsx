@@ -1,8 +1,8 @@
 import { Flex } from "@mantine/core";
-import "./Shops.css";
+// import "./Shops.css";
 import shopLogo from "../../../assets/logo.png";
 // import { CiLocationOn } from "react-icons/ci";
-import { Footer } from "../../components/Footer/Footer";
+import * as stylex from "@stylexjs/stylex";
 
 const shopList = [
   {
@@ -60,38 +60,40 @@ const shopList = [
     address: "Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương",
   },
 ];
+
 export const Shops = () => {
   const handleClick = () => {
     window.location.href = "../shop-product";
   };
+
   return (
     <div className="ShopsPage">
-      <Flex className="ShopsPage--container" vertical gap="large">
+      <Flex {...stylex.props(styles.container)} direction="column" gap="lg">
         <span style={{ fontWeight: "700", fontSize: "24px", opacity: 0.9 }}>
           Tất cả cửa hàng
         </span>
         <Flex
           className="ShopsPage--ListContainer"
           wrap="wrap"
-          gap="middle"
+          gap="md"
           justify="space-between"
         >
           {shopList.map((shop) => (
-            <div className="ShopsPage--ShopItem" onClick={handleClick}>
+            <div {...stylex.props(styles.item)} onClick={handleClick}>
               <img
                 src={shop.logo}
                 alt="shop logo"
                 style={{ borderRadius: "100px", marginRight: "10px" }}
               />
-              <Flex vertical justify="space-evenly">
+              <Flex direction="column" justify="space-evenly">
                 <span style={{ fontWeight: "600", fontSize: "18px" }}>
                   {shop.name}
                 </span>
                 <Flex align="flex-start">
-                  <CiLocationOn
+                  {/* <CiLocationOn
                     size={20}
                     style={{ opacity: 0.8, marginRight: "3px" }}
-                  />
+                  /> */}
                   <span style={{ opacity: 0.8, fontSize: "14px" }}>
                     {shop.address}
                   </span>
@@ -100,8 +102,24 @@ export const Shops = () => {
             </div>
           ))}
         </Flex>
-      </Flex>
-      <Footer />
+      </Flex> 
     </div>
   );
 };
+
+const styles = stylex.create({
+  item: {
+    display: "flex",
+    padding: "10px",
+    border: "1px solid #e7e7e7",
+    width: "400px",
+    height: "100px",
+    backgroundColor: "#fff",
+    ':hover': {
+      cursor: "pointer",
+    },
+  },
+  container: {
+    padding: "100px 140px",
+  },
+});

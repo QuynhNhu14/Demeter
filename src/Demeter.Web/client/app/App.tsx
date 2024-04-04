@@ -41,6 +41,10 @@ import { HeaderMegaMenu } from "./components/Navbar";
 import { defaultTheme } from "../themes";
 import { Footer } from "./components/Footer/Footer";
 import {IntroPage} from "./pages/IntroPage";
+import { Profile } from "./pages/Profile/Profile";
+import { ChangePassword } from "./pages/Profile/ChangePassword";
+import { Shops } from "./pages/Shops/Shops";
+import { ProductPage } from "./pages/ProductDetail/ProductPage";
 
 export default function App() {
   const navigate = useNavigate();
@@ -81,15 +85,17 @@ export default function App() {
         </AppShell.Header>
         <AppShell.Main>
           <Routes>
-            <Route path="/home" element={<HomePage />} />
-            {/* <Route path="/login" element={<SignInSignUp />} />
-          <Route path="/products" element={<ProductPage />} />
-          <Route path="/shop-product" element={<ShopProduct />} />
-          <Route path="/shops" element={<Shops />} />
-          <Route path="/offer" element={<Offer />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/change_password" element={<ChangePassword />} />
+          <Route path="/shops" element={<Shops />} />
+          <Route path="/products" element={<ProductPage />} />
+
+            {/* <Route path="/login" element={<SignInSignUp />} />
+          <Route path="/shop-product" element={<ShopProduct />} />
+          
+          <Route path="/offer" element={<Offer />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />

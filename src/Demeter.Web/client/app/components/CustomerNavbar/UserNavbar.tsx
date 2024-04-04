@@ -1,108 +1,59 @@
 import { useState, useEffect } from "react";
-import { MenuProps, Menu, Text } from "@mantine/core";
-import { NavLink } from "react-router-dom";
+import { Menu, Button, rem, Text, MenuProps, Box, NavLink } from '@mantine/core';
+import { IconGauge, IconFingerprint, IconActivity, IconChevronRight } from '@tabler/icons-react';
 
-type MenuItem = Required<MenuProps>["items"][number];
-import "./CustomerNavbar.css";
+import * as stylex from "@stylexjs/stylex";
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  link: React.ReactNode,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group"
-): MenuItem {
-  const to = `/${link}`.toLowerCase().replace(/\s/g, ""); // Tạo đường dẫn từ label
-
-  const menuItem: MenuItem = {
-    key,
-    icon,
-    link,
-    children,
-    label,
-    type,
-  };
-
-  // Kiểm tra key của mục có phải là các key cụ thể cần tạo NavLink hay không
-  const keysToNavLink = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
-  if (keysToNavLink.includes(String(key))) {
-    menuItem.label = (
-      <NavLink
-        to={to}
-        activeClassName="active"
-        style={{ color: label === "Đăng xuất" ? "#dc0f0f" : undefined }}
-      >
-        {label}
-      </NavLink>
-    );
-  }
-  if (key === "grp") {
-    menuItem.link = (
-      <Text strong type="secondary">
-        {link}
-      </Text>
-    );
-  }
-
-  return menuItem;
-}
-
-const items: MenuProps["items"] = [
-  getItem("Hồ sơ", "1", "profile"),
-  getItem("Đổi mật khẩu", "2", "change_password"),
-  getItem("Đơn hàng của tôi", "3", "orders"),
-  getItem("Danh sách yêu thích", "4", "profile"),
-  getItem("Yêu cầu hoàn tiền", "5", "profile"),
-  getItem("Báo cáo", "6", "profile"),
-  getItem("Phương thức thanh toán", "7", "profile"),
-  getItem("Trợ giúp", "8", "profile"),
-  getItem("Đăng xuất", "9", "login"),
-  // getItem('Danh sách yêu thích', '4', 'wishlist'),
-  // getItem('Yêu cầu hoàn tiền', '5', 'refund'),
-  // getItem('Báo cáo', '6', 'report'),
-  // getItem('Phương thức thanh toán', '7', 'payment'),
-  // getItem('Trợ giúp', '8', 'help'),
-  // getItem('Đăng xuất', '9', 'login'),
+const data = [
+  { label: 'Hồ sơ', link: 'profile'},
+  { label: 'Đổi mật khẩu', link: 'change_password'},
+  { label: 'Đơn hàng của tôi', link: 'orders' },
+  { label: 'Danh sách yêu thích', link: 'profile' },
+  { label: 'Yêu cầu hoàn tiền', link: 'profile' },
+  { label: 'Báo cáo', link: 'profile' },
+  { label: 'Phương thức thanh toán', link: 'profile' },
+  { label: 'Trợ giúp', link: 'profile' },
+  { label: 'Đăng xuất', link: 'login' },
 ];
 
+
 const UserNavbar: React.FC = () => {
-  const [selectedMenuKey, setSelectedMenuKey] = useState<string>(
-    localStorage.getItem("selectedMenuKey") || "1"
+  const [active, setActive] = useState<string>(
+    localStorage.getItem("selectedMenuKey") || "0"
   );
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    const clickedKey = e.key.toString();
+  const onClick = (index: number) => {
+    const clickedKey = index.toString();
     localStorage.setItem("selectedMenuKey", clickedKey);
-    setSelectedMenuKey(clickedKey);
+    setActive(clickedKey);
   };
 
-  useEffect(() => {
-    const menu = document.getElementsByClassName("ant-menu")[0];
-    if (menu) {
-      menu.setAttribute("data-selectedkeys", selectedMenuKey);
-    }
-  }, [selectedMenuKey]);
-
   return (
-    <div className="CustomerNavbar">
-      <>
-        <Menu
-          onClick={onClick}
-          defaultSelectedKeys={[localStorage.getItem("selectedMenuKey") || "1"]}
-          defaultOpenKeys={["grp"]}
-          mode="inline"
-          items={items}
-          style={{
-            width: 256,
-            fontWeight: "500",
-            backgroundColor: "white",
-            border: "0",
-          }}
-        />
-      </>
+    <div {...stylex.props(styles.navbar)}>
+      {
+      data.map((item, index) => 
+      <NavLink
+        href={item.link}
+        key={item.label}
+        active={index === parseInt(active) }
+        label={item.label}
+        onClick={() => onClick(index)}
+      />)
+    }
     </div>
   );
 };
 
+const styles = stylex.create({
+  navbar: {
+    backgroundColor: "#fff",
+    padding: "5px",
+    position: "fixed",
+    left: "24px",
+    top: "88px",
+    borderRadius: "5px",
+    border: "2px solid #e7e7e7",
+    width: "18%",
+  },
+});
 export default UserNavbar;

@@ -1,7 +1,7 @@
-import "./ProductDetail.css";
+// import "./ProductDetail.css";
 import "../../App.css";
 import { ProductDescription } from "../../components/ProductDescription/ProductDescription";
-import { Flex, Pagination, Select, Badge } from "@mantine/core";
+import { Flex, Pagination, Select, Badge, rem } from "@mantine/core";
 import { ProductList } from "../../components/ProductList/ProductList";
 import { NavLink } from "react-router-dom";
 // import {
@@ -13,8 +13,8 @@ import { NavLink } from "react-router-dom";
 // } from '@tabler/icons-react';
 import { Rating } from "../../components/Rating/Rating";
 // import { BsThreeDotsVertical } from "react-icons/bs";
-import { Footer } from "../../components/Footer/Footer";
-import { IconArrowLeft } from "@tabler/icons-react";
+import { IconArrowLeft, IconStarFilled } from "@tabler/icons-react";
+import * as stylex from "@stylexjs/stylex";
 
 type ProductPageProps = {
   productId?: string;
@@ -60,27 +60,29 @@ const reviews = [
   },
 ];
 
+
+
 export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
 
   return (
-    <div className="ProductPage">
-      <div className="ProductDetail">
-        <NavLink to="/home" className="BackHomeButton">
+    <div {...stylex.props(styles.ProductPage)}>
+      <div {...stylex.props(styles.ProductDetail)}>
+        <NavLink to="/home" {...stylex.props(styles.BackHomeButton)}>
           <IconArrowLeft />
           <span style={{ paddingLeft: "8px" }}>Quay lại</span>
         </NavLink>
-        <ProductDescription productInfo={ItemDetail} />
-        <Flex className="ProductDetail--Rating" vertical gap="large">
+         <ProductDescription productInfo={ItemDetail} />
+        <Flex {...stylex.props(styles.rating)} direction="column" gap="lg">
           <span style={{ fontWeight: "bolder", fontSize: "20px" }}>
             Đánh giá & Nhận xét của {ItemDetail.productName}
           </span>
           <Rating rate={ItemDetail.rate} />
         </Flex>
-        <Flex className="ProductDetail--Review" vertical>
-          <Flex className="ProductDetail--Review__title" align="center">
+        <Flex {...stylex.props(styles.review)} direction="column">
+          <Flex {...stylex.props(styles.reviewTitle)} align="center">
             <Flex
               flex="3"
               style={{
@@ -99,52 +101,44 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                 borderLeft: "1px solid #e7e7e7",
                 height: "100%",
                 paddingLeft: "20px",
+                paddingRight: "20px",
               }}
             >
-              <span style={{ opacity: 0.8 }}>Lọc theo:</span>
+              <span>Lọc theo:</span>
               <Select
-                defaultValue="Recent"
+                defaultValue="Gần đây"
                 style={{ width: 200 }}
                 bordered={false}
+                data={['Gần đây', 'Thấp đến Cao', 'Cao đến Thấp']}
                 onChange={handleChange}
-                options={[
-                  { value: "Recent", label: "Gần đây" },
-                  {
-                    value: "Ratings: Low to High",
-                    label: "Đánh giá: Thấp đến Cao",
-                  },
-                  {
-                    value: "Rating: High to Low",
-                    label: "Đánh giá: Cao đến Thấp",
-                  },
-                ]}
               />
             </Flex>
-            <Flex align="center" justify="center">
-              <span style={{ opacity: 0.8 }}>Lọc theo:</span>
+            <Flex               
+              flex="1"
+              align="center"
+              justify="center"
+              style={{
+                borderLeft: "1px solid #e7e7e7",
+                height: "100%",
+                paddingLeft: "20px",
+              }}>
+              <span>Lọc theo:</span>
               <Select
-                defaultValue="All Star"
+                defaultValue="Tất cả sao"
                 style={{ width: 200 }}
                 bordered={false}
+                data={['Tất cả sao', '5 Sao', '4 Sao', '3 sao', '2 sao', '1 sao']}
                 onChange={handleChange}
-                options={[
-                  { value: "All Star", label: "Tất cả" },
-                  { value: "5 Star", label: "5 Sao" },
-                  { value: "4 Star", label: "4 Sao" },
-                  { value: "3 Star", label: "3 Sao" },
-                  { value: "2 Star", label: "2 Sao" },
-                  { value: "1 Star", label: "1 Sao" },
-                ]}
               />
             </Flex>
           </Flex>
-          <Flex vertical justify="flex-end">
+          <Flex direction="column" justify="flex-end">
             {reviews.map((review) => (
-              <Flex className="ProductDetail--comment" justify="space-between">
+              <Flex {...stylex.props(styles.comment)} justify="space-between">
                 <Flex
                   className="ProductDetail--comments__left"
-                  vertical
-                  gap="small"
+                  direction="column"
+                  gap="sm"
                 >
                   <Badge
                     color="#009f7f"
@@ -155,11 +149,12 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                       borderRadius: "20px",
                     }}
                   >
-                    {review.rating} <IconStar />
+                    {review.rating} 
+                    <IconStarFilled style={{ width: rem(12), height: rem(12) }} />
                   </Badge>
                   <span style={{ fontSize: "12px", opacity: 0.8 }}>
                     bởi {review.by}
-                    <IconCheckCircle />
+                    {/* <IconCheckCircle /> */}
                   </span>
                   <span style={{ padding: "10px 0", fontSize: "16px" }}>
                     {review.comment}
@@ -171,27 +166,27 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                 <Flex
                   className="ProductDetail--right"
                   align="flex-end"
-                  gap="large"
+                  gap="lg"
                   style={{ opacity: 0.6 }}
                 >
                   <Flex
                     className="ProductDetail--right--icon"
                     align="center"
-                    gap="small"
+                    gap="sm"
                   >
-                    <IconLike />
+                    {/* <IconLike /> */}
                     {review.likes}
                   </Flex>
                   <Flex
                     className="ProductDetail--right--icon"
                     align="center"
-                    gap="small"
+                    gap="sm"
                   >
-                    <IconDislike />
+                    {/* <IconDislike /> */}
                     {review.dislikes}
                   </Flex>
                   <span className="ProductDetail--right--icon">
-                    <BsThreeDotsVertical />
+                    {/* <BsThreeDotsVertical /> */}
                   </span>
                 </Flex>
               </Flex>
@@ -200,18 +195,52 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
               <span style={{ fontSize: "12px", opacity: 0.6, padding: "20px" }}>
                 Trang 1 trên 1
               </span>
-              <Pagination defaultCurrent={1} total={1} />
+              <Pagination color="#009f7f" defaultCurrent={1} total={1} />
             </Flex>
           </Flex>
         </Flex>
-        <Flex className="ProductDetail--Related" vertical gap="large">
+        <Flex className="ProductDetail--Related" direction="column" gap="lg">
           <span style={{ fontWeight: "bolder", fontSize: "20px" }}>
             Sản phẩm tương tự
           </span>
-          <ProductList categoryId={"1"} />
+          <ProductList categoryId={"1"} /> 
         </Flex>
       </div>
-      <Footer />
     </div>
   );
 };
+
+const styles = stylex.create({
+  ProductPage: {
+    width: "100%",
+    padding: "0 30px 10px 30px",
+  },
+  ProductDetail: {
+    width: "100%",
+    padding: "20px",
+  },
+  BackHomeButton: {
+    position: "relative",
+    top: "30px",
+    color: "#009f7f",
+    textDecoration: "none",
+    fontSize: "16px",
+    display: "flex",
+  },
+  rating: {
+    padding: "20px",
+    borderBottom: "1px solid #e7e7e7", 
+  },
+  review: {
+    borderBottom: "1px solid #e7e7e7", 
+  },
+  reviewTitle: {
+    height: "70px",
+    borderBottom: "1px solid #e7e7e7", 
+  },
+  comment: {
+    borderBottom: "1px solid #e7e7e7",
+    margin: "0 20px",
+    padding: "20px 0",
+  }
+});
