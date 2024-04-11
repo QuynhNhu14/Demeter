@@ -1,6 +1,6 @@
 import { Container, Flex, Text, Image, Title, BackgroundImage } from "@mantine/core";
 import { CategoryList } from "../components/CategoryList/CategoryList";
-import { ProductList } from "../components/ProductList/ProductList";
+import { ProductList } from "../components/ProductList";
 import Offer1 from "../../assets/offer-1.png";
 import Offer2 from "../../assets/offer-2.png";
 import Offer3 from "../../assets/offer-3.png";
@@ -8,6 +8,7 @@ import Offer4 from "../../assets/offer-4.png";
 import Offer5 from "../../assets/offer-5.png";
 import logo from "../../assets/logo.png";
 import { ApplicationCard } from "../components/Card/ApplicationCard";
+import React from "react";
 // import "../../App.css";
 // import { CategoryList } from "../components/CategoryList/CategoryList";
 // import { ProductList } from "../components/ProductList/ProductList";
@@ -41,7 +42,7 @@ export default function HomePage() {
 
       <Flex mt={10}>
         <CategoryList/>
-        <ProductList categoryId="1"/>
+        <ProductList/>
       </Flex>
     </div>
      

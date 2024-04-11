@@ -9,6 +9,8 @@ interface SignInFormState {
 }
 
 const SignInForm: React.FC = () => {
+  const navigate = useNavigate();
+
   const [state, setState] = useState<SignInFormState>({
     email: "",
     password: "",
@@ -34,6 +36,7 @@ const SignInForm: React.FC = () => {
     };
 
     setState(initialState);
+    navigate('/home');
   };
 
   return (
@@ -70,7 +73,8 @@ const SignInForm: React.FC = () => {
           placeholder="Mật khẩu"
         />
         <a href="#">Quên mật khẩu?</a>
-        <button>Đăng nhập</button>
+        <button>Đăng nhập
+        </button>
       </form>
     </div>
   );

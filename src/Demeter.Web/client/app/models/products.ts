@@ -1,27 +1,29 @@
-import { ShopAccount } from "./users"
+import { ShopAccount } from "./users";
 
-export interface Products {
-    id: number
-    name: string
-    image?: string
-    description?:string
-    baseUnitPrice: number
-    dateCreated: Date | string
-    dateModified: Date | string
-    category: Category
-    vendor: ShopAccount
-  }
+export interface Product {
+  id: number;
+  name: string;
+  image?: string;
+  description?: string;
+  baseUnitPrice: number;
+  dateCreated: Date | string;
+  dateModified: Date | string;
+  category: Category;
+  vendor: ShopAccount;
+  sale?: number; 
+  rate?: number;
+}
 
 export interface Category {
-    id: number
-    name?: string
-    description?: string
-  }
+  id: number;
+  name?: string;
+  description?: string;
+}
 
-  export interface Prices{
-    id: number
-    unitPrice: number
-    product: Products
-    startDate: Date | string
-    endDate: Date | string
-  }
+export interface Price {
+  id: number;
+  unitPrice: number;
+  product: Product;
+  startDate: Date | string;
+  endDate: Date | string;
+}

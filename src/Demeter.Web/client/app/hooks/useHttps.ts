@@ -4,7 +4,7 @@ import { useLocalStorage } from "./useLocalStorage"; // Import useLocalStorage h
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // Browser should use relative URL
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use Vercel URL
-  return `http://localhost:${process.env.PORT ?? 3000}`; // Dev SSR should use localhost
+  return `http://localhost:${process.env.PORT ?? 5029}`; // Dev SSR should use localhost
 };
 
 export const useHttp = () => {

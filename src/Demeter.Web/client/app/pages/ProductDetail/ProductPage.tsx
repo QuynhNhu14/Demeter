@@ -2,7 +2,7 @@
 import "../../App.css";
 import { ProductDescription } from "../../components/ProductDescription/ProductDescription";
 import { Flex, Pagination, Select, Badge, rem } from "@mantine/core";
-import { ProductList } from "../../components/ProductList/ProductList";
+import { ProductList } from "../../components/ProductList";
 import { NavLink } from "react-router-dom";
 // import {
 //   IconArrowLeft,

@@ -1,52 +1,66 @@
 import axios, { AxiosError } from "axios";
-import { Category, Prices, Products } from "../models/products";
-
+import { Category, Price, Product } from "../models/products";
+import { useHttp } from "../hooks";
 
 const baseUrl = "http://localhost:5029/api/products";
 
-export async function getProduct() {
-    try {
-      const response = await axios.get<Products>(baseUrl);
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
-}
 
-export async function createProduct(product: Products) {
-    try {
-      const response = await axios.post<Products>(baseUrl, product);
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
+export async function getAllProducts() {
+  try {
+    const response = await axios.get<Product[]>(baseUrl);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
     }
   }
-
-export async function deleteProduct(id: string) {
-    try {
-      const response = await axios.delete<Products>(baseUrl, {data: {id}});
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
 }
 
-export async function updateProduct(product: Products) {
+export async function getProduct() {
+  try {
+    const response = await axios.get<Product>(baseUrl);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
+    }
+  }
+}
+
+export async function createProduct(product: Product) {
+  try {
+    const response = await axios.post<Product>(baseUrl, product);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
+    }
+  }
+}
+
+export async function deleteProduct(id: string) {
+  try {
+    const response = await axios.delete<Product>(baseUrl, { data: { id } });
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
+    }
+  }
+}
+
+export async function updateProduct(product: Product) {
   const url = `${baseUrl}/update`;
   try {
-    await axios.post<Products>(url, product);
+    await axios.post<Product>(url, product);
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error("Error: ", error.message);
@@ -57,23 +71,23 @@ export async function updateProduct(product: Products) {
 }
 
 export async function getCategory() {
-    const url = `${baseUrl}/categories`;
-    try {
-        const response = await axios.get<Category>(url);
-        return response.data;
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.error("Error: ", error.message);
-        } else {
-          console.error("Error: ", error);
-        }
-      }
+  const url = `${baseUrl}/categories`;
+  try {
+    const response = await axios.get<Category>(url);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
+    }
+  }
 }
 
 export async function deleteCategory(id: string) {
   const url = `${baseUrl}/update`;
   try {
-    await axios.delete<Category>(url, {data: {id}});
+    await axios.delete<Category>(url, { data: { id } });
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error("Error: ", error.message);
@@ -84,24 +98,23 @@ export async function deleteCategory(id: string) {
 }
 
 export async function getPrice() {
-    const url = `${baseUrl}/prices`;
-    try {
-        const response = await axios.get<Prices>(url);
-        return response.data;
+  const url = `${baseUrl}/prices`;
+  try {
+    const response = await axios.get<Price>(url);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+      console.error("Error: ", error);
     }
-    catch (error) {
-        if (error instanceof AxiosError) {
-            console.error("Error: ", error.message);
-          } else {
-            console.error("Error: ", error);
-          }
-    }
+  }
 }
 
 export async function deletePrice(id: string) {
   const url = `${baseUrl}/prices`;
   try {
-    await axios.delete<Prices>(url, {data: {id}});
+    await axios.delete<Price>(url, { data: { id } });
   } catch (error) {
     if (error instanceof AxiosError) {
       console.error("Error: ", error.message);
