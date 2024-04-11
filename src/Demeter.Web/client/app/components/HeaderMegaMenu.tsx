@@ -1,7 +1,7 @@
 import { IconShoppingCart, IconUser } from "@tabler/icons-react";
 import { Box, Group, Image, ActionIcon, Tabs, Paper, Overlay } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import headerLogo from "../../assets/header_logo.jpg";
+import headerLogo2 from "../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
 
 export function HeaderMegaMenu() {
@@ -35,15 +35,14 @@ export function HeaderMegaMenu() {
         component="nav"
         justify="space-between"
         h="100%"
-        px="lg"
-        pt="lg"
-        pb="0"
+        px="sm"
+        pt={10}
       >
-        <Group gap={4} align="center">
-          <NavLink to="/home">
-            <Image src={headerLogo} h={25} />
+        <Group gap={4}>
+          <NavLink to="/home" >
+            <Image src={headerLogo2} h={50} align="top"/>
           </NavLink>
-          <FuzzySearch />
+          <FuzzySearch/>
         </Group>
 
         <Group gap={4} align="center" >

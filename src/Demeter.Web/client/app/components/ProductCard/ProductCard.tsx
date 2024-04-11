@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styles from "./ProductCard.module.css";
 import { IconPlus, IconMinus } from "@tabler/icons-react";
 import { Card,  Badge, Flex } from "@mantine/core";
 

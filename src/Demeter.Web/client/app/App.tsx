@@ -76,7 +76,7 @@ export default function App() {
   return (
     <MantineProvider theme={defaultTheme} >
       <AppShell
-        header={{ height: 70, collapsed: false, offset: true }}
+        header={{height: 10, collapsed: false, offset: true }}
         withBorder={false}
         //appshell have position:fixed style - they are not scroll with the page.
       >
@@ -114,7 +114,7 @@ export default function App() {
           </Routes>
         </AppShell.Main>
       </AppShell>
-      <Footer />
+      <Footer/>
     </MantineProvider>
   );
 }

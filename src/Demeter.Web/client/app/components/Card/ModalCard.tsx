@@ -88,8 +88,8 @@ export const CardWithModal: React.FC<CardProps> = ({ productId }) => {
                 {ItemDetail.price}
               </span>
             </Flex>
-            <Badge color="#F9C127" style={{ marginRight: "0" }}>
-              {ItemDetail.rate.rating} <IconStarFilled />
+            <Badge color="#F9C127" style={{ marginRight: "0"}}>
+              {ItemDetail.rate.rating} <IconStarFilled size={14} style={{ marginTop: "5" }} />
             </Badge>
           </div>
         ) : (

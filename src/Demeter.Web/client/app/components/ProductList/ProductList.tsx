@@ -77,7 +77,7 @@ export const ProductList: React.FC<ProductListProps> = ({
         align="center"
         vertical
       >
-        <Flex wrap="wrap" gap="small" justify="space-between">
+        <Flex m={30} wrap="wrap" gap="sm" justify={"space-between"}>
           {Products.map((item) => (
             <CardWithModal productId="1" />
           ))}

@@ -1,7 +1,7 @@
 import { Container, Title, Group, Button, Text } from "@mantine/core";
-import { Illustration503 } from "../../components/Error/Illutration503";
-import { Illustration404 } from "../../components/Error/Illutration404";
-import { Illustration403 } from "../../components/Error/Illutration403";
+import { Illustration503 } from "../components/Error/Illutration503";
+import { Illustration404 } from "../components/Error/Illutration404";
+import { Illustration403 } from "../components/Error/Illutration403";
 import { IconListLetters } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 

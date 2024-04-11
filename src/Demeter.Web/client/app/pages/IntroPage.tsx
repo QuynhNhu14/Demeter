@@ -3,7 +3,6 @@ import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock } from '@tabler
 import logo from '../../assets/logo.png';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from "react-router-dom";
-import { Carousel } from '@mantine/carousel';
 import { useMediaQuery } from '@mantine/hooks';
 
 //feature
@@ -148,14 +147,6 @@ export function IntroPage() {
   const features = MOCKDATA.map((feature, index) => <Feature {...feature} key={index} />);
   const navigate = useNavigate();
 
-  // const theme = useMantineTheme();
-  // const mobile = useMediaQuery(`(max-width: ${theme.breakpoints.sm})`);
-  // const slides = data.map((item) => (
-  //   <Carousel.Slide key={item.title}>
-  //     <CardSlide {...item} />
-  //   </Carousel.Slide>
-  // ));
-
   return (   
     <div> 
       <Container align="center" mb={20}>
@@ -198,17 +189,13 @@ export function IntroPage() {
             ml={80}
             mr={50}
             mt={50}
+            mb={50}
             cols={{ base: 1, sm: 2, md: 3, lg:4, xl:5}}
             spacing={{ base: 'xl', md: 50 }}
             verticalSpacing={{ base: 'xl', md: 50 }}
           >
           {features}
         </SimpleGrid>
-       {/* <Carousel withIndicators height={200}>
-       <Carousel.Slide>1</Carousel.Slide>
-        <Carousel.Slide>2</Carousel.Slide>
-        <Carousel.Slide>3</Carousel.Slide>
-      </Carousel> */}
     </div>
     
   );
