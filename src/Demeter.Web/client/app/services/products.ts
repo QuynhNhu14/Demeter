@@ -18,9 +18,9 @@ export async function getAllProducts() {
   }
 }
 
-export async function getProduct() {
+export async function getProductById(productId: string) {
   try {
-    const response = await axios.get<Product>(baseUrl);
+    const response = await axios.get<Product>(`${baseUrl}/${productId}` );
     return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {

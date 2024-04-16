@@ -87,6 +87,8 @@ namespace Demeter.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId");
+
                     b.ToTable("Accounts");
                 });
 
@@ -455,16 +457,11 @@ namespace Demeter.Infrastructure.Migrations
                     b.Property<Guid>("VendorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("VoucherId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("VendorId");
-
-                    b.HasIndex("VoucherId");
 
                     b.ToTable("Products");
                 });
@@ -538,6 +535,32 @@ namespace Demeter.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Vouchers");
+                });
+
+            modelBuilder.Entity("ProductsVoucher", b =>
+                {
+                    b.Property<Guid>("AppliedProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VouchersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AppliedProductsId", "VouchersId");
+
+                    b.HasIndex("VouchersId");
+
+                    b.ToTable("ProductsVoucher");
+                });
+
+            modelBuilder.Entity("Demeter.Core.Entities.Accounts.Account", b =>
+                {
+                    b.HasOne("Demeter.Core.Entities.Users", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Demeter.Core.Entities.Accounts.AccountClaim", b =>
@@ -683,24 +706,24 @@ namespace Demeter.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Demeter.Core.Entities.Voucher", null)
-                        .WithMany("AppliedProducts")
-                        .HasForeignKey("VoucherId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Vendor");
                 });
 
-            modelBuilder.Entity("Demeter.Core.Entities.Users", b =>
+            modelBuilder.Entity("ProductsVoucher", b =>
                 {
-                    b.HasOne("Demeter.Core.Entities.Accounts.Account", "Account")
-                        .WithOne("User")
-                        .HasForeignKey("Demeter.Core.Entities.Users", "Id")
+                    b.HasOne("Demeter.Core.Entities.Products", null)
+                        .WithMany()
+                        .HasForeignKey("AppliedProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Account");
+                    b.HasOne("Demeter.Core.Entities.Voucher", null)
+                        .WithMany()
+                        .HasForeignKey("VouchersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Demeter.Core.Entities.Accounts.Account", b =>
@@ -716,8 +739,6 @@ namespace Demeter.Infrastructure.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("Claims");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Demeter.Core.Entities.Accounts.Roles", b =>
@@ -730,11 +751,6 @@ namespace Demeter.Infrastructure.Migrations
             modelBuilder.Entity("Demeter.Core.Entities.Orders", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Demeter.Core.Entities.Voucher", b =>
-                {
-                    b.Navigation("AppliedProducts");
                 });
 #pragma warning restore 612, 618
         }

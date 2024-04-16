@@ -1,6 +1,8 @@
 using System.ComponentModel.DataAnnotations;
+using Demeter.Core.Services.Orders;
 using Demeter.Core.Services.Products;
 using Demeter.Domain;
+using Demeter.Web.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demeter.Web.Controllers;
@@ -13,12 +15,15 @@ public class ProductsController: ControllerBase
     private readonly IProductsService _productsService;
     private readonly ICategoryService _categoryService;
     private readonly IPriceService _priceService;
+    private readonly IVoucherService _voucherService;
 
-    public ProductsController(ILogger<ProductsController> logger, IProductsService productsService, ICategoryService categoryService, IPriceService priceService) {
+    public ProductsController(ILogger<ProductsController> logger, IProductsService productsService,
+        ICategoryService categoryService, IPriceService priceService, IVoucherService voucherService) {
         _logger = logger;
         _productsService = productsService;
         _categoryService = categoryService;
         _priceService = priceService;
+        _voucherService = voucherService;
     }
 
     [HttpGet]
@@ -27,7 +32,29 @@ public class ProductsController: ControllerBase
         try
         {
             var products = await _productsService.GetAllAsync();
+            // var vouchers = await _voucherService.GetAllAsync();
+            // var productDto = products.Select(product => new ProductDto
+            // (
+            //     product,
+            //     vouchers.Where(v => v.AppliedProducts.Contains(product)).ToList()
+            // )).ToList();
+            
             return Ok(products);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpGet]
+    [Route("{id}")] // api/products[]
+    public async Task<ActionResult<Domain.Products>> GetProductById(string id)
+    {
+        try
+        {
+            var product = await _productsService.GetById(id);
+            return Ok(product);
         }
         catch (Exception)
         {

@@ -78,10 +78,9 @@ public class CoreDbContext : DbContext, ICoreDbContext
             .HasOne(u => u.Account)
             .WithMany(u => u.AccountTokens)
             .HasForeignKey(u => u.UserId);
-        modelBuilder.Entity<Users>()
-            .HasOne(u => u.Account)
-            .WithOne(u => u.User)
-            .HasForeignKey<Users>(u => u.Id);
+        // modelBuilder.Entity<Account>()
+        //     .HasOne(u => u.User)
+        //     .WithOne(u => u.Account);
     }
 
     #endregion

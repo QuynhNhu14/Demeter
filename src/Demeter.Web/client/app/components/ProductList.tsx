@@ -1,8 +1,10 @@
-import { Card, Flex } from "@mantine/core";
+import { Badge, Card, Flex } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Product } from "../models/products";
 import { getAllProducts } from "../services/products";
-import React from "react";
+
+import {IconStarFilled } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
 
 type ProductCardProps = {
   product: Product;
@@ -10,11 +12,10 @@ type ProductCardProps = {
 
 function ProductCard({ product }: ProductCardProps) {
   return (
-    <Card>
-      {/* <Badge>{product.discountPercent}</Badge> */}
-
-      <div className="ProductCard--Image">
-        <img src={product.image} alt="product image" />
+    <Card withBorder shadow="sm">
+      {product.vouchers && product.vouchers.length > 0 && <Badge pos={"absolute"} style={{ top: "10px", right: "10px" }}> - {product.vouchers[0].discount} %</Badge>}
+      <div>
+        <img src={product.imageUrl} alt="product image" width={"150"} height={"120"}/>
       </div>
       <Flex
         gap="sm"
@@ -24,11 +25,10 @@ function ProductCard({ product }: ProductCardProps) {
         wrap="wrap"
         style={{ padding: "20px", width: "100%" }}
       >
-        {/* {product.sale ? (
-          <div className="ProductCard--price">
+          <div>
             <Flex gap="sm" align="center">
               <span style={{ fontWeight: "500", fontSize: "18px" }}>
-                {product.baseUnitPrice - product.baseUnitPrice * product.sale}
+                {product.vouchers && product.vouchers.length > 0 ? product.baseUnitPrice - product.baseUnitPrice * product.vouchers[0].discount / 100 + "đ" : product.baseUnitPrice + "đ"} 
               </span>
               <span
                 style={{
@@ -38,18 +38,13 @@ function ProductCard({ product }: ProductCardProps) {
                 }}
               >
                 {" "}
-                {product.baseUnitPrice}
+                {product.baseUnitPrice + "đ"}
               </span>
             </Flex>
-            <Badge color="#F9C127" style={{ marginRight: "0" }}>
-              {product.rate ?? 0} <IconStarFilled />
+            <Badge color="#F9C127" pos={"absolute"} alignContent={"center"}>
+              {product.rate ?? 0} <IconStarFilled size={16}/>
             </Badge>
           </div>
-        ) : (
-          <span style={{ fontWeight: "600", fontSize: "20px" }}>
-            {product.baseUnitPrice}
-          </span>
-        )} */}
         <span style={{ opacity: "0.8", fontSize: "16px" }}>{product.name}</span>
         
       </Flex>
@@ -66,6 +61,7 @@ type ProductListProps = {
 };
 
 export const ProductList: React.FC<ProductListProps> = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState<Product[]>([]);
   const fetchData = async () => {
     const data = await getAllProducts();
@@ -80,9 +76,8 @@ export const ProductList: React.FC<ProductListProps> = () => {
   }, []);
 
   return (
-    <div className="ProductList">
+    <div onClick={()=> {navigate('/')}}>
       <Flex
-        className="ProductList--products"
         gap="large"
         align="center"
       >

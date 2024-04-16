@@ -1,15 +1,17 @@
+import { Vouchers } from "./orders";
 import { ShopAccount } from "./users";
 
 export interface Product {
   id: number;
   name: string;
-  image?: string;
+  imageUrl?: string;
   description?: string;
   baseUnitPrice: number;
   dateCreated: Date | string;
   dateModified: Date | string;
   category: Category;
   vendor: ShopAccount;
+  vouchers?: Vouchers[];
   sale?: number; 
   rate?: number;
 }

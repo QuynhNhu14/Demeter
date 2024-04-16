@@ -44,7 +44,7 @@ import {IntroPage} from "./pages/IntroPage";
 import { Profile } from "./pages/Profile/Profile";
 import { ChangePassword } from "./pages/Profile/ChangePassword";
 import { Shops } from "./pages/Shops/Shops";
-import { ProductPage } from "./pages/ProductDetail/ProductPage";
+import { ProductPage } from "./pages/ProductPage";
 
 export default function App() {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ export default function App() {
   return (
     <MantineProvider theme={defaultTheme} >
       <AppShell
-        header={{height: 10, collapsed: false, offset: true }}
+        header={{height: 50, collapsed: false, offset: true }}
         withBorder={false}
         //appshell have position:fixed style - they are not scroll with the page.
       >
@@ -89,7 +89,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/change_password" element={<ChangePassword />} />
           <Route path="/shops" element={<Shops />} />
-          <Route path="/products" element={<ProductPage />} />
+          <Route path="/products" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47" />} />
 
             {/* <Route path="/login" element={<SignInSignUp />} />
           <Route path="/shop-product" element={<ShopProduct />} />

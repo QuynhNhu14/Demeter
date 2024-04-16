@@ -1,19 +1,17 @@
 import { IconStarFilled } from "@tabler/icons-react";
-import { Flex, Progress, Rate, Badge, rem  } from "@mantine/core";
+import { Flex, Badge, rem  } from "@mantine/core";
 // import "./Rating.css";
 import * as stylex from "@stylexjs/stylex";
 
 type RatingProps = {
-  rate: {
-    rating: number;
-    ratingStar: number[];
-    ratingNumber: number;
-  };
+  rate: number | undefined
+    // ratingStar: number[];
+    // ratingNumber: number;
 };
 
 export const Rating: React.FC<RatingProps> = (props) => {
   const {
-    rate: { rating, ratingStar, ratingNumber },
+    rate: rate,
   } = props;
   return (
     <Flex className="Rating">
@@ -27,10 +25,10 @@ export const Rating: React.FC<RatingProps> = (props) => {
             borderRadius: "30px",
           }}
         >
-          {rating} <IconStarFilled />
+          {rate} <IconStarFilled />
         </Badge>
         <span style={{ fontSize: "16px", opacity: "0.6", paddingTop: "10px" }}>
-          {ratingNumber} đánh giá
+          2 đánh giá
         </span>
       </Flex>
       <Flex
@@ -39,7 +37,8 @@ export const Rating: React.FC<RatingProps> = (props) => {
         justify="center"
         align="flex-start"
       >
-        {ratingStar.map((star, index) => {
+        {rate} <IconStarFilled style={{ width: rem(14), height: rem(14) }}/>
+        {/* {ratingStar.map((star, index) => {
           const percent = (star / ratingNumber) * 100;
           return (
             <Flex {...stylex.props(styles.detail)} justify="center" align="center" gap="md">
@@ -63,7 +62,7 @@ export const Rating: React.FC<RatingProps> = (props) => {
               <span>{ratingStar[index]}</span>
             </Flex>
           );
-        })}
+        })} */}
       </Flex>
     </Flex>
   );

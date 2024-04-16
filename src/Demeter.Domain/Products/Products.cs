@@ -13,6 +13,8 @@ public class Products: BaseEntity<Guid>
     
     public Category Category { get; set; }
     public Users Vendor { get; set; }
+    
+    public ICollection<Voucher> Vouchers { get; set; }
 
     // public IList<Variants> Variants { get; set; }
 }
