@@ -1,31 +1,20 @@
 import { useState, useEffect } from "react";
 import {
-  Routes,
-  Route,
   useNavigate,
   useLocation,
   NavLink,
 } from "react-router-dom";
-import "./App_admin.css";
-import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
-import Dashboard from "../Dashboard/Dashboard";
+// import "./App_admin.css";
+
 import { Input, Button, Flex } from "@mantine/core";
-import AllProduct from "../Product_admin/AllProduct";
-import AddProduct from "../pages/Product_admin/AddProduct";
+
 import {
   IconLogout,
-  IconMenuFold,
-  IconMenuUnfold,
   IconSearch,
   IconShoppingBag,
   IconUser,
-} from "@tabler/icons-react"; // Import các biểu tượng từ Ant Design
-import Inventory from "../pages/Inventory/Inventory";
-import Orders from "../Orders/Order";
-import ShopProfile from "../pages/ShopsPreview/ShopPreview";
-import Dashboardadmin from "../Dashboard/Dashboard_admin";
-import AllShopTable from "../../components/Table/TableAllShop";
-import AllShop from "../ShopsPreview/Allshop";
+} from "@tabler/icons-react";
+
 import headerLogo from "../../../assets/header_logo.jpg";
 
 export default function AdminHeader() {

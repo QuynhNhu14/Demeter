@@ -1,9 +1,9 @@
-import { Badge, Card, Flex } from "@mantine/core";
+import { Badge, Flex, Card, Button} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Product } from "../models/products";
 import { getAllProducts } from "../services/products";
 
-import {IconStarFilled } from "@tabler/icons-react";
+import {IconMinus, IconPlus, IconStarFilled } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
 type ProductCardProps = {
@@ -11,11 +11,23 @@ type ProductCardProps = {
 };
 
 function ProductCard({ product }: ProductCardProps) {
+  const [quantity, setQuantity] = useState<number>(0);
+
+  const handleAddProduct = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleSubProduct = () => {
+    setQuantity(quantity - 1);
+  };
+
+  const navigate = useNavigate();
+
   return (
     <Card withBorder shadow="sm">
       {product.vouchers && product.vouchers.length > 0 && <Badge pos={"absolute"} style={{ top: "10px", right: "10px" }}> - {product.vouchers[0].discount} %</Badge>}
       <div>
-        <img src={product.imageUrl} alt="product image" width={"150"} height={"120"}/>
+        <img src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate("/products")}/>
       </div>
       <Flex
         gap="sm"
@@ -46,11 +58,26 @@ function ProductCard({ product }: ProductCardProps) {
             </Badge>
           </div>
         <span style={{ opacity: "0.8", fontSize: "16px" }}>{product.name}</span>
-        
+        {quantity === 0 ? (
+          <Button variant="filled" fullWidth leftSection={<IconMinus size={14}/>} rightSection={<IconPlus size={14} />} onClick={handleAddProduct}>
+            <span >Thêm vào giỏ</span>
+          </Button>
+        ) : (
+          <Button>
+            <span
+              onClick={handleSubProduct}
+            >
+            <IconMinus />
+            </span>
+            <span>{quantity}</span>
+            <span
+              onClick={handleAddProduct}
+            >
+              <IconPlus/>
+            </span>
+          </Button>
+        )}
       </Flex>
-      {/* <Modal opened={isModalOpen} onClose={handleCancel} size="75%">
-        <ProductDetail productId={productId} />
-      </Modal> */}
     </Card>
   );
 }
@@ -61,7 +88,6 @@ type ProductListProps = {
 };
 
 export const ProductList: React.FC<ProductListProps> = () => {
-  const navigate = useNavigate();
   const [data, setData] = useState<Product[]>([]);
   const fetchData = async () => {
     const data = await getAllProducts();
@@ -76,14 +102,15 @@ export const ProductList: React.FC<ProductListProps> = () => {
   }, []);
 
   return (
-    <div onClick={()=> {navigate('/')}}>
+    <div >
       <Flex
         gap="large"
         align="center"
+        justify="space-between"
       >
-        <Flex m={30} wrap="wrap" gap="sm" justify={"space-between"}>
+        <Flex m={30} wrap="wrap" gap={30} justify={"flex-start"}>
           {data.map((product) => (
-            <ProductCard product={product} />
+            <ProductCard product={product}/>
           ))}
         </Flex>
       </Flex>

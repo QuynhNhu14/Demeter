@@ -2,9 +2,8 @@
 import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
 import { ProductList } from "../components/ProductList";
 import { NavLink} from "react-router-dom";
-import { Rating } from "../components/Rating";
-// import { BsThreeDotsVertical } from "react-icons/bs";
-import { IconArrowLeft, IconHeart, IconStarFilled } from "@tabler/icons-react";
+
+import { IconArrowLeft, IconCircleCheck, IconHeart, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 import { useState, useEffect } from "react";
 import { Product } from "../models/products";
@@ -13,27 +12,6 @@ import { getProductById } from "../services/products";
 type ProductPageProps = {
   productId?: string;
 };
-
-// const ItemDetail = {
-//   productId: "1",
-//   productName: "Cà rốt",
-//   unit: "1kg",
-//   description:
-//     "Cà rốt là một loại rau quả được yêu thích với vị ngọt tự nhiên và màu sắc tươi sáng. Với hàm lượng chất xơ cao, vitamin A và các chất chống oxy hóa, cà rốt không chỉ mang lại lợi ích cho sức khỏe mà còn là nguyên liệu tuyệt vời cho các món ăn chế biến và nấu nướng.",
-//   price: "20.000 đ",
-//   salePrice: "16.000 đ",
-//   discountPercent: "20%",
-//   available: "18 sản phẩm",
-//   categories: ["Trái cây & Rau củ", "Rau củ"],
-//   seller: "Nông sản Demeter",
-//   rate: { rating: 4.67, ratingStar: [2, 1, 0, 0, 0], ratingNumber: 3 },
-//   image: [
-//     "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
-//     "https://suckhoedoisong.qltns.mediacdn.vn/thumb_w/1200/324455921873985536/2021/8/10/ava-carot-1628613142139653627209-20-0-660-1024-crop-1628613159334685556069.jpg",
-//     "https://hips.hearstapps.com/hmg-prod/images/carrots-royalty-free-image-1684505309.jpg?crop=0.68723xw:1xh;center,top&resize=640:*",
-//     "https://static-images.vnncdn.net/files/publish/2022/10/31/mua-ca-rot-nen-chon-cu-sam-mau-hay-nhat-mau-nguoi-trong-nhac-nho-5-meo-04fd1ee0880744f98a3b3677dffba535.jpg",
-//   ],
-// };
 
 const styles = stylex.create({
   ProductPage: {
@@ -157,9 +135,7 @@ const reviews = [
 
 
 export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
-  // const handleChange = (value: string) => {
-  //   console.log(`selected ${value}`);
-  // };
+ 
   const [heart, setHeart] = useState<boolean>(false);
 
   const handleLike = () => {
@@ -208,18 +184,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                 src={data?.imageUrl}
                 alt="ProductImage"
               />
-              {/* <Flex gap="sm" justify="space-between">
-                {data?.imageUrl.map((item, index) => {
-                  return (
-                    <img
-                      {...stylex.props(styles.subImage)}
-                      src={item}
-                      alt="ProductImage"
-                      onClick={() => setImageIdx(index)}
-                    />
-                  );
-                })}
-              </Flex> */}
+
             </Flex>
             <Flex {...stylex.props(styles.infoContainer)} direction="column" gap="lg">
               <Flex {...stylex.props(styles.info)} direction="column" gap="sm">
@@ -301,7 +266,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
             <span>{data?.description}</span>
           </Flex>
         </div>
-        {/* <ProductDescription productInfo={data}/> */}
+        
         <Flex {...stylex.props(styles.rating)} direction="column" gap="lg">
           <span style={{ fontWeight: "bolder", fontSize: "20px" }}>
             Đánh giá & Nhận xét của {data?.name}
@@ -363,7 +328,6 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
             {reviews.map((review) => (
               <Flex {...stylex.props(styles.comment)} justify="space-between">
                 <Flex
-                  // className="ProductDetail--comments__left"
                   direction="column"
                   gap="sm"
                 >
@@ -381,7 +345,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                   </Badge>
                   <span style={{ fontSize: "12px", opacity: 0.8 }}>
                     bởi {review.by}
-                    {/* <IconCheckCircle /> */}
+                    <IconCircleCheck />
                   </span>
                   <span style={{ padding: "10px 0", fontSize: "16px" }}>
                     {review.comment}
@@ -391,30 +355,24 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
                   </span>
                 </Flex>
                 <Flex
-                  // className="ProductDetail--right"
                   align="flex-end"
                   gap="lg"
                   style={{ opacity: 0.6 }}
                 >
                   <Flex
-                    // className="ProductDetail--right--icon"
                     align="center"
                     gap="sm"
                   >
-                    {/* <IconLike /> */}
+                    <IconThumbUp />
                     {review.likes}
                   </Flex>
                   <Flex
-                    // className="ProductDetail--right--icon"
                     align="center"
                     gap="sm"
                   >
-                    {/* <IconDislike /> */}
+                    <IconThumbDown />
                     {review.dislikes}
                   </Flex>
-                  {/* <span className="ProductDetail--right--icon">
-                    <BsThreeDotsVertical />
-                  </span> */}
                 </Flex>
               </Flex>
             ))}

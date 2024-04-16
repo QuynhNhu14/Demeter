@@ -7,20 +7,17 @@ import {
 } from "@tabler/icons-react";
 import {
   ActionIcon,
-  Box,
-  Button,
-  Container,
   Flex,
   Group,
-  Input,
+
   Paper,
   Stack,
   Text,
   Title,
   rem,
 } from "@mantine/core";
-import { NavLink } from "react-router-dom";
-import logo from "../../../assets/logo.png";
+
+import logo from "../../assets/logo.png";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({

@@ -1,7 +1,7 @@
 import { Flex } from "@mantine/core";
-// import "./Shops.css";
-import shopLogo from "../../../assets/logo.png";
-// import { CiLocationOn } from "react-icons/ci";
+
+import shopLogo from "../../assets/logo.png";
+
 import * as stylex from "@stylexjs/stylex";
 
 const shopList = [

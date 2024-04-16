@@ -25,7 +25,7 @@ import {
     { title: 'Giỏ quà biếu tặng', icon: IconBasket, color: 'pink' },
   ];
   
-  export function ApplicationCard() {
+  export function Shortcut() {
     const theme = useMantineTheme();
   
     const items = mockdata.map((item) => (

@@ -2,7 +2,7 @@ import { Container, Title, Group, Button, Text } from "@mantine/core";
 import { Illustration503 } from "../components/Error/Illutration503";
 import { Illustration404 } from "../components/Error/Illutration404";
 import { Illustration403 } from "../components/Error/Illutration403";
-import { IconListLetters } from "@tabler/icons-react";
+
 import { useNavigate } from "react-router-dom";
 
 type ErrorDisplay = {
@@ -10,8 +10,6 @@ type ErrorDisplay = {
   des: string;
   display: React.ReactNode;
 };
-
-
 
 const ErrorDefinition = ["403", "404", "500", "503"] as const;
 type ErrorCode = typeof ErrorDefinition[number];

@@ -1,19 +1,16 @@
-import { Flex, Grid } from "@mantine/core";
-import Navbar from "../../components/HeaderMegaMenu";
-import { ShopInfo } from "../../components/ShopInfo/ShopInfo";
+import { Flex} from "@mantine/core";
+import { ShopInfo } from "../components/ShopInfo";
 import "./ShopProduct.css";
-import shopBanner from "../../../assets/shopBanner.png";
-import { ProductList } from "../../components/ProductList/ProductList";
+import { ProductList } from "../components/ProductList";
 
 export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
   return (
-    <div className="ShopProductPage">
+    <div>
       <Flex>
         <Flex style={{ flex: "3" }}>
           <ShopInfo shopId={shopId ? shopId : "1"} />
         </Flex>
         <Flex
-          className="ShopProduct"
           vertical
           gap="large"
           style={{ flex: "10", padding: "24px 24px 0 0" }}

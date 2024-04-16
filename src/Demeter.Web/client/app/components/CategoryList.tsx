@@ -123,7 +123,7 @@ import {
   IconCoffee,
   IconSalad, } from '@tabler/icons-react';
 import { JSX } from 'react/jsx-runtime';
-import React from 'react';
+
 interface LinksGroupProps {
   icon: React.FC<any>;
   label: string;
