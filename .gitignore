@@ -9,6 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+*.cloud.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -535,7 +536,8 @@ dist
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*

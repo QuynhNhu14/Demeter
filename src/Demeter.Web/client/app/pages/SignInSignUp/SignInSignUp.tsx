@@ -1,6 +1,5 @@
 import { useState } from "react";
 import "./SignInSignUp.css";
-import "../../components/Navbar/Navbar.module.css";
 import SignInForm from "./SignIn";
 import SignUpForm from "./SignUp";
 import Navbar from "../../components/Navbar/NavbarTwo";
@@ -23,8 +22,8 @@ const SignInSignUp: React.FC = () =>  {
   return (
     <div className="LoginPage" style={{marginTop: '0'}}>
       <div className={containerClass} id="container">
-        <SignUpForm />
-        <SignInForm />
+        {/* <SignUpForm />
+        <SignInForm /> */}
         <div className="overlay-container">
           <div className="overlay">
             <div className={`overlay-panel overlay-left ${type === "signUp" ? "" : "hidden"}`}>

@@ -25,8 +25,12 @@ const {Text} = Typography;
 const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts }) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
-  const handleProductCheckboxChange = (productId: number, checked: boolean) => {
+  const handleProductCheckboxChange = (productId: number, shop: string, checked: boolean) => {
+    console.log({productId})
     const updatedProducts = products.map((product) => {
+      if(product.selected && product.shop !== shop) {
+        return { ...product, selected: false } };
+
       if (product.id === productId) {
         return { ...product, selected: checked };
       }
@@ -110,7 +114,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
 
   const handleQuantityChange = (value: number | undefined, productId: number) => {
     const updatedProducts = products.map((product) => {
-      if (product.id === productId && value !== undefined) {
+      if (product.id === productId && value !== undefined && typeof value !== 'string') {
         return { ...product, quantity: value };
       }
       return product;
@@ -163,10 +167,61 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
     const shopProducts = groupedProducts[shopName];
     const isShopSelected = shopProducts.every((product) => product.selected);
 
+    const rows = shopProducts.map((element) => (
+      <Table.Tr key={element.name}>
+        <Table.Td>
+          <Checkbox 
+            color="#009f7f" 
+            checked={element.selected} 
+            onChange={(e) => handleProductCheckboxChange(element.id,element.shop, e.target.checked)} />
+        </Table.Td>
+        <Table.Td>
+          <Flex align="center" gap={4}>
+            <img src={element.image} alt={element.name} style={{ width: '50px', height: '50px' }} />
+            {element.name}
+          </Flex>
+        </Table.Td>
+        <Table.Td>
+          <Flex gap={8}>
+            <Text td="line-through" fs="italic">{element.oldPrice} đ</Text>
+            <Text fw={700}>{element.newPrice} đ</Text>
+          </Flex>
+        </Table.Td>
+        <Table.Td>
+          <Flex gap={8}>
+            <Button
+              variant="default"
+              style={{padding: 12}}
+              onClick={() => decreaseQuantity(element.id)}><FaMinus size={10} /></Button>
+            <NumberInput 
+              style={{width: '100px'}}
+              min={1} 
+              value={element.quantity} 
+              hideControls 
+              onChange={(value) => handleQuantityChange(value, element.id)} />
+            <Button
+              variant="default"
+              style={{padding: "0 12px"}}
+              onClick={() => increaseQuantity(element.id)}><FaPlus size={10} /></Button>
+          </Flex>
+        </Table.Td>
+        <Table.Td>{element.quantity * element.newPrice} VNĐ</Table.Td>
+        <Table.Td>
+          <Button 
+            variant="default"
+            style={{padding: "0 10px"}}
+            onClick={() => deleteProduct(element.id)} >
+              <AiOutlineDelete size={18}/>
+          </Button>
+        </Table.Td>
+      </Table.Tr>
+    ));
+
     return (
-      <div key={shopName}>
-        <h2>
+      <Flex key={shopName} direction="column" gap={8} >
+        <Flex style={{marginTop: '0'}}>
           <Checkbox
+            color="#009f7f"
             checked={isShopSelected}
             onChange={(e) => handleShopCheckboxChange(shopName, e.target.checked)}
           />
