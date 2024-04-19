@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import {
-  Table,
-  Space,
-  NumberInput,
-  Button,
-  Checkbox,
-  Text,
-} from "@mantine/core";
-import { IconTrash } from "@tabler/icons-react";
+import React, { useState} from 'react';
+import { Table, Space, Button, Checkbox, Text, NumberInput, ActionIcon, Flex } from '@mantine/core';
+import { AiOutlineDelete } from "react-icons/ai";
+import { FaPlus, FaMinus } from "react-icons/fa6";
+import * as stylex from "@stylexjs/stylex";
 
+const styles = stylex.create({
+  button: {
+    width: "fit-content",
+  },
+});
 interface Props {
   initialProducts: Product[];
   updateSelectedProducts: (updatedProducts: Product[]) => void;
 }
+
 
 export interface Product {
   id: number;
@@ -25,14 +26,15 @@ export interface Product {
   selected: boolean;
 }
 
-const ProductCart: React.FC<Props> = ({
-  initialProducts,
-  updateSelectedProducts,
-}) => {
+const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts }) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
 
-  const handleProductCheckboxChange = (productId: number, checked: boolean) => {
+  const handleProductCheckboxChange = (productId: number, shop: string, checked: boolean) => {
+    console.log({productId})
     const updatedProducts = products.map((product) => {
+      if(product.selected && product.shop !== shop) {
+        return { ...product, selected: false } };
+
       if (product.id === productId) {
         return { ...product, selected: checked };
       }
@@ -52,97 +54,15 @@ const ProductCart: React.FC<Props> = ({
     updateSelectedProducts(updatedProducts);
   };
 
-  const columns = [
-    {
-      title: "",
-      dataIndex: "check",
-      key: "check",
-      render: (_: any, record: Product) => (
-        <Checkbox
-          checked={record.selected}
-          onChange={(e) =>
-            handleProductCheckboxChange(record.id, e.target.checked)
-          }
-        />
-      ),
-    },
-    {
-      title: "Sản phẩm",
-      dataIndex: "name",
-      key: "name",
-      render: (text: string, record: Product) => (
-        <Space>
-          <img
-            src={record.image}
-            alt={record.name}
-            style={{ width: "50px", height: "50px" }}
-          />
-          <span>{record.name}</span>
-        </Space>
-      ),
-    },
-    {
-      title: "Giá",
-      dataIndex: "price",
-      key: "price",
-      align: "center",
-      render: (text: string, record: Product) => (
-        <Space align="baseline">
-          <Text delete italic>
-            {record.oldPrice} đ
-          </Text>
-          <Text strong>{record.newPrice} đ</Text>
-        </Space>
-      ),
-    },
-    {
-      title: "Số lượng",
-      dataIndex: "quantity",
-      key: "quantity",
-      align: "center",
-      render: (text: string, record: Product) => (
-        <Space>
-          <Button onClick={() => decreaseQuantity(record.id)}>-</Button>
-          <NumberInput
-            min={1}
-            value={record.quantity}
-            onChange={(value) => handleQuantityChange(value, record.id)}
-          />
-          <Button onClick={() => increaseQuantity(record.id)}>+</Button>
-        </Space>
-      ),
-    },
-    {
-      title: "Tổng cộng",
-      dataIndex: "total",
-      key: "total",
-      render: (text: string, record: Product) => (
-        <span>{record.quantity * record.newPrice} VNĐ</span>
-      ),
-    },
-    {
-      title: "",
-      dataIndex: "action",
-      key: "action",
-      align: "center",
-      render: (text: string, record: Product) => (
-        <Button icon={<IconTrash />} onClick={() => deleteProduct(record.id)} />
-      ),
-    },
-  ];
-
-  const handleQuantityChange = (
-    value: number | undefined,
-    productId: number
-  ) => {
+  const handleQuantityChange = (value: number | string, productId: number) => {
     const updatedProducts = products.map((product) => {
-      if (product.id === productId && value !== undefined) {
+      if (product.id === productId && value !== undefined && typeof value !== 'string') {
         return { ...product, quantity: value };
       }
       return product;
     });
     setProducts(updatedProducts);
-
+    
     updateSelectedProducts(updatedProducts);
   };
 
@@ -154,7 +74,7 @@ const ProductCart: React.FC<Props> = ({
       return product;
     });
     setProducts(updatedProducts);
-
+    
     updateSelectedProducts(updatedProducts);
   };
 
@@ -166,78 +86,110 @@ const ProductCart: React.FC<Props> = ({
       return product;
     });
     setProducts(updatedProducts);
-
+    
     updateSelectedProducts(updatedProducts);
   };
 
   const deleteProduct = (productId: number) => {
-    const updatedProducts = products.filter(
-      (product) => product.id !== productId
-    );
+    const updatedProducts = products.filter((product) => product.id !== productId);
     setProducts(updatedProducts);
-
+    
     updateSelectedProducts(updatedProducts);
   };
 
-  const groupedProducts = products.reduce(
-    (acc: { [key: string]: Product[] }, product: Product) => {
-      if (!acc[product.shop]) {
-        acc[product.shop] = [];
-      }
-      acc[product.shop].push(product);
-      return acc;
-    },
-    {}
-  );
+  const groupedProducts = products.reduce((acc: { [key: string]: Product[] }, product: Product) => {
+    if (!acc[product.shop]) {
+      acc[product.shop] = [];
+    }
+    acc[product.shop].push(product);
+    return acc;
+  }, {});
 
   const tables = Object.keys(groupedProducts).map((shopName) => {
     const shopProducts = groupedProducts[shopName];
     const isShopSelected = shopProducts.every((product) => product.selected);
 
+    const rows = shopProducts.map((element) => (
+      <Table.Tr key={element.name}>
+        <Table.Td>
+          <Checkbox 
+            color="#009f7f" 
+            checked={element.selected} 
+            onChange={(e) => handleProductCheckboxChange(element.id,element.shop, e.target.checked)} />
+        </Table.Td>
+        <Table.Td>
+          <Flex align="center" gap={4}>
+            <img src={element.image} alt={element.name} style={{ width: '50px', height: '50px' }} />
+            {element.name}
+          </Flex>
+        </Table.Td>
+        <Table.Td>
+          <Flex gap={8}>
+            <Text td="line-through" fs="italic">{element.oldPrice} đ</Text>
+            <Text fw={700}>{element.newPrice} đ</Text>
+          </Flex>
+        </Table.Td>
+        <Table.Td>
+          <Flex gap={8}>
+            <Button
+              variant="default"
+              style={{padding: 12}}
+              onClick={() => decreaseQuantity(element.id)}><FaMinus size={10} /></Button>
+            <NumberInput 
+              style={{width: '100px'}}
+              min={1} 
+              value={element.quantity} 
+              hideControls 
+              onChange={(value) => handleQuantityChange(value, element.id)} />
+            <Button
+              variant="default"
+              style={{padding: "0 12px"}}
+              onClick={() => increaseQuantity(element.id)}><FaPlus size={10} /></Button>
+          </Flex>
+        </Table.Td>
+        <Table.Td>{element.quantity * element.newPrice} VNĐ</Table.Td>
+        <Table.Td>
+          <Button 
+            variant="default"
+            style={{padding: "0 10px"}}
+            onClick={() => deleteProduct(element.id)} >
+              <AiOutlineDelete size={18}/>
+          </Button>
+        </Table.Td>
+      </Table.Tr>
+    ));
+
     return (
-      <div key={shopName}>
-        <h2>
+      <Flex key={shopName} direction="column" gap={8} >
+        <Flex style={{marginTop: '0'}}>
           <Checkbox
+            color="#009f7f"
             checked={isShopSelected}
-            onChange={(e) =>
-              handleShopCheckboxChange(shopName, e.target.checked)
-            }
+            onChange={(e) => handleShopCheckboxChange(shopName, e.target.checked)}
           />
-          <Text strong style={{ margin: "0 0 0 10px" }}>
-            {shopName}{" "}
-          </Text>
-        </h2>
-        <Table
-          columns={columns}
-          dataSource={shopProducts}
-          pagination={false}
-          showHeader={true}
-          style={{
-            border: "1px solid #E5E7EB",
-            boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-          }}
-        />
-      </div>
+          <Text fw={600} style={{margin: '0 0 0 10px'}}>{shopName} </Text>
+        </Flex>
+
+        <Table style = {{ backgroundColor: "#fff", border: '1px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', marginBottom: '20px'}}>
+          <Table.Thead>
+            <Table.Tr>
+              <Table.Th />
+              <Table.Th>Sản phẩm</Table.Th>
+              <Table.Th>Giá</Table.Th>
+              <Table.Th>Số lượng</Table.Th>
+              <Table.Th>Tổng cộng</Table.Th>
+              <Table.Th />
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+        </Flex>
     );
   });
 
-  return (
-    <div>
-      {/* <div className="box">
-      <div className="table-header">
-            <Text strong>Check</Text>
-            <Text strong>Product</Text>
-            <Text strong>Price</Text>
-            <Text strong>Quantity</Text>
-            <Text strong>Total</Text>
-            <Text strong>Action</Text>
-        </div> 
-      </div>
-      <Table columns={columns}> </Table> */}
-
+  return <div>
       {tables}
-    </div>
-  );
+    </div>;
 };
 
 export default ProductCart;

@@ -1,35 +1,21 @@
-import { useState } from "react";
-import {
-  Divider,
-  Text,
-  Input,
-  Tabs,
-  Radio,
-  Button,
-  Table,
-  Modal,
-  Select,
-  Flex,
-  NumberInput,
-  TextInput,
-  Container,
-} from "@mantine/core";
-import {
-  IconGift,
-  IconCreditCard,
-  IconCurrencyDollar,
-  IconWallet,
-} from "@tabler/icons-react";
-import "./Cart.css";
-import "../../App.css";
-import Navbar from "../../components/HeaderMegaMenu";
-import ProductCart, { Product } from "../../components/ProductCart/ProductCart";
-import logo from "../../../assets/logo.png";
-import { NavLink } from "react-router-dom";
-import { useForm } from "@mantine/form";
+import React, {useEffect, useState} from 'react';
 
-// Định nghĩa lại
-interface cartinfoData {
+import { NavLink } from 'react-router-dom';
+import { useDisclosure } from '@mantine/hooks';
+import 
+{ Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
+import 
+{ GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@tabler/icons-react';
+
+import logo from '../../../assets/logo.png';
+
+import { getVoucher } from '../../services/orders';
+import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
+import { OrderForm } from '../../components/OrderForm';
+import {styles} from './Cart.stylex';
+import * as stylex from '@stylexjs/stylex';
+
+interface cartInfoData {
   name: string;
   address: string;
   email: string;
@@ -37,24 +23,82 @@ interface cartinfoData {
   link: string;
 }
 
-interface seleccartData {
+interface selectCartData {
   TOTAL: number;
   amount: number;
   totalamount: number;
   totalship: number;
+  voucherDiscount: number;
 }
 
-interface Voucher {
-  ID: string;
-  name: string;
-  CouponDetail: string;
-  Coupon: number;
+interface VoucherType {
+  id: string;
+  code: string;
+  description: string;
+  discount: number;
+  startDate: string;
+  endDate: string;
+  active: boolean;
+  usageLimit: number;
 }
+
+const VoucherSample: VoucherType[] = [
+  {
+    id: '1',
+    code: 'VOUCHER001',
+    description: 'This voucher is only for new customers. Đơn tối thiểu 20k, dùng 2 lần /ngày',
+    discount: 20,
+    startDate:  '2024-03-15',
+    endDate: '2024-03-30',
+    active: true,
+    usageLimit: 50,
+  },
+  {
+    id: '2',
+    code: 'VOUCHER002',
+    description: 'This voucher is only for new customers',
+    discount: 30,
+    startDate: '2024-03-15',
+    endDate: '2024-03-30',
+    active: true,
+    usageLimit: 100,
+  },
+  {
+    id: '3',
+    code: 'VOUCHER003',
+    description: 'This voucher is only for new customers',
+    discount: 15,
+    startDate: '2024-03-15',
+    endDate: '2024-03-30',
+    active: true,
+    usageLimit: 20,
+  },
+  {
+    id: '4',
+    code: 'VOUCHER004',
+    description: 'This voucher is only for new customers',
+    discount: 15,
+    startDate: '2024-03-15',
+    endDate: '2024-03-30',
+    active: true,
+    usageLimit: 20,
+  },
+  {
+    id: '5',
+    code: 'VOUCHER005',
+    description: 'This voucher is only for new customers',
+    discount: 15,
+    startDate: '2024-03-15',
+    endDate: '2024-03-30',
+    active: true,
+    usageLimit: 20,
+  },
+]
 // Đối tượng  chứa thông tin về user
-const infoData: cartinfoData = {
-  name: "Nông sản Demeter",
-  address: "Đại học Bách Khoa ĐHQG-HCM, Dĩ An, Bình Dương",
-  email: "demeter_ec@gmail.com",
+const infoData: cartInfoData = {
+  name: "Gojo Sulaiman",
+  address: "Ký Túc Xá ĐHQG Khu A, khu phố 6, phường Linh Trung, tp Thủ Đức, Hồ Chí Minh",
+  email: "gojo_demeter@gmail.com",
   phone: "+84 1234 56789",
   link: logo,
 };
@@ -62,83 +106,93 @@ const infoData: cartinfoData = {
 const initialProducts: Product[] = [
   {
     id: 1,
-    name: "Sản phẩm 1",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    name: 'Sản phẩm 1',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 1,
-    shop: "Cửa hàng A",
+    shop: 'Cửa hàng A',
     selected: false,
   },
   {
     id: 2,
-    name: "Sản phẩm 2",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    name: 'Sản phẩm 2',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 2,
-    shop: "Cửa hàng b",
+    shop: 'Cửa hàng b',
     selected: false,
   },
   {
     id: 3,
-    name: "Sản phẩm 3",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: "Cửa hàng c",
+    shop: 'Cửa hàng c',
     selected: false,
   },
   {
     id: 4,
-    name: "Sản phẩm 3",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: "Cửa hàng c",
-    selected: false,
-  },
-  {
-    id: 4,
-    name: "Sản phẩm 3",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 3,
-    shop: "Cửa hàng c",
+    shop: 'Cửa hàng c',
     selected: false,
   },
   {
     id: 5,
-    name: "Sản phẩm 3",
-    image:
-      "https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg",
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
     newPrice: 16000,
     oldPrice: 20000,
     quantity: 3,
-    shop: "Cửa hàng c",
+    shop: 'Cửa hàng c',
+    selected: false,
+  },
+  {
+    id: 6,
+    name: 'Sản phẩm 3',
+    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+    newPrice: 16000,
+    oldPrice: 20000,
+    quantity: 3,
+    shop: 'Cửa hàng c',
     selected: false,
   },
   // ... Add more products as needed
 ];
 
-const totaldata: seleccartData = {
-  TOTAL: 10,
-  amount: 10,
-  totalamount: 10,
-  totalship: 10,
-};
 
-const Cart: React.FC = (Props) => {
-  const [selectedProducts, setSelectedProducts] =
-    useState<Product[]>(initialProducts);
+const Cart: React.FC = () => {
+  const [selectedProducts, setSelectedProducts] = useState<Product[]>(initialProducts);
+
+  const [selectedVoucher, setSelectedVoucher] = useState<string | undefined>();
+  const [selectedVoucherData, setSelectedVoucherData] = useState<VoucherType>();
+  const [vouchers, setVouchers] = useState<VoucherType[]>([]); // Danh sách các voucher
+
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+      setIsModalOpen(false);
+      console.log('ok');
+  };
+
+  const handleCancelOrder = () => {
+      setIsModalOpen(false);
+      console.log('cancel');
+  };
 
   // Function to update selected products
   const updateSelectedProducts = (updatedProducts: Product[]) => {
@@ -146,345 +200,170 @@ const Cart: React.FC = (Props) => {
   };
 
   // Tính lại totaldata.amount và totaldata.totalamount dựa trên selectedProducts
-  const totalSelectedQuantity = selectedProducts.reduce(
-    (total, product) => total + (product.selected ? product.quantity : 0),
-    0
-  );
-  const totalSelectedValue = selectedProducts.reduce(
-    (total, product) =>
-      total + (product.selected ? product.quantity * product.newPrice : 0),
-    0
-  );
+  const totalSelectedQuantity = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity : 0), 0);
+  const totalSelectedValue = selectedProducts.reduce((total, product) => total + (product.selected ? product.quantity * product.newPrice : 0), 0);
+  const totalShipValue = totalSelectedValue === 0 ? 0 : 25000;
+  const voucherDiscountValue = selectedVoucherData ? (selectedVoucherData.discount*totalSelectedValue/100) : 0;
 
-  const totaldata: seleccartData = {
-    TOTAL: 25000, // Giá trị TOTAL ban đầu của bạn
+  const totaldata: selectCartData = {
+    TOTAL: 20, // Giá trị TOTAL ban đầu của bạn
     amount: totalSelectedQuantity, // Số lượng sản phẩm được chọn
     totalamount: totalSelectedValue, // Tổng giá trị sản phẩm được chọn
-    totalship: 25000, // Giá trị totalship ban đầu của bạn
+    totalship: totalShipValue, // Giá trị totalship ban đầu của bạn
+    voucherDiscount: selectedVoucherData ? (voucherDiscountValue <= selectedVoucherData.usageLimit*1000 ? voucherDiscountValue : selectedVoucherData.usageLimit*1000) : 0, // Giá trị voucherDiscount ban đầu của bạn
   };
-  // Hàm để tính giá trị mới của TOTAL
-  const calculateTotal = (): number => {
-    return totaldata.totalamount + totaldata.totalship;
+   // Hàm để tính giá trị mới của TOTAL
+   const calculateTotal = (): number => {
+    return totaldata.totalamount + totaldata.totalship - totaldata.voucherDiscount;
   };
 
   const newTotal = calculateTotal(); // Tính giá trị mới của TOTAL
   totaldata.TOTAL = newTotal;
 
-  const [value, setValue] = useState<number>(1);
-  const form = useForm({
-    initialValues: { name: "", email: "", age: 0 },
 
-    // functions will be used to validate values at corresponding key
-    validate: {
-      name: (value: string) =>
-        value.length < 2 ? "Name must have at least 2 letters" : null,
-      email: (value: string) =>
-        /^\S+@\S+$/.test(value) ? null : "Invalid email",
-      age: (value: number) =>
-        value < 18 ? "You must be at least 18 to register" : null,
-    },
-  });
+  // useEffect(() => {
+  //   async function fetchData() {
+  //     const voucherList = await getVoucher();
+  //     if (voucherList ) {
+  //       setVouchers(voucherList);
+  //     }
+  //   }
 
-  const onChange = (e: any) => {
-    setValue(e.target.value);
-  };
-
-  const handleFormSubmit = (values: any) => {
-    console.log("Submitted values:", values);
-  };
-
-  //vocher
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedVoucher, setSelectedVoucher] = useState<string | null>(null);
-  const [vouchers, setVouchers] = useState<Voucher[]>([]); // Danh sách các voucher
-
-  // Mẫu dữ liệu voucher
-  // Tạo 15 đối tượng Voucher với các giá trị khác nhau
-  const sampleVouchers: Voucher[] = Array.from({ length: 15 }, (_, index) => ({
-    ID: `ABC${index + 1}`,
-    name: `Voucher ${String.fromCharCode(65 + index)}`,
-    CouponDetail: `Giảm ${Math.floor(Math.random() * 100)}%`,
-    Coupon: Math.random() * 0.9 + 0.1, // Giá trị ngẫu nhiên từ 0.1 đến 1.0
-  }));
+  //   fetchData();
+  // }, []);
 
   // Mỗi khi component được khởi chạy, ta sẽ set danh sách voucher từ mẫu dữ liệu
+  
   useState(() => {
-    setVouchers(sampleVouchers);
+    setVouchers(VoucherSample);
   });
 
   const handleApplyVoucher = () => {
-    // Xử lý khi áp dụng voucher, có thể làm gì đó với selectedVoucher ở đây
-    console.log("Voucher được áp dụng:", selectedVoucher);
-    setIsModalVisible(false);
+    close();
+    setSelectedVoucherData(vouchers.find(voucher => voucher.id === selectedVoucher));
+    console.log('Voucher được áp dụng:', selectedVoucherData);
+  };
+  const handleCancel = () => {
+    setSelectedVoucher(undefined);
+    close();
   };
 
-  const handleCancel = () => {
-    setSelectedVoucher(null);
-    setIsModalVisible(false);
-  };
-  // với select
-  // const handleVoucherChange = (value: string) => {
-  //   setSelectedVoucher(value);
-  // };
   const handleVoucherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedVoucher(e.target.value);
+    console.log('selece', e.target.value);
   };
 
-  const renderTabContent = (key: string | number) => {
-    switch (key) {
-      case "1":
-        return <p>Thanh toán bằng tiền mặt khi nhận hàng</p>;
-      case "2":
-        return (
-          <form onSubmit={form.onSubmit(console.log)}>
-            <Flex direction="column" align="center">
-              <TextInput label="Số thẻ" name="cardNumber">
-                <Input />
-              </TextInput>
-              <TextInput label="Ngày hết hiệu lực" name="expiration">
-                <Input />
-              </TextInput>
-            </Flex>
-            <Flex direction="column" align="center">
-              <TextInput label="Tên trên thẻ" name="cardName">
-                <Input />
-              </TextInput>
-
-              <TextInput label="CVV" name="cvvCode">
-                <Input />
-              </TextInput>
-            </Flex>
-            <TextInput>
-              <Button
-                style={{ wight: "100%", backgroundColor: "#009F7F" }}
-                htmlType="submit"
-              >
-                <Text strong style={{ color: "#FFFFFF" }}>
-                  Xác nhận
-                </Text>
-              </Button>
-            </TextInput>
-          </form>
-        );
-      case "3":
-        return (
-          <form onSubmit={form.onSubmit(console.log)}>
-            <NumberInput
-              label="Số ví điện tử"
-              placeholder="Số ví điện tử"
-              {...form.getInputProps("eWalletNumber")}
-            />
-            <TextInput label="Mật khẩu" name="password">
-              <Input.Password />
-            </TextInput>
-            <TextInput>
-              <Button
-                style={{ wight: "100%", backgroundColor: "#009F7F" }}
-                htmlType="submit"
-              >
-                <Text strong style={{ color: "#FFFFFF" }}>
-                  Xác nhận
-                </Text>
-              </Button>
-            </TextInput>
-          </form>
-        );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <Container
-      direction="vertical"
-      style={{ position: "absolute", width: "100%", minHeight: "100%" }}
-    >
-      <Container style={{ background: "c" }}>
-        <div className="horizontalSections">
-          <div className="section1">
-            <img
-              src={infoData.link}
-              alt="Your Image"
-              className="centeredImage"
-            />
-            <NavLink
-              to="/shop-product"
-              style={{
-                color: "#009F7F",
-                fontWeight: "bolder",
-                fontSize: "16px",
-                textAlign: "center",
-                padding: "10px 0",
-              }}
-            >
-              {" "}
-              {infoData.name}
-            </NavLink>
-            <Divider style={{ margin: "8px" }} />
-            <Text strong>Địa chỉ</Text>
-            <Text type="secondary"> {infoData.address}</Text>
-            <Divider style={{ margin: "8px" }} />
-            <Text strong>Email</Text>
-            <Text type="secondary"> {infoData.email}</Text>
-            <Divider style={{ margin: "8px" }} />
-            <Text strong>SĐT</Text>
-            <Text type="secondary"> {infoData.phone}</Text>
+  return(
+  <Flex direction="column" style={{position: 'absolute', width: '100%', minHeight:'100%'}}>
+      <Flex style={{ backgroundColor: '#f3f4f6' }}>
+        <div {...stylex.props(styles.horizontalSections)}>
+          <div {...stylex.props(styles.section1)}>
+            <img src={infoData.link} alt="Your Image" {...stylex.props(styles.centeredImage)} />
+            <NavLink to='/shop-product' style={{color: '#009F7F', fontWeight: 'bolder', fontSize:'16px', textAlign:'center', padding: '10px 0'}}> {infoData.name}</NavLink>
+            <Divider style={{ margin: '8px'}}/>
+            <Text fw={700}>Địa chỉ</Text>
+            <Text c="dimmed"> {infoData.address}</Text>
+            <Divider style={{ margin: '8px'}}/>
+            <Text fw={700}>Email</Text>
+            <Text c="dimmed"> {infoData.email}</Text>
+            <Divider style={{ margin: '8px'}}/>
+            <Text fw={700}>SĐT</Text>
+            <Text c="dimmed"> {infoData.phone}</Text>
           </div>
-          <div className="section2">
-            <ProductCart
-              initialProducts={initialProducts}
-              updateSelectedProducts={updateSelectedProducts}
-            />
+           <div {...stylex.props(styles.section2)}>
+            <ProductCart initialProducts={initialProducts} updateSelectedProducts={updateSelectedProducts} />
           </div>
-          <div className="section3">
-            <div className="box">
-              <div className="leftColumn">
-                <Text strong type="secondary">
-                  Giá đơn hàng:
-                </Text>
-                <Text strong type="secondary">
-                  Số lượng:
-                </Text>
-                <Text strong type="secondary">
-                  Phí giao hàng:
-                </Text>
+          <div {...stylex.props(styles.section3)}>
+            <div {...stylex.props(styles.box)}>
+              <div {...stylex.props(styles.leftColumn)}>
+                <Text fw={700} c="dimmed">Giá đơn hàng:</Text>
+                <Text fw={700} c="dimmed">Số lượng:</Text>
+                <Text fw={700} c="dimmed">Phí giao hàng:</Text>
+                <Text fw={700} c="dimmed">Giảm giá:</Text>
               </div>
-              <div className="rightColumn">
-                <Text strong>{totaldata.totalamount} VNĐ</Text>
-                <Text strong> {totaldata.amount}</Text>
-                <Text strong> {totaldata.totalship} VNĐ</Text>
+              <div {...stylex.props(styles.rightColumn)}>
+                <Text fw={700}>{totaldata.totalamount.toLocaleString("en-US")} VNĐ</Text>
+                <Text fw={700}> {totaldata.amount.toLocaleString("en-US")}</Text>
+                <Text fw={700}> {totaldata.totalship.toLocaleString("en-US")} VNĐ</Text>
+                <Text fw={700}> - {totaldata.voucherDiscount.toLocaleString("en-US")} VNĐ</Text>
               </div>
             </div>
 
-            <div className="box" style={{ padding: "10px 30px" }}>
-              <div className="leftColumn">
-                <Text strong>TỔNG CỘNG:</Text>
+            <div {...stylex.props(styles.box)} style={{padding: '10px 30px'}}>
+              <div {...stylex.props(styles.leftColumn)}>
+                <Text fw={700} >TỔNG CỘNG:</Text>
               </div>
-              <div className="rightColumn">
-                <Text strong> {totaldata.TOTAL} VNĐ</Text>
+              <div {...stylex.props(styles.rightColumn)}>
+                <Text fw={700}> {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
               </div>
             </div>
 
-            <Text strong> Áp dụng voucher </Text>
-            <Button
-              size="large"
-              style={{ margin: "10px 0 10px 0" }}
-              onClick={() => setIsModalVisible(true)}
-            >
-              <Text
-                strong
-                style={{ color: "#009F7F", backgroundColor: "#fff" }}
-              >
-                {" "}
-                Áp dụng voucher{" "}
-              </Text>
-            </Button>
-            <Modal
-              title="Danh sách voucher của bạn"
-              opened={isModalVisible}
-              onClose={handleCancel}
-              footer={[
-                <Button key="cancel" onClick={handleCancel}>
-                  Hủy
-                </Button>,
-                <Button key="apply" type="primary" onClick={handleApplyVoucher}>
-                  Áp dụng
-                </Button>,
-              ]}
-              className="customModal"
-            >
-              {/* <Select
-                    style={{ width: '100%' }}
-                    placeholder="Chọn voucher"
-                    onChange={handleVoucherChange}
-                    value={selectedVoucher}
-                  >
-                    {vouchers.map((voucher) => (
-                      <Option key={voucher.ID} value={voucher.name}>
-                        {voucher.name}
-                      </Option>
-                    ))}
-                  </Select> */}
-              <Radio.Group
-                style={{ width: "98%" }}
-                onChange={handleVoucherChange}
-                value={selectedVoucher}
-              >
-                {vouchers.map((voucher) => (
-                  <div className="box">
-                    <div className="leftColumn">
-                      <Radio key={voucher.ID} value={voucher.name}>
-                        {voucher.name}
-                      </Radio>
-                    </div>
-                    <div className="rightColumn">
-                      <Text>{voucher.CouponDetail} </Text>
+            <Text fw={700} > Áp dụng voucher </Text>
+              <Button size="large" variant="outline" color="#009f7f" style={{ margin: '10px 0 10px 0'}} onClick={open} >
+                <Text fw={700} style={{ color:'#009F7F' }}> Áp dụng voucher </Text>
+              </Button>
+              <Modal 
+                opened={opened} onClose={close} 
+                size="lg" 
+                scrollAreaComponent={ScrollArea.Autosize}
+                title="Danh sách voucher của bạn" 
+                {...stylex.props(styles.customModal)}>
+                <Radio.Group style={{ width: '98%'}} value={selectedVoucher}>
+                   {vouchers.map((voucher) => (
+                    <Flex direction="column"  {...stylex.props(styles.box)} onClick={console.log}>
+                      <Flex justify='space-between'>
+                          <Radio       
+                            key={voucher.id}
+                            onChange={handleVoucherChange}
+                            iconColor="#fff"
+                            color="#009f7f" 
+                            value={voucher.code} 
+                            label={voucher.code}/>
+                        <Flex>
+                          <Text style={{fontWeight: '500'}}>Giảm {voucher.discount}%
+                            <Text style={{fontWeight: '400', fontSize: '13px'}}> - Tối đa đ{voucher.usageLimit}k </Text>
+                          </Text>
+                        </Flex>
+                      </Flex>
+                      <Flex direction="column">
+                        <Text style={{paddingLeft: '25px', opacity: '0.8', fontSize: '13px'}}>{voucher.description}</Text>
+                        <Text style={{paddingLeft: '25px', opacity: '0.8', fontSize: '13px', color: 'red'}}>
+                          Hạn: {new Date(voucher.startDate).toLocaleDateString('en-GB')} - {new Date(voucher.endDate).toLocaleDateString('en-GB')}
+                        </Text>
+                      </Flex>
+                    </Flex>
+                    
+                  ))}
+                </Radio.Group> 
+                <Flex gap={8} justify="flex-end">
+                  <Button key="cancel" onClick={close} variant="default">
+                    Hủy
+                  </Button>
+                  <Button key="apply" variant="filled" color="#009F7F" onClick={handleApplyVoucher}>
+                    Áp dụng
+                  </Button>
+                </Flex>
+              </Modal>
+
+                {selectedVoucher && (
+                  <div>
+                    <div  {...stylex.props(styles.box)} style={{padding: '10px 13px', margin: '0px 0 10px 0'}}>
+                      <Text fw={700}> Voucher được áp dụng: {selectedVoucher}</Text>
                     </div>
                   </div>
-                ))}
-              </Radio.Group>
-            </Modal>
-            {selectedVoucher && (
-              <div>
-                <div
-                  className="box"
-                  style={{ padding: "10px 13px", margin: "0px 0 10px 0" }}
-                >
-                  <Text strong> Voucher được áp dụng: {selectedVoucher}</Text>
-                </div>
-              </div>
-            )}
-            <Text strong> Vui lòng chọn phương thức thanh toán </Text>
-            <div
-              className="box"
-              style={{ padding: "10px 13px", margin: "10px 0 10px 0" }}
-            >
-              <Tabs
-                activeKey={value.toString()}
-                onChange={(key) => setValue(parseInt(key))}
-              >
-                <TabPane
-                  tab={
-                    <Radio disabled={value !== 1} value={1}>
-                      <IconCurrencyDollar />
-                    </Radio>
-                  }
-                  key="1"
-                >
-                  {renderTabContent("1")}
-                </TabPane>
-                <TabPane
-                  tab={
-                    <Radio disabled={value !== 2} value={2}>
-                      <IconCreditCard />
-                    </Radio>
-                  }
-                  key="2"
-                >
-                  {renderTabContent("2")}
-                </TabPane>
-                <TabPane
-                  tab={
-                    <Radio disabled={value !== 3} value={3}>
-                      <IconWallet />
-                    </Radio>
-                  }
-                  key="3"
-                >
-                  {renderTabContent("3")}
-                </TabPane>
-              </Tabs>
-            </div>
-            <Button size="large" style={{ backgroundColor: "#009F7F" }}>
-              <Text strong style={{ color: "#FFFFFF" }}>
-                TỔNG CỘNG: {totaldata.TOTAL}đ
-              </Text>
+                )}
+            <Button size="large" style={{ backgroundColor:'#009F7F'}} onClick={showModal}>
+              <Text fw={700}  style={{ color: '#FFFFFF' }}>ĐẶT HÀNG  {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
             </Button>
+            <Modal opened={isModalOpen} onOk={handleOk} onClose={handleCancelOrder} footer={null} size="65%"  >
+                <OrderForm totaldata={totaldata} selectedProducts={selectedProducts.filter((item) => item.selected)}/>
+            </Modal>
           </div>
         </div>
-      </Container>
-    </Container>
+      </Flex>
+  </Flex>
   );
+
 };
 
 export default Cart;
