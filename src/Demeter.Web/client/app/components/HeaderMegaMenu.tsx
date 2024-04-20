@@ -1,4 +1,4 @@
-import { IconShoppingCart, IconUser } from "@tabler/icons-react";
+import { IconBell, IconShoppingCart, IconUser } from "@tabler/icons-react";
 import { Box, Group, Image, ActionIcon, Tabs, Paper, Overlay } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import headerLogo2 from "../../assets/header_logo2.jpg";
@@ -56,16 +56,21 @@ export function HeaderMegaMenu() {
           </Tabs>
           <Group gap={2} align="center">
             <ActionIcon
-              component="NavLink"
-              to="/cart"
+              onClick={() => navigate("/cart")}
               size="lg"
               variant="transparent"
             >
               <IconShoppingCart />
             </ActionIcon>
             <ActionIcon
-              component="NavLink"
-              to="/profile"
+              onClick={() => navigate("/notification")}
+              size="lg"
+              variant="transparent"
+            >
+              <IconBell/>
+            </ActionIcon>
+            <ActionIcon
+              onClick={() => navigate("/profile")}
               size="lg"
               variant="transparent"
             >

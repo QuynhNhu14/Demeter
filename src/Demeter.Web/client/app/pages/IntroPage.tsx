@@ -1,4 +1,4 @@
-import {Image, ThemeIcon, Text, Title, useMantineTheme, Card, Container, SimpleGrid, rem, Button, Paper, px} from '@mantine/core';
+import {Image, ThemeIcon, Text, Title, useMantineTheme, Card, Container, SimpleGrid, rem, Button, Paper, px, Box} from '@mantine/core';
 import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock } from '@tabler/icons-react';
 import logo from '../../assets/logo.png';
 import * as stylex from '@stylexjs/stylex';
@@ -148,7 +148,7 @@ export function IntroPage() {
   const navigate = useNavigate();
 
   return (   
-    <div> 
+    <Box py="xl"> 
       <Container align="center" mb={20}>
         <Image
             radius="md" 
@@ -196,7 +196,7 @@ export function IntroPage() {
           >
           {features}
         </SimpleGrid>
-    </div>
+    </Box>
     
   );
 }

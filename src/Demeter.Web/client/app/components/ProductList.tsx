@@ -1,4 +1,4 @@
-import { Badge, Flex, Card, Button} from "@mantine/core";
+import { Badge, Flex, Card, Button, Image} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Product } from "../models/products";
 import { getAllProducts } from "../services/products";
@@ -27,7 +27,7 @@ function ProductCard({ product }: ProductCardProps) {
     <Card withBorder shadow="sm">
       {product.vouchers && product.vouchers.length > 0 && <Badge pos={"absolute"} style={{ top: "10px", right: "10px" }}> - {product.vouchers[0].discount} %</Badge>}
       <div>
-        <img src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate("/products")}/>
+        <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate("/products")}/>
       </div>
       <Flex
         gap="sm"

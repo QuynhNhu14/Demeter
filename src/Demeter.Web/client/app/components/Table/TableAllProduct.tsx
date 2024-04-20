@@ -17,7 +17,7 @@ import ModalEditProduct from "../Form/ModalEditProduct";
 const { Search } = Input;
 const { Option } = Select;
 
-const generateData = (count) => {
+const generateData = (count: number) => {
   const data = [];
   for (let i = 1; i <= count; i++) {
     data.push({

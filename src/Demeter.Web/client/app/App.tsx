@@ -47,6 +47,7 @@ import { Shops } from "./pages/Shops";
 import { ProductPage } from "./pages/ProductPage";
 import Cart from "./pages/Cart/Cart";
 import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
+import { Notification } from "./pages/Notification";
 
 export default function App() {
   // const navigate = useNavigate();
@@ -93,6 +94,7 @@ export default function App() {
           <Route path="/shops" element={<Shops />} />
           <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47" />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/notification" element={<Notification />} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />

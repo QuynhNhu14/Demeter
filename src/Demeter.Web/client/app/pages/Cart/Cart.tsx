@@ -1,15 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import {useState} from 'react';
 
 import { NavLink } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import 
 { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
-import 
-{ GiftOutlined,CreditCardOutlined,DollarOutlined,WalletOutlined } from '@tabler/icons-react';
 
 import logo from '../../../assets/logo.png';
 
-import { getVoucher } from '../../services/orders';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
