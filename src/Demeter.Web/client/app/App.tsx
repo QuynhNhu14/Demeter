@@ -36,18 +36,18 @@ import { useEffect} from "react";
 // });
 
 import { AppShell, MantineProvider } from "@mantine/core";
-import HomePage from "./pages/Home";
-import { HeaderMegaMenu } from "./components"
+import HomePage from "./customer/pages/Home";
+import { HeaderMegaMenu } from "./customer/components";
 import { defaultTheme } from "../themes";
-import { Footer } from "./components/Footer";
-import {IntroPage} from "./pages/IntroPage";
-import { Profile } from "./pages/Profile/Profile";
-import { ChangePassword } from "./pages/Profile/ChangePassword";
-import { Shops } from "./pages/Shops";
-import { ProductPage } from "./pages/ProductPage";
-import Cart from "./pages/Cart/Cart";
+import { Footer } from "./customer/components/Footer";
+import { IntroPage } from "./customer/pages/IntroPage";
+import { Profile } from "./customer/pages/Profile/Profile";
+import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
+import { Shops } from "./customer/pages/Shops";
+import { ProductPage } from "./customer/pages/ProductPage";
+import Cart from "./customer/pages/Cart/Cart";
 import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
-import { Notification } from "./pages/Notification";
+import { Notification } from "./customer/pages/Notification";
 
 export default function App() {
   // const navigate = useNavigate();

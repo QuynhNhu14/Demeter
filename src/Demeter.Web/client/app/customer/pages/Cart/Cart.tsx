@@ -7,10 +7,7 @@ import
 
 import logo from '../../../../assets/logo.png';
 
-<<<<<<< HEAD:src/Demeter.Web/client/app/customer/pages/Cart/Cart.tsx
 import { getVoucher } from '../../../services/orders';
-=======
->>>>>>> 7801e47aaa5d3911bd1f5d0493468c4ff9d55df7:src/Demeter.Web/client/app/pages/Cart/Cart.tsx
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
