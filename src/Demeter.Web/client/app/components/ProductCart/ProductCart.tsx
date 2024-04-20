@@ -1,8 +1,7 @@
-import React, { useState} from 'react';
-import { Table, Space, Button, Checkbox, Text, NumberInput, ActionIcon, Flex } from '@mantine/core';
-import { AiOutlineDelete } from "react-icons/ai";
-import { FaPlus, FaMinus } from "react-icons/fa6";
+import { useState} from 'react';
+import { Table, Button, Checkbox, Text, NumberInput, Flex } from '@mantine/core';
 import * as stylex from "@stylexjs/stylex";
+import { IconMinus, IconPlus, IconTrash } from '@tabler/icons-react';
 
 const styles = stylex.create({
   button: {
@@ -134,7 +133,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             <Button
               variant="default"
               style={{padding: 12}}
-              onClick={() => decreaseQuantity(element.id)}><FaMinus size={10} /></Button>
+              onClick={() => decreaseQuantity(element.id)}><IconMinus /></Button>
             <NumberInput 
               style={{width: '100px'}}
               min={1} 
@@ -144,7 +143,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             <Button
               variant="default"
               style={{padding: "0 12px"}}
-              onClick={() => increaseQuantity(element.id)}><FaPlus size={10} /></Button>
+              onClick={() => increaseQuantity(element.id)}><IconPlus/></Button>
           </Flex>
         </Table.Td>
         <Table.Td>{element.quantity * element.newPrice} VNĐ</Table.Td>
@@ -153,7 +152,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             variant="default"
             style={{padding: "0 10px"}}
             onClick={() => deleteProduct(element.id)} >
-              <AiOutlineDelete size={18}/>
+              <IconTrash />
           </Button>
         </Table.Td>
       </Table.Tr>
