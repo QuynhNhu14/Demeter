@@ -4,10 +4,11 @@ using Demeter.Infrastructure.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add configuration from app settings.json
+// Check for appsettings.cloud.json is existed or not
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.json");
+    // Add configuration from app settings.json
+    .AddJsonFile(File.Exists("appsettings.cloud.json") ? "appsettings.cloud.json" : "appsettings.json");
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 

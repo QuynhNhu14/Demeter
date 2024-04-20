@@ -1,12 +1,9 @@
 import { useState } from "react";
 
-import { Button, Flex, Input, Radio, Table, TableProps, Tabs, Textarea, Text  } from "@mantine/core";
-
-import { Vouchers } from "../models/orders";
-// import { CreditCardOutlined, DollarOutlined, EyeOutlined, WalletOutlined } from "@tabler/icons-react";
-import { LuEye } from "react-icons/lu";
+import { Button, Flex, Table, Textarea, Text  } from "@mantine/core";
 
 import { Product } from "./ProductCart";
+import { IconEye } from "@tabler/icons-react";
 
 type OrderFormProps = {
     totaldata: {
@@ -128,7 +125,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
         <Flex gap="large" direction="column" style={{pading: 20}}>
             <Flex justify="space-between">
                 <span style={{fontWeight: 'bold', fontSize: '18px'}}>Chi tiết đơn đặt hàng - {OrderInfo.id}</span>
-                <span style={{color: '#009f7f'}}><LuEye  /> Chi tiết</span>
+                <span style={{color: '#009f7f'}}><IconEye  /> Chi tiết</span>
              </Flex>
             <Flex style={{borderBottom: '1px solid #e7e7e7'}}>
                 <Flex style={{flex: '5', borderRight: '1px solid #e7e7e7', padding: '0 20px 20px 0'}} direction="column" gap="small" justify="center">

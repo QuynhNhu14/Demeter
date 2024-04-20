@@ -192,7 +192,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             <Button
               variant="default"
               style={{padding: 12}}
-              onClick={() => decreaseQuantity(element.id)}><FaMinus size={10} /></Button>
+              onClick={() => decreaseQuantity(element.id)}><IconMinus /></Button>
             <NumberInput 
               style={{width: '100px'}}
               min={1} 
@@ -202,7 +202,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             <Button
               variant="default"
               style={{padding: "0 12px"}}
-              onClick={() => increaseQuantity(element.id)}><FaPlus size={10} /></Button>
+              onClick={() => increaseQuantity(element.id)}><IconPlus/></Button>
           </Flex>
         </Table.Td>
         <Table.Td>{element.quantity * element.newPrice} VNĐ</Table.Td>
@@ -211,7 +211,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
             variant="default"
             style={{padding: "0 10px"}}
             onClick={() => deleteProduct(element.id)} >
-              <AiOutlineDelete size={18}/>
+              <IconTrash />
           </Button>
         </Table.Td>
       </Table.Tr>
