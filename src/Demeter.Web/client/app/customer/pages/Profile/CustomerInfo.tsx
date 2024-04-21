@@ -1,27 +1,7 @@
-import {
-  IconCalendar,
-  IconMail,
-  IconPhone,
-  IconUpload,
-  IconUser,
-  IconPhoto,
-  IconX,
-} from "@tabler/icons-react";
-import {
-  Button,
-  Divider,
-  FileInput,
-  Flex,
-  Input,
-  Select,
-  Text,
-  Group,
-  rem,
-  TextInput,
-} from "@mantine/core";
-import { useState } from "react";
-import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import "./Profile.css";
+import {IconCalendar, IconMail, IconPhone, IconUpload, IconUser, IconPhoto, IconX} from "@tabler/icons-react";
+import {Button, Flex, Text, Group, rem, TextInput} from "@mantine/core";
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+
 import * as stylex from "@stylexjs/stylex";
 
 type user = {
@@ -55,63 +35,50 @@ const userInfo = {
   phone: "1234 56789",
 };
 
-const styles = stylex.create({
-  PersonalInfo: {
-    backgroundColor: "#fff",
-    padding: "30px 50px 30px 0",
-  },
-});
-
 export const CustomerInfo = () => {
-  const [avatar, setAvatar] = useState<any>();
-  // console.log(avatar);
+
   return (
-    <Flex className="CustomerInfo" direction="column" gap="lg">
+    <Flex direction="column" gap="lg">
       <Flex {...stylex.props(styles.PersonalInfo)}>
-        <Flex style={{ flex: "2" }} justify="center" align="center">
+        <Flex {...stylex.props(styles.avatarSection)} justify="center" align="center">
           <img
             src={userInfo.avatarUrl}
             alt="Avatar"
-            style={{
-              width: "200px",
-              height: "200px",
-              border: "15px solid rgba(38, 156, 133, 0.3)",
-              borderRadius: "100px",
-            }}
+            {...stylex.props(styles.avatar)}
           />
         </Flex>
-        <Flex direction="column" gap="sm" style={{ flex: "3" }} align="flex-end">
+        <Flex direction="column" gap="sm" align="flex-end" {...stylex.props(styles.infoSection)}>
           <Flex
             direction="column"
             gap="sm"
             align="flex-start"
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
             <TextInput
               leftSection={<IconUser />}
               label="Tên"
               defaultValue={userInfo.fullName}
-              style={{ width: "100%" }}
+              {...stylex.props(styles.maxwidth)}
             />
           </Flex>
           <Flex
             direction="column"
             gap="sm"
             align="flex-start"
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
             <TextInput
               leftSection={<IconCalendar />}
               label="Ngày sinh"
               defaultValue={userInfo.dateOfBirth}
-              style={{ width: "100%" }}
+              {...stylex.props(styles.maxwidth)}
             />
           </Flex>
           <Flex
             direction="column"
             gap="sm"
             align="flex-start"
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
             <span>Tải lên ảnh đại diện</span>
           <Dropzone
@@ -119,20 +86,14 @@ export const CustomerInfo = () => {
             onReject={(files) => console.log('rejected files', files)}
             maxSize={5 * 1024 ** 2}
             accept={IMAGE_MIME_TYPE}
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
-            <Group justify="center" gap="xl" mih={220} style={{ pointerEvents: 'none' }}>
+            <Group justify="center" gap="xl" mih={220} {...stylex.props(styles.nonePointerEvent)}>
               <Dropzone.Accept>
-                <IconUpload
-                  style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
-                  stroke={1.5}
-                />
+                <IconUpload stroke={1.5} />
               </Dropzone.Accept>
               <Dropzone.Reject>
-                <IconX
-                  style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
-                  stroke={1.5}
-                />
+                <IconX stroke={1.5} />
               </Dropzone.Reject>
               <Dropzone.Idle>
                 <IconPhoto
@@ -153,86 +114,63 @@ export const CustomerInfo = () => {
           </Dropzone>
 
           </Flex>
-          <Button
-            style={{
-              width: "120px", 
-              backgroundColor: "#009f7f",
-              color: "#fff",
-            }}
-          >
+          <Button size="sm" color="#009f7f" >
             Lưu
           </Button>
         </Flex>
       </Flex>
-      <Flex className="Contact">
+      <Flex {...stylex.props(styles.contact)}>
         <Flex
           direction="column"
           gap="sm"
-          style={{ width: "100%", marginRight: "50px" }}
+          {...stylex.props(styles.contactInputContainer)}
         >
           <Flex
             direction="column"
             gap="sm"
             align="flex-start"
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
             <TextInput
               leftSection={<IconMail />}
               label="E-mail"
               defaultValue={userInfo.email}
-              style={{ width: "100%" }}
-            />
+              {...stylex.props(styles.maxwidth)}
+              />
           </Flex>
           <Flex
             direction="column"
             gap="sm"
             align="flex-start"
-            style={{ width: "100%" }}
+            {...stylex.props(styles.maxwidth)}
           >
             <TextInput
               leftSection={<IconPhone />}
               label="Số điện thoại"
               defaultValue={`+84 ${userInfo.phone}`}
-              style={{ width: "100%" }}
-            />
+              {...stylex.props(styles.maxwidth)}
+              />
           </Flex>
         </Flex>
         <Flex justify="center" align="flex-end">
-          <Button
-            style={{
-              width: "120px",
-              backgroundColor: "#009f7f",
-              color: "#fff",
-            }}
-          >
+          <Button size="sm" color="#009f7f" >
             Cập nhật
           </Button>
         </Flex>
       </Flex>
-      <Flex className="Address" gap="md" direction="column">
+      <Flex {...stylex.props(styles.contact)} gap="md" direction="column">
         <Flex justify="space-between">
           <span>Địa chỉ</span>
-          <Button
-            style={{
-              width: "120px",
-              backgroundColor: "#009f7f",
-              color: "#fff",
-            }}
-          >
+          <Button size="sm" color="#009f7f" >
             + Thêm
           </Button>
         </Flex>
         <Flex
           direction="column"
           gap="sm"
-          style={{
-            backgroundColor: "#c4c4c4",
-            width: "400px",
-            padding: "10px",
-            borderRadius: "10px",
-          }}
+          {...stylex.props(styles.addressCard)}
         >
-          <span style={{ fontWeight: "500" }}>Địa chỉ giao hàng</span>
+          <Text fw={500}>Địa chỉ giao hàng</Text>
           <span>
             {userInfo.address.locality}, {userInfo.address.country}
           </span>
@@ -241,3 +179,48 @@ export const CustomerInfo = () => {
     </Flex>
   );
 };
+
+
+const styles = stylex.create({
+  PersonalInfo: {
+    backgroundColor: "#fff",
+    padding: "30px 50px 30px 0",
+  },
+  avatarSection: {
+    flex: "2",
+  },
+  avatar:{
+    width: "200px",
+    height: "200px",
+    border: "15px solid rgba(38, 156, 133, 0.3)",
+    borderRadius: "100px",
+  },
+  infoSection: {
+    flex: "3",
+  },
+  maxwidth: {
+    width: "100%",
+  },
+  nonePointerEvent: {
+    pointerEvents: 'none',
+  },
+  photoIcon: {
+    width: "rem(52)", 
+    height: "rem(52)", 
+    color: 'var(--mantine-color-dimmed)',
+  },
+  contact: {
+    backgroundColor: '#fff',
+    padding: '30px 50px 30px 50px',
+  },
+  contactInputContainer: {
+    width: "100%", 
+    marginRight: "50px",
+  },
+  addressCard: {
+    backgroundColor: "#c4c4c4",
+    width: "400px",
+    padding: "10px",
+    borderRadius: "10px",
+  }
+});

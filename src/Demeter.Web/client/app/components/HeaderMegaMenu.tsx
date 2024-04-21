@@ -1,7 +1,7 @@
 import { IconBell, IconShoppingCart } from "@tabler/icons-react";
 import { Group, Image, ActionIcon, Tabs, Paper } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import headerLogo2 from "../../../assets/header_logo2.jpg";
+import headerLogo2 from "../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
 import { Login } from "./LogIn";
 

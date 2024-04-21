@@ -1,5 +1,4 @@
 import { Button, Flex, Input } from "@mantine/core";
-import "./Profile.css";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import * as stylex from "@stylexjs/stylex";
 import { useDisclosure } from '@mantine/hooks';
@@ -11,66 +10,60 @@ export const ChangePassword: React.FC<{ shopId?: string }> = () => {
   return (
     <div {...stylex.props(styles.ChangePasswordPage)}>
       <Flex>
-        <Flex style={{ flex: "3" }}>
+        <Flex {...stylex.props(styles.navbar)}>
           <UserNavbar />
         </Flex>
           <Flex
           direction="column"
           gap="lg"
-          style={{ flex: "11", padding: "24px 24px 0 0" }}
+          {...stylex.props(styles.formContainer)}
         >
           <Flex
             direction="column"
             gap="sm"
-            style={{ flex: "3", backgroundColor: "#fff", padding: "30px 50px 30px 50px",}}
+            {...stylex.props(styles.inputGroup)}
             align="flex-end"
           >
              <Flex
               direction="column"
               gap="sm"
               align="flex-start"
-              style={{ width: "100%" }}
+              {...stylex.props(styles.maxwidth)}
             >
               <PasswordInput
                 label="Mật khẩu cũ"
                 visible={visible}
                 onVisibilityChange={toggle}
-                style={{ width: "100%" }}
+                {...stylex.props(styles.maxwidth)}
               />
             </Flex>
             <Flex
               direction="column"
               gap="sm"
               align="flex-start"
-              style={{ width: "100%" }}
+              {...stylex.props(styles.maxwidth)}
             >
               <PasswordInput
                 label="Mật khẩu mới"
                 visible={visible}
                 onVisibilityChange={toggle}
-                style={{ width: "100%" }}
+                {...stylex.props(styles.maxwidth)}
               />
             </Flex>
             <Flex
               direction="column"
               gap="sm"
               align="flex-start"
-              style={{ width: "100%" }}
+              {...stylex.props(styles.maxwidth)}
             >
               <PasswordInput
                 label="Xác nhận mật khẩu"
                 visible={visible}
                 onVisibilityChange={toggle}
-                style={{ width: "100%" }}
+                {...stylex.props(styles.maxwidth)}
               />
             </Flex>
-            <Button
-              style={{
-                width: "120px",
-                backgroundColor: "#009f7f",
-                color: "#fff",
-              }}
-            >
+            <Button size="sm" color="#009f7f" >
               Xác nhận
             </Button>
           </Flex>
@@ -87,4 +80,19 @@ const styles = stylex.create({
     height: "100vh",
     paddingBottom: "30px",
   },
+  navbar: {
+    flex: '3',
+  },
+  formContainer:{
+    flex: "11", 
+    padding: "24px 24px 0 0",
+  },
+  inputGroup: {
+    flex: "3", 
+    backgroundColor: "#fff", 
+    padding: "30px 50px 30px 50px",
+  },
+  maxwidth: {
+    width: "100%",
+  }
 });

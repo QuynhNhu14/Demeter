@@ -17,7 +17,7 @@ import {
   rem,
 } from "@mantine/core";
 
-import logo from "../../../assets/logo.png";
+import logo from "../../assets/logo.png";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({

@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-import { Button, Flex, Table, Textarea, Text  } from "@mantine/core";
+import { Button, Flex, Table, Tabs, Textarea, Text, rem, TextInput, PasswordInput   } from "@mantine/core";
+import { useForm } from '@mantine/form';
 
-
-import { IconEye } from "@tabler/icons-react";
-import { Product } from "../../models/products";
+import { Product } from "./ProductCart";
+import { IconCoin, IconCreditCard, IconWallet, IconEye } from '@tabler/icons-react';
+import * as stylex from "@stylexjs/stylex";
 
 type OrderFormProps = {
     totaldata: {
@@ -27,9 +28,31 @@ interface DataType {
 export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts}) => {
   const [selectedProduct, setSelectedProduct] = useState<number>(0);
   const [value, setValue] = useState<number>(1);
-  // const [form] = Form.useForm();
 
-  
+  const formCard = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+        cardNumber: '',
+        expiration: '',
+        cardName: '',
+        cvvCode: ''
+    },
+    validate: {
+    },
+  });
+
+  const formEWallet = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+        walletCode: '',
+        password: '',
+    },
+    validate: {
+    },
+  });
+
+  const iconStyle = { width: rem(14), height: rem(14) };
+
   const OrderInfo = {
     id: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
     account: {id: 1, phone: '0123456789', address: 'Ký Túc Xá ĐHQG Khu A, khu phố 6, phường Linh Trung, tp Thủ Đức, Hồ Chí Minh'},
@@ -39,81 +62,78 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
         <Table.Tr key={item.name}>
           <Table.Td>
                 <Flex alignItems='center' gap={1}>
-                    <img src={item.image} alt='product image' style={{width: '50px', height: '50px'}}/>
+                    <img src={item.image} alt='product image' {...stylex.props(styles.productImg)}/>
                     <Flex direction="column">
-                        <span style={{opacity: '0.7'}}>{item.name}</span>
-                        <span style={{color: '#009f7f', fontWeight: '500'}}>{item.newPrice} VNĐ</span>
+                        <Text c="dimmed">{item.name}</Text>
+                        <Text c="#009f7f" fw={500}>{item.newPrice} VNĐ</Text>
                     </Flex>
                 </Flex>
           </Table.Td>
           <Table.Td>{item.quantity}</Table.Td>
           <Table.Td>
-            {/* <Flex justifyContent="center" sx={{margin: 'auto'}}>{item.newPrice*item.quantity} VNĐ</Flex> */}
+            <Flex justifyContent="center" sx={{margin: 'auto'}}><Text fw={500}>{item.newPrice*item.quantity} VNĐ</Text></Flex>
           </Table.Td>
         </Table.Tr>
-      ));
-  const handleFormSubmit = (values: any) => {
-      console.log('Submitted values:', values);
+    ));
+    const handleFormCardSubmit = (values: any) => {
+        console.log('Submitted values:', values);
+    };
+    const handleFormEWalletSubmit = (values: any) => {
+        console.log('Submitted values:', values);
     };
 
-  // const renderTabContent = (key: string | number) => {
-  //     switch (key) {
-  //       case '1':
-  //         return <p>Thanh toán bằng tiền mặt khi nhận hàng</p>;
-  //       case '2':
-  //         return (
-  //           <Form form={form} onFinish={handleFormSubmit} layout="direction="column"">
-  //             <Row gutter={16}>
-  //               <Col span={12}>
-  //                 <Form.Item label="Số thẻ" name="cardNumber">
-  //                   <Input />
-  //                 </Form.Item>
-  //               </Col>
-  //               <Col span={12}>
-  //                 <Form.Item label="Ngày hết hiệu lực" name="expiration">
-  //                   <Input />
-  //                 </Form.Item>
-  //               </Col>
-  //             </Row>
-  //             <Row gutter={16}>
-  //               <Col span={12}>
-  //                 <Form.Item label="Tên trên thẻ" name="cardName">
-  //                   <Input />
-  //                 </Form.Item>
-  //               </Col>
-  //               <Col span={12}>
-  //                 <Form.Item label="CVV" name="cvvCode">
-  //                   <Input />
-  //                 </Form.Item>
-  //               </Col>
-  //             </Row>
-  //             <Form.Item>
-  //             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-  //                 <Text fw={700}  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
-  //               </Button>
-  //             </Form.Item>
-  //           </Form>
-  //         );
-  //       case '3':
-  //         return (
-  //           <Form form={form} onFinish={handleFormSubmit}>
-  //             <Form.Item label="Số ví điện tử" name="eWalletNumber">
-  //               <Input />
-  //             </Form.Item>
-  //             <Form.Item label="Mật khẩu" name="password">
-  //               <Input.Password />
-  //             </Form.Item>
-  //             <Form.Item>
-  //             <Button style={{wight:'100%', backgroundColor:'#009F7F'}} htmlType="submit">
-  //               <Text fw={700}  style={{ color: '#FFFFFF' }}>Xác nhận</Text>
-  //               </Button>
-  //             </Form.Item>
-  //           </Form>
-  //         );
-  //       default:
-  //         return null;
-  //     }
-  //   };
+  const renderTabContent = (key: string | number) => {
+      switch (key) {
+        case '1':
+          return <p>Thanh toán bằng tiền mặt khi nhận hàng</p>;
+        case '2':
+          return (
+            <form onSubmit={formCard.onSubmit((values) => handleFormCardSubmit(values))}>
+                <Flex direction="column" gap="md" p='15px 0'>
+                    <Flex gap="md">
+                        <TextInput
+                            withAsterisk
+                            label="Số thẻ"
+                            {...formCard.getInputProps('cardNumber')} />
+                        <TextInput
+                            withAsterisk
+                            label="Ngày hết hiệu lực"
+                            {...formCard.getInputProps('expiration')} />
+                    </Flex>
+                    <Flex gap="md">
+                        <TextInput
+                            withAsterisk
+                            label="Tên trên thẻ"
+                            {...formCard.getInputProps('cardName')} />
+                        <TextInput
+                            withAsterisk
+                            label="CVV"
+                            {...formCard.getInputProps('cvvCode')}/>
+                    </Flex>
+                </Flex>
+                <Button type="submit" color="#009F7F">Submit</Button>
+          </form>
+          );
+        case '3':
+          return (
+            <form onSubmit={formEWallet.onSubmit((values) => handleFormEWalletSubmit(values))}>
+                <Flex direction="column" gap="md" {...stylex.props(styles.eWalletContainer)}>
+                    <TextInput
+                        withAsterisk
+                        label="Số ví điện tử"
+                        {...formEWallet.getInputProps('walletCode')} />
+                    <PasswordInput 
+                        withAsterisk
+                        label="Mật khẩu"
+                        {...formEWallet.getInputProps('password')} />
+                </Flex>
+                    <Button type="submit" color="#009F7F">Submit</Button>
+          </form>
+          );
+        default:
+          return null;
+      }
+    };
 
     // Lấy ngày hôm nay
     const today = new Date();
@@ -123,41 +143,40 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
     futureDate.setDate(today.getDate() + 1);
 
     return (
-        <Flex gap="large" direction="column" style={{pading: 20}}>
+        <Flex gap="lg" direction="column" p={20}>
             <Flex justify="space-between">
-                <span style={{fontWeight: 'bold', fontSize: '18px'}}>Chi tiết đơn đặt hàng - {OrderInfo.id}</span>
-                <span style={{color: '#009f7f'}}><IconEye  /> Chi tiết</span>
-             </Flex>
-            <Flex style={{borderBottom: '1px solid #e7e7e7'}}>
-                <Flex style={{flex: '5', borderRight: '1px solid #e7e7e7', padding: '0 20px 20px 0'}} direction="column" gap="small" justify="center">
-                    <span style={{fontWeight: 'bolder'}}>Số điện thoại nhận hàng</span>
-                    <span style={{opacity: 0.7}}>{OrderInfo.account.phone}</span>
-                    <span style={{fontWeight: 'bolder'}}>Địa chỉ giao hàng</span>
-                    <span style={{opacity: 0.7}}>{OrderInfo.account.address}</span>
+                <Text fw={700} size="lg">Chi tiết đơn đặt hàng - {OrderInfo.id}</Text>
+                <Flex align="center" gap={8} {...stylex.props(styles.textColor)}><IconEye  /> Chi tiết</Flex>
+            </Flex>
+            <Flex {...stylex.props(styles.infoSection)}>
+                <Flex direction="column" gap={4} justify="center" {...stylex.props(styles.address)}>
+                    <Text fw={500}>Số điện thoại nhận hàng</Text>
+                    <Text c="dimmed">{OrderInfo.account.phone}</Text>
+                    <Text fw={500}>Địa chỉ giao hàng</Text>
+                    <Text c="dimmed">{OrderInfo.account.address}</Text>
                 </Flex>
-                <Flex  style={{flex: '4', padding: '0 0 20px 20px'}} direction="column" gap="small" justify="center">
+                <Flex direction="column" gap={4} justify="center" {...stylex.props(styles.price)}>
                     <Flex justify='space-between'>
-                        <span style={{opacity: 0.7}}>Giá đơn hàng</span>
-                        <span style={{opacity: 0.7}}>{totaldata.totalamount} VNĐ</span>
+                        <Text c="dimmed">Giá đơn hàng</Text>
+                        <Text c="dimmed">{totaldata.totalamount} VNĐ</Text>
                     </Flex>
                     <Flex justify='space-between'>
-                        <span style={{opacity: 0.7}}>Giảm giá</span>
-                        <span style={{opacity: 0.7}}>- {totaldata.voucherDiscount} VNĐ</span>
+                        <Text c="dimmed">Giảm giá</Text>
+                        <Text c="dimmed">- {totaldata.voucherDiscount} VNĐ</Text>
                     </Flex>
                     <Flex justify='space-between'>
-                        <span style={{opacity: 0.7}}>Phí giao hàng</span>
-                        <span style={{opacity: 0.7}}>{totaldata.totalship} VNĐ</span>
+                        <Text c="dimmed">Phí giao hàng</Text>
+                        <Text c="dimmed">{totaldata.totalship} VNĐ</Text>
                     </Flex>
                     <Flex justify='space-between'>
-                        <span style={{fontWeight: 'bolder'}}>Tổng cộng</span>
-                        <span style={{fontWeight: 'bolder'}}>{totaldata.TOTAL} VNĐ</span>
+                        <Text fw={700}>Tổng cộng</Text>
+                        <Text fw={700}>{totaldata.TOTAL} VNĐ</Text>
                     </Flex>
                 </Flex>
             </Flex>
-            <Flex justify="space-between">
-                <span style={{fontWeight: '500', fontSize: '16px'}}>Dự kiến giao - &nbsp;
-                  <span style={{color:'#009F7F'}}>{futureDate.toLocaleDateString('en-GB')}</span>
-                </span>
+            <Flex>
+                <Text fw={500} size="md">Dự kiến giao - &nbsp; </Text>
+                <Text fw={500} c='#009F7F'>{futureDate.toLocaleDateString('en-GB')}</Text>
             </Flex>
             <Table>
                 <Table.Thead>
@@ -169,31 +188,74 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
                 </Table.Thead>
                 <Table.Tbody>{rows}</Table.Tbody>
             </Table>
-            {/*<div>
+            <div>
                 <Text fw={700}> Vui lòng chọn phương thức thanh toán </Text>
-                <div className='box' style={{padding: '10px 13px', margin: '10px 0 10px 0'}}>
-                <Tabs activeKey={value.toString()} onChange={(key) => setValue(parseInt(key))}>
-                    <Tabs.Panel tab={<span style={{fontWeight: '500', fontSize:'13px'}}><DollarOutlined /> COD</span>} key="1">
-                    {renderTabContent('1')}
-                    </Tabs.Panel>
-                    <Tabs.Panel tab={<span style={{fontWeight: '500', fontSize:'13px'}}><CreditCardOutlined /> Thẻ tín dụng</span>} key="2">
-                    {renderTabContent('2')}
-                    </Tabs.Panel>
-                    <Tabs.Panel tab={<span style={{fontWeight: '500', fontSize:'13px'}}><WalletOutlined /> Ví điện tử</span>} key="3">
-                    {renderTabContent('3')}
-                    </Tabs.Panel>
-                </Tabs>
+                <div {...stylex.props(styles.paymentContainer)}>
+                    <Tabs defaultValue="gallery">
+                        <Tabs.List>
+                            <Tabs.Tab value="COD" leftSection={<IconCoin style={iconStyle} />}>
+                            COD
+                            </Tabs.Tab>
+                            <Tabs.Tab value="creditCard" leftSection={<IconCreditCard style={iconStyle} />}>
+                            Thẻ tín dụng
+                            </Tabs.Tab>
+                            <Tabs.Tab value="e-wallet" leftSection={<IconWallet style={iconStyle} />}>
+                            Ví điện tử
+                            </Tabs.Tab>
+                        </Tabs.List>
+
+                        <Tabs.Panel value="COD">
+                            {renderTabContent('1')}
+                        </Tabs.Panel>
+                        <Tabs.Panel value="creditCard">
+                            {renderTabContent('2')}
+                        </Tabs.Panel>
+                        <Tabs.Panel value="e-wallet">
+                            {renderTabContent('3')}
+                        </Tabs.Panel>
+                    </Tabs>
                 </div>
-            </div>*/}
+            </div>
             <div>
                 <Text fw={700}> Ghi chú </Text>
-                <Textarea rows={3} style={{padding: '10px 13px', margin: '10px 0 10px 0'}}></Textarea>
+                <Textarea rows={3} p="10px 13px" m="10px 0 10px 0"/>
             </div>
             <Flex justify='flex-end'>
-                <Button size="large" style={{ backgroundColor:'#009F7F'}}>
-                <Text fw={700}  style={{ color: '#FFFFFF' }}>ĐẶT HÀNG</Text>
+                <Button size="md" color="#009F7F">
+                <Text fw={500}>ĐẶT HÀNG</Text>
                 </Button>
             </Flex> 
         </Flex>
     );
 }
+
+
+const styles = stylex.create({
+    productImg: {
+        width: '50px', 
+        height: '50px',
+    },
+    eWalletContainer: {
+        padding: '15px 0', 
+        width: '40%',
+    },
+    textColor: {
+        color: '#009f7f',
+    },
+    infoSection: {
+        borderBottom: '1px solid #e7e7e7',
+    },
+    address: {
+        flex: '5', 
+        borderRight: '1px solid #e7e7e7', 
+        padding: '0 20px 20px 0',
+    },
+    price: {
+        flex: '4', 
+        padding: '0 0 20px 20px',
+    },
+    paymentContainer:{
+        padding: '10px 13px', 
+        margin: '10px 0 10px 0',
+    },
+  });

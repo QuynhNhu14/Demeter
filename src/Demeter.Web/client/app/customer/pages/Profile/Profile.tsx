@@ -1,5 +1,4 @@
 import { Flex } from "@mantine/core";
-import "./Profile.css";
 import { CustomerInfo } from "./CustomerInfo";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import * as stylex from "@stylexjs/stylex";
@@ -10,20 +9,26 @@ const styles = stylex.create({
     width: "100%",
     paddingBottom: "30px",
   },
+  userNavbar: {
+    flex: "3",
+  },
+  customerInfo: {
+    flex: "11", 
+    padding: "24px 24px 0 0",
+  }
 });
 
 export const Profile: React.FC<{ shopId?: string }> = () => {
   return (
     <div {...stylex.props(styles.ProfilePage)}>
       <Flex>
-        <Flex style={{ flex: "3" }}>
+        <div {...stylex.props(styles.userNavbar)}>
           <UserNavbar />
-        </Flex>
+        </div>
         <Flex
-          className="Profile"
           direction="column"
-          gap="large"
-          style={{ flex: "11", padding: "24px 24px 0 0" }}
+          gap="lg"
+          {...stylex.props(styles.customerInfo)}
         >
           <CustomerInfo />
         </Flex>

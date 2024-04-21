@@ -1,6 +1,6 @@
 import {Image, ThemeIcon, Text, Title, Card, Container, SimpleGrid, rem, Button, Paper, Box} from '@mantine/core';
 import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock } from '@tabler/icons-react';
-import logo from '../../../assets/logo.png';
+import logo from '../../assets/logo.png';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from "react-router-dom";
 

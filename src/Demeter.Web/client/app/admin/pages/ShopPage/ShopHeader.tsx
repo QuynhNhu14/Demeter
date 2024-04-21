@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import * as stylex from "@stylexjs/stylex";
-import { Button, Flex, Text } from "@mantine/core";
+import { Input, Button, Flex } from "@mantine/core";
 // import {
 //   IconLogout,
 //   IconSearch,
@@ -10,7 +10,7 @@ import { Button, Flex, Text } from "@mantine/core";
 // } from '@tabler/icons-react'; 
 import headerLogo from "../../../assets/header_logo.jpg";
 import { IconLogout, IconSearch, IconShoppingBag, IconHome } from "@tabler/icons-react";
-import { FuzzySearch } from "../../components/Search";
+import { FuzzySearch } from "../../customer/components/Search";
 
 export default function ShopHeader() {
   const navigate = useNavigate();
@@ -49,21 +49,29 @@ export default function ShopHeader() {
 
   return (
     <Flex {...stylex.props(styles.ShopHeader)}>
-      <Flex {...stylex.props(styles.headerSection1)} >
+      <Flex
+        style={{
+          width: "260px",
+          padding: "10px",
+          height: "100%",
+          margin: "0 30px"
+        }}
+      >
         <img
           src={headerLogo}
           alt="header logo"
+          style={{ width: "100%", height: "100%" }}
         />
       </Flex>
-      <Flex {...stylex.props(styles.headerSection2)}>
+      <Flex style={{ flex: "8", height: "100%" }}>
         <Flex
           align="center"
-          {...stylex.props(styles.header__search)}
+          style={{ flex: "7", borderRight: "1px solid #e7e7e7" }}
         >
           <FuzzySearch/>
         </Flex>
         <Flex
-          {...stylex.props(styles.header__link)}
+          style={{ flex: "2", borderRight: "1px solid #e7e7e7" }}
           justify="center"
           align="center"
         >
@@ -71,31 +79,36 @@ export default function ShopHeader() {
           {...stylex.props(styles.VisitSiteButton)}
           >
             <NavLink to="/home" {...stylex.props(styles.VisitSiteLink)}>
-              <IconHome size={20}/> Truy cập sàn
+              <IconHome size={20} style={{marginRight: '5px'}}/> Truy cập sàn
             </NavLink>
           </Button>
         </Flex>
         <Flex
-           {...stylex.props(styles.header__link)}
+          style={{ flex: "2", borderRight: "1px solid #e7e7e7" }}
           justify="center"
           align="center"
           gap="sm"
         >
           <Flex
-             {...stylex.props(styles.shopLogo)}
+            style={{
+              width: "40px",
+              height: "40px",
+              borderRadius: "100px",
+              border: "1px solid #e7e7e7",
+            }}
             justify="center"
             align="center"
           >
             <IconHome />
           </Flex>
           <Flex direction="column">
-            <Text fw={500} size="sm">
+            <span style={{ fontWeight: "500", fontSize: "16px" }}>
               Demeter
-            </Text>
-            <Text fw={500} size="xs" c="dimmed">Cửa hàng</Text>
+            </span>
+            <span style={{ opacity: "0.7", fontSize: "12px" }}>Cửa hàng</span>
           </Flex>
         </Flex>
-        <Flex  {...stylex.props(styles.header__logout)} justify="center" align="center">
+        <Flex style={{ flex: "1" }} justify="center" align="center">
           <NavLink to="/login">
             <IconLogout size={24} color="red" />
           </NavLink>
@@ -119,37 +132,9 @@ const styles = stylex.create({
     alignItems: "center",
     borderBottom: "1px solid #E5E7EB",
   },
-  headerSection1:{
-    width: "260px",
-    padding: "10px",
-    height: "100%",
-    margin: "0 30px",
-  },
-  headerSection2:{
-    flex: "8", 
-    height: "100%",
-  },
-  header__search:{
-    flex: "7", 
-    borderRight: "1px solid #e7e7e7",
-  },
-  header__link:{
-    flex: "2", 
-    borderRight: "1px solid #e7e7e7",
-  },
-  header__logout:{
-    flex: "1", 
-    marginRight: "5px",
-  },
   VisitSiteButton: {
     borderRadius: '20px',
     fontWeight: '500',
-  },
-  shopLogo:{
-    width: "40px",
-    height: "40px",
-    borderRadius: "100px",
-    border: "1px solid #e7e7e7",
   },
   VisitSiteLink: {
     color: "#009f7f",

@@ -1,13 +1,8 @@
 import { useState} from 'react';
 import { Table, Button, Checkbox, Text, NumberInput, Flex } from '@mantine/core';
-import * as stylex from "@stylexjs/stylex";
 import { IconMinus, IconPlus, IconTrash } from '@tabler/icons-react';
+import * as stylex from "@stylexjs/stylex";
 
-const styles = stylex.create({
-  button: {
-    width: "fit-content",
-  },
-});
 interface Props {
   initialProducts: Product[];
   updateSelectedProducts: (updatedProducts: Product[]) => void;
@@ -118,41 +113,41 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
         </Table.Td>
         <Table.Td>
           <Flex align="center" gap={4}>
-            <img src={element.image} alt={element.name} style={{ width: '50px', height: '50px' }} />
+            <img src={element.image} alt={element.name} {...stylex.props(styles.productImg)} />
             {element.name}
           </Flex>
         </Table.Td>
         <Table.Td>
           <Flex gap={8}>
             <Text td="line-through" fs="italic">{element.oldPrice} đ</Text>
-            <Text fw={700}>{element.newPrice} đ</Text>
+            <Text fw={500}>{element.newPrice} đ</Text>
           </Flex>
         </Table.Td>
         <Table.Td>
           <Flex gap={8}>
             <Button
               variant="default"
-              style={{padding: 12}}
-              onClick={() => decreaseQuantity(element.id)}><IconMinus /></Button>
+              p={12}
+              onClick={() => decreaseQuantity(element.id)}><IconMinus size={10} /></Button>
             <NumberInput 
-              style={{width: '100px'}}
+              {...stylex.props(styles.numberInput)}
               min={1} 
               value={element.quantity} 
               hideControls 
               onChange={(value) => handleQuantityChange(value, element.id)} />
             <Button
               variant="default"
-              style={{padding: "0 12px"}}
-              onClick={() => increaseQuantity(element.id)}><IconPlus/></Button>
+              p="0 12px"
+              onClick={() => increaseQuantity(element.id)}><IconPlus size={10} /></Button>
           </Flex>
         </Table.Td>
         <Table.Td>{element.quantity * element.newPrice} VNĐ</Table.Td>
         <Table.Td>
           <Button 
             variant="default"
-            style={{padding: "0 10px"}}
+            p = "0 10px"
             onClick={() => deleteProduct(element.id)} >
-              <IconTrash />
+              <IconTrash size={18}/>
           </Button>
         </Table.Td>
       </Table.Tr>
@@ -160,13 +155,13 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
 
     return (
       <Flex key={shopName} direction="column" gap={8} >
-        <Flex style={{marginTop: '0'}}>
+        <Flex>
           <Checkbox
             color="#009f7f"
             checked={isShopSelected}
             onChange={(e) => handleShopCheckboxChange(shopName, e.target.checked)}
           />
-          <Text fw={600} style={{margin: '0 0 0 10px'}}>{shopName} </Text>
+          <Text fw={600} m = '0 0 0 10px'>{shopName} </Text>
         </Flex>
 
         <Table style = {{ backgroundColor: "#fff", border: '1px solid #E5E7EB', boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)', marginBottom: '20px'}}>
@@ -192,3 +187,26 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
 };
 
 export default ProductCart;
+
+
+const styles = stylex.create({
+  ProfilePage: {
+    backgroundColor: "#f3f4f6",
+    width: "100%",
+    paddingBottom: "30px",
+  },
+  userNavbar: {
+    flex: "3",
+  },
+  customerInfo: {
+    flex: "11", 
+    padding: "24px 24px 0 0",
+  },
+  productImg: {
+    width: '50px', 
+    height: '50px',
+  },
+  numberInput: {
+    width: '100px',
+  }
+});

@@ -21,7 +21,6 @@ import { Routes, Route, useLocation } from "react-router-dom";
 // import Inventory from "./pages/Inventory/Inventory";
 // import ShopProfile from "./pages/ShopsPreview/ShopPreview";
 // import ShopAllProduct from "./pages/Product_admin/ShopAllProduct";
-// import ShopOrders from "./pages/Orders/ShopOrders";
 import { useEffect} from "react";
 // import * as stylex from "@stylexjs/stylex";
 
@@ -46,8 +45,9 @@ import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
 import { Shops } from "./customer/pages/Shops";
 import { ProductPage } from "./pages/ProductPage";
 import Cart from "./customer/pages/Cart/Cart";
-
+import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
 import { Notification } from "./pages/Notification";
+import ShopOrders from "./admin/pages/Orders/ShopOrders";
 
 export default function App() {
   // const navigate = useNavigate();
@@ -95,6 +95,7 @@ export default function App() {
           <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47" />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notification" element={<Notification />} />
+          <Route path="/shop_orders" element={<ShopOrders />} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />
@@ -107,7 +108,6 @@ export default function App() {
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/shop_allproduct" element={<ShopAllProduct />} />
           <Route path="/manage_orders" element={<AdminOrders />} />
-          <Route path="/shop_orders" element={<ShopOrders />} />
           <Route path="/allshop" element={<AllShop />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/inventory" element={<Inventory />} />

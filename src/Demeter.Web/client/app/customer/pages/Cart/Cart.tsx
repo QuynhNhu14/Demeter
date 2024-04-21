@@ -2,8 +2,7 @@ import {useState} from 'react';
 
 import { NavLink } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import 
-{ Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
+import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
 
 import logo from '../../../../assets/logo.png';
 
@@ -12,6 +11,7 @@ import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
 import * as stylex from '@stylexjs/stylex';
+
 
 interface cartInfoData {
   name: string;
@@ -169,13 +169,11 @@ const initialProducts: Product[] = [
 const Cart: React.FC = () => {
   const [selectedProducts, setSelectedProducts] = useState<Product[]>(initialProducts);
 
-  const [selectedVoucher, setSelectedVoucher] = useState<string | undefined>();
+  const [selectedVoucher, setSelectedVoucher] = useState<string>();
   const [selectedVoucherData, setSelectedVoucherData] = useState<VoucherType>();
   const [vouchers, setVouchers] = useState<VoucherType[]>([]); // Danh sách các voucher
 
   const [opened, { open, close }] = useDisclosure(false);
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
@@ -230,8 +228,7 @@ const Cart: React.FC = () => {
   //   fetchData();
   // }, []);
 
-  // Mỗi khi component được khởi chạy, ta sẽ set danh sách voucher từ mẫu dữ liệu
-  
+
   useState(() => {
     setVouchers(VoucherSample);
   });
@@ -239,7 +236,6 @@ const Cart: React.FC = () => {
   const handleApplyVoucher = () => {
     close();
     setSelectedVoucherData(vouchers.find(voucher => voucher.id === selectedVoucher));
-    console.log('Voucher được áp dụng:', selectedVoucherData);
   };
   const handleCancel = () => {
     setSelectedVoucher(undefined);
@@ -248,23 +244,22 @@ const Cart: React.FC = () => {
 
   const handleVoucherChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedVoucher(e.target.value);
-    console.log('selece', e.target.value);
   };
 
   return(
-  <Flex direction="column" style={{position: 'absolute', width: '100%', minHeight:'100%'}}>
-      <Flex style={{ backgroundColor: '#f3f4f6' }}>
+  <Flex direction="column" {...stylex.props(styles.cartPage)}>
+      <Flex>
         <div {...stylex.props(styles.horizontalSections)}>
           <div {...stylex.props(styles.section1)}>
             <img src={infoData.link} alt="Your Image" {...stylex.props(styles.centeredImage)} />
-            <NavLink to='/shop-product' style={{color: '#009F7F', fontWeight: 'bolder', fontSize:'16px', textAlign:'center', padding: '10px 0'}}> {infoData.name}</NavLink>
-            <Divider style={{ margin: '8px'}}/>
+            <NavLink to='/shop-product' {...stylex.props(styles.shopName)}> {infoData.name}</NavLink>
+            <Divider m={8}/>
             <Text fw={700}>Địa chỉ</Text>
             <Text c="dimmed"> {infoData.address}</Text>
-            <Divider style={{ margin: '8px'}}/>
+            <Divider m={8}/>
             <Text fw={700}>Email</Text>
             <Text c="dimmed"> {infoData.email}</Text>
-            <Divider style={{ margin: '8px'}}/>
+            <Divider m={8}/>
             <Text fw={700}>SĐT</Text>
             <Text c="dimmed"> {infoData.phone}</Text>
           </div>
@@ -274,20 +269,20 @@ const Cart: React.FC = () => {
           <div {...stylex.props(styles.section3)}>
             <div {...stylex.props(styles.box)}>
               <div {...stylex.props(styles.leftColumn)}>
-                <Text fw={700} c="dimmed">Giá đơn hàng:</Text>
-                <Text fw={700} c="dimmed">Số lượng:</Text>
-                <Text fw={700} c="dimmed">Phí giao hàng:</Text>
-                <Text fw={700} c="dimmed">Giảm giá:</Text>
+                <Text fw={500} c="dimmed">Giá đơn hàng:</Text>
+                <Text fw={500} c="dimmed">Số lượng:</Text>
+                <Text fw={500} c="dimmed">Phí giao hàng:</Text>
+                <Text fw={500} c="dimmed">Giảm giá:</Text>
               </div>
               <div {...stylex.props(styles.rightColumn)}>
-                <Text fw={700}>{totaldata.totalamount.toLocaleString("en-US")} VNĐ</Text>
-                <Text fw={700}> {totaldata.amount.toLocaleString("en-US")}</Text>
-                <Text fw={700}> {totaldata.totalship.toLocaleString("en-US")} VNĐ</Text>
-                <Text fw={700}> - {totaldata.voucherDiscount.toLocaleString("en-US")} VNĐ</Text>
+                <Text fw={500}>{totaldata.totalamount.toLocaleString("en-US")} VNĐ</Text>
+                <Text fw={500}> {totaldata.amount.toLocaleString("en-US")}</Text>
+                <Text fw={500}> {totaldata.totalship.toLocaleString("en-US")} VNĐ</Text>
+                <Text fw={500}> - {totaldata.voucherDiscount.toLocaleString("en-US")} VNĐ</Text>
               </div>
             </div>
 
-            <div {...stylex.props(styles.box)} style={{padding: '10px 30px'}}>
+            <div {...stylex.props(styles.box, styles.totalBox)}>
               <div {...stylex.props(styles.leftColumn)}>
                 <Text fw={700} >TỔNG CỘNG:</Text>
               </div>
@@ -296,9 +291,9 @@ const Cart: React.FC = () => {
               </div>
             </div>
 
-            <Text fw={700} > Áp dụng voucher </Text>
-              <Button size="large" variant="outline" color="#009f7f" style={{ margin: '10px 0 10px 0'}} onClick={open} >
-                <Text fw={700} style={{ color:'#009F7F' }}> Áp dụng voucher </Text>
+            <Text fw={500} > Áp dụng voucher </Text>
+              <Button size="large" variant="outline" color="#009f7f" m="10px 0" onClick={open} >
+                <Text fw={500} color='#009F7F'> Áp dụng voucher </Text>
               </Button>
               <Modal 
                 opened={opened} onClose={close} 
@@ -306,26 +301,25 @@ const Cart: React.FC = () => {
                 scrollAreaComponent={ScrollArea.Autosize}
                 title="Danh sách voucher của bạn" 
                 {...stylex.props(styles.customModal)}>
-                <Radio.Group style={{ width: '98%'}} value={selectedVoucher}>
+                <Radio.Group value={selectedVoucher}>
                    {vouchers.map((voucher) => (
-                    <Flex direction="column"  {...stylex.props(styles.box)} onClick={console.log}>
+                    <Flex direction="column"  {...stylex.props(styles.box)} onClick={() => setSelectedVoucher(voucher.id)}>
                       <Flex justify='space-between'>
                           <Radio       
                             key={voucher.id}
                             onChange={handleVoucherChange}
                             iconColor="#fff"
                             color="#009f7f" 
-                            value={voucher.code} 
+                            value={voucher.id} 
                             label={voucher.code}/>
-                        <Flex>
-                          <Text style={{fontWeight: '500'}}>Giảm {voucher.discount}%
-                            <Text style={{fontWeight: '400', fontSize: '13px'}}> - Tối đa đ{voucher.usageLimit}k </Text>
-                          </Text>
+                        <Flex align="center" gap={4}>
+                            <Text fw={500}>Giảm {voucher.discount}%</Text>
+                            <Text size="sm" c="dimmed"> - Tối đa đ{voucher.usageLimit}k </Text>
                         </Flex>
                       </Flex>
                       <Flex direction="column">
-                        <Text style={{paddingLeft: '25px', opacity: '0.8', fontSize: '13px'}}>{voucher.description}</Text>
-                        <Text style={{paddingLeft: '25px', opacity: '0.8', fontSize: '13px', color: 'red'}}>
+                        <Text c="dimmed" size="sm">{voucher.description}</Text>
+                        <Text c="red" size="sm">
                           Hạn: {new Date(voucher.startDate).toLocaleDateString('en-GB')} - {new Date(voucher.endDate).toLocaleDateString('en-GB')}
                         </Text>
                       </Flex>
@@ -334,7 +328,7 @@ const Cart: React.FC = () => {
                   ))}
                 </Radio.Group> 
                 <Flex gap={8} justify="flex-end">
-                  <Button key="cancel" onClick={close} variant="default">
+                  <Button key="cancel" onClick={handleCancel} variant="default">
                     Hủy
                   </Button>
                   <Button key="apply" variant="filled" color="#009F7F" onClick={handleApplyVoucher}>
@@ -343,17 +337,15 @@ const Cart: React.FC = () => {
                 </Flex>
               </Modal>
 
-                {selectedVoucher && (
-                  <div>
-                    <div  {...stylex.props(styles.box)} style={{padding: '10px 13px', margin: '0px 0 10px 0'}}>
-                      <Text fw={700}> Voucher được áp dụng: {selectedVoucher}</Text>
-                    </div>
+              {selectedVoucher && (
+                  <div {...stylex.props(styles.box, styles.voucherApplyBox)}>
+                    <Text fw={500} size="sm"> Voucher được áp dụng: {selectedVoucherData?.code}</Text>
                   </div>
                 )}
-            <Button size="large" style={{ backgroundColor:'#009F7F'}} onClick={showModal}>
-              <Text fw={700}  style={{ color: '#FFFFFF' }}>ĐẶT HÀNG  {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
+            <Button size="lg" color="#009F7F" onClick={showModal}>
+              <Text fw={500}>ĐẶT HÀNG  {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
             </Button>
-            <Modal opened={isModalOpen} onOk={handleOk} onClose={handleCancelOrder} footer={null} size="65%"  >
+            <Modal opened={isModalOpen} onOk={handleOk} onClose={handleCancelOrder} footer={null} size="65%" scrollAreaComponent={ScrollArea.Autosize}>
                 <OrderForm totaldata={totaldata} selectedProducts={selectedProducts.filter((item) => item.selected)}/>
             </Modal>
           </div>

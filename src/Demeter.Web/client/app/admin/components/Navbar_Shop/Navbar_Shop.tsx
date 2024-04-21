@@ -1,241 +1,77 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  IconLayoutGrid,
-  IconInbox,
-  IconSetting,
-  IconCircle,
-  IconArrowBackUp,
-  IconShoppingBag,
-  IconGift,
+  IconLayoutDashboard,
+  IconBox,
+  IconTablePlus,
+  IconBuildingWarehouse,
+  IconReceipt,
+  IconReceiptRefund,
+  IconInfoCircle,
+  IconGiftCard,
   IconStar,
 } from "@tabler/icons-react";
-import { MenuProps, Menu, Text } from "@mantine/core";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Text } from '@mantine/core';
+import * as stylex from "@stylexjs/stylex";
 
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[],
-  type?: "group",
-  name?: string
-): MenuItem {
-  const to = `/${name}`.toLowerCase().replace(/\s/g, ""); // Tạo đường dẫn từ label
-
-  const menuItem: MenuItem = {
-    key,
-    icon,
-    children,
-    label,
-    type,
-    name,
-  };
-
-  // Kiểm tra key của mục có phải là các key cụ thể cần tạo NavLink hay không
-  const keysToNavLink = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-  ];
-  if (keysToNavLink.includes(String(key))) {
-    menuItem.label = (
-      <NavLink to={to} activeClassName="active">
-        {label}
-      </NavLink>
-    );
-  }
-  if (key === "grp") {
-    menuItem.label = (
-      <Text strong type="secondary">
-        {label}
-      </Text>
-    );
-  }
-
-  return menuItem;
-}
-
-const items: MenuProps["items"] = [
-  getItem(
-    "Chính",
-    "grp",
-    null,
-    [
-      getItem(
-        "Tổng quan",
-        "1",
-        <IconLayoutGrid />,
-        undefined,
-        undefined,
-        "shop"
-      ),
-    ],
-    "group"
-  ),
-
-  getItem(
-    "Quản lý sản phẩm",
-    "grp",
-    null,
-    [
-      getItem("Sản phẩm", "sub1", <IconInbox />, [
-        getItem(
-          "Tất cả sản phẩm",
-          "2",
-          undefined,
-          undefined,
-          undefined,
-          "shop_allproduct"
-        ),
-        getItem(
-          "Thêm Sản phẩm",
-          "3",
-          undefined,
-          undefined,
-          undefined,
-          "Add Product"
-        ),
-      ]),
-
-      getItem(
-        "Kho",
-        "4",
-        <IconLayoutGrid />,
-        undefined,
-        undefined,
-        "Inventory"
-      ),
-    ],
-    "group"
-  ),
-
-  getItem(
-    "Quản lý đơn hàng",
-    "grp",
-    null,
-    [
-      getItem(
-        "Đơn hàng",
-        "5",
-        <IconCircle />,
-        undefined,
-        undefined,
-        "shop_orders"
-      ),
-      getItem(
-        "Hoàn tiền",
-        "6",
-        <IconArrowBackUp />,
-        undefined,
-        undefined,
-        "shop_orders"
-      ),
-    ],
-    "group"
-  ),
-
-  getItem(
-    "Quản lý cửa hàng",
-    "grp",
-    null,
-    [
-      getItem(
-        "Thông tin",
-        "7",
-        <IconShoppingBag />,
-        undefined,
-        undefined,
-        "ShopProfile"
-      ),
-      getItem(
-        "Voucher",
-        "8",
-        <IconGift />,
-        undefined,
-        undefined,
-        "ShopProfile"
-      ),
-      getItem("Review", "9", <IconStar />, undefined, undefined, "ShopProfile"),
-    ],
-    "group"
-  ),
-
-  // getItem('Navigation Three', 'sub2', <IconSetting />, [
-  //   getItem('Option 9', '9', undefined, undefined, undefined, 'Option 9'),
-  //   getItem('Option 10', '10', undefined, undefined, undefined, 'Option 10'),
-  //   getItem('Option 11', '11', undefined, undefined, undefined, 'Option 11'),
-  //   getItem('Option 12', '12', undefined, undefined, undefined, 'Option 12'),
-  // ]),
-
-  // getItem('Group', 'grp', null, [getItem('Option 13', '13', undefined, undefined, undefined, 'Option 13'), getItem('Option 14', '14', undefined, undefined, undefined, 'Option 14')], 'group'),
+const data = [
+  { group: 'Chính', label: 'Tổng quan ', icon: IconLayoutDashboard, link: 'shop'},
+  { group: 'Quản lý sản phẩm', label: 'Tất cả sản phẩm', icon: IconBox, link: 'shop_allproduct'},
+  { group: 'Quản lý sản phẩm', label: 'Thêm Sản phẩm', icon: IconTablePlus, link: 'addproduct' },
+  { group: 'Quản lý sản phẩm', label: 'Kho', icon: IconBuildingWarehouse, link: 'inventory' },
+  { group: 'Quản lý đơn hàng', label: 'Đơn hàng', icon: IconReceipt, link: 'shop_orders' },
+  { group: 'Quản lý đơn hàng', label: 'Hoàn tiền', icon: IconReceiptRefund, link: 'shop_orders' },
+  { group: 'Quản lý cửa hàng', label: 'Thông tin', icon: IconInfoCircle, link: 'shopprofile' },
+  { group: 'Quản lý cửa hàng', label: 'Voucher', icon: IconGiftCard, link: 'shopprofile' },
+  { group: 'Quản lý cửa hàng', label: 'Review', icon: IconStar, link: 'shopprofile' },
 ];
 
 const Navbar_Admin: React.FC = () => {
-  const location = useLocation();
-
-  const [selectedMenuKey, setSelectedMenuKey] = useState<string>(
-    localStorage.getItem("selectedMenuKey") || "1"
+  const [active, setActive] = useState<string>(
+    localStorage.getItem("selectedMenuKey") || "0"
   );
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    const clickedKey = e.key.toString();
+  const onClick = (index: number) => {
+    const clickedKey = index.toString();
     localStorage.setItem("selectedMenuKey", clickedKey);
-    setSelectedMenuKey(clickedKey);
+    setActive(clickedKey);
   };
 
-  useEffect(() => {
-    itemsLoop: for (const group of items) {
-      if (group) {
-        for (const item of group.children) {
-          if (
-            item &&
-            `/${item.name}`.toLowerCase().replace(/\s/g, "") ===
-              location.pathname
-          ) {
-            localStorage.setItem("selectedMenuKey", item.key.toString());
-            setSelectedMenuKey(item.key.toString());
-            break itemsLoop; // Thoát khỏi vòng lặp ngoài
-          }
-        }
-      }
-    }
-  }, [location.pathname]);
-
-  console.log({ selectedMenuKey });
-  // useEffect(() => {
-  //   const menu = document.getElementsByClassName('ant-menu')[0];
-  //   if (menu) {
-  //     menu.setAttribute('data-selectedkeys', selectedMenuKey);
-  //   }
-  // }, [selectedMenuKey]);
   return (
-    <>
-      <div className="AdminNavbar">
-        <Menu
-          onClick={onClick}
-          style={{ width: 256, fontWeight: "500" }}
-          defaultSelectedKeys={[selectedMenuKey]}
-          defaultOpenKeys={["grp"]}
-          mode="inline"
-          items={items}
-        />
-      </div>
-    </>
+    <div {...stylex.props(styles.AdminNavbar)}>
+      {
+        data.map((item, index) =>{ 
+          return(
+            <>
+              { !(index > 0 && item.group === data[index - 1].group) && 
+                <Text c="dimmed" size="sm" m={5}>{item.group}</Text>}
+              <NavLink
+                href={item.link}
+                key={item.label}
+                active={index === parseInt(active) }
+                label={item.label}
+                leftSection={<item.icon size="1rem" stroke={1.5} />}
+                onClick={() => onClick(index)}
+              />
+            </>
+          )
+          }
+        )
+      }
+    </div>
   );
 };
 
 export default Navbar_Admin;
+
+const styles = stylex.create({
+  AdminNavbar: {
+    backgroundColor: "#fff",
+    padding: "5px",
+    position: "fixed",
+    left: "24px",
+    top: "88px",
+    borderRadius: "5px",
+    border: "2px solid #e7e7e7",
+    width: "18%",
+  },
+});

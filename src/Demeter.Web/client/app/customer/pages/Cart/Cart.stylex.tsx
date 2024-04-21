@@ -1,6 +1,12 @@
 import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
+    cartPage:{
+        position: 'absolute', 
+        width: '100%', 
+        minHeight:'100%',
+        backgroundColor: '#f3f4f6',
+    },
     horizontalSections: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -17,6 +23,13 @@ export const styles = stylex.create({
         borderRadius: '5px',
         height: 'fit-content',
         boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)',
+    },
+    shopName:{
+        color: '#009F7F', 
+        fontWeight: 'bolder', 
+        fontSize:'16px', 
+        textAlign:'center', 
+        padding: '10px 0',
     },
     centeredImage: {
         maxWidth: '95%',
@@ -47,6 +60,14 @@ export const styles = stylex.create({
         marginBottom: '20px',
         border: '1px solid #e5e7eb',
         boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.05)',
+        cursor: 'pointer',
+    },
+    totalBox: {
+        padding: '10px 30px',
+    },
+    voucherApplyBox: {
+        padding: '10px 13px', 
+        margin: '0px 0 10px 0',
     },
     leftColumn: {
         display: 'flex',
