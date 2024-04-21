@@ -2,6 +2,9 @@ import { Vouchers } from "./orders";
 import { ShopAccount } from "./users";
 
 export interface Product {
+  image: string | undefined;
+  newPrice: ReactNode;
+  quantity: React.ComponentPropsWithoutRef<ElementType>;
   id: number;
   name: string;
   imageUrl?: string;

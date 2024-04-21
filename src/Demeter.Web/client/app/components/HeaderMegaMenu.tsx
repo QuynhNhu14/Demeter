@@ -1,8 +1,9 @@
-import { IconBell, IconShoppingCart, IconUser } from "@tabler/icons-react";
-import { Box, Group, Image, ActionIcon, Tabs, Paper, Overlay } from "@mantine/core";
+import { IconBell, IconShoppingCart } from "@tabler/icons-react";
+import { Group, Image, ActionIcon, Tabs, Paper } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import headerLogo2 from "../../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
+import { Login } from "./LogIn";
 
 export function HeaderMegaMenu() {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ export function HeaderMegaMenu() {
   if (hideNavbar) {
     return null;
   }
-
+  
   return (
     <Paper shadow="sm" variant="gradient">
       <Group
@@ -69,13 +70,7 @@ export function HeaderMegaMenu() {
             >
               <IconBell/>
             </ActionIcon>
-            <ActionIcon
-              onClick={() => navigate("/profile")}
-              size="lg"
-              variant="transparent"
-            >
-              <IconUser />
-            </ActionIcon>
+            <Login />
           </Group>
         </Group>
       </Group>

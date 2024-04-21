@@ -1,13 +1,13 @@
 // import { ProductDescription } from "../components/ProductDescription/ProductDescription";
 import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
-import { ProductList } from "../../components/ProductList";
+import { ProductList } from "../components/ProductList";
 import { NavLink} from "react-router-dom";
 
 import { IconArrowLeft, IconCircleCheck, IconHeart, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 import { useState, useEffect } from "react";
-import { Product } from "../../models/products";
-import { getProductById } from "../../services/products";
+import { Product } from "../models/products";
+import { getProductById } from "../services/products";
 
 type ProductPageProps = {
   productId?: string;

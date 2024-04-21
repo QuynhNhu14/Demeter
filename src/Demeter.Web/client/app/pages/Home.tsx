@@ -1,6 +1,6 @@
 import { Container, Flex, Text, Image, Title, Box } from "@mantine/core";
 import { CategoryList } from "../components/CategoryList";
-import { ProductList } from "../../components/ProductList";
+import { ProductList } from "../components/ProductList";
 import Offer1 from "../../../assets/offer-1.png";
 import Offer2 from "../../../assets/offer-2.png";
 import Offer3 from "../../../assets/offer-3.png";

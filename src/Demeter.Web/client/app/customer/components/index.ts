@@ -1,3 +1,3 @@
-export * from "./Search";
-export * from "./HeaderMegaMenu";
-export * from "./Link";
+export * from "../../components/Search";
+export * from "../../components/HeaderMegaMenu";
+export * from "../../components/Link";

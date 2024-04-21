@@ -3,7 +3,6 @@ import {
   IconTrash,
   IconReceipt,
 } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
 
 const data = [
   {

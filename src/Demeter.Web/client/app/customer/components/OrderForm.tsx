@@ -2,8 +2,9 @@ import { useState } from "react";
 
 import { Button, Flex, Table, Textarea, Text  } from "@mantine/core";
 
-import { Product } from "../customer/components/ProductCart";
+
 import { IconEye } from "@tabler/icons-react";
+import { Product } from "../../models/products";
 
 type OrderFormProps = {
     totaldata: {
@@ -47,7 +48,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
           </Table.Td>
           <Table.Td>{item.quantity}</Table.Td>
           <Table.Td>
-            <Flex justifyContent="center" sx={{margin: 'auto'}}>{item.newPrice*item.quantity} VNĐ</Flex>
+            {/* <Flex justifyContent="center" sx={{margin: 'auto'}}>{item.newPrice*item.quantity} VNĐ</Flex> */}
           </Table.Td>
         </Table.Tr>
       ));

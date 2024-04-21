@@ -1,9 +1,8 @@
-import {Image, ThemeIcon, Text, Title, useMantineTheme, Card, Container, SimpleGrid, rem, Button, Paper, px, Box} from '@mantine/core';
+import {Image, ThemeIcon, Text, Title, Card, Container, SimpleGrid, rem, Button, Paper, Box} from '@mantine/core';
 import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock } from '@tabler/icons-react';
 import logo from '../../../assets/logo.png';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from "react-router-dom";
-import { useMediaQuery } from '@mantine/hooks';
 
 //feature
 export const MOCKDATA = [

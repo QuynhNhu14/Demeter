@@ -1,4 +1,4 @@
-import { Badge, Flex, Card, Button, Image} from "@mantine/core";
+import { Badge, Flex, Card, Button, Image, Skeleton} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Product } from "../models/products";
 import { getAllProducts } from "../services/products";
@@ -88,12 +88,15 @@ type ProductListProps = {
 };
 
 export const ProductList: React.FC<ProductListProps> = () => {
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Product[]>([]);
   const fetchData = async () => {
     const data = await getAllProducts();
+    
     if (!data) {
       return;
     }
+    setLoading(false);
     setData(data);
   };
   
@@ -102,18 +105,18 @@ export const ProductList: React.FC<ProductListProps> = () => {
   }, []);
 
   return (
-    <div >
+    <Skeleton visible={loading}>
       <Flex
         gap="large"
         align="center"
         justify="space-between"
       >
         <Flex m={30} wrap="wrap" gap={30} justify={"flex-start"}>
-          {data.map((product) => (
+          { data.map((product) => (
             <ProductCard product={product}/>
           ))}
         </Flex>
       </Flex>
-    </div>
+    </Skeleton>
   );
 };
