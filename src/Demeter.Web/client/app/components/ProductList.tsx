@@ -1,7 +1,7 @@
 import { Badge, Flex, Card, Button, Image, Skeleton} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { Product } from "../models/products";
-import { getAllProducts } from "../services/products";
+import { getAllProducts, getProductByName } from "../services/products";
 
 import {IconMinus, IconPlus, IconStarFilled } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +10,7 @@ type ProductCardProps = {
   product: Product;
 };
 
-function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
   const [quantity, setQuantity] = useState<number>(0);
 
   const handleAddProduct = () => {
@@ -85,24 +85,34 @@ function ProductCard({ product }: ProductCardProps) {
 type ProductListProps = {
   categoryId?: string;
   shopId?: string;
+  search?: string;
 };
 
-export const ProductList: React.FC<ProductListProps> = () => {
+export const ProductList: React.FC<ProductListProps> = ({search}: ProductListProps) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Product[]>([]);
   const fetchData = async () => {
-    const data = await getAllProducts();
-    
-    if (!data) {
-      return;
+    if (search) {
+      const data = await getProductByName(search);
+      if (!data) {
+        return;
+      }
+      setLoading(false);
+      setData(data);
     }
-    setLoading(false);
-    setData(data);
+    else {
+      const data = await getAllProducts();
+      if (!data) {
+        return;
+      }
+      setLoading(false);
+      setData(data);
+    }
   };
   
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [search]);
 
   return (
     <Skeleton visible={loading}>
@@ -120,3 +130,4 @@ export const ProductList: React.FC<ProductListProps> = () => {
     </Skeleton>
   );
 };
+

@@ -37,6 +37,12 @@ public class ProductsService : IProductsService
         return _mapper.Map<IList<Domain.Products>>(result);
     }
 
+    public async ValueTask<ICollection<Domain.Products>> GetByCategory(int id)
+    {
+        var entities = await _context.Products.Where(p => p.Category != null && p.Category.Id == id).ToListAsync();
+        return _mapper.Map<IList<Domain.Products>>(entities);
+    }
+
     public async ValueTask UpdateAsync(ICollection<Domain.Products> products)
     {
         foreach (var product in products)

@@ -1,7 +1,7 @@
 // import "./App.css";
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useSearchParams } from "react-router-dom";
 // import { ProductPage } from "./pages/ProductDetail/ProductPage";
 // import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
 // import { Shops } from "./pages/Shops/Shops";
@@ -45,36 +45,17 @@ import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
 import { Shops } from "./customer/pages/Shops";
 import { ProductPage } from "./pages/ProductPage";
 import Cart from "./customer/pages/Cart/Cart";
-import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
 import { Notification } from "./pages/Notification";
 import ShopOrders from "./admin/pages/Orders/ShopOrders";
+import { ProductSearch } from "./pages/ProductSearch";
 
 export default function App() {
-  // const navigate = useNavigate();
   const location = useLocation();
-  // const [firstRender, setFirstRender] = useState(true);
-
+  
   // Automatically scrolls to top whenever pathname changes
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
-
-  // useEffect(() => {
-  //   if (firstRender) {
-  //     if (location.pathname === "/") {
-  //       navigate("/");
-  //     }
-  //     setFirstRender(false);
-  //   }
-  // }, [firstRender, navigate, location.pathname]);
-
-  // useEffect(() => {
-  //   // Chỉ điều hướng đến '/home' nếu không phải là lần render đầu tiên
-  //   if (!firstRender && location.pathname !== "/home") {
-  //     // Nếu đường dẫn không phải là '/home' thì không thực hiện điều hướng
-  //     navigate(location.pathname);
-  //   }
-  // }, [location.pathname, firstRender, navigate]);
 
   return (
     <MantineProvider theme={defaultTheme} >
@@ -96,6 +77,7 @@ export default function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/shop_orders" element={<ShopOrders />} />
+          <Route path="/search" element={<ProductSearch  />} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />

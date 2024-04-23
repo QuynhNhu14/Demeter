@@ -31,6 +31,18 @@ export async function getProductById(productId: string) {
   }
 }
 
+export async function getProductByName(productName: string) {
+  try {
+    const response = await axios.get<Product[]>(`${baseUrl}/search?name=${productName}` );
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error("Error: ", error.message);
+    } else {
+    }
+  }
+}
+
 export async function createProduct(product: Product) {
   try {
     const response = await axios.post<Product>(baseUrl, product);

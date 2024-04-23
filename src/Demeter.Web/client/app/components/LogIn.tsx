@@ -3,11 +3,9 @@ import { useForm } from '@mantine/form';
 import {
   TextInput,
   PasswordInput,
-  Text,
   Group,
   PaperProps,
   Button,
-  Divider,
   Checkbox,
   Anchor,
   Stack,
