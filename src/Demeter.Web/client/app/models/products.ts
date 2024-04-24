@@ -1,3 +1,4 @@
+import { ReactNode, ElementType } from "react";
 import { Vouchers } from "./orders";
 import { ShopAccount } from "./users";
 

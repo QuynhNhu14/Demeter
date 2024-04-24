@@ -1,6 +1,5 @@
 import axios, { AxiosError } from "axios";
 import { Category, Price, Product } from "../models/products";
-import { useHttp } from "../hooks";
 
 const baseUrl = "http://localhost:5029/api/products";
 

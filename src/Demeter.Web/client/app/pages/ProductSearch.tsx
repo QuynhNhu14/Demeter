@@ -2,10 +2,8 @@ import { Box, Text} from "@mantine/core";
 import { ProductList } from "../components/ProductList";
 import { useSearchParams } from "react-router-dom";
 
-
 export function ProductSearch() {
-    const [searchParams, setSearchParams] = useSearchParams();
-    console.log("params", searchParams);
+    const [searchParams] = useSearchParams()
 
     return (
         <Box p="xl">

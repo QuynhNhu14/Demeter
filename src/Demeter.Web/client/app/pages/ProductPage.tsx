@@ -2,7 +2,6 @@
 import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
 import { ProductList } from "../components/ProductList";
 import { NavLink} from "react-router-dom";
-
 import { IconArrowLeft, IconCircleCheck, IconHeart, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 import { useState, useEffect } from "react";
@@ -132,10 +131,7 @@ const reviews = [
   },
 ];
 
-
-
 export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
- 
   const [heart, setHeart] = useState<boolean>(false);
 
   const handleLike = () => {
@@ -155,7 +151,6 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
     if(!productId) {
       return;
     }
-
     const data = await getProductById(productId);
 
     if (!data) {

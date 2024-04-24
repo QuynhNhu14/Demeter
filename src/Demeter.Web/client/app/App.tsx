@@ -1,39 +1,7 @@
-// import "./App.css";
 import "@mantine/core/styles.css";
 import '@mantine/carousel/styles.css';
-import { Routes, Route, useLocation, useSearchParams } from "react-router-dom";
-// import { ProductPage } from "./pages/ProductDetail/ProductPage";
-// import { ShopProduct } from "./pages/ShopProduct/ShopProduct";
-// import { Shops } from "./pages/Shops/Shops";
-// import { Offer } from "./pages/Offer/Offer";
-// import Cart from "./pages/Cart/Cart";
-// import SignInSignUp from "./pages/SignInSignUp/SignInSignUp";
-// import AppSettingPage from "./pages/testapi/appsetting";
-// import { Profile } from "./pages/Profile/Profile";
-// import { ChangePassword } from "./pages/Profile/ChangePassword";
-// import { Orders } from "./pages/Profile/Orders";
-// import Dashboardadmin from "./pages/Dashboard/Dashboard_admin";
-// import AllProduct from "./pages/Product_admin/AllProduct";
-// import AllShop from "./pages/ShopsPreview/Allshop";
-// import AdminOrders from "./pages/Orders/Order";
-// import Dashboard from "./pages/Dashboard/Dashboard";
-// import AddProduct from "./pages/Product_admin/AddProduct";
-// import Inventory from "./pages/Inventory/Inventory";
-// import ShopProfile from "./pages/ShopsPreview/ShopPreview";
-// import ShopAllProduct from "./pages/Product_admin/ShopAllProduct";
+import { Routes, Route, useLocation} from "react-router-dom";
 import { useEffect} from "react";
-// import * as stylex from "@stylexjs/stylex";
-
-// Import styles of packages that you've installed.
-// All packages except `@mantine/hooks` require styles imports
-
-// const styles = stylex.create({
-//   app: {
-//     fontSize: "16px",
-//     fontFamily: "sans-serif",
-//   },
-// });
-
 import { AppShell, MantineProvider } from "@mantine/core";
 import HomePage from "./pages/Home";
 import { HeaderMegaMenu } from "./customer/components";
@@ -43,7 +11,7 @@ import { IntroPage } from "./pages/IntroPage";
 import { Profile } from "./customer/pages/Profile/Profile";
 import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
 import { Shops } from "./customer/pages/Shops";
-import { ProductPage } from "./pages/ProductPage";
+import { ProductPage} from "./pages/ProductPage";
 import Cart from "./customer/pages/Cart/Cart";
 import { Notification } from "./pages/Notification";
 import ShopOrders from "./admin/pages/Orders/ShopOrders";
@@ -73,7 +41,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/change_password" element={<ChangePassword />} />
           <Route path="/shops" element={<Shops />} />
-          <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47" />} />
+          <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47"/>}/>
           <Route path="/cart" element={<Cart />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/shop_orders" element={<ShopOrders />} />
