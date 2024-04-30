@@ -6,7 +6,7 @@ import { AppShell, MantineProvider } from "@mantine/core";
 import HomePage from "./pages/Home";
 import { HeaderMegaMenu } from "./customer/components";
 import { defaultTheme } from "../themes";
-import { Footer } from "./components/Footer";
+import { Footer} from "./components/Footer";
 import { IntroPage } from "./pages/IntroPage";
 import { Profile } from "./customer/pages/Profile/Profile";
 import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
@@ -16,6 +16,7 @@ import Cart from "./customer/pages/Cart/Cart";
 import { Notification } from "./pages/Notification";
 import ShopOrders from "./admin/pages/Orders/ShopOrders";
 import { ProductSearch } from "./pages/ProductSearch";
+import {PaymentStatus} from "./pages/PaymentStatus";
 
 export default function App() {
   const location = useLocation();
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/shop_orders" element={<ShopOrders />} />
           <Route path="/search" element={<ProductSearch  />} />
+          <Route path="/payment" element={<PaymentStatus/>} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />
