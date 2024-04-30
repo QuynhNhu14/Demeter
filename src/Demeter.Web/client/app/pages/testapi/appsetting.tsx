@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getSettings } from "../../services/appsettings";
 import { AppSettings } from "../../models/settings";
 import "./test.css";
-import { EditOutlined } from "@ant-design/icons";
+import { IconEdit } from "@tabler/icons-react";
 import FormSetting from "./form";
 
 export default function AppSettingPage() {
@@ -33,11 +33,18 @@ export default function AppSettingPage() {
     }
     fetchData();
   }, []);
-  
+
   // TODO: show data in table using antd
   return (
-    <div className="test" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", padding: "10px"}}>
-      <div >
+    <div
+      className="test"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        padding: "10px",
+      }}
+    >
+      <div>
         <h1>Appsetting Page</h1>
         <div>
           <div
@@ -65,7 +72,7 @@ export default function AppSettingPage() {
                     <td>{setting.value}</td>
                     <td>{setting.description}</td>
                     <td>{setting.type}</td>
-                    <td style={{ paddingLeft: "10px", border: 'none' }}>
+                    <td style={{ paddingLeft: "10px", border: "none" }}>
                       <button
                         className="button"
                         onClick={() => {
@@ -73,7 +80,7 @@ export default function AppSettingPage() {
                           setShowForm(true);
                         }}
                       >
-                        <EditOutlined />
+                        <IconEdit />
                       </button>
                     </td>
                   </tr>
@@ -81,7 +88,7 @@ export default function AppSettingPage() {
               ))}
             </table>
           </div>
-          <div >
+          <div>
             <button className="button" onClick={() => setShowForm(true)}>
               Add Setting
             </button>

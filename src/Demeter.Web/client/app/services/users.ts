@@ -1,7 +1,9 @@
 import axios, { AxiosError } from "axios";
 import { Account, User } from "../models/users";
+import { useHttp } from "../hooks";
 
 const baseUrl = 'http://localhost:5029/api/users';
+const http = useHttp();
 export async function getAcount() {
   const url = `${baseUrl}/account`;
   try {

@@ -16,6 +16,4 @@ public class Users
     public string PhoneNumber { get; set; } = string.Empty;
     public string AvatarUrl { get; set; } = string.Empty;
     public string AddressJson { get; set; } = string.Empty;
-
-    public virtual Account? Account { get; set; }
 }

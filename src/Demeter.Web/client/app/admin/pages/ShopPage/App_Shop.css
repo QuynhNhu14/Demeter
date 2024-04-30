@@ -1,0 +1,37 @@
+.AppAdmin {
+  display: flex;
+  font-family: sans-serif;
+}
+
+.button__primary {
+  background-color: #009f7f;
+  border-radius: 5px;
+  border: 0px;
+  width: fit-content;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.ShopHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
+}
+.content-with-navbar {
+  padding-top: 70px;
+}
+
+.VisitSiteButton {
+  background-color: rgba(243, 244, 246, 0.5);
+  color: var(--primary-color);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+  padding: 18px 15px;
+  display: flex;
+  align-items: center;
+}
