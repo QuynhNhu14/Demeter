@@ -2,8 +2,8 @@ import { Card, Text,  Button,  Divider,  Flex,} from "@mantine/core";
 import { IconEdit, IconMail, IconMapPin, IconPhone, 
   IconPremiumRights, IconInbox, IconReceipt, IconShoppingBag} from "@tabler/icons-react";
 
-import ShopHeader from "../ShopPage/ShopHeader";
-import Navbar_Shops from "../../admin/components/Navbar_Shop/Navbar_shop";
+import ShopHeader from "../../../pages/ShopPage/ShopHeader";
+import Navbar_Shops from "../../components/Navbar_Shop/Navbar_shop";
 
 import * as stylex from "@stylexjs/stylex";
 import {styles} from './ShopPreview.stylex';

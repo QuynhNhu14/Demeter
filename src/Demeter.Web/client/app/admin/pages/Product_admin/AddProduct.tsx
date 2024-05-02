@@ -1,6 +1,6 @@
 import React from "react";
 import { Flex } from "@mantine/core";
-import FormAddProduct from "../../../components/Form/FormAddProduct";
+import FormAddProduct from "../../components/Form/FormAddProduct";
 import ShopHeader from "../../../pages/ShopPage/ShopHeader";
 import Navbar_Shop from "../../components/Navbar_Shop/Navbar_Shop";
 import { useForm } from "@mantine/form";

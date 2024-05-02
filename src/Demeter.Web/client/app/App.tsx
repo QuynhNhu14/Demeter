@@ -18,7 +18,7 @@ import ShopOrders from "./admin/pages/Orders/ShopOrders";
 import { ProductSearch } from "./pages/ProductSearch";
 import ShopAllProduct from "./admin/pages/Product_admin/ShopAllProduct";
 import AddProduct from "./admin/pages/Product_admin/AddProduct";
-import ShopProfile from "./pages/ShopsPreview/ShopPreview";
+import ShopProfile from "./admin/pages/ShopsPreview/ShopPreview";
 import {PaymentStatus} from "./pages/PaymentStatus";
 
 export default function App() {

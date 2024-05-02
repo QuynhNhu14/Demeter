@@ -13,7 +13,7 @@ import {
   Modal
 } from "@mantine/core";
 import { IconEdit, IconSearch } from "@tabler/icons-react";
-import ProductForm from "../../../components/Form/FormAddProduct";
+import ProductForm from "../Form/FormAddProduct";
 
 import * as stylex from "@stylexjs/stylex";
 

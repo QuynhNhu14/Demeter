@@ -25,7 +25,7 @@ import Orders from "../Orders/Order";
 import ShopProfile from "../pages/ShopsPreview/ShopPreview";
 import Dashboardadmin from "../../../pages/Dashboard/Dashboard_admin";
 import AllShopTable from "../../components/Table/TableAllShop";
-import AllShop from "../../../pages/ShopsPreview/Allshop";
+import AllShop from "../ShopsPreview/Allshop";
 import headerLogo from "../../../assets/header_logo.jpg";
 
 export default function App_Shop() {
