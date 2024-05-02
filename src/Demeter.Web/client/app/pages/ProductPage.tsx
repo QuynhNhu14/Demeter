@@ -142,10 +142,6 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
     console.log("Add");
   };
 
-  const handleClickTitle = () => {
-    window.location.href = "../products";
-  };
-
   const [data, setData] = useState<Product|null>();
   const fetchData = async () => {
     if(!productId) {
@@ -184,7 +180,7 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
             <Flex {...stylex.props(styles.infoContainer)} direction="column" gap="lg">
               <Flex {...stylex.props(styles.info)} direction="column" gap="sm">
                 <Flex justify="space-between" align="center">
-                  <span {...stylex.props(styles.productTitle)} onClick={handleClickTitle}>
+                  <span {...stylex.props(styles.productTitle)}>
                     {data?.name}
                   </span>
                   <Button {...stylex.props(styles.heart)} onClick={handleLike}> 
