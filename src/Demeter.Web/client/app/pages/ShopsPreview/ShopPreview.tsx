@@ -1,27 +1,13 @@
-import React from "react";
-import {
-  Card,
-  Avatar,
-  Descriptions,
-  Text,
-  Button,
-  Divider,
-  Flex,
-} from "@mantine/core";
-import { IconEdit, IconMail, IconMapPin, IconPhone } from "@tabler/icons-react";
-import {
-  IconArrowDown,
-  IconArrowUp,
-  IconCurrencyDollar,
-  IconInbox,
-  IconShoppingCart,
-  IconCircle,
-  IconShoppingBag,
-  IconUser,
-} from "@tabler/icons-react";
+import { Card, Text,  Button,  Divider,  Flex,} from "@mantine/core";
+import { IconEdit, IconMail, IconMapPin, IconPhone, 
+  IconPremiumRights, IconInbox, IconReceipt, IconShoppingBag} from "@tabler/icons-react";
 
-import "./ShopPreview.css";
 import ShopHeader from "../ShopPage/ShopHeader";
+import Navbar_Shops from "../../admin/components/Navbar_Shop/Navbar_shop";
+
+import * as stylex from "@stylexjs/stylex";
+import {styles} from './ShopPreview.stylex';
+
 const ShopProfile: React.FC = () => {
   // Dữ liệu giả mạo
   const UserData = {
@@ -47,206 +33,123 @@ const ShopProfile: React.FC = () => {
   };
 
   return (
-    <>
-      <Flex style={{ backgroundColor: "#f3f4f6" }}>
-        <div style={{ flex: "2", width: "100%" }}>
+      <Flex {...stylex.props(styles.shopPreviewPage)}>
+        <div  {...stylex.props(styles.navbar)}>
           <Navbar_Shops />
         </div>
-        <div style={{ flex: "10", width: "100%" }}>
+        <div {...stylex.props(styles.container)}>
           <ShopHeader />
-          <div className="profile-container">
-            <div className="profile-image">
+          <div {...stylex.props(styles.profileContainer)}>
+            <div {...stylex.props(styles.profileImage)}>
               <img
                 src={UserData.image}
                 alt="Cover Image"
-                style={{
-                  width: "100%",
-                  height: "auto",
-                  maxHeight: "500px",
-                  objectFit: "cover",
-                }}
+                {...stylex.props(styles.coverImage)}
               />
-              <div className="profile-style">
-                <img src={UserData.avatar} className="profile-avatar" />
-                <div className="profile-info">
-                  <div className="profile-name"> {UserData.name}</div>
+              <Flex>
+                <img src={UserData.avatar} {...stylex.props(styles.profileAvatar)} />
+                <div {...stylex.props(styles.profileInfo)}>
+                  <div {...stylex.props(styles.profileName)}> {UserData.name}</div>
 
-                  <div className="profile-details">
-                    <div className="profile-text">
+                  <div {...stylex.props(styles.profileDetails)}>
+                    <div {...stylex.props(styles.profileText)}>
                       <IconMail /> {UserData.email}
                     </div>
 
-                    <div className="profile-text">
+                    <div {...stylex.props(styles.profileText)}>
                       <IconMapPin /> {UserData.location}
                     </div>
 
-                    <div className="profile-text">
+                    <div {...stylex.props(styles.profileText)}>
                       <IconPhone /> {UserData.phoneNumber}
                     </div>
 
                     <Button
                       type="primary"
-                      icon={<IconEdit />}
-                      className="edit-button"
+                      leftSection={<IconEdit />}
+                      {...stylex.props(styles.editButton)}
                     >
                       Sửa thông tin
                     </Button>
                   </div>
                 </div>
-              </div>
+              </Flex>
             </div>
-            <div style={{ display: "flex" }}>
-              <Card
-                style={{ width: "100%", maxWidth: 300, margin: "20px 20px" }}
-              >
-                <Text type="secondary">Đã đăng ký kể từ</Text>
-                <div style={{ fontWeight: "bold", color: "#454545" }}>
-                  {" "}
-                  {UserData.Registered}
+            <Flex>
+              <Card {...stylex.props(styles.storyCard)}>
+                <div>
+                  <Text type="secondary">Đã đăng ký kể từ</Text>
+                  <Text fw={700} c="#454545">
+                    {" "}
+                    {UserData.Registered}
+                  </Text>
                 </div>
                 <Divider />
-                <div
-                  style={{
-                    fontWeight: "bold",
-                    color: "#454545",
-                    fontSize: "24px",
-                  }}
-                >
+                <Text fw={700} c="#454545" size="lg">
                   Tiểu sử
-                </div>
+                </Text>
                 <Text type="secondary">{UserData.Bio}</Text>
               </Card>
 
-              <Card style={{ width: "100%", margin: "20px 20px" }}>
-                <div style={{ display: "flex", flexWrap: "wrap" }}>
-                  <Card
-                    style={{
-                      flex: "1",
-                      margin: "20px 10px",
-                      minHeight: 100,
-                      minWidth: 250,
-                      borderColor: "#ff0000",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: "#454545",
-                        fontSize: "24px",
-                      }}
-                    >
+              <Card {...stylex.props(styles.cardContainer)}>
+                <Flex wrap="wrap">
+                  <Card {...stylex.props(styles.card, styles.redBorder)} >
+                    <Text fw={700} c="#454545" size="xl" >
                       {data.totalproducts}
-                    </div>
-                    <Text type="secondary">Tổng số sản phẩm</Text>
-                    <IconInbox
-                      style={{ fontSize: "24px", padding: "0 18px" }}
-                    />
+                    </Text>
+                    <Flex gap={8}>
+                      <Text type="secondary">Tổng số sản phẩm</Text>
+                      <IconInbox/>
+                    </Flex>
                   </Card>
 
-                  <Card
-                    style={{
-                      flex: "1",
-                      margin: "20px 10px",
-                      minHeight: 100,
-                      minWidth: 250,
-                      borderColor: "#00ff00",
-                      display: "flex",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: "#454545",
-                        fontSize: "24px",
-                      }}
-                    >
+                  <Card {...stylex.props(styles.card, styles.greenBorder)}>
+                    <Text fw={700} c="#454545" size="xl">
                       {data.totaloder}
-                    </div>
-                    <Text type="secondary">Tổng số đơn đặt hàng</Text>
-                    <IconCircle
-                      style={{ fontSize: "24px", padding: "0 18px" }}
-                    />
+                    </Text>
+                    <Flex gap={8}>
+                      <Text type="secondary">Tổng số đơn đặt hàng</Text>
+                      <IconReceipt/>
+                    </Flex>
                   </Card>
 
-                  <Card
-                    style={{
-                      flex: "1",
-                      margin: "20px 10px",
-                      minHeight: 100,
-                      minWidth: 250,
-                      borderColor: "#0000ff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: "#454545",
-                        fontSize: "24px",
-                      }}
-                    >
+                  <Card {...stylex.props(styles.card, styles.blueBorder)}  >
+                    <Text fw={700} c="#454545" size="xl">
                       {data.ACR}
-                    </div>
-                    <Text type="secondary">Tỷ lệ hoa hồng quản trị</Text>
-                    <IconShoppingBag
-                      style={{ fontSize: "24px", padding: "0 18px" }}
-                    />
+                    </Text>
+                    <Flex gap={8}>
+                      <Text type="secondary">Tỷ lệ hoa hồng quản trị</Text>
+                      <IconShoppingBag />
+                    </Flex>
                   </Card>
 
-                  <Card
-                    style={{
-                      flex: "1",
-                      margin: "20px 10px",
-                      minHeight: 100,
-                      Width: 250,
-                      borderColor: "#ffff00",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: "#454545",
-                        fontSize: "24px",
-                      }}
-                    >
+                  <Card {...stylex.props(styles.card, styles.yellowBorder)}>
+                    <Text fw={700} c="#454545" size="xl">
                       {data.GS}
-                    </div>
-                    <Text type="secondary">Tổng doanh thu</Text>
-                    <IconCurrencyDollar
-                      style={{ fontSize: "24px", padding: "0 18px" }}
-                    />
+                    </Text>
+                    <Flex gap={8}>
+                      <Text type="secondary">Tổng doanh thu</Text>
+                      <IconPremiumRights/>
+                    </Flex>
                   </Card>
 
-                  <Card
-                    style={{
-                      flex: "1",
-                      margin: "20px 10px",
-                      minHeight: 100,
-                      minWidth: 250,
-                      borderColor: "#ff00ff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontWeight: "bold",
-                        color: "#454545",
-                        fontSize: "24px",
-                      }}
-                    >
+                  <Card {...stylex.props(styles.card, styles.pinkBorder)}>
+                    <Text fw={700} c="#454545" size="xl">
                       {data.CB}
-                    </div>
-                    <Text type="secondary">Số dư hiện tại</Text>
-                    <IconCurrencyDollar
-                      style={{ fontSize: "24px", padding: "0 18px" }}
-                    />
+                    </Text>
+                    <Flex gap={8}>
+                      <Text type="secondary">Số dư hiện tại</Text>
+                      <IconPremiumRights />
+                    </Flex>
                   </Card>
-                </div>
+                </Flex>
               </Card>
-            </div>
+            </Flex>
           </div>
         </div>
       </Flex>
-    </>
   );
 };
 
 export default ShopProfile;
+

@@ -131,6 +131,7 @@ const styles = stylex.create({
     display: "flex",
     alignItems: "center",
     borderBottom: "1px solid #E5E7EB",
+    zIndex: "1000",
   },
   VisitSiteButton: {
     borderRadius: '20px',

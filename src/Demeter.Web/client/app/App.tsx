@@ -16,6 +16,9 @@ import Cart from "./customer/pages/Cart/Cart";
 import { Notification } from "./pages/Notification";
 import ShopOrders from "./admin/pages/Orders/ShopOrders";
 import { ProductSearch } from "./pages/ProductSearch";
+import ShopAllProduct from "./admin/pages/Product_admin/ShopAllProduct";
+import AddProduct from "./admin/pages/Product_admin/AddProduct";
+import ShopProfile from "./pages/ShopsPreview/ShopPreview";
 
 export default function App() {
   const location = useLocation();
@@ -46,6 +49,11 @@ export default function App() {
           <Route path="/notification" element={<Notification />} />
           <Route path="/shop_orders" element={<ShopOrders />} />
           <Route path="/search" element={<ProductSearch  />} />
+          <Route path="/shop_allproduct" element={<ShopAllProduct />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/ShopProfile" element={<ShopProfile />} /> 
+
+
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />
@@ -56,12 +64,9 @@ export default function App() {
           <Route path="/admin" element={<Dashboardadmin />} />
           <Route path="/shop" element={<Dashboard />} />
           <Route path="/allproduct" element={<AllProduct />} />
-          <Route path="/shop_allproduct" element={<ShopAllProduct />} />
           <Route path="/manage_orders" element={<AdminOrders />} />
           <Route path="/allshop" element={<AllShop />} />
-          <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/ShopProfile" element={<ShopProfile />} /> 
           <Route path="/404" element={<ErrorPage variant="404"/>} />
           <Route path="/503" element={<ErrorPage variant="503"/>} />*/}
             <Route path="/" element={<IntroPage />} />

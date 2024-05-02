@@ -1,21 +1,21 @@
 import React, { useState } from "react";
 import {
   Table,
-  Space,
   Badge,
-  Menu,
   Button,
   Input,
   Select,
   Image,
   Text,
+  Pagination,
+  Center,
+  Flex,
+  Modal
 } from "@mantine/core";
-import { IconEdit } from "@tabler/icons-react";
+import { IconEdit, IconSearch } from "@tabler/icons-react";
 import ProductForm from "../../../components/Form/FormAddProduct";
-import ModalEditProduct from "../../../components/Form/ModalEditProduct";
 
-const { Search } = Input;
-const { Option } = Select;
+import * as stylex from "@stylexjs/stylex";
 
 const generateData = (count: number) => {
   const data = [];
@@ -25,7 +25,7 @@ const generateData = (count: number) => {
       ID: i,
       productImage: `https://pickbazar-react-admin.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1%2Fconversions%2FApples-thumbnail.jpg&w=1920&q=75`,
       productName: `Product ${i}`,
-      productType: `Type ${i % 5}`,
+      productType: `Loại ${i % 5}`,
       pricePerUnit: `$${(Math.random() * 100).toFixed(2)}`,
       quantity: Math.floor(Math.random() * 100),
       status: ["Hết hàng", "Đang bán", "Bị ẩn", "Ngừng bán"][
@@ -36,14 +36,18 @@ const generateData = (count: number) => {
   return data;
 };
 
-const dataSource = generateData(900);
+const dataSource = generateData(30);
 
 const FilterTable = () => {
-  const [filterVisible, setFilterVisible] = useState(false);
   const [statusFilter, setStatusFilter] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [searchText, setSearchText] = useState("");
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const pageSize = 10;
+  const uniqueProductTypes = Array.from(new Set(dataSource.map((item) => item.productType)));
+  const typeOptions = ['Tất cả'].concat(uniqueProductTypes);
 
   const handleStatusFilterChange = (value) => {
     setStatusFilter(value);
@@ -53,130 +57,14 @@ const FilterTable = () => {
     setTypeFilter(value);
   };
 
-  const handleFilterClick = () => {
-    setFilterVisible(!filterVisible);
-  };
-
-  const handleSearch = (value) => {
-    setSearchText(value);
-  };
-
   const handleEditClick = () => {
     setEditModalVisible(true);
   };
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="status">
-        <Select
-          style={{ width: 120 }}
-          onChange={handleStatusFilterChange}
-          value={statusFilter}
-        >
-          <Option value="">All Status</Option>
-          <Option value="Hết hàng">Hết hàng</Option>
-          <Option value="Đang bán">Đang bán</Option>
-          <Option value="Bị ẩn">Bị ẩn</Option>
-          <Option value="Ngừng bán">Ngừng bán</Option>
-        </Select>
-      </Menu.Item>
-      <Menu.Item key="type">
-        <Select
-          style={{ width: 120 }}
-          onChange={handleTypeFilterChange}
-          value={typeFilter}
-        >
-          <Option value="">All Types</Option>
-          {/* Lấy các loại sản phẩm duy nhất từ dataSource */}
-          {Array.from(new Set(dataSource.map((item) => item.productType))).map(
-            (type) => (
-              <Option key={type} value={type}>
-                {type}
-              </Option>
-            )
-          )}
-        </Select>
-      </Menu.Item>
-    </Menu>
-  );
-
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "ID",
-      align: "center",
-    },
-    {
-      title: "Sản phẩm",
-      dataIndex: "productName",
-      align: "left",
-      sorter: (a, b) => a.productName.localeCompare(b.productName),
-      render: (text, record) => (
-        <Space>
-          <Image src={record.productImage} width={50} />
-          <Text>{text}</Text>
-        </Space>
-      ),
-    },
-    {
-      title: "Loại sản phẩm",
-      dataIndex: "productType",
-      align: "center",
-    },
-    {
-      title: "Giá/Đơn vị",
-      dataIndex: "pricePerUnit",
-      align: "center",
-    },
-    {
-      title: "Số lượng",
-      dataIndex: "quantity",
-      align: "center",
-    },
-    {
-      title: "Trạng thái",
-      dataIndex: "status",
-      align: "center",
-      filters: [
-        { text: "Hết hàng", value: "Hết hàng" },
-        { text: "Đang bán", value: "Đang bán" },
-        { text: "Bị ẩn", value: "Bị ẩn" },
-        { text: "Ngừng bán", value: "Ngừng bán" },
-      ],
-      onFilter: (value, record) => record.status.indexOf(value) === 0,
-      render: (status) => {
-        let color = "";
-        switch (status) {
-          case "Hết hàng":
-            color = "red";
-            break;
-          case "Đang bán":
-            color = "green";
-            break;
-          case "Bị ẩn":
-            color = "orange";
-            break;
-          case "Ngừng bán":
-            color = "gray";
-            break;
-          default:
-            break;
-        }
-        return <Badge color={color}>{status}</Badge>;
-      },
-    },
-    {
-      title: "Hành động",
-      dataIndex: "actions",
-      align: "center",
-      render: () => (
-        <Button icon={<IconEdit />} type="primary" onClick={handleEditClick}>
-          Sửa
-        </Button>
-      ),
-    },
-  ];
-
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page);
+  };
+  
   const filteredData = dataSource.filter(
     (item) =>
       (statusFilter ? item.status === statusFilter : true) &&
@@ -187,69 +75,153 @@ const FilterTable = () => {
         : true)
   );
 
+
+  const rows = filteredData.map((item) => (
+    <Table.Tr key={item.key}>
+      <Table.Td><Center>{item.ID}</Center></Table.Td>
+      <Table.Td>
+          <Flex align="center">
+            <Image src={item.productImage} h={50} />
+            <Text>{item.productName}</Text>
+          </Flex>
+      </Table.Td>
+      <Table.Td><Center>{item.productType}</Center></Table.Td>
+      <Table.Td><Center>{item.pricePerUnit}</Center></Table.Td>
+      <Table.Td><Center>{item.quantity}</Center></Table.Td>
+      <Table.Td>
+        <Center>
+          {(() => {
+            let color = "";
+            switch (item.status) {
+              case "Hết hàng":
+                color = "red";
+                break;
+              case "Đang bán":
+                color = "green";
+                break;
+              case "Bị ẩn":
+                color = "orange";
+                break;
+              case "Ngừng bán":
+                color = "gray";
+                break;
+              default:
+                break;
+            }
+            return <Badge variant="outline" color={color}>{item.status}</Badge>;
+          })()}
+        </Center>
+      </Table.Td>
+      <Table.Td>
+        <Center>
+          <Button 
+            leftSection={<IconEdit width={20}/>} 
+            color="#009f7f" size="xs" 
+            onClick={handleEditClick}>
+            Sửa
+          </Button>
+        </Center>
+      </Table.Td>
+
+    </Table.Tr>
+  ));
   return (
     <div>
-      <div
-        style={{
-          padding: "20px",
-          margin: "10px 0px 30px 0px",
-          backgroundColor: "#fff",
-          borderRadius: "8px",
-          display: "flex",
-          justifyContent: "space-between",
-          border: "2px solid #E5E7EB",
-          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-        }}
-      >
-        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
-          Tất cả sản phẩm
-        </Text>
-        <div>
-          <Search
-            placeholder="Search products"
-            style={{ width: 300, marginRight: 10 }}
-            onSearch={handleSearch}
+      <div {...stylex.props(styles.searchHeader)}>
+        <Flex align="center">
+          <Text fw={700} size="xl">
+            Tất cả sản phẩm
+          </Text>
+        </Flex>
+        <Flex align="flex-end" gap={4}>
+          <Input 
+            placeholder="Nhập mã sản phẩm" 
+            leftSection={<IconSearch size={16} />}
+            onChange={(event) => setSearchText(event.currentTarget.value)}
           />
-          <Button onClick={handleFilterClick} style={{ marginLeft: "auto" }}>
-            Bộ lọc
-          </Button>
-          {filterVisible && (
-            <Combobox
-              overlay={menu}
-              placement="bottomCenter"
-              opened={filterVisible}
-            >
-              <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
-            </Combobox>
-          )}
-        </div>
+          <Select
+            label="Lọc theo trạng thái"
+            placeholder="Chọn trạng thái sản phẩm"
+            data={['Tất cả', 'Hết hàng', 'Đang bán', 'Bị ẩn', 'Ngừng bán']}
+            defaultValue="Tất cả"
+            clearable
+            onChange={handleStatusFilterChange}
+            width={100}
+          />
+          <Select
+            label="Lọc theo loại"
+            placeholder="Chọn loại sản phẩm"
+            data={typeOptions}
+            defaultValue="Tất cả"
+            clearable
+            onChange={handleTypeFilterChange}
+          />
+        </Flex>
       </div>
-      <div
-        style={{
-          backgroundColor: "#fff",
-          margin: "10px 0px 60px 0px",
-          border: "2px solid #E5E7EB",
-          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-          borderRadius: "8px",
-        }}
-      >
-        <Table
-          dataSource={filteredData}
-          columns={columns}
-          pagination={{
-            pageSize: 15,
-            total: filteredData.length,
-            showSizeChanger: false,
-          }}
-        />
-
-        <ModalEditProduct
-          opened={editModalVisible}
-          onCancel={() => setEditModalVisible(false)}
-        />
+      <div {...stylex.props(styles.orderTable)} >
+        <Table>
+          <Table.Thead>
+              <Table.Tr>
+              <Table.Th><Center>ID</Center></Table.Th>
+              <Table.Th>Sản phẩm</Table.Th>
+              <Table.Th><Center>Loại sản phẩm</Center></Table.Th>
+              <Table.Th><Center>Giá/Đơn vị</Center></Table.Th>
+              <Table.Th><Center>Số lượng</Center></Table.Th>
+              <Table.Th><Center>Trạng thái</Center></Table.Th>
+              <Table.Th><Center>Hành động</Center></Table.Th>
+              <Table.Th/>
+              </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+        <Flex justify="center">
+          <Pagination
+            type="primary"
+            current={currentPage}
+            total={dataSource.length}
+            pageSize={pageSize}
+            onChange={handleChangePage}
+            showSizeChanger={false}
+            {...stylex.props(styles.pagination)}
+          />
+            <Modal 
+              centered size="xl"
+              opened={editModalVisible}  
+              onClose={() => setEditModalVisible(false)} 
+              zIndex={1001}
+              >
+                <ProductForm />
+            </Modal>
+        </Flex>
       </div>
     </div>
   );
 };
 
 export default FilterTable;
+
+const styles = stylex.create({
+  searchHeader: {
+    padding: "20px",
+    margin: "10px 0px 30px 0px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    display: "flex",
+    justifyContent: "space-between",
+    border: "2px solid #E5E7EB",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+  },
+  orderTable: {          
+    overflowX: "auto",
+    backgroundColor: "#FFFFFF",
+    margin: "10px 0px 60px 0px",
+    border: "2px solid #E5E7EB",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+    borderRadius: "8px",
+    fontFamily: "sans-serif",
+  },
+  pagination: {
+    margin: "16px", 
+    textAlign: "right",
+  }
+});

@@ -62,10 +62,6 @@ const OrdersTable: React.FC = () => {
     setCurrentPage(page);
   };
 
-  const handleSearch = (value: string) => {
-    setSearchText(value);
-  };
-
   const filteredData = data.filter((item) => 
     item.trackingNumber.toString().includes(searchText)
   );
@@ -97,7 +93,8 @@ const OrdersTable: React.FC = () => {
         <IconEye color="green" />
       </Table.Td>
     </Table.Tr>
-));
+  ));
+
   return (
     <div>
       <div {...stylex.props(styles.searchHeader)}>
@@ -134,7 +131,7 @@ const OrdersTable: React.FC = () => {
             pageSize={pageSize}
             onChange={handleChangePage}
             showSizeChanger={false}
-            style={{ margin: "16px", textAlign: "right" }}
+            {...stylex.props(styles.pagination)}
           />
         </Flex>
       </div>
@@ -163,5 +160,9 @@ const styles = stylex.create({
     boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
     borderRadius: "8px",
     fontFamily: "sans-serif",
+  },
+  pagination: {
+    margin: "16px", 
+    textAlign: "right",
   }
 });
