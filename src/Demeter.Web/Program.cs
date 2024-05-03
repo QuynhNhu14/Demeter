@@ -15,6 +15,7 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(
 // Add services to the container.
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddStripe(builder.Configuration);
 builder.Services.AddCoreServices();
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
