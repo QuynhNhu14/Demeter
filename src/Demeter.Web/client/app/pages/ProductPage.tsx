@@ -1,16 +1,12 @@
 // import { ProductDescription } from "../components/ProductDescription/ProductDescription";
 import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
 import { ProductList } from "../components/ProductList";
-import { NavLink} from "react-router-dom";
+import { NavLink, useParams} from "react-router-dom";
 import { IconArrowLeft, IconCircleCheck, IconHeart, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 import { useState, useEffect } from "react";
 import { Product } from "../models/products";
 import { getProductById } from "../services/products";
-
-type ProductPageProps = {
-  productId?: string;
-};
 
 const styles = stylex.create({
   ProductPage: {
@@ -131,7 +127,9 @@ const reviews = [
   },
 ];
 
-export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
+export function ProductPage() {
+  const { productId } = useParams();
+
   const [heart, setHeart] = useState<boolean>(false);
 
   const handleLike = () => {
@@ -385,4 +383,3 @@ export const ProductPage: React.FC<ProductPageProps> = ({ productId }) => {
     </div>
   );
 };
-
