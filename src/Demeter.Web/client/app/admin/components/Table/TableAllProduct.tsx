@@ -46,6 +46,9 @@ const FilterTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const pageSize = 10;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * pageSize;
+
   const uniqueProductTypes = Array.from(new Set(dataSource.map((item) => item.productType)));
   const typeOptions = ['Tất cả'].concat(uniqueProductTypes);
 
@@ -73,7 +76,7 @@ const FilterTable = () => {
         ? item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
           item.productType.toLowerCase().includes(searchText.toLowerCase())
         : true)
-  );
+  ).slice(startIndex, endIndex);
 
 
   const rows = filteredData.map((item) => (

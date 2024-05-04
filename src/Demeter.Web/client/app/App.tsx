@@ -20,6 +20,7 @@ import ShopAllProduct from "./admin/pages/Product_admin/ShopAllProduct";
 import AddProduct from "./admin/pages/Product_admin/AddProduct";
 import ShopProfile from "./admin/pages/ShopsPreview/ShopPreview";
 import {PaymentStatus} from "./pages/PaymentStatus";
+import Dashboard from "./admin/pages/Dashboard/Dashboard";
 
 export default function App() {
   const location = useLocation();
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/shop_allproduct" element={<ShopAllProduct />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/ShopProfile" element={<ShopProfile />} /> 
+          <Route path="/shop" element={<Dashboard />} />
 
 
           <Route path="/payment" element={<PaymentStatus/>} />
@@ -65,7 +67,6 @@ export default function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />
-          <Route path="/shop" element={<Dashboard />} />
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/manage_orders" element={<AdminOrders />} />
           <Route path="/allshop" element={<AllShop />} />

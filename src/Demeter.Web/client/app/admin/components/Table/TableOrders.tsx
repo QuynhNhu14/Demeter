@@ -12,8 +12,6 @@ import {
 import { IconUser, IconEye, IconSearch } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 
-
-
 interface Order {
   key: string;
   trackingNumber: number;
@@ -56,7 +54,7 @@ const OrdersTable: React.FC = () => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = currentPage * pageSize;
 
-  const currentData = data.slice(startIndex, endIndex);
+  // const currentData = data.slice(startIndex, endIndex);
 
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
@@ -64,8 +62,7 @@ const OrdersTable: React.FC = () => {
 
   const filteredData = data.filter((item) => 
     item.trackingNumber.toString().includes(searchText)
-  );
-  console.log({filteredData});
+  ).slice(startIndex, endIndex);
 
   const rows = filteredData.map((item) => (
     <Table.Tr key={item.key}>

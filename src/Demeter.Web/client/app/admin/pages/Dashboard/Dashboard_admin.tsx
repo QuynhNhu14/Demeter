@@ -1,5 +1,6 @@
 import {  Flex } from "@mantine/core";
 import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
+import ShopOverviewCard from "../../components/Summary_Card/ShopOverviewCard";
 import Summary_Card from "../../components/Summary_Card/Summary_Card";
 import Summary_CardTwo from "../../components/Summary_Card/Summary_CardTwo";
 import SaleHistoryChart from "../../components/Table/TableChart";
