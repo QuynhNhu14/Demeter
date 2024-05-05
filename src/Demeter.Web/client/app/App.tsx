@@ -6,7 +6,7 @@ import { AppShell, MantineProvider } from "@mantine/core";
 import HomePage from "./pages/Home";
 import { HeaderMegaMenu } from "./customer/components";
 import { defaultTheme } from "../themes";
-import { Footer } from "./components/Footer";
+import { Footer} from "./components/Footer";
 import { IntroPage } from "./pages/IntroPage";
 import { Profile } from "./customer/pages/Profile/Profile";
 import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
@@ -16,6 +16,11 @@ import Cart from "./customer/pages/Cart/Cart";
 import { Notification } from "./pages/Notification";
 import ShopOrders from "./admin/pages/Orders/ShopOrders";
 import { ProductSearch } from "./pages/ProductSearch";
+import ShopAllProduct from "./admin/pages/Product_admin/ShopAllProduct";
+import AddProduct from "./admin/pages/Product_admin/AddProduct";
+import ShopProfile from "./admin/pages/ShopsPreview/ShopPreview";
+import {PaymentStatus} from "./pages/PaymentStatus";
+import Dashboard from "./admin/pages/Dashboard/Dashboard";
 
 export default function App() {
   const location = useLocation();
@@ -41,11 +46,19 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/change_password" element={<ChangePassword />} />
           <Route path="/shops" element={<Shops />} />
-          <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47"/>}/>
+          {/* <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47"/>}/> */}
+          <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notification" element={<Notification />} />
           <Route path="/shop_orders" element={<ShopOrders />} />
           <Route path="/search" element={<ProductSearch  />} />
+          <Route path="/shop_allproduct" element={<ShopAllProduct />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/ShopProfile" element={<ShopProfile />} /> 
+          <Route path="/shop" element={<Dashboard />} />
+
+
+          <Route path="/payment" element={<PaymentStatus/>} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />
@@ -54,14 +67,10 @@ export default function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />
-          <Route path="/shop" element={<Dashboard />} />
           <Route path="/allproduct" element={<AllProduct />} />
-          <Route path="/shop_allproduct" element={<ShopAllProduct />} />
           <Route path="/manage_orders" element={<AdminOrders />} />
           <Route path="/allshop" element={<AllShop />} />
-          <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/ShopProfile" element={<ShopProfile />} /> 
           <Route path="/404" element={<ErrorPage variant="404"/>} />
           <Route path="/503" element={<ErrorPage variant="503"/>} />*/}
             <Route path="/" element={<IntroPage />} />

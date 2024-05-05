@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./App_admin.css";
 import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
-import Dashboard from "../../../pages/Dashboard/Dashboard";
+import Dashboard from "../Dashboard/Dashboard";
 import { Input, Button, Flex } from "@mantine/core";
 import AllProduct from "../Product_admin/AllProduct";
 import AddProduct from "../pages/Product_admin/AddProduct";
@@ -23,9 +23,9 @@ import {
 import Inventory from "../pages/Inventory/Inventory";
 import Orders from "../Orders/Order";
 import ShopProfile from "../pages/ShopsPreview/ShopPreview";
-import Dashboardadmin from "../../../pages/Dashboard/Dashboard_admin";
+import Dashboardadmin from "../Dashboard/Dashboard_admin";
 import AllShopTable from "../../components/Table/TableAllShop";
-import AllShop from "../../../pages/ShopsPreview/Allshop";
+import AllShop from "../ShopsPreview/Allshop";
 import headerLogo from "../../../assets/header_logo.jpg";
 
 export default function App_Shop() {

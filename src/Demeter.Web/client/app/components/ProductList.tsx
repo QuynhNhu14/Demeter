@@ -56,7 +56,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <Card withBorder shadow="sm">
       {product.vouchers && product.vouchers.length > 0 && <Badge variant="gradient" size="lg" pos={"absolute"} {...stylex.props(styles.voucher)}> - {product.vouchers[0].discount} %</Badge>}
       <div>
-        <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate("/products")}/>
+        <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate(`/products/${product.id}`)}/>
       </div>
       <Flex
         gap="sm"

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Table, Avatar, Space, Badge, Pagination } from "@mantine/core";
-import { ColumnType } from "antd/lib/table";
+import { Table, Avatar, Space, Badge, Pagination, Center, Flex } from "@mantine/core";
 import { IconUser, IconEye } from "@tabler/icons-react";
+import * as stylex from "@stylexjs/stylex";
 
 interface Order {
   key: string;
@@ -36,72 +36,6 @@ for (let i = 1; i <= 30; i++) {
 
   data.push(order);
 }
-
-const columns: ColumnType<Order>[] = [
-  {
-    title: "Mã đơn hàng",
-    dataIndex: "trackingNumber",
-    key: "trackingNumber",
-    width: 150,
-    align: "center",
-  },
-  {
-    title: "Khách hàng",
-    dataIndex: "customer",
-    key: "customer",
-    render: (customer) => (
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <Avatar src={customer.avatar} icon={<IconUser />} />
-        <div style={{ marginLeft: "8px" }}>
-          <div>{customer.name}</div>
-          <div>{customer.email}</div>
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: "Số lượng",
-    dataIndex: "products",
-    key: "products",
-    align: "center",
-  },
-  {
-    title: "Thời gian",
-    dataIndex: "orderDate",
-    key: "orderDate",
-    width: 150,
-    align: "center",
-  },
-  {
-    title: "Tổng tiền",
-    dataIndex: "total",
-    key: "total",
-    width: 100,
-    align: "center",
-  },
-  {
-    title: "Trạng thái",
-    dataIndex: "status",
-    key: "status",
-    render: (status) => (
-      <Badge color={status === "Đang xử lý" ? "orange" : "green"}>
-        {status}
-      </Badge>
-    ),
-    align: "center",
-  },
-  {
-    title: "Hành động",
-    key: "actions",
-    render: () => (
-      <Space>
-        <IconEye style={{ color: "green" }} />
-      </Space>
-    ),
-    align: "center",
-  },
-];
-
 const RecentOrdersTable: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // Số lượng hàng trong mỗi trang
@@ -116,31 +50,77 @@ const RecentOrdersTable: React.FC = () => {
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   };
+  const rows = currentData.map((item) => (
+    <Table.Tr key={item.key}>
+      <Table.Td><Center>{item.trackingNumber}</Center></Table.Td>
+      <Table.Td>
+        <Flex align="center" gap={8}>
+          <Avatar src={item.customer.avatar} icon={<IconUser />} />
+          <div>
+            <div>{item.customer.name}</div>
+            <div>{item.customer.email}</div>
+          </div>
+        </Flex>
+      </Table.Td> 
+      <Table.Td><Center>{item.products}</Center></Table.Td>
+      <Table.Td><Center>{item.orderDate}</Center></Table.Td>
+      <Table.Td><Center>{item.total}</Center></Table.Td>
+      <Table.Td>
+        <Center>
+          <Badge variant="outline"  color={item.status === "Đang xử lý" ? "orange" : "green"}>
+          {item.status}
+          </Badge> 
+        </Center>
+      </Table.Td>
+      <Table.Td>
+        <IconEye color="green" />
+      </Table.Td>
+    </Table.Tr>
+  ));
   return (
-    <div
-      style={{
-        overflowX: "auto",
-        backgroundColor: "#FFFFFF",
-        borderRadius: "8px",
-        fontFamily: "sans-serif",
-      }}
-    >
-      <Table<Order>
-        columns={columns}
-        dataSource={currentData}
-        pagination={false} // Loại bỏ phân trang mặc định của Table
-      />
+    <div {...stylex.props(styles.orderTable)} >
+    <Table>
+      <Table.Thead>
+          <Table.Tr>
+          <Table.Th><Center>Mã đơn hàng</Center></Table.Th>
+          <Table.Th>Khách hàng</Table.Th>
+          <Table.Th><Center>Số lượng</Center></Table.Th>
+          <Table.Th><Center>Thời gian</Center></Table.Th>
+          <Table.Th><Center>Tổng tiền</Center></Table.Th>
+          <Table.Th><Center>Trạng thái</Center></Table.Th>
+          <Table.Th/>
+          </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>{rows}</Table.Tbody>
+    </Table>
+    <Flex justify="center">
       <Pagination
         type="primary"
         current={currentPage}
         total={data.length}
         pageSize={pageSize}
         onChange={handleChangePage}
-        showSizeChanger={false} // Tắt chức năng thay đổi kích thước trang
-        style={{ margin: "16px", textAlign: "right" }}
+        showSizeChanger={false}
+        {...stylex.props(styles.pagination)}
       />
-    </div>
+    </Flex>
+  </div>
   );
 };
 
 export default RecentOrdersTable;
+const styles = stylex.create({
+  orderTable: {          
+    overflowX: "auto",
+    backgroundColor: "#FFFFFF",
+    margin: "10px 0px 60px 0px",
+    border: "2px solid #E5E7EB",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+    borderRadius: "8px",
+    fontFamily: "sans-serif",
+  },
+  pagination: {
+    margin: "16px", 
+    textAlign: "right",
+  }
+});

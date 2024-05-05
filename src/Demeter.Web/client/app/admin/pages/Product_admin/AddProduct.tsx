@@ -1,9 +1,10 @@
 import React from "react";
-import { Flex, Form } from "@mantine/core";
-import FormAddProduct from "../../../components/Form/FormAddProduct";
-import styles from "./AddProduct.module.css";
+import { Flex } from "@mantine/core";
+import FormAddProduct from "../../components/Form/FormAddProduct";
 import ShopHeader from "../../../pages/ShopPage/ShopHeader";
 import Navbar_Shop from "../../components/Navbar_Shop/Navbar_Shop";
+import { useForm } from "@mantine/form";
+import * as stylex from "@stylexjs/stylex";
 
 const AddProduct: React.FC = () => {
   const form = useForm({
@@ -25,13 +26,13 @@ const AddProduct: React.FC = () => {
   };
 
   return (
-    <Flex style={{ backgroundColor: "#f3f4f6" }}>
-      <div style={{ flex: "2", width: "100%" }}>
+    <Flex {...stylex.props(styles.addProductPage)}>
+      <div  {...stylex.props(styles.navbar)}>
         <Navbar_Shop />
       </div>
-      <div style={{ flex: "9", width: "100%" }}>
+      <div {...stylex.props(styles.container)}>
         <ShopHeader />
-        <div className={styles.AddProduct}>
+        <div  {...stylex.props(styles.order)}>
           <FormAddProduct form={form} onSubmit={handleSubmit} />
         </div>
       </div>
@@ -40,3 +41,27 @@ const AddProduct: React.FC = () => {
 };
 
 export default AddProduct;
+const styles = stylex.create({
+  addProductPage: {
+    backgroundColor: "#f3f4f6"
+  },
+  navbar:{
+    flex: "2", 
+    width: "100%",
+  },
+  container: {
+    flex: "9", 
+    width: "100%",
+  },
+  order: {
+    display: "flex",
+    flexGrow: 1,
+    flexDirection: "column",
+    padding: "10px 5%",
+    backgroundColor: "#FFFFFF",
+    margin: "20px 60px 60px 60px",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+    borderRadius: "5px",
+    border: "2px solid #e7e7e7",
+  }
+});

@@ -21,25 +21,25 @@ const Summary_Card: React.FC = () => {
     {
       title: "Tổng doanh thu",
       value: "235.559.500 VNĐ",
-      icon: <IconCurrencyDollar style={{ fontSize: "24px", padding: "8px" }} />,
+      icon: <IconCurrencyDollar/>,
       color: "rgb(30, 174, 152)",
     },
     {
       title: "Tổng số đơn hàng",
       value: "520",
-      icon: <IconShoppingCart style={{ fontSize: "24px", padding: "8px" }} />,
+      icon: <IconShoppingCart/>,
       color: "rgb(134, 93, 255)",
     },
-    {
-      title: "Tổng số cửa hàng",
-      value: "52",
-      icon: <IconShoppingBag style={{ fontSize: "24px", padding: "8px" }} />,
-      color: "rgb(215, 78, 255)",
-    },
+    // {
+    //   title: "Tổng số cửa hàng",
+    //   value: "52",
+    //   icon: <IconShoppingBag/>,
+    //   color: "rgb(215, 78, 255)",
+    // },
     {
       title: "Tổng số khách hàng",
       value: "1.180",
-      icon: <IconUser style={{ fontSize: "24px", padding: "8px" }} />,
+      icon: <IconUser/>,
       color: "rgb(225, 87, 160)",
     },
   ];
