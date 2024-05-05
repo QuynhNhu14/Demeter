@@ -67,43 +67,40 @@ export const Shops = () => {
   };
 
   return (
-    <div className="ShopsPage">
-      <Flex {...stylex.props(styles.container)} direction="column" gap="lg">
-        <span style={{ fontWeight: "700", fontSize: "24px", opacity: 0.9 }}>
-          Tất cả cửa hàng
-        </span>
-        <Flex
-          className="ShopsPage--ListContainer"
-          wrap="wrap"
-          gap="md"
-          justify="space-between"
-        >
-          {shopList.map((shop) => (
-            <div {...stylex.props(styles.item)} onClick={handleClick}>
-              <img
-                src={shop.logo}
-                alt="shop logo"
-                style={{ borderRadius: "100px", marginRight: "10px" }}
-              />
-              <Flex direction="column" justify="space-evenly">
-                <span style={{ fontWeight: "600", fontSize: "18px" }}>
-                  {shop.name}
+    <Flex {...stylex.props(styles.container)} direction="column" gap="lg">
+      <span style={{ fontWeight: "700", fontSize: "24px", opacity: 0.9 }}>
+        Tất cả cửa hàng
+      </span>
+      <Flex
+        wrap="wrap"
+        gap="md"
+        justify="space-between"
+      >
+        {shopList.map((shop) => (
+          <div {...stylex.props(styles.item)} onClick={handleClick}>
+            <img
+              src={shop.logo}
+              alt="shop logo"
+              style={{ borderRadius: "100px", marginRight: "10px" }}
+            />
+            <Flex direction="column" justify="space-evenly">
+              <span style={{ fontWeight: "600", fontSize: "18px" }}>
+                {shop.name}
+              </span>
+              <Flex align="flex-start">
+                {/* <CiLocationOn
+                  size={20}
+                  style={{ opacity: 0.8, marginRight: "3px" }}
+                /> */}
+                <span style={{ opacity: 0.8, fontSize: "14px" }}>
+                  {shop.address}
                 </span>
-                <Flex align="flex-start">
-                  {/* <CiLocationOn
-                    size={20}
-                    style={{ opacity: 0.8, marginRight: "3px" }}
-                  /> */}
-                  <span style={{ opacity: 0.8, fontSize: "14px" }}>
-                    {shop.address}
-                  </span>
-                </Flex>
               </Flex>
-            </div>
-          ))}
-        </Flex>
-      </Flex> 
-    </div>
+            </Flex>
+          </div>
+        ))}
+      </Flex>
+    </Flex> 
   );
 };
 

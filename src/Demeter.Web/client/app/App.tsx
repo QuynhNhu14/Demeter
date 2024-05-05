@@ -21,6 +21,7 @@ import AddProduct from "./admin/pages/Product_admin/AddProduct";
 import ShopProfile from "./admin/pages/ShopsPreview/ShopPreview";
 import {PaymentStatus} from "./pages/PaymentStatus";
 import Dashboard from "./admin/pages/Dashboard/Dashboard";
+import { VoucherPage } from "./pages/VoucherPage";
 
 export default function App() {
   const location = useLocation();
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/change_password" element={<ChangePassword />} />
           <Route path="/shops" element={<Shops />} />
+          <Route path="/voucher" element={<VoucherPage />} />
           {/* <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47"/>}/> */}
           <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
