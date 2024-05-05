@@ -6,6 +6,9 @@ import { useForm } from '@mantine/form';
 import { Product } from "./ProductCart";
 import { IconCoin, IconCreditCard, IconWallet, IconEye } from '@tabler/icons-react';
 import * as stylex from "@stylexjs/stylex";
+import { addStripeCustomer, addStripePayment, createCheckoutSession } from "../../services/stripe";
+import { emitWarning } from "process";
+import { CreateCheckoutSessionStripeRequest } from "../../models/stripe";
 
 type OrderFormProps = {
     totaldata: {
@@ -30,7 +33,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
   const [value, setValue] = useState<number>(1);
 
   const formCard = useForm({
-    mode: 'uncontrolled',
     initialValues: {
         cardNumber: '',
         expiration: '',
@@ -42,7 +44,6 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
   });
 
   const formEWallet = useForm({
-    mode: 'uncontrolled',
     initialValues: {
         walletCode: '',
         password: '',
@@ -55,7 +56,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
 
   const OrderInfo = {
     id: Math.floor(Math.random() * (999999 - 100000 + 1)) + 100000,
-    account: {id: 1, phone: '0123456789', address: 'Ký Túc Xá ĐHQG Khu A, khu phố 6, phường Linh Trung, tp Thủ Đức, Hồ Chí Minh'},
+    account: {id: 1,phone: '0123456789', address: 'Ký Túc Xá ĐHQG Khu A, khu phố 6, phường Linh Trung, tp Thủ Đức, Hồ Chí Minh'},
   }
 
     const rows = selectedProducts.map((item) => (
@@ -142,6 +143,78 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
     const futureDate = new Date();
     futureDate.setDate(today.getDate() + 1);
 
+    const checkout = async () => {
+        const fakeOrder = [
+          {
+            quantity: 5,
+            productName: "Apples",
+            price: 299,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 3,
+            productName: "Bananas",
+            price: 150,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 1,
+            productName: "Milk",
+            price: 325,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 2,
+            productName: "Bread",
+            price: 200,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 4,
+            productName: "Eggs",
+            price: 199,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 2,
+            productName: "Oranges",
+            price: 450,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 1,
+            productName: "Cheese",
+            price: 575,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 3,
+            productName: "Pasta",
+            price: 225,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 2,
+            productName: "Tomatoes",
+            price: 399,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+          {
+            quantity: 1,
+            productName: "Chicken",
+            price: 799,
+            userId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+          },
+        ] as CreateCheckoutSessionStripeRequest[];
+    
+        const url = await createCheckoutSession(fakeOrder);
+        if (url) {
+          window.location.href = url;
+        } else {
+          console.error("Error creating checkout session");
+        }
+      };
+
     return (
         <Flex gap="lg" direction="column" p={20}>
             <Flex justify="space-between">
@@ -220,7 +293,7 @@ export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts
                 <Text fw={700}> Ghi chú </Text>
                 <Textarea rows={3} p="10px 13px" m="10px 0 10px 0"/>
             </div>
-            <Flex justify='flex-end'>
+            <Flex justify='flex-end' onClick={checkout}>
                 <Button size="md" color="#009F7F">
                 <Text fw={500}>ĐẶT HÀNG</Text>
                 </Button>

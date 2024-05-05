@@ -1,4 +1,3 @@
-import React from "react";
 import {
   IconCurrencyDollar,
   IconShoppingCart,
@@ -71,7 +70,6 @@ const styles = stylex.create({
         width: "40px",
         height: "40px",
         backgroundColor: "#F3F4F5",
-        display: "block",
         borderRadius: "5px",
         display: "flex",
         alignItems: "center",

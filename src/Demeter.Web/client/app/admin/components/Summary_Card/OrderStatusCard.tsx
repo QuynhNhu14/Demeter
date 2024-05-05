@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   IconUserShare,
   IconRefresh,
@@ -144,7 +144,6 @@ const styles = stylex.create({
         width: "40px",
         height: "40px",
         backgroundColor: "#F3F4F5",
-        display: "block",
         borderRadius: "5px",
         display: "flex",
         alignItems: "center",

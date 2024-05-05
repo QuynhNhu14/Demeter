@@ -38,7 +38,9 @@ public static class ServiceCollections
         services.AddTransient<SubscriptionService>();
         services.AddTransient<InvoiceService>();
         services.AddTransient<PriceService>();
-        services.AddTransient<CheckoutService>();
+        services.AddTransient<ChargeService>();
+        services.AddTransient<TokenService>();
+        services.AddScoped<ICheckoutService,CheckoutService>();
         return services;
     }
 

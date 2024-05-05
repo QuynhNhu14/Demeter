@@ -57,8 +57,8 @@ export default function App() {
           <Route path="/ShopProfile" element={<ShopProfile />} /> 
           <Route path="/shop" element={<Dashboard />} />
 
-
-          <Route path="/payment" element={<PaymentStatus/>} />
+          <Route path="/payment-success" element={<PaymentStatus success={true}/>} />
+          <Route path="/payment-cancel" element={<PaymentStatus />} />
           {/*<Route path="/login" element={<SignInSignUp />} />
           
           <Route path="/shop-product" element={<ShopProduct />} />
