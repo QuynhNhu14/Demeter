@@ -1,8 +1,9 @@
 using Demeter.Core.Entities;
-using Demeter.Core.Entities.Accounts;
 using Demeter.Core.Extensions;
+using Demeter.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Account = Demeter.Core.Entities.Accounts.Account;
 
 namespace Demeter.Infrastructure.Identity;
 
@@ -26,7 +27,8 @@ public class AccountContext: IAccountContext
     }
     
     public Task<bool> CheckPassword(Account account, string password)
-    {
+    {   
+        // var result = _accountManager.CreateAsync(account, password);
         return _accountManager.CheckPasswordAsync(account, password);
     }
 

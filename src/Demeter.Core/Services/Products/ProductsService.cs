@@ -18,17 +18,29 @@ public class ProductsService : IProductsService
 
     public async ValueTask<ICollection<Domain.Products>> GetAllAsync()
     {
-        var entities = await _context.Products.ToListAsync();
+        var entities = await _context.Products.Include(t => t.Vouchers).ToListAsync();
         return _mapper.Map<IList<Domain.Products>>(entities);
     }
     
+    public async ValueTask<Domain.Products?> GetById(string id)
+    {
+        var entity = await _context.Products
+            .FirstOrDefaultAsync(s => s.Id.ToString() == id);
+        return _mapper.Map<Domain.Products>(entity);
+    }
     public async ValueTask<ICollection<Domain.Products>> GetByName(string name)
     {
-        var entities = await _context.Products.ToListAsync();
+        var entities = await _context.Products.Include(t => t.Vouchers).ToListAsync();
         var result = entities
             .Where(t => t.Name.ToLower().Trim().Contains(name.ToLower().Trim()))
             .ToList();
         return _mapper.Map<IList<Domain.Products>>(result);
+    }
+
+    public async ValueTask<ICollection<Domain.Products>> GetByCategory(int id)
+    {
+        var entities = await _context.Products.Where(p => p.Category != null && p.Category.Id == id).ToListAsync();
+        return _mapper.Map<IList<Domain.Products>>(entities);
     }
 
     public async ValueTask UpdateAsync(ICollection<Domain.Products> products)

@@ -1,16 +1,17 @@
 using System.Text;
-using Demeter.Core.Entities;
-using Demeter.Core.Entities.Accounts;
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Identity;
 using Demeter.Infrastructure.Jwt;
 using Demeter.Infrastructure.Persistence;
+using Demeter.Infrastructure.Stripe;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Stripe;
+using Account = Demeter.Core.Entities.Accounts.Account;
 
 namespace Demeter.Infrastructure.Extensions;
 
@@ -24,6 +25,22 @@ public static class ServiceCollections
         // You can also configure services using the configuration parameter
         // var someConfigValue = configuration.GetValue<string>("SomeConfigKey");
         // services.AddSingleton(new MyConfigService(someConfigValue));
+        return services;
+    }
+    
+    public static IServiceCollection AddStripe(this IServiceCollection services, IConfiguration configuration)
+    {
+        // Configure and register your core services here
+        StripeConfiguration.ApiKey = configuration.GetValue<string>(Constant.StripeSecretKey);
+        
+        //https://github.com/stripe/stripe-dotnet/issues/1882
+        services.AddTransient<CustomerService>();
+        services.AddTransient<SubscriptionService>();
+        services.AddTransient<InvoiceService>();
+        services.AddTransient<PriceService>();
+        services.AddTransient<ChargeService>();
+        services.AddTransient<TokenService>();
+        services.AddScoped<ICheckoutService,CheckoutService>();
         return services;
     }
 

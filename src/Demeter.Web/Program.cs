@@ -15,6 +15,7 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(
 // Add services to the container.
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddIdentityServices(builder.Configuration);
+builder.Services.AddStripe(builder.Configuration);
 builder.Services.AddCoreServices();
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -29,7 +30,9 @@ builder.Services.AddCors(options =>
                 .AllowAnyMethod();
         });
 });
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = 
+        Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

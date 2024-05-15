@@ -17,7 +17,7 @@ namespace Demeter.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -87,8 +87,7 @@ namespace Demeter.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+                    b.HasIndex("UserId");
 
                     b.ToTable("Accounts");
                 });
@@ -441,14 +440,21 @@ namespace Demeter.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Rate")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("VoucherId")
+                    b.Property<int>("Sale")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("VendorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -456,8 +462,6 @@ namespace Demeter.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("VendorId");
-
-                    b.HasIndex("VoucherId");
 
                     b.ToTable("Products");
                 });
@@ -533,11 +537,26 @@ namespace Demeter.Infrastructure.Migrations
                     b.ToTable("Vouchers");
                 });
 
+            modelBuilder.Entity("ProductsVoucher", b =>
+                {
+                    b.Property<Guid>("AppliedProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("VouchersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AppliedProductsId", "VouchersId");
+
+                    b.HasIndex("VouchersId");
+
+                    b.ToTable("ProductsVoucher");
+                });
+
             modelBuilder.Entity("Demeter.Core.Entities.Accounts.Account", b =>
                 {
                     b.HasOne("Demeter.Core.Entities.Users", "User")
-                        .WithOne("Account")
-                        .HasForeignKey("Demeter.Core.Entities.Accounts.Account", "UserId")
+                        .WithMany()
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -681,19 +700,30 @@ namespace Demeter.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Demeter.Core.Entities.Accounts.Account", "Vendor")
+                    b.HasOne("Demeter.Core.Entities.Users", "Vendor")
                         .WithMany()
                         .HasForeignKey("VendorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Demeter.Core.Entities.Voucher", null)
-                        .WithMany("AppliedProducts")
-                        .HasForeignKey("VoucherId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Vendor");
+                });
+
+            modelBuilder.Entity("ProductsVoucher", b =>
+                {
+                    b.HasOne("Demeter.Core.Entities.Products", null)
+                        .WithMany()
+                        .HasForeignKey("AppliedProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Demeter.Core.Entities.Voucher", null)
+                        .WithMany()
+                        .HasForeignKey("VouchersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Demeter.Core.Entities.Accounts.Account", b =>
@@ -721,16 +751,6 @@ namespace Demeter.Infrastructure.Migrations
             modelBuilder.Entity("Demeter.Core.Entities.Orders", b =>
                 {
                     b.Navigation("Items");
-                });
-
-            modelBuilder.Entity("Demeter.Core.Entities.Users", b =>
-                {
-                    b.Navigation("Account");
-                });
-
-            modelBuilder.Entity("Demeter.Core.Entities.Voucher", b =>
-                {
-                    b.Navigation("AppliedProducts");
                 });
 #pragma warning restore 612, 618
         }

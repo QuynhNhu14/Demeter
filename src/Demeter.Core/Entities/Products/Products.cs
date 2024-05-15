@@ -12,6 +12,9 @@ public class Products
     public int BaseUnitPrice { get; set; }
     public DateTimeOffset DateCreated { get; set; }
     public DateTimeOffset DateModified { get; set; }
+    public string ImageUrl { get; set; } = String.Empty;
+    public int Sale { get; set; }
+    public int Rate { get; set; }
     
     [ForeignKey("Category")]
     public int CategoryId { get; set; }
@@ -19,7 +22,9 @@ public class Products
     
     [ForeignKey("Vendor")]
     public Guid VendorId { get; set; }
-    public virtual Account? Vendor { get; set; }
+    public virtual Users? Vendor { get; set; }
+    
+    public ICollection<Voucher>? Vouchers { get; set; }
 
     // public IList<Variants> Variants { get; set; }
 }
