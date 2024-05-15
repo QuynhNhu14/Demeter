@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 
 import { Button, Flex, Table, Tabs, Textarea, Text, rem, TextInput, PasswordInput   } from "@mantine/core";
 import { useForm } from '@mantine/form';
@@ -6,8 +6,7 @@ import { useForm } from '@mantine/form';
 import { Product } from "./ProductCart";
 import { IconCoin, IconCreditCard, IconWallet, IconEye } from '@tabler/icons-react';
 import * as stylex from "@stylexjs/stylex";
-import { addStripeCustomer, addStripePayment, createCheckoutSession } from "../../services/stripe";
-import { emitWarning } from "process";
+import {createCheckoutSession } from "../../services/stripe";
 import { CreateCheckoutSessionStripeRequest } from "../../models/stripe";
 
 type OrderFormProps = {
@@ -31,6 +30,19 @@ interface DataType {
 export const OrderForm: React.FC<OrderFormProps> = ({totaldata, selectedProducts}) => {
   const [selectedProduct, setSelectedProduct] = useState<number>(0);
   const [value, setValue] = useState<number>(1);
+
+//   const [data, setData] = useState<Account>();
+//   const fetchData = async () => {
+//       const dataAccount = await getAcount();
+//       if (!dataAccount) {
+//         return;
+//       }
+//       setData(dataAccount);
+//   };
+//   useEffect(() => {
+//     fetchData();
+//   }, []);
+//   console.log({data});
 
   const formCard = useForm({
     initialValues: {
