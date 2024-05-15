@@ -21,6 +21,7 @@ import AddProduct from "./admin/pages/Product_admin/AddProduct";
 import ShopProfile from "./admin/pages/ShopsPreview/ShopPreview";
 import {PaymentStatus} from "./pages/PaymentStatus";
 import Dashboard from "./admin/pages/Dashboard/Dashboard";
+import { ShopProduct } from "./pages/ShopProduct";
 
 export default function App() {
   const location = useLocation();
@@ -59,11 +60,12 @@ export default function App() {
 
           <Route path="/payment-success" element={<PaymentStatus success={true}/>} />
           <Route path="/payment-cancel" element={<PaymentStatus />} />
-          {/*<Route path="/login" element={<SignInSignUp />} />
-          
           <Route path="/shop-product" element={<ShopProduct />} />
           
+          
+          {/*<Route path="/login" element={<SignInSignUp />} />
           <Route path="/offer" element={<Offer />} />
+          
           <Route path="/orders" element={<Orders />} />
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />

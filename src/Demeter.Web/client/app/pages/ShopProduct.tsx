@@ -1,6 +1,6 @@
 import { Flex} from "@mantine/core";
 import { ShopInfo } from "../components/ShopInfo";
-import "./ShopProduct.css";
+//chưa fix
 import { ProductList } from "../components/ProductList";
 
 export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
@@ -18,7 +18,6 @@ export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
           <img
             src="https://www.lithospos.com/storage/app/media/veg_banner.jpg"
             alt="shop banner"
-            className="ShopBanner"
           />
           <ProductList shopId={shopId} />
         </Flex>

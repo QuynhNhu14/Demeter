@@ -17,7 +17,7 @@ if (Test-Path -Path "C:\Program Files\Docker\Docker\docker.exe") {
 
 # Check if .NET Core is installed and get its version
 $dotnet_version = & dotnet --version 2>&1
-$required_dotnet_version = [version]"7.0"
+$required_dotnet_version = [version]"8.0"
 
 # Check if Node.js is installed and get its version
 $node_version = & node --version 2>&1

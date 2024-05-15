@@ -216,19 +216,6 @@ const Cart: React.FC = () => {
   const newTotal = calculateTotal(); // Tính giá trị mới của TOTAL
   totaldata.TOTAL = newTotal;
 
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     const voucherList = await getVoucher();
-  //     if (voucherList ) {
-  //       setVouchers(voucherList);
-  //     }
-  //   }
-
-  //   fetchData();
-  // }, []);
-
-
   useState(() => {
     setVouchers(VoucherSample);
   });

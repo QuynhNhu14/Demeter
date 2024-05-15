@@ -1,5 +1,5 @@
-import "./ShopInfo.css";
-import shopLogo from "../../../assets/logo.png";
+//chưa fix
+import shopLogo from "../../assets/logo.png";
 import { Flex } from "@mantine/core";
 import {
   IconBrandFacebook,
