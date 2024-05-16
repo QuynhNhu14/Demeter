@@ -1,84 +1,48 @@
-import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from "axios";
-import { useLocalStorage } from "./useLocalStorage"; // Import useLocalStorage hook
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { storeLocal } from './storeLocal';
+import { environment } from '../../environment';
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // Browser should use relative URL
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use Vercel URL
-  return `http://localhost:${process.env.PORT ?? 5029}`; // Dev SSR should use localhost
-};
+const axiosInstance = axios.create({
+  baseURL: environment.apiUrl,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
 
 export const useHttp = () => {
-  const [token, setToken] = useLocalStorage<string | null>("token", null);
+  const [token, setToken] = storeLocal<string | null>('token', null);
 
-  const api = `${getBaseUrl()}/api`;
+  if (token) {
+    axiosInstance.defaults.headers['Authorization'] = `Bearer ${token}`;
+  }
 
-  // Axios instance with token authentication
-  const axiosInstance = axios.create({
-    baseURL: api,
-    headers: {
-      Authorization: token ? `Bearer ${token}` : undefined,
-      "Content-Type": "application/json",
-    },
-  });
-
-  // Intercept 401 Unauthorized errors to handle token expiration/invalidation
-  axiosInstance.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError) => {
-      if (error.response?.status === 401) {
-        // Handle token expiration/invalidation
-        // For example, redirect to login page or refresh token
-        console.log("Unauthorized: Token expired or invalid");
-      }
-      return Promise.reject(error);
+  const makeRequest = async <T>(request: Promise<AxiosResponse<T>>): Promise<{ data: T | null; error: any }> => {
+    try {
+      const response = await request;
+      return { data: response.data, error: null };
+    } catch (error) {
+      return { data: null, error: error instanceof AxiosError ?  error.response : error instanceof Error ? error.message : error };
     }
-  );
-
-  // Function to set token (e.g., after successful login)
-  const setAuthToken = (newToken: string) => {
-    setToken(newToken);
   };
 
-  // Function to make a GET request
-  const get = <T>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => {
-    return axiosInstance.get<T>(url, config);
-  };
+  const get = <T = any>(url: string, config: AxiosRequestConfig = {}): Promise<{ data: T | null; error: any }> =>
+    makeRequest(axiosInstance.get<T>(url, config));
 
-  // Function to make a POST request
-  const post = <T, Payload>(
-    url: string,
-    data?: Payload,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => {
-    return axiosInstance.post<T>(url, data, config);
-  };
+  const post = <T = any, U = any>(url: string, data?: U, config: AxiosRequestConfig = {}): Promise<{ data: T | null; error: any }> =>
+    makeRequest(axiosInstance.post<T>(url, data, config));
 
-  // Function to make a PUT request
-  const put = <T, Payload>(
-    url: string,
-    data?: Payload,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => {
-    return axiosInstance.put<T>(url, data, config);
-  };
+  const put = <T = any, U = any>(url: string, data?: U, config: AxiosRequestConfig = {}): Promise<{ data: T | null; error: any }> =>
+    makeRequest(axiosInstance.put<T>(url, data, config));
 
-  // Function to make a DELETE request
-  const remove = <T>(
-    url: string,
-    config?: AxiosRequestConfig
-  ): Promise<AxiosResponse<T>> => {
-    return axiosInstance.delete<T>(url, config);
-  };
+  const deleteRequest = <T = any>(url: string, config: AxiosRequestConfig = {}): Promise<{ data: T | null; error: any }> =>
+    makeRequest(axiosInstance.delete<T>(url, config));
 
   return {
-    axiosInstance,
-    setAuthToken,
+    setAuthToken: setToken,
     get,
     post,
     put,
-    remove,
+    delete: deleteRequest,
   };
 };

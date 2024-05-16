@@ -23,6 +23,7 @@ import {PaymentStatus} from "./pages/PaymentStatus";
 import Dashboard from "./admin/pages/Dashboard/Dashboard";
 import { ShopProduct } from "./pages/ShopProduct";
 import { VoucherPage } from "./pages/VoucherPage";
+import AppSettingPage from "./pages/testapi/appsetting";
 
 export default function App() {
   const location = useLocation();
@@ -63,6 +64,7 @@ export default function App() {
           <Route path="/payment-success" element={<PaymentStatus success={true}/>} />
           <Route path="/payment-cancel" element={<PaymentStatus />} />
           <Route path="/shop-product" element={<ShopProduct />} />
+          <Route path="/setting" element={<AppSettingPage />} />
           
           
           {/*<Route path="/login" element={<SignInSignUp />} />

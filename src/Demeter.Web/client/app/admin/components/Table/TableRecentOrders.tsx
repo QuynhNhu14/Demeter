@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {useState } from "react";
 import { Table, Avatar, Space, Badge, Pagination, Center, Flex } from "@mantine/core";
 import { IconUser, IconEye } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";

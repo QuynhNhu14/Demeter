@@ -10,7 +10,7 @@ import { Input, Button, Flex } from "@mantine/core";
 // } from '@tabler/icons-react'; 
 import headerLogo from "../../../assets/header_logo.jpg";
 import { IconLogout, IconSearch, IconShoppingBag, IconHome } from "@tabler/icons-react";
-import { FuzzySearch } from "../../customer/components/Search";
+import { FuzzySearch } from "../../../components/Search";
 
 export default function ShopHeader() {
   const navigate = useNavigate();

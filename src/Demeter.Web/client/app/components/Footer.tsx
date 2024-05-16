@@ -84,7 +84,7 @@ export const Footer = () => {
               <span className="footer--link" style={{ fontWeight: "bolder" }}>
                 Trường Đại học Bách Khoa ĐHQG - HCM
               </span>
-              <Flex vertical gap="small" align="center">
+              <Flex vertical="true" gap="small" align="center">
                 <Text component="a">demeter_ec@gmail.com</Text>
                 <Text component="a">+84 1234 56789</Text>
               </Flex>

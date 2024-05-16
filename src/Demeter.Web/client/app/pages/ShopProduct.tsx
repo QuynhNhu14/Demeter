@@ -11,7 +11,7 @@ export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
           <ShopInfo shopId={shopId ? shopId : "1"} />
         </Flex>
         <Flex
-          vertical
+          vertical="true"
           gap="large"
           style={{ flex: "10", padding: "24px 24px 0 0" }}
         >
