@@ -5,9 +5,9 @@ import styleX from "vite-plugin-stylex"
 // https://vitejs.dev/config/
 export default defineConfig({
   root: 'client/app',
-  publicDir: './public',
+  publicDir: '../public',
   build: {
-    outDir: '../dist'
+    outDir: '../../dist'
   },
   plugins: [react(), styleX()],
 })
