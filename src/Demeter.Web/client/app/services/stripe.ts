@@ -5,7 +5,7 @@ import {
 } from "../models/stripe";
 import { useHttp } from "../hooks";
 
-const baseUrl = "http://localhost:5029/api/stripe";
+const baseUrl = "/stripe";
 const https = useHttp();
 
 export async function addStripeCustomer(customer: AddStripeCustomer) {

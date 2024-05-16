@@ -1,7 +1,7 @@
 import OrdersTable from "../../components/Table/TableOrders";
 import { Flex } from "@mantine/core";
 import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import Navbar_Shops from "../../components/Navbar_Shop/Navbar_shop";
+import Navbar_Shops from "../../components/NavbarShop/NavbarShop";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({

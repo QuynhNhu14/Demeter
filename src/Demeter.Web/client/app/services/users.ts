@@ -1,8 +1,7 @@
-import axios, { AxiosError } from "axios";
 import { Account, User } from "../models/users";
 import { useHttp } from "../hooks";
 
-const baseUrl = "http://localhost:5029/api/users";
+const baseUrl = "/users";
 const https = useHttp();
 
 export async function getAcount() {

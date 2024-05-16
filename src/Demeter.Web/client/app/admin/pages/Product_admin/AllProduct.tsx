@@ -1,5 +1,5 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
+import NavbarAdmin from "../../components/NavbarShop/NavbarAdmin";
 import AllProductTable from "../../components/Table/TableAllProduct";
 import AdminHeader from "../AdminPage/AdminHeader";
 import styles from "./AllProduct.module.css";
@@ -9,7 +9,7 @@ const AllProduct: React.FC = () => {
     <>
       <Flex style={{ backgroundColor: "#f3f4f6" }}>
         <div style={{ flex: "2", width: "100%" }}>
-          <Navbar_Admins />
+          <NavbarAdmin />
         </div>
         <div style={{ flex: "9", width: "100%" }}>
           <AdminHeader />

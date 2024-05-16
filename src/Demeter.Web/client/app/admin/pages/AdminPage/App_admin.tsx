@@ -7,7 +7,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./App_admin.css";
-import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
+import NavbarAdmin from "../../components/NavbarShop/NavbarAdmin";
 import Dashboard from "../Dashboard/Dashboard";
 import { Input, Button, Flex } from "@mantine/core";
 import AllProduct from "../Product_admin/AllProduct";
@@ -67,7 +67,7 @@ export default function App_Shop() {
     <>
       <Flex className="AppAdmin" style={{ backgroundColor: "#f3f4f6" }}>
         <div style={{ flex: "2" }}>
-          {showNavbar && <Navbar_Admins />}{" "}
+          {showNavbar && <NavbarAdmin />}{" "}
           {/* Hiển thị navbar nếu showNavbar là true */}
         </div>
         <div style={{ flex: "9", width: "100%" }}>

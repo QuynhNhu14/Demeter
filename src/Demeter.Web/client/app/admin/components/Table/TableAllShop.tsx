@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Table,
   Space,
@@ -13,7 +13,7 @@ import { IconEdit } from "@tabler/icons-react";
 
 const { Search } = Input;
 
-const generateData = (count) => {
+const generateData = (count: number) => {
   const data = [];
   for (let i = 1; i <= count; i++) {
     data.push({

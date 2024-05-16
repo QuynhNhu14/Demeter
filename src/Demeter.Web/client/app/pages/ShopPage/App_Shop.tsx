@@ -1,16 +1,8 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./App_Shop.css";
-import Navbar_Admin from "./components/Navbar_Shop/Navbar_Shop";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import { Input, Button, Flex } from "@mantine/core";
-import AllProduct from "./pages/Product_admin/AllProduct";
-import AddProduct from "./pages/Product_admin/AddProduct";
-import { IconMenuFold, IconMenuUnfold, IconSearch } from "@tabler/icons-react"; // Import các biểu tượng từ Ant Design
-import Inventory from "./pages/Inventory/Inventory";
-import Orders from "./pages/Orders/Order";
-import ShopProfile from "./pages/ShopsPreview/ShopPreview";
-import Navbar_Shop from "../../components/Navbar_Shop/Navbar_Shop";
+import { Flex } from "@mantine/core";
+import Navbar_Shop from "../../admin/components/NavbarShop/NavbarShop";
 import ShopHeader from "../ShopPage/ShopHeader";
 
 export default function App_Shop() {
@@ -20,7 +12,7 @@ export default function App_Shop() {
   const [showNavbar, setShowNavbar] = useState(true); // State để kiểm soát hiển thị navbar
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     console.log("Đã tìm kiếm:", value);
   };
 
