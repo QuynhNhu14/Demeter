@@ -14,8 +14,8 @@ interface EnvironmentConfig {
   
     return {
       apiUrl: `${apiUrl}/api`,
-      port: import.meta.env.PORT ?? defaultPort,
-      vercelUrl: import.meta.env.VERCEL_URL ?? 'localhost'
+      port: import.meta.env.PORT as string ?? defaultPort,
+      vercelUrl: import.meta.env.VERCEL_URL as string ?? 'localhost'
     };
   };
   

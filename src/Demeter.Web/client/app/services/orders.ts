@@ -3,7 +3,7 @@ import { useHttp } from "../hooks";
 
 const https = useHttp();
 
-const baseUrl = "http://localhost:5029/api/orders";
+const baseUrl = "/orders";
 export async function getOrder() {
   const { data, error } = await https.get<Orders>(baseUrl);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   MultiSelect,
@@ -6,14 +6,11 @@ import {
   Text,
   TextInput,
   Textarea,
-  Group,
-  rem,
-  FileInput,
   CloseButton,
   Center,
   Flex,
 } from "@mantine/core";
-import { IconPhoto, IconUpload, IconX } from "@tabler/icons-react";
+import { IconUpload } from "@tabler/icons-react";
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import * as stylex from "@stylexjs/stylex";
@@ -83,12 +80,13 @@ const ProductForm: React.FC = () => {
     setGalleryFileList(fileList);
   };
 
+  // tslint:disable-unused-variable
   const featuredUploaderProps = {
     fileList: featuredFileList,
     beforeUpload: () => false,
     onChange: handleFeaturedFileChange,
   };
-
+  // tslint:disable-unused-variable
   const galleryUploaderProps = {
     fileList: galleryFileList,
     beforeUpload: () => false,

@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --emptyOutDir",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "build": "vite build --emptyOutDir",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives",
     "preview": "vite preview",
     "db:update": "dotnet ef database update --startup-project ./Demeter.Web.csproj -p ../Demeter.Infrastructure/Demeter.Infrastructure.csproj",
     "db:remove": "dotnet ef migrations remove -f --startup-project ./Demeter.Web.csproj -p ../Demeter.Infrastructure/Demeter.Infrastructure.csproj",

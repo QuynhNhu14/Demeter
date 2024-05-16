@@ -9,7 +9,7 @@ import { Button, Flex, Text } from "@mantine/core";
 //   IconShoppingBag,
 // } from '@tabler/icons-react'; 
 import headerLogo from "../../../assets/header_logo.jpg";
-import { IconLogout, IconSearch, IconShoppingBag, IconHome } from "@tabler/icons-react";
+import { IconLogout, IconHome } from "@tabler/icons-react";
 import { FuzzySearch } from "../../components/Search";
 
 export default function ShopHeader() {

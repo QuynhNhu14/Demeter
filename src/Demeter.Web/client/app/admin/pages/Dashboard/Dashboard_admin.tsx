@@ -1,5 +1,5 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Admins from "../../components/Navbar_Shop/Navbar_admin";
+import NavbarAdmin from "../../components/NavbarShop/NavbarAdmin";
 import ShopOverviewCard from "../../components/Summary_Card/ShopOverviewCard";
 import Summary_Card from "../../components/Summary_Card/Summary_Card";
 import Summary_CardTwo from "../../components/Summary_Card/Summary_CardTwo";
@@ -13,7 +13,7 @@ const Dashboardadmin: React.FC = () => {
     <>
       <Flex style={{ backgroundColor: "#f3f4f6" }}>
         <div style={{ flex: "2", width: "100%" }}>
-          <Navbar_Admins />
+          <NavbarAdmin />
         </div>
         <div style={{ flex: "9", width: "100%" }}>
           <AdminHeader />

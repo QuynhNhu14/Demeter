@@ -1,5 +1,5 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/Navbar_Shop/Navbar_Shop";
+import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
 import AllProductTable from "../../components/Table/TableAllProduct";
 import ShopHeader from "../../../pages/ShopPage/ShopHeader";
 import styles from "./AllProduct.module.css";

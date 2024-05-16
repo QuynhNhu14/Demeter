@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   IconLayoutGrid,
   IconInbox,
-  IconSetting,
   IconShoppingBag,
   IconCircle,
   IconList,
@@ -13,12 +12,10 @@ import {
   IconGift,
   IconArrowBackUp,
 } from "@tabler/icons-react";
-import { MenuProps, Menu, Text, Flex } from "@mantine/core";
+import { MenuProps, Menu, Text } from "@mantine/core";
 import { NavLink } from "react-router-dom";
-import headerLogo from "../../../assets/header_logo.jpg";
 import "./Navbar_Shop.css";
 
-type MenuItem = Required<MenuProps>["items"][number];
 
 function getItem(
   label: React.ReactNode,
@@ -195,7 +192,7 @@ const items: MenuProps["items"] = [
   // getItem('Group', 'grp', null, [getItem('Option 13', '13', undefined, undefined, undefined, 'Option 13'), getItem('Option 14', '14', undefined, undefined, undefined, 'Option 14')], 'group'),
 ];
 
-const Navbar_Admins: React.FC = () => {
+const NavbarAdmin: React.FC = () => {
   const [selectedMenuKey, setSelectedMenuKey] = useState<string>(
     localStorage.getItem("selectedMenuKey") || "1"
   );
@@ -229,4 +226,4 @@ const Navbar_Admins: React.FC = () => {
   );
 };
 
-export default Navbar_Admins;
+export default NavbarAdmin;
