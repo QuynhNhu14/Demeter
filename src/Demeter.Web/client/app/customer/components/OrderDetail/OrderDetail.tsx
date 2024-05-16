@@ -1,8 +1,6 @@
 import { IconCheck, IconEye } from "@tabler/icons-react";
 import { Flex, Progress, Table, TableProps, Badge } from "@mantine/core";
-import useItems from "antd/es/menu/hooks/useItems";
 import "./OrderDetail.css";
-import productImage from "../../assets/chili.png";
 
 const OrderInfo = {
   id: 544,
@@ -48,7 +46,7 @@ const columns: TableProps<DataType>["columns"] = [
           alt="product image"
           style={{ width: "50px", height: "50px" }}
         />
-        <Flex vertical>
+        <Flex vertical="true">
           <span style={{ opacity: "0.7" }}>{name}</span>
           <span style={{ color: "#009f7f", fontWeight: "500" }}>
             {price} VNĐ
@@ -68,7 +66,7 @@ const columns: TableProps<DataType>["columns"] = [
     dataIndex: "total",
     key: "total",
     align: "center",
-    render: (total) => (
+    render: (total: number) => (
       <Flex justify="center" style={{ margin: "auto" }}>
         {total} VNĐ
       </Flex>
@@ -92,7 +90,7 @@ export const OrderDetail: React.FC<{ orderId: number }> = ({ orderId }) => {
   }, 0);
 
   return (
-    <Flex className="OrderDetail" gap="large" vertical>
+    <Flex className="OrderDetail" gap="large" vertical="true">
       <Flex className="OrderDetail--OrderId" justify="space-between">
         <span style={{ fontWeight: "bold", fontSize: "18px" }}>
           Chi tiết đơn đặt hàng - {OrderInfo.id}
@@ -163,7 +161,7 @@ export const OrderDetail: React.FC<{ orderId: number }> = ({ orderId }) => {
             borderRight: "1px solid #e7e7e7",
             padding: "0 20px 20px 0",
           }}
-          vertical
+          vertical="true"
           gap="small"
           justify="center"
         >
@@ -174,7 +172,7 @@ export const OrderDetail: React.FC<{ orderId: number }> = ({ orderId }) => {
         </Flex>
         <Flex
           style={{ flex: "4", padding: "0 0 20px 20px" }}
-          vertical
+          vertical="true"
           gap="small"
           justify="center"
         >
@@ -204,7 +202,7 @@ export const OrderDetail: React.FC<{ orderId: number }> = ({ orderId }) => {
         className="OrderDetail--Progress"
         style={{ width: "100%" }}
         align="center"
-        vertical
+        vertical="true"
       >
         <Flex
           justify="space-between"

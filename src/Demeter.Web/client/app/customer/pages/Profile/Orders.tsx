@@ -44,7 +44,7 @@ export const Orders = () => {
           <Flex
             className="myOrders"
             style={{ flex: "3", backgroundColor: "#fff" }}
-            vertical
+            vertical="true"
             gap="large"
           >
             <span style={{ fontWeight: "bold", fontSize: "18px" }}>
@@ -52,7 +52,7 @@ export const Orders = () => {
             </span>
             {orderList.map((order) => {
               return (
-                <Flex className="orderOverview" vertical gap="middle">
+                <Flex className="orderOverview" vertical="true" gap="middle">
                   <Flex
                     justify="space-between"
                     style={{
@@ -111,8 +111,7 @@ export const Orders = () => {
             })}
           </Flex>
           <Flex
-            className="OrderDetail"
-            vertical
+            vertical = "true"
             style={{ flex: "6", backgroundColor: "#fff" }}
           >
             <OrderDetail orderId={1} />

@@ -122,7 +122,7 @@ export default function AdminHeader() {
             >
               <IconUser style={{ fontSize: "20px" }} />
             </Flex>
-            <Flex vertical>
+            <Flex vertical="true">
               <span style={{ fontWeight: "500", fontSize: "16px" }}>
                 Ms.Demeter
               </span>

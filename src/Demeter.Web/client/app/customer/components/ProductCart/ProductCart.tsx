@@ -104,12 +104,12 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
     const isShopSelected = shopProducts.every((product) => product.selected);
 
     const rows = shopProducts.map((element) => (
-      <Table.Tr key={element.name}>
+      <Table.Tr key={element.id}>
         <Table.Td>
           <Checkbox 
             color="#009f7f" 
             checked={element.selected} 
-            onChange={(e) => handleProductCheckboxChange(element.id,element.shop, e.target.checked)} />
+            onChange={(e:any) => handleProductCheckboxChange(element.id,element.shop, e.target.checked)} />
         </Table.Td>
         <Table.Td>
           <Flex align="center" gap={4}>
@@ -159,7 +159,7 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
           <Checkbox
             color="#009f7f"
             checked={isShopSelected}
-            onChange={(e) => handleShopCheckboxChange(shopName, e.target.checked)}
+            onChange={(e:any) => handleShopCheckboxChange(shopName, e.target.checked)}
           />
           <Text fw={600} m = '0 0 0 10px'>{shopName} </Text>
         </Flex>

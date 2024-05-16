@@ -6,7 +6,6 @@ import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/co
 
 import logo from '../../../../assets/logo.png';
 
-import { getVoucher } from '../../../services/orders';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
@@ -289,8 +288,8 @@ const Cart: React.FC = () => {
                 title="Danh sách voucher của bạn" 
                 {...stylex.props(styles.customModal)}>
                 <Radio.Group value={selectedVoucher}>
-                   {vouchers.map((voucher) => (
-                    <Flex direction="column"  {...stylex.props(styles.box)} onClick={() => setSelectedVoucher(voucher.id)}>
+                   {vouchers.map((voucher, key) => (
+                    <Flex key={key} direction="column"  {...stylex.props(styles.box)} onClick={() => setSelectedVoucher(voucher.id)}>
                       <Flex justify='space-between'>
                           <Radio       
                             key={voucher.id}
@@ -332,7 +331,7 @@ const Cart: React.FC = () => {
             <Button size="lg" color="#009F7F" onClick={showModal}>
               <Text fw={500}>ĐẶT HÀNG  {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
             </Button>
-            <Modal opened={isModalOpen} onOk={handleOk} onClose={handleCancelOrder} footer={null} size="65%" scrollAreaComponent={ScrollArea.Autosize}>
+            <Modal opened={isModalOpen} onClose={handleCancelOrder} footer={null} size="65%" scrollAreaComponent={ScrollArea.Autosize}>
                 <OrderForm totaldata={totaldata} selectedProducts={selectedProducts.filter((item) => item.selected)}/>
             </Modal>
           </div>

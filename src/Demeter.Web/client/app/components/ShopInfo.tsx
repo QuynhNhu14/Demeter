@@ -20,10 +20,10 @@ const ShopDetails = {
 
 export const ShopInfo: React.FC<{ shopId: string }> = ({ shopId }) => {
   return (
-    <Flex className="ShopInfo" vertical>
+    <Flex className="ShopInfo" vertical="true">
       <Flex
         className="ShopInfo--description"
-        vertical
+        vertical="true"
         gap="middle"
         align="center"
       >
@@ -46,16 +46,16 @@ export const ShopInfo: React.FC<{ shopId: string }> = ({ shopId }) => {
           <IconBrandTwitter />
         </Flex>
       </Flex>
-      <Flex className="ShopInfo--details" vertical justify="center" gap="large">
-        <Flex vertical gap="small">
+      <Flex className="ShopInfo--details" vertical="true" justify="center" gap="large">
+        <Flex vertical="true" gap="small">
           <span style={{ fontWeight: "bold" }}>Địa chỉ</span>
           <span style={{ opacity: "0.8" }}>{ShopDetails.adress}</span>
         </Flex>
-        <Flex vertical gap="small">
+        <Flex vertical="true" gap="small">
           <span style={{ fontWeight: "bold" }}>SĐT</span>
           <span style={{ opacity: "0.8" }}>{ShopDetails.phone}</span>
         </Flex>
-        <Flex vertical gap="small">
+        <Flex vertical="true" gap="small">
           <span style={{ fontWeight: "bold" }}>Trang web</span>
           <Flex justify="space-between">
             <span style={{ opacity: "0.8" }}>{ShopDetails.website}</span>
