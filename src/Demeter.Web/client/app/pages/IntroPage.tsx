@@ -1,4 +1,4 @@
-import {Image, ThemeIcon, Text, Title, Card, Container, SimpleGrid, rem, Button, Box} from '@mantine/core';
+import {Image, ThemeIcon, Text, Title, Card, Container, SimpleGrid, Button, Box} from '@mantine/core';
 import { IconGauge, IconCookie, IconUser, IconMessage2, IconLock } from '@tabler/icons-react';
 import logo from '../../assets/logo.png';
 
@@ -49,7 +49,7 @@ export function Feature({ icon: Icon, title, description }: FeatureProps) {
   return (
     <Card shadow="lg" padding="lg" radius="md" p="md" >
       <ThemeIcon variant="light" size={40} radius={40}>
-        <Icon style={{width: rem(30), height: rem(30)}} stroke={2} />
+        <Icon width={30} height={30} stroke={2} />
       </ThemeIcon>
       <Text mt="sm" mb={7}>
         {title}

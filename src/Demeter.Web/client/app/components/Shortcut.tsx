@@ -3,18 +3,19 @@ import {
     Text,
     SimpleGrid,
     UnstyledButton,
-    Anchor,
-    Group,
     useMantineTheme,
   } from '@mantine/core';
-  import {
-    IconTruckDelivery,
-    IconTags,
-    IconGift,
-    IconRosetteDiscount,
-    IconAlarmMinus,
-    IconBasket,
-  } from '@tabler/icons-react';
+
+import {
+  IconTruckDelivery,
+  IconTags,
+  IconGift,
+  IconRosetteDiscount,
+  IconAlarmMinus,
+  IconBasket,
+} from '@tabler/icons-react';
+
+import * as stylex from '@stylexjs/stylex';
   
   const mockdata = [
     { title: 'Voucher giảm đến 500.000đ', icon: IconTags, color: 'violet' },
@@ -24,6 +25,12 @@ import {
     { title: 'Đặt trước', icon: IconAlarmMinus, color: 'cyan' },
     { title: 'Giỏ quà biếu tặng', icon: IconBasket, color: 'pink' },
   ];
+
+  const styles = stylex.create({
+    marginTop: {
+      marginTop: '10px' 
+    }
+  });
   
   export function Shortcut() {
     const theme = useMantineTheme();
@@ -40,7 +47,7 @@ import {
           gap: '10px',
           // backgroundColor: theme.colors[item.color][0],
       }}>
-        <item.icon color={theme.colors[item.color][6]} size="2.2rem" style={{marginTop: 10 }}/>
+        <item.icon color={theme.colors[item.color][6]} size="2.2rem" {...stylex.props(styles.marginTop)}/>
         <Text size="sm" mt={5} align="center" mb={10}>
           {item.title}
         </Text>

@@ -1,4 +1,4 @@
-import { Table, Group, Text, ActionIcon, rem, Box, Flex, Pagination, Stack, Button } from '@mantine/core';
+import { Table, Group, Text, ActionIcon, Box, Flex, Pagination, Stack, Button } from '@mantine/core';
 import {
   IconTrash,
   IconReceipt,
@@ -52,7 +52,7 @@ export function Notification() {
       <Table.Td>
         <Group gap={0} justify="flex-end">
           <ActionIcon variant="subtle" color="gray">
-            <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
+            <IconTrash width={30} height={30} stroke={1.5} />
           </ActionIcon>
         </Group>
       </Table.Td>

@@ -16,7 +16,7 @@ export async function getAllProducts() {
 }
 
 export async function getProductById(productId: string) {
-  const { data, error } = await https.get<Product[]>(`${baseUrl}/${productId}`);
+  const { data, error } = await https.get<Product>(`${baseUrl}/${productId}`);
 
   if (error) {
     console.error("Error: ", error);

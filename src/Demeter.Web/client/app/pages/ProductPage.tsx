@@ -1,4 +1,3 @@
-// import { ProductDescription } from "../components/ProductDescription/ProductDescription";
 import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
 import { ProductList } from "../components/ProductList";
 import { NavLink, useParams} from "react-router-dom";
@@ -182,11 +181,13 @@ export function ProductPage() {
                     {data?.name}
                   </span>
                   <Button {...stylex.props(styles.heart)} onClick={handleLike}> 
-                    <IconHeart style={{ color: "#009f7f" }} />
+                    <IconHeart color= "#009f7f" />
                   </Button>
                 </Flex>
                 <Flex justify="space-between">
-                  <span style={{ fontSize: "14px", opacity: "0.7" }}>{1}</span>
+                  <span style={{ fontSize: "14px", opacity: "0.7" }}>
+                  2 đánh giá
+                  </span>
                   <Badge color="#009f7f" style={{ fontSize: "14px", margin: "0" }}>
                     {data?.rate} <IconStarFilled style={{ width: rem(12), height: rem(12) }} />
                   </Badge>
@@ -200,7 +201,7 @@ export function ProductPage() {
                       color: "#009f7f",
                     }}
                   >
-                    {data?.sale}
+                    {data.baseUnitPrice}
                   </span>
                   <span style={{ textDecoration: "line-through", opacity: "0.7" }}>
                     {" "}

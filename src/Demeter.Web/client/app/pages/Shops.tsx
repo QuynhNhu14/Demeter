@@ -1,6 +1,6 @@
-import { Flex } from "@mantine/core";
+import { Container, Flex, Title } from "@mantine/core";
 
-import shopLogo from "../../../assets/logo.png";
+import shopLogo from "../../assets/logo.png";
 
 import * as stylex from "@stylexjs/stylex";
 
@@ -68,9 +68,9 @@ export const Shops = () => {
 
   return (
     <Flex {...stylex.props(styles.container)} direction="column" gap="lg">
-      <span style={{ fontWeight: "700", fontSize: "24px", opacity: 0.9 }}>
-        Tất cả cửa hàng
-      </span>
+      <Container>
+        <Title> Tất cả cửa hàng</Title>
+      </Container>
       <Flex
         wrap="wrap"
         gap="md"
@@ -88,10 +88,6 @@ export const Shops = () => {
                 {shop.name}
               </span>
               <Flex align="flex-start">
-                {/* <CiLocationOn
-                  size={20}
-                  style={{ opacity: 0.8, marginRight: "3px" }}
-                /> */}
                 <span style={{ opacity: 0.8, fontSize: "14px" }}>
                   {shop.address}
                 </span>
@@ -117,6 +113,6 @@ const styles = stylex.create({
     },
   },
   container: {
-    padding: "100px 140px",
-  },
+    padding: "50px 140px",
+  }
 });

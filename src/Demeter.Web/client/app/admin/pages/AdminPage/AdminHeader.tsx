@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import {
   useNavigate,
   useLocation,
   NavLink,
 } from "react-router-dom";
-// import "./App_admin.css";
 
 import { Input, Button, Flex } from "@mantine/core";
 
@@ -24,7 +23,7 @@ export default function AdminHeader() {
   const [showNavbar, setShowNavbar] = useState(true); // State để kiểm soát hiển thị navbar
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     console.log("Đã tìm kiếm:", value);
   };
 

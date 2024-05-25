@@ -1,23 +1,49 @@
 import { useEffect, useState } from "react";
 import { getSettings } from "../../services/appsettings";
 import { AppSettings } from "../../models/settings";
-import "./test.css";
 import { IconEdit } from "@tabler/icons-react";
 import FormSetting from "./form";
+import * as stylex from "@stylexjs/stylex";
+import { Button, Table } from "@mantine/core";
+
+const styles = stylex.create ({
+  test: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    padding: "10px",
+  },
+  column:{
+    display: "flex-column",
+    flexDirection: "column",
+    paddingBottom: "10px",
+  },
+  table:{
+    borderCollapse: 'collapse',
+    borderRadius: '5%',
+  },
+  td: {
+    border: '1px solid black',
+    padding: '5px',
+  },
+  tdcenter:{
+    border: '1px solid black',
+    padding: '5px',
+    textAlign: 'center',
+  },
+  tdbutton:{
+    paddingLeft: "10px", 
+    border: "none" 
+  },
+  form:{
+    justifySelf: "center",
+    alignSelf: "center"
+  }
+});
 
 export default function AppSettingPage() {
   const [settings, setSettings] = useState<AppSettings[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [edit, setEdit] = useState<AppSettings>();
-  // const getDate = (date: Date | string | undefined) => {
-  //   if (!date) {
-  //     return '';
-  //   }
-  //   if (date instanceof Date) {
-  //     return date.toDateString();
-  //   }
-  //   return date;
-  // }
 
   const handleSubmit = async () => {
     setEdit(undefined);
@@ -37,61 +63,51 @@ export default function AppSettingPage() {
   // TODO: show data in table using antd
   return (
     <div
-      className="test"
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        padding: "10px",
-      }}
+      {...stylex.props(styles.test)}
     >
       <div>
         <h1>Appsetting Page</h1>
         <div>
           <div
-            style={{
-              display: "flex-column",
-              flexDirection: "column",
-              paddingBottom: "10px",
-            }}
+            {...stylex.props(styles.column)}
           >
-            <table>
+            <Table {...stylex.props(styles.table)}>
               <thead>
                 <tr>
-                  <th>No.</th>
-                  <th>Name</th>
-                  <th>Value</th>
-                  <th>Description</th>
-                  <th>Type</th>
+                  <th {...stylex.props(styles.td)}>No.</th>
+                  <th {...stylex.props(styles.td)}>Name</th>
+                  <th {...stylex.props(styles.td)}>Value</th>
+                  <th {...stylex.props(styles.td)}>Description</th>
+                  <th {...stylex.props(styles.td)}>Type</th>
                 </tr>
               </thead>
               {settings.map((setting, index) => (
                 <tbody key={index}>
                   <tr>
-                    <td style={{ textAlign: "center" }}>{index}</td>
-                    <td>{setting.referenceKey}</td>
-                    <td>{setting.value}</td>
-                    <td>{setting.description}</td>
-                    <td>{setting.type}</td>
-                    <td style={{ paddingLeft: "10px", border: "none" }}>
-                      <button
-                        className="button"
+                    <td {...stylex.props(styles.tdcenter)}>{index}</td>
+                    <td {...stylex.props(styles.td)}>{setting.referenceKey}</td>
+                    <td {...stylex.props(styles.td)}>{setting.value}</td>
+                    <td {...stylex.props(styles.td)}>{setting.description}</td>
+                    <td {...stylex.props(styles.td)}>{setting.type}</td>
+                    <td {...stylex.props(styles.tdbutton)}>
+                      <Button
                         onClick={() => {
                           setEdit(setting);
                           setShowForm(true);
                         }}
                       >
                         <IconEdit />
-                      </button>
+                      </Button>
                     </td>
                   </tr>
                 </tbody>
               ))}
-            </table>
+            </Table>
           </div>
           <div>
-            <button className="button" onClick={() => setShowForm(true)}>
+            <Button variant="gradient" onClick={() => setShowForm(true)}>
               Add Setting
-            </button>
+            </Button>
           </div>
         </div>
       </div>
@@ -99,7 +115,7 @@ export default function AppSettingPage() {
         <FormSetting
           settings={edit}
           handleSubmit={handleSubmit}
-          style={{ justifySelf: "center", alignSelf: "center" }}
+          {...stylex.props(styles.form)}
         />
       )}
     </div>

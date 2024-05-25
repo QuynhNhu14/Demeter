@@ -36,7 +36,7 @@ public class OrdersController: ControllerBase
     }
 
     [HttpGet("voucher")]
-    public async ValueTask<IActionResult> GetVoucher()
+    public async ValueTask<ActionResult<ICollection<Domain.Voucher>>> GetVoucher()
     {
         try
         {

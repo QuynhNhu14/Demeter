@@ -1,11 +1,11 @@
-//chưa fix
 import shopLogo from "../../assets/logo.png";
-import { Flex } from "@mantine/core";
+import { Container, Flex, Image } from "@mantine/core";
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandTwitter,
 } from "@tabler/icons-react";
+import * as stylex from "@stylexjs/stylex";
 
 const ShopDetails = {
   shopId: "1",
@@ -20,54 +20,69 @@ const ShopDetails = {
 
 export const ShopInfo: React.FC<{ shopId: string }> = ({ shopId }) => {
   return (
-    <Flex className="ShopInfo" vertical="true">
-      <Flex
-        className="ShopInfo--description"
-        vertical="true"
-        gap="middle"
-        align="center"
-      >
-        <img
+    <div>
+      <Container align="center">
+        <Image
           src={ShopDetails.logo}
           alt="logo"
-          style={{ width: "65%", borderRadius: "10px" }}
+          w={"50%"}
+          borderRadius="10px"
         />
-        <span
-          style={{ fontWeight: "bolder", fontSize: "20px", color: "#009f7f" }}
+        <Container
+          fw={700}
+          fz={"h2"}
+          c={"#009f7f"}
         >
           {ShopDetails.name}
-        </span>
-        <span style={{ textAlign: "center", opacity: "0.8" }}>
+        </Container>
+        <Flex ta={"justify"} opacity= "0.8" mb={10}>
           {ShopDetails.description}
-        </span>
-        <Flex justify="center" gap="small" style={{ opacity: "0.8" }}>
+        </Flex>
+        <Flex justify="center" gap="10" opacity= "0.8" mb={10}>
           <IconBrandFacebook />
           <IconBrandInstagram />
           <IconBrandTwitter />
         </Flex>
-      </Flex>
-      <Flex className="ShopInfo--details" vertical="true" justify="center" gap="large">
-        <Flex vertical="true" gap="small">
-          <span style={{ fontWeight: "bold" }}>Địa chỉ</span>
-          <span style={{ opacity: "0.8" }}>{ShopDetails.adress}</span>
+      </Container>
+      <Container
+        vertical="true"
+        justify="center"
+        gap="large"
+      >
+        <Flex vertical="true" gap="10">
+          <span {...stylex.props(styles.bold)}>Địa chỉ: </span>
+          <span {...stylex.props(styles.opacity)}>{ShopDetails.adress}</span>
         </Flex>
-        <Flex vertical="true" gap="small">
-          <span style={{ fontWeight: "bold" }}>SĐT</span>
-          <span style={{ opacity: "0.8" }}>{ShopDetails.phone}</span>
+        <Flex vertical="true" gap="10">
+          <span {...stylex.props(styles.bold)}>SĐT: </span>
+          <span {...stylex.props(styles.opacity)}>{ShopDetails.phone}</span>
         </Flex>
-        <Flex vertical="true" gap="small">
-          <span style={{ fontWeight: "bold" }}>Trang web</span>
-          <Flex justify="space-between">
-            <span style={{ opacity: "0.8" }}>{ShopDetails.website}</span>
+        <Flex vertical="true" gap="10">
+          <span {...stylex.props(styles.bold)}>Trang web: </span>
+          <span>
             <a
               href={ShopDetails.website}
-              style={{ fontWeight: "bolder", color: "#009f7f" }}
+              {...stylex.props(styles.a)}
+              target="_blank"
             >
-              Truy cập web
+              {ShopDetails.website}
             </a>
-          </Flex>
+          </span>
         </Flex>
-      </Flex>
-    </Flex>
+      </Container>
+    </div>
   );
 };
+
+const styles = stylex.create({
+  a: {
+    fontWeight: 'bolder',
+    color: '#009f7f'
+  },
+  bold: {
+    fontWeight: 'bolder',
+  },
+  opacity: {
+    opacity: "0.8"
+  }
+});

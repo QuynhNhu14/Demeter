@@ -1,9 +1,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import "./App_Shop.css";
 import { Flex } from "@mantine/core";
 import Navbar_Shop from "../../admin/components/NavbarShop/NavbarShop";
 import ShopHeader from "../ShopPage/ShopHeader";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  background: {
+    backgroundColor: "#f3f4f6"
+  },
+  navbarShop: {
+    flex: "2", 
+    width: "100%"
+  },
+  shopheader: {
+    flex: "9",
+    width: "100%"
+  }
+});
 
 export default function App_Shop() {
   const navigate = useNavigate();
@@ -19,6 +33,7 @@ export default function App_Shop() {
   const onSearchClick = () => {
     handleSearch(searchTerm); // Gọi hàm xử lý tìm kiếm khi người dùng nhấn nút tìm kiếm
   };
+
   useEffect(() => {
     if (firstRender) {
       if (location.pathname === "/") {
@@ -42,16 +57,17 @@ export default function App_Shop() {
 
   return (
     <>
-      <Flex style={{ backgroundColor: "#f3f4f6" }}>
-        <div style={{ flex: "2", width: "100%" }}>
+      <Flex {...stylex.props(styles.background)}>
+        <div {...stylex.props(styles.navbarShop)}>
           <Navbar_Shop />
         </div>
-        <div style={{ flex: "9", width: "100%" }}>
+        <div {...stylex.props(styles.shopheader)}>
           <ShopHeader />
         </div>
       </Flex>
     </>
   );
 }
+
 // quản lý đơn hàng, trang sửa thông tin shop)
 // Admin (3 Trang quản lý user, shop với đơn hàng)

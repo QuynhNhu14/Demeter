@@ -23,8 +23,19 @@ import * as stylex from "@stylexjs/stylex";
 const styles = stylex.create({
   footer: {
     position: "sticky",
-    bottom: 0,
+    bottom: '0',
   },
+  image:{
+    width: "120px", 
+    height: "120px"
+  },
+  bold: {
+    fontWeight: "bolder"
+  },
+  icon: {
+    width: 'rem(18)', 
+    height: 'rem(18)'
+  }
 });
 
 const data = [
@@ -79,9 +90,9 @@ export const Footer = () => {
               <img
                 src={logo}
                 alt="logo"
-                style={{ width: "120px", height: "120px" }}
+                {...stylex.props(styles.image)}
               />
-              <span className="footer--link" style={{ fontWeight: "bolder" }}>
+              <span {...stylex.props(styles.bold)}>
                 Trường Đại học Bách Khoa ĐHQG - HCM
               </span>
               <Flex vertical="true" gap="small" align="center">
@@ -89,7 +100,7 @@ export const Footer = () => {
                 <Text component="a">+84 1234 56789</Text>
               </Flex>
             </Flex>
-            <Flex justify="center" gap={"md"}>
+            <Flex justify="center" gap={"xl"}>
               {groups}
             </Flex>
           </Group>
@@ -101,31 +112,31 @@ export const Footer = () => {
             <Group gap={0} justify="flex-end" wrap="nowrap">
               <ActionIcon size="lg" color="gray" variant="subtle">
                 <IconBrandTwitter
-                  style={{ width: rem(18), height: rem(18) }}
+                  {...stylex.props(styles.icon)}
                   stroke={1.5}
                 />
               </ActionIcon>
               <ActionIcon size="lg" color="gray" variant="subtle">
                 <IconBrandYoutube
-                  style={{ width: rem(18), height: rem(18) }}
+                  {...stylex.props(styles.icon)}
                   stroke={1.5}
                 />
               </ActionIcon>
               <ActionIcon size="lg" color="gray" variant="subtle">
                 <IconBrandInstagram
-                  style={{ width: rem(18), height: rem(18) }}
+                  {...stylex.props(styles.icon)}
                   stroke={1.5}
                 />
               </ActionIcon>
               <ActionIcon size="lg" color="gray" variant="subtle">
                 <IconBrandFacebook
-                  style={{ width: rem(18), height: rem(18) }}
+                  {...stylex.props(styles.icon)}
                   stroke={1.5}
                 />
               </ActionIcon>
               <ActionIcon size="lg" color="gray" variant="subtle">
                 <IconSend
-                  style={{ width: rem(18), height: rem(18) }}
+                  {...stylex.props(styles.icon)}
                   stroke={1.5}
                 />
               </ActionIcon>
@@ -135,3 +146,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+

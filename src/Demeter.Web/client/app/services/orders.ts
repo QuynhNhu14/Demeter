@@ -5,7 +5,7 @@ const https = useHttp();
 
 const baseUrl = "/orders";
 export async function getOrder() {
-  const { data, error } = await https.get<Orders>(baseUrl);
+  const { data, error } = await https.get<Orders[]>(baseUrl);
 
   if (error) {
     console.error("Error: ", error);
@@ -50,8 +50,8 @@ export async function updateOrder(order: Orders) {
 }
 
 export async function getVoucher() {
-  const url = `${baseUrl}/vouchers`;
-  const { data, error } = await https.get<Vouchers>(url);
+  const url = `${baseUrl}/voucher`;
+  const { data, error } = await https.get<Vouchers[]>(url);
 
   if (error) {
     console.error("Error: ", error);
@@ -62,7 +62,7 @@ export async function getVoucher() {
 }
 
 export async function deleteVoucher(id: string) {
-  const url = `${baseUrl}/vouchers`;
+  const url = `${baseUrl}/voucher`;
   const { data, error } = await https.delete<Vouchers>(url, { data: { id } });
 
   if (error) {
@@ -75,7 +75,7 @@ export async function deleteVoucher(id: string) {
 
 export async function getOrderItem() {
   const url = `${baseUrl}/items`;
-  const { data, error } = await https.get<OrderItem>(url);
+  const { data, error } = await https.get<OrderItem[]>(url);
 
   if (error) {
     console.error("Error: ", error);

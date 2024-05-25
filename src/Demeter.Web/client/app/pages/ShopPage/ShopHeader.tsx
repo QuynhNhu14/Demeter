@@ -2,12 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import * as stylex from "@stylexjs/stylex";
 import { Button, Flex, Text } from "@mantine/core";
-// import {
-//   IconLogout,
-//   IconSearch,
-//   IconShoppingBag,
-//   IconShoppingBag,
-// } from '@tabler/icons-react'; 
 import headerLogo from "../../../assets/header_logo.jpg";
 import { IconLogout, IconHome } from "@tabler/icons-react";
 import { FuzzySearch } from "../../components/Search";
@@ -19,7 +13,7 @@ export default function ShopHeader() {
   const [showNavbar, setShowNavbar] = useState(true); // State để kiểm soát hiển thị navbar
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = (value) => {
+  const handleSearch = (value :string) => {
     console.log("Đã tìm kiếm:", value);
   };
 

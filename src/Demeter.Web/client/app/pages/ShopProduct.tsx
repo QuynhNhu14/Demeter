@@ -1,26 +1,24 @@
-import { Flex} from "@mantine/core";
+import { Container, Flex, Image } from "@mantine/core";
 import { ShopInfo } from "../components/ShopInfo";
-//chưa fix
 import { ProductList } from "../components/ProductList";
 
 export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
   return (
     <div>
       <Flex>
-        <Flex style={{ flex: "3" }}>
+        <Flex flex={2}>
           <ShopInfo shopId={shopId ? shopId : "1"} />
         </Flex>
-        <Flex
-          vertical="true"
-          gap="large"
-          style={{ flex: "10", padding: "24px 24px 0 0" }}
-        >
-          <img
+        <Container align="center">
+          <Image
             src="https://www.lithospos.com/storage/app/media/veg_banner.jpg"
             alt="shop banner"
+            w={"100%"}
+            h={"25%"}
+            fallbackSrc="https://placehold.co/600x400?text=Placeholder"
           />
           <ProductList shopId={shopId} />
-        </Flex>
+        </Container>
       </Flex>
     </div>
   );

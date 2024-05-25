@@ -18,5 +18,10 @@ export interface Orders {
 export interface Vouchers {
   id: string;
   code: string;
+  description: string;
   discount: number;
+  startDate: string;
+  endDate: string;
+  active: boolean;
+  usageLimit: number;
 }

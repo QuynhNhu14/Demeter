@@ -10,7 +10,7 @@ import { Footer} from "./components/Footer";
 import { IntroPage } from "./pages/IntroPage";
 import { Profile } from "./customer/pages/Profile/Profile";
 import { ChangePassword } from "./customer/pages/Profile/ChangePassword";
-import { Shops } from "./customer/pages/Shops";
+import { Shops } from "./pages/Shops";
 import { ProductPage} from "./pages/ProductPage";
 import Cart from "./customer/pages/Cart/Cart";
 import { Notification } from "./pages/Notification";
@@ -24,6 +24,8 @@ import Dashboard from "./admin/pages/Dashboard/Dashboard";
 import { ShopProduct } from "./pages/ShopProduct";
 import { VoucherPage } from "./pages/VoucherPage";
 import AppSettingPage from "./pages/testapi/appsetting";
+import { FAQ } from "./pages/faq";
+import { Contact } from "./pages/contact";
 
 export default function App() {
   const location = useLocation();
@@ -50,7 +52,6 @@ export default function App() {
           <Route path="/change_password" element={<ChangePassword />} />
           <Route path="/shops" element={<Shops />} />
           <Route path="/voucher" element={<VoucherPage />} />
-          {/* <Route path="/products/" element={<ProductPage productId="cd9b5b5a-3506-45a2-b37a-0d27e9ee6c47"/>}/> */}
           <Route path="/products/:productId" element={<ProductPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/notification" element={<Notification />} />
@@ -60,12 +61,12 @@ export default function App() {
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/ShopProfile" element={<ShopProfile />} /> 
           <Route path="/shop" element={<Dashboard />} />
-
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/payment-success" element={<PaymentStatus success={true}/>} />
           <Route path="/payment-cancel" element={<PaymentStatus />} />
-          <Route path="/shop-product" element={<ShopProduct />} />
+          <Route path="/shop-product" element={<ShopProduct/>} />
           <Route path="/setting" element={<AppSettingPage />} />
-          
+          <Route path="/contact" element={<Contact />} />
           
           {/*<Route path="/login" element={<SignInSignUp />} />
           <Route path="/offer" element={<Offer />} />

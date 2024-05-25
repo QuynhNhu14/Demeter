@@ -12,7 +12,7 @@ type ErrorDisplay = {
 };
 
 const ErrorDefinition = ["403", "404", "500", "503"] as const;
-type ErrorCode = typeof ErrorDefinition[number];
+type ErrorCode = (typeof ErrorDefinition)[number];
 
 const error: Record<ErrorCode, ErrorDisplay> = {
   "500": {
@@ -38,25 +38,31 @@ const error: Record<ErrorCode, ErrorDisplay> = {
 };
 
 type ErrorProps = {
-    variant: ErrorCode;
-  };
+  variant: ErrorCode;
+};
 
 export default function ErrorPage({ variant }: ErrorProps) {
-    const navigate = useNavigate();
-  return <>
-  <Container>
+  const navigate = useNavigate();
+  return (
+    <>
+      <Container>
         <div>
           {error[variant].display}
           <div>
             <Title>{error[variant].title}</Title>
-            <Text>{error[variant].des }</Text>
+            <Text>{error[variant].des}</Text>
             <Group justify="center">
-              <Button size="md" variant="white" onClick={() => navigate("/home")}>
+              <Button
+                size="md"
+                variant="white"
+                onClick={() => navigate("/home")}
+              >
                 Take me back to homepage
               </Button>
             </Group>
           </div>
         </div>
       </Container>
-    </>;
+    </>
+  );
 }
