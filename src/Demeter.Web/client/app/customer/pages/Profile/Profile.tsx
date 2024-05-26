@@ -14,7 +14,7 @@ const styles = stylex.create({
   },
   customerInfo: {
     flex: "11", 
-    padding: "24px 24px 0 0",
+    padding: "30px 24px 0 0",
   }
 });
 

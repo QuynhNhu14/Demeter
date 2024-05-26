@@ -1,8 +1,59 @@
-import { Flex, Badge } from "@mantine/core";
-import "./Profile.css";
+import { Flex, Badge, Text } from "@mantine/core";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import { OrderDetail } from "../../components/OrderDetail/OrderDetail";
+import * as stylex from "@stylexjs/stylex";
 
+const styles = stylex.create({
+  OrderPage: {
+    backgroundColor: "#f3f4f6",
+    width: "100%",
+    height: "100vh",
+    paddingBottom: "30px",
+  },
+  userNavbar: {
+    flex: "3",
+  },
+  customerInfo: {
+    flex: "11", 
+    padding: "24px 24px 0 0",
+  },
+  orderList:{
+    flex: "3", 
+    backgroundColor: "#fff",
+    top: 88,
+    bottom: 20,
+    height: '85vh',
+    overflow: 'hidden',
+    borderRadius: 5,
+    border: `2px solid #e7e7e7`,
+    padding: 20,
+    ':hover': {
+      overflow: 'scroll',
+      paddingRight: 12,
+    },
+    '::-webkit-scrollbar': {
+      width: 8,
+    },
+    '::-webkit-scrollbar-thumb': {
+      backgroundColor: '#888888',
+      borderRadius: 10,
+      ':hover': {
+        backgroundColor: '#555555',
+      },
+    },
+  },
+  orderOverview:{
+    padding: 10,
+    backgroundColor: '#f3f4f6',
+    border: '2px solid #009f7f',
+    borderRadius: 5,
+    cursor: 'pointer',
+  },
+  OrderDetailContainer: {
+    flex: "6", 
+    backgroundColor: "#fff",
+  }
+});
 const orderList = [
   {
     id: "544",
@@ -35,24 +86,22 @@ const orderList = [
 ];
 export const Orders = () => {
   return (
-    <div className="OrdersPage">
+    <div  {...stylex.props(styles.OrderPage)}>
       <Flex>
-        <Flex style={{ flex: "3" }}>
+        <div {...stylex.props(styles.userNavbar)}>
           <UserNavbar />
-        </Flex>
-        <Flex gap="large" style={{ flex: "11", padding: "24px 24px 0 0" }}>
-          <Flex
-            className="myOrders"
-            style={{ flex: "3", backgroundColor: "#fff" }}
-            vertical="true"
-            gap="large"
-          >
-            <span style={{ fontWeight: "bold", fontSize: "18px" }}>
+        </div>
+        <Flex
+          gap="lg"
+          {...stylex.props(styles.customerInfo)}
+        >
+          <Flex {...stylex.props(styles.orderList)} direction="column" gap="lg">
+            <Text fw={500} size="lg">
               Đơn hàng của tôi
-            </span>
+            </Text>
             {orderList.map((order) => {
               return (
-                <Flex className="orderOverview" vertical="true" gap="middle">
+                <Flex {...stylex.props(styles.orderOverview)} direction="column" gap="lg">
                   <Flex
                     justify="space-between"
                     style={{
@@ -60,9 +109,9 @@ export const Orders = () => {
                       paddingBottom: "10px",
                     }}
                   >
-                    <span style={{ fontWeight: "500" }}>
+                    <Text>
                       Đơn hàng #{order.id}
-                    </span>
+                    </Text>
                     {order.status === "pending" ? (
                       <Badge
                         color="rgba(201, 161, 22, 0.15)"
@@ -75,7 +124,7 @@ export const Orders = () => {
                         color="rgba(0, 161, 127, 0.15)"
                         style={{ color: "#00A17F", marginRight: 0 }}
                       >
-                        Đơn hàng đã hoàn thành
+                        Đã hoàn thành
                       </Badge>
                     ) : (
                       <Badge
@@ -87,32 +136,32 @@ export const Orders = () => {
                     )}
                   </Flex>
                   <Flex justify="space-between">
-                    <span>Ngày đặt hàng:</span>
-                    <span>{order.dateCreate}</span>
+                    <Text size="sm">Ngày đặt hàng:</Text>
+                    <Text size="sm">{order.dateCreate}</Text>
                   </Flex>
                   <Flex justify="space-between">
-                    <span>Đơn vị vận chuyển:</span>
-                    <span>Chuyển phát nhanh</span>
+                    <Text size="sm">Đơn vị vận chuyển:</Text>
+                    <Text size="sm">Chuyển phát nhanh</Text>
                   </Flex>
                   <Flex justify="space-between">
-                    <span style={{ fontWeight: "500" }}>Giá đơn hàng:</span>
-                    <span style={{ fontWeight: "500" }}>
+                    <Text size="sm" >Giá đơn hàng:</Text>
+                    <Text size="sm" >
                       {order.orderPrice} VNĐ
-                    </span>
+                    </Text>
                   </Flex>
                   <Flex justify="space-between">
-                    <span style={{ fontWeight: "500" }}>Thành tiền:</span>
-                    <span style={{ fontWeight: "500" }}>
+                    <Text size="sm" >Thành tiền:</Text>
+                    <Text size="sm" >
                       {order.totalPrice} VNĐ
-                    </span>
+                    </Text>
                   </Flex>
                 </Flex>
               );
             })}
-          </Flex>
+          </Flex> 
           <Flex
-            vertical = "true"
-            style={{ flex: "6", backgroundColor: "#fff" }}
+            direction="column"
+            {...stylex.props(styles.OrderDetailContainer)}
           >
             <OrderDetail orderId={1} />
           </Flex>

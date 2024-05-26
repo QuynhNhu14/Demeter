@@ -2,16 +2,38 @@ import {  Flex } from "@mantine/core";
 import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
 import AllProductTable from "../../components/Table/TableAllProduct";
 import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import styles from "./AllProduct.module.css";
+import * as stylex from "@stylexjs/stylex";
+
+const styles = stylex.create({
+  shopProductPage: {
+    backgroundColor: "#f3f4f6"
+  },
+  navbar:{
+    flex: "2", 
+    width: "100%",
+  },
+  container: {
+    flex: "9", 
+    width: "100%",
+  },
+  product: {
+    display: "flex",
+    flexGrow: 1,
+    flexDirection: "column",
+    padding: "10px 5%",
+    backgroundColor: "#f3f4f5",
+  }
+});
+
 const ShopAllProduct: React.FC = () => (
   /* Code của thành phần Navbar ở đây*/ <>
-    <Flex style={{ backgroundColor: "#f3f4f6" }}>
-      <div style={{ flex: "2", width: "100%" }}>
+    <Flex {...stylex.props(styles.shopProductPage)}>
+      <div {...stylex.props(styles.navbar)}>
         <Navbar_Shop />
       </div>
-      <div style={{ flex: "9", width: "100%" }}>
+      <div  {...stylex.props(styles.container)}>
         <ShopHeader />
-        <div className={styles.AllProduct}>
+        <div {...stylex.props(styles.product)}>
           <AllProductTable />
         </div>
       </div>

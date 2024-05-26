@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 import { NavLink } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
@@ -6,10 +6,12 @@ import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/co
 
 import logo from '../../../../assets/logo.png';
 
+import { getVoucher } from '../../../services/orders';
 import ProductCart, {Product} from '../../components/ProductCart/ProductCart'
 import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
 import * as stylex from '@stylexjs/stylex';
+import { Vouchers } from '../../../models/orders';
 
 
 interface cartInfoData {
@@ -39,58 +41,58 @@ interface VoucherType {
   usageLimit: number;
 }
 
-const VoucherSample: VoucherType[] = [
-  {
-    id: '1',
-    code: 'VOUCHER001',
-    description: 'This voucher is only for new customers. Đơn tối thiểu 20k, dùng 2 lần /ngày',
-    discount: 20,
-    startDate:  '2024-03-15',
-    endDate: '2024-03-30',
-    active: true,
-    usageLimit: 50,
-  },
-  {
-    id: '2',
-    code: 'VOUCHER002',
-    description: 'This voucher is only for new customers',
-    discount: 30,
-    startDate: '2024-03-15',
-    endDate: '2024-03-30',
-    active: true,
-    usageLimit: 100,
-  },
-  {
-    id: '3',
-    code: 'VOUCHER003',
-    description: 'This voucher is only for new customers',
-    discount: 15,
-    startDate: '2024-03-15',
-    endDate: '2024-03-30',
-    active: true,
-    usageLimit: 20,
-  },
-  {
-    id: '4',
-    code: 'VOUCHER004',
-    description: 'This voucher is only for new customers',
-    discount: 15,
-    startDate: '2024-03-15',
-    endDate: '2024-03-30',
-    active: true,
-    usageLimit: 20,
-  },
-  {
-    id: '5',
-    code: 'VOUCHER005',
-    description: 'This voucher is only for new customers',
-    discount: 15,
-    startDate: '2024-03-15',
-    endDate: '2024-03-30',
-    active: true,
-    usageLimit: 20,
-  },
-]
+// const VoucherSample: VoucherType[] = [
+//   {
+//     id: '1',
+//     code: 'VOUCHER001',
+//     description: 'This voucher is only for new customers. Đơn tối thiểu 20k, dùng 2 lần /ngày',
+//     discount: 20,
+//     startDate:  '2024-03-15',
+//     endDate: '2024-03-30',
+//     active: true,
+//     usageLimit: 50,
+//   },
+//   {
+//     id: '2',
+//     code: 'VOUCHER002',
+//     description: 'This voucher is only for new customers',
+//     discount: 30,
+//     startDate: '2024-03-15',
+//     endDate: '2024-03-30',
+//     active: true,
+//     usageLimit: 100,
+//   },
+//   {
+//     id: '3',
+//     code: 'VOUCHER003',
+//     description: 'This voucher is only for new customers',
+//     discount: 15,
+//     startDate: '2024-03-15',
+//     endDate: '2024-03-30',
+//     active: true,
+//     usageLimit: 20,
+//   },
+//   {
+//     id: '4',
+//     code: 'VOUCHER004',
+//     description: 'This voucher is only for new customers',
+//     discount: 15,
+//     startDate: '2024-03-15',
+//     endDate: '2024-03-30',
+//     active: true,
+//     usageLimit: 20,
+//   },
+//   {
+//     id: '5',
+//     code: 'VOUCHER005',
+//     description: 'This voucher is only for new customers',
+//     discount: 15,
+//     startDate: '2024-03-15',
+//     endDate: '2024-03-30',
+//     active: true,
+//     usageLimit: 20,
+//   },
+// ]
 // Đối tượng  chứa thông tin về user
 const infoData: cartInfoData = {
   name: "Gojo Sulaiman",
@@ -215,9 +217,22 @@ const Cart: React.FC = () => {
   const newTotal = calculateTotal(); // Tính giá trị mới của TOTAL
   totaldata.TOTAL = newTotal;
 
-  useState(() => {
-    setVouchers(VoucherSample);
-  });
+
+  useEffect(() => {
+    async function fetchData() {
+      const voucherList = await getVoucher();
+      console.log({voucherList});
+      if (voucherList ) {
+        setVouchers(voucherList);
+      }
+    }
+    fetchData();
+  }, []);
+
+
+  // useState(() => {
+  //   setVouchers(VoucherSample);
+  // });
 
   const handleApplyVoucher = () => {
     close();
@@ -288,8 +303,8 @@ const Cart: React.FC = () => {
                 title="Danh sách voucher của bạn" 
                 {...stylex.props(styles.customModal)}>
                 <Radio.Group value={selectedVoucher}>
-                   {vouchers.map((voucher, key) => (
-                    <Flex key={key} direction="column"  {...stylex.props(styles.box)} onClick={() => setSelectedVoucher(voucher.id)}>
+                   {vouchers.map((voucher) => (
+                    <Flex direction="column"  {...stylex.props(styles.box)} onClick={() => setSelectedVoucher(voucher.id)}>
                       <Flex justify='space-between'>
                           <Radio       
                             key={voucher.id}
@@ -331,7 +346,7 @@ const Cart: React.FC = () => {
             <Button size="lg" color="#009F7F" onClick={showModal}>
               <Text fw={500}>ĐẶT HÀNG  {totaldata.TOTAL.toLocaleString("en-US")} VNĐ</Text>
             </Button>
-            <Modal opened={isModalOpen} onClose={handleCancelOrder} footer={null} size="65%" scrollAreaComponent={ScrollArea.Autosize}>
+            <Modal opened={isModalOpen} onOk={handleOk} onClose={handleCancelOrder} footer={null} size="65%" scrollAreaComponent={ScrollArea.Autosize}>
                 <OrderForm totaldata={totaldata} selectedProducts={selectedProducts.filter((item) => item.selected)}/>
             </Modal>
           </div>

@@ -14,7 +14,7 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 
-import headerLogo from "../../../assets/header_logo.jpg";
+import headerLogo from "../../../../assets/header_logo.jpg";
 
 export default function AdminHeader() {
   const navigate = useNavigate();

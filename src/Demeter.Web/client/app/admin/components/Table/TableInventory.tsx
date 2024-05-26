@@ -1,29 +1,27 @@
 import { useState } from "react";
 import {
   Table,
-  Space,
-  Button,
+  Badge,
+  Pagination,
   Input,
-  Image,
   Text,
-  Menu,
-  Select,
-  Combobox,
+  Flex,
+  Center,
+  Image,
+  Button
 } from "@mantine/core";
-import { IconEdit } from "@tabler/icons-react";
+import { IconUser, IconEye, IconSearch, IconEdit } from "@tabler/icons-react";
+import * as stylex from "@stylexjs/stylex";
 
-const { Search } = Input;
-const { Option } = Select;
-
-const generateData = (count) => {
+const generateData = (count: number) => {
   const data = [];
   for (let i = 1; i <= count; i++) {
     data.push({
       key: i,
-      ID: i,
+      id: i,
       productImage: `https://pickbazar-react-admin.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1%2Fconversions%2FApples-thumbnail.jpg&w=1920&q=75`,
       productName: `Product ${i}`,
-      Inventory: `SKU-${i % 10}`,
+      inventory: `SKU-${i % 10}`,
       quantity: Math.floor(Math.random() * 100),
       soldQuantity: Math.floor(Math.random() * 50),
     });
@@ -31,163 +29,121 @@ const generateData = (count) => {
   return data;
 };
 
-const dataSource = generateData(900);
+const dataSource = generateData(100);
 
 const InventoryTable = () => {
-  const [filterVisible, setFilterVisible] = useState(false);
-  const [statusFilter, setStatusFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleStatusFilterChange = (value) => {
-    setStatusFilter(value);
-  };
+  const pageSize = 10;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * pageSize;
 
-  const handleTypeFilterChange = (value) => {
-    setTypeFilter(value);
-  };
-
-  const handleFilterClick = () => {
-    setFilterVisible(!filterVisible);
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page);
   };
 
   const handleSearch = (value) => {
     setSearchText(value);
   };
 
-  const menu = (
-    <Menu>
-      <Menu.Item key="Inventory">
-        <Select
-          style={{ width: 120 }}
-          onChange={handleTypeFilterChange}
-          value={typeFilter}
-        >
-          <Option value="">All Inventory</Option>
-          {Array.from(new Set(dataSource.map((item) => item.Inventory))).map(
-            (type) => (
-              <Option key={type} value={type}>
-                {type}
-              </Option>
-            )
-          )}
-        </Select>
-      </Menu.Item>
-    </Menu>
-  );
+  const filteredData = dataSource.filter((item) => 
+    item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
+    item.inventory.toLowerCase().includes(searchText.toLowerCase())
+  ).slice(startIndex, endIndex);
 
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "ID",
-      align: "center",
-    },
-    {
-      title: "Sản phẩm",
-      dataIndex: "productName",
-      align: "left",
-      sorter: (a, b) => a.productName.localeCompare(b.productName),
-      render: (text, record) => (
-        <Space>
-          <Image src={record.productImage} width={50} />
-          <Text>{text}</Text>
-        </Space>
-      ),
-    },
-    {
-      title: "Kho",
-      dataIndex: "Inventory",
-      align: "center",
-    },
-    {
-      title: "Số lượng",
-      dataIndex: "quantity",
-      align: "center",
-    },
-    {
-      title: "Số lượng bán",
-      dataIndex: "soldQuantity",
-      align: "center",
-    },
-    {
-      title: "Hành động",
-      dataIndex: "actions",
-      align: "center",
-      render: () => (
-        <Button icon={<IconEdit />} type="primary">
-          Sửa
-        </Button>
-      ),
-    },
-  ];
+  const rows = filteredData.map((item) => (
+    <Table.Tr key={item.key}>
+      <Table.Td><Center>{item.id}</Center></Table.Td>
+      <Table.Td>
+          <Flex align="center">
+            <Image src={item.productImage} h={50} />
+            <Text>{item.productName}</Text>
+          </Flex>
+      </Table.Td>
+      <Table.Td><Center>{item.inventory}</Center></Table.Td>
+      <Table.Td><Center>{item.quantity}</Center></Table.Td>
+      <Table.Td><Center>{item.soldQuantity}</Center></Table.Td>
+      <Table.Td>
+        <Center>
+          <Button 
+            leftSection={<IconEdit width={20}/>} 
+            color="#009f7f" size="xs">
+            Sửa
+          </Button>
+        </Center>
+      </Table.Td>
 
-  const filteredData = dataSource.filter(
-    (item) =>
-      (typeFilter ? item.Inventory === typeFilter : true) &&
-      (searchText
-        ? item.productName.toLowerCase().includes(searchText.toLowerCase()) ||
-          item.Inventory.toLowerCase().includes(searchText.toLowerCase())
-        : true)
-  );
-
+    </Table.Tr>
+  ));
+  
   return (
     <div>
-      <div
-        style={{
-          padding: "20px",
-          margin: "10px 0px 30px 0px",
-          backgroundColor: "#fff",
-          borderRadius: "8px",
-          display: "flex",
-          justifyContent: "space-between",
-          border: "2px solid #E5E7EB",
-          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-        }}
-      >
-        <Text strong style={{ fontSize: "20px", fontWeight: "bold" }}>
-          Kho
+      <div {...stylex.props(styles.searchHeader)}>
+        <Text fw={500} size="lg">
+          Đơn Hàng
         </Text>
-        <div>
-          <Search
-            placeholder="Search products"
-            style={{ width: 300, marginRight: 10 }}
-            onSearch={handleSearch}
+        <Input 
+          placeholder="Nhập mã đơn hàng" 
+          leftSection={<IconSearch size={16} />}
+          onChange={(event) => setSearchText(event.currentTarget.value)}
           />
-          <Button onClick={handleFilterClick} style={{ marginLeft: "auto" }}>
-            Bộ lọc
-          </Button>
-          {filterVisible && (
-            <Combobox
-              overlay={menu}
-              placement="bottomCenter"
-              opened={filterVisible}
-            >
-              <Button style={{ marginLeft: 8 }}>Tùy chọn bộ lọc</Button>
-            </Combobox>
-          )}
-        </div>
       </div>
-      <div
-        style={{
-          backgroundColor: "#fff",
-          margin: "10px 0px 60px 0px",
-          border: "2px solid #E5E7EB",
-          boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-          borderRadius: "8px",
-        }}
-      >
-        <Table
-          dataSource={filteredData}
-          columns={columns}
-          pagination={{
-            pageSize: 15,
-            total: filteredData.length,
-            showSizeChanger: false,
-          }}
-        />
+
+      <div {...stylex.props(styles.orderTable)} >
+        <Table>
+          <Table.Thead>
+              <Table.Tr>
+              <Table.Th><Center>ID</Center></Table.Th>
+              <Table.Th>Sản phẩm</Table.Th>
+              <Table.Th><Center>Kho</Center></Table.Th>
+              <Table.Th><Center>Số lượng</Center></Table.Th>
+              <Table.Th><Center>Số lượng bán</Center></Table.Th>
+              <Table.Th><Center>Hành động</Center></Table.Th>
+              <Table.Th/>
+              </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>{rows}</Table.Tbody>
+        </Table>
+        <Flex justify="center">
+          <Pagination
+            type="primary"
+            current={currentPage}
+            total={dataSource.length/pageSize}
+            pageSize={pageSize}
+            onChange={handleChangePage}
+            showSizeChanger={false}
+            {...stylex.props(styles.pagination)}
+          />
+        </Flex>
       </div>
     </div>
   );
 };
 
 export default InventoryTable;
+const styles = stylex.create({
+  searchHeader: {
+    padding: "20px",
+    margin: "10px 0px 30px 0px",
+    backgroundColor: "#fff",
+    borderRadius: "8px",
+    display: "flex",
+    justifyContent: "space-between",
+    border: "2px solid #E5E7EB",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+  },
+  orderTable: {          
+    overflowX: "auto",
+    backgroundColor: "#FFFFFF",
+    margin: "10px 0px 60px 0px",
+    border: "2px solid #E5E7EB",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+    borderRadius: "8px",
+    fontFamily: "sans-serif",
+  },
+  pagination: {
+    margin: "16px", 
+    textAlign: "right",
+  }
+});
