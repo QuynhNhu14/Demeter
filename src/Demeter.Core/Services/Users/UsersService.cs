@@ -17,31 +17,25 @@ public class UsersService : IUsersService
         _mapper = mapper;
     }
 
-    public async ValueTask<ICollection<Domain.Users>> GetAllUsersAsync()
+    public async ValueTask<ICollection<User>> GetAllAsync()
     {
         var entities = await _context.Users.ToListAsync();
-        return _mapper.Map<IList<Domain.Users>>(entities);
+        return _mapper.Map<IList<User>>(entities);
     }
     
-    public async ValueTask<ICollection<Account>> GetAllAccountsAsync()
-    {
-        var entities = await _context.Accounts.Include(account => account.User).ToListAsync();
-        return _mapper.Map<IList<Account>>(entities);
-    }
-
-    public async ValueTask<Domain.Users> GetById(Guid id)
+    public async ValueTask<User> GetById(Guid id)
     {
         var entity = await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
-        return _mapper.Map<Domain.Users>(entity);
+        return _mapper.Map<User>(entity);
     }
     
-    public async ValueTask<Domain.Users> GetById(BaseEntity<Guid> domain)
+    public async ValueTask<User> GetById(BaseEntity<Guid> domain)
     {
         var entity = await _context.Users.FirstOrDefaultAsync(user => user.Id == domain.Id);
-        return _mapper.Map<Domain.Users>(entity);
+        return _mapper.Map<User>(entity);
     }
 
-    public async ValueTask UpdateAsync(ICollection<Domain.Users> users)
+    public async ValueTask UpdateAsync(ICollection<User> users)
     {
         foreach (var user in users)
         {
@@ -52,25 +46,20 @@ public class UsersService : IUsersService
             {
                 throw new ValidationException($"Invalid: {user.Id} is not existed.");
             }
-            _context.Users.Entry(entity).CurrentValues.SetValues( _mapper.Map<Entities.Users>(user));
+            _context.Users.Entry(entity).CurrentValues.SetValues( _mapper.Map<Entities.User>(user));
             await _context.SaveChangesAsync();
         }
     }
     
     public async ValueTask RemoveAsync(Guid id)
     {
-        var entity = await _context.Accounts.Include(t => t.User).Where(t => t.Id == id).FirstOrDefaultAsync();
+        var entity = await _context.Users.Where(t => t.Id == id).FirstOrDefaultAsync();
         if (entity is null)
         {
             throw new ValidationException($"Invalid: {id} is not existed.");
         }
 
-        if (entity.User is not null)
-        {
-            _context.Users.Remove(entity.User);
-        }
-
-        _context.Accounts.Remove(entity);
+        _context.Users.Remove(entity);
         await _context.SaveChangesAsync();
     }
 }

@@ -22,7 +22,6 @@ public static class ServiceCollections
         services.AddScoped<IPriceService, PricesService>();
         services.AddScoped<IProductsService, ProductsService>();
 
-        services.AddScoped<IAccountService, AccountService>();
         services.AddScoped<IUsersService, UsersService>();
         
         // You can also configure services using the configuration parameter

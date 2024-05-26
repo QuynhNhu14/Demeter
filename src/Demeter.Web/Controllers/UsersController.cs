@@ -21,7 +21,7 @@ public class UsersController: ControllerBase
     {
         try
         {
-            var users = await _usersService.GetAllUsersAsync();
+            var users = await _usersService.GetAllAsync();
             return Ok(users);
         }
         catch (Exception)
@@ -31,7 +31,7 @@ public class UsersController: ControllerBase
     }
 
     [HttpPost("update")]
-    public async ValueTask<IActionResult> UpdateUser(ICollection<Users> users)
+    public async ValueTask<IActionResult> UpdateUser(ICollection<User> users)
     {
         try
         {
@@ -49,7 +49,7 @@ public class UsersController: ControllerBase
     {
         try
         {
-            var accounts = await _usersService.GetAllAccountsAsync();
+            var accounts = await _usersService.GetAllAsync();
             return Ok(accounts);
         }
         catch (Exception)

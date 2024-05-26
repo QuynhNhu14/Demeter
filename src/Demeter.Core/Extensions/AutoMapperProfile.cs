@@ -1,5 +1,4 @@
 using AutoMapper;
-using Demeter.Core.Entities.Accounts;
 using Newtonsoft.Json;
 
 namespace Demeter.Core.Extensions;
@@ -11,17 +10,11 @@ public class AutoMapperProfile : Profile
         CreateMap<Domain.AppSettings, Entities.AppSettings>();
         CreateMap<Entities.AppSettings, Domain.AppSettings>();
 
-        CreateMap<Domain.Users, Entities.Users>()
+        CreateMap<Domain.User, Entities.User>()
             .ForMember(dest => dest.AddressJson, act => act.MapFrom(src => JsonConvert.SerializeObject(src.Address)));
-        CreateMap<Entities.Users, Domain.Users>()
+        CreateMap<Entities.User, Domain.User>()
             .ForMember(dest => dest.Address,
                 act => act.MapFrom(src => JsonConvert.DeserializeObject<Domain.Address>(src.AddressJson)));
-        CreateMap<Domain.Account, Account>()
-            .ForMember(dest => dest.UserId, act => act.MapFrom(src => src.User.Id));
-        CreateMap<Account, Domain.Account?>()
-            .AfterMap((_, dest) => JsonConvert.DeserializeObject<Domain.Account>(JsonConvert.SerializeObject(dest)));
-        CreateMap<string, Domain.Account?>()
-            .ConvertUsing(src => JsonConvert.DeserializeObject<Domain.Account>(src));
         
         CreateMap<Domain.Orders, Entities.Orders>();
         CreateMap<Entities.Orders, Domain.Orders>();

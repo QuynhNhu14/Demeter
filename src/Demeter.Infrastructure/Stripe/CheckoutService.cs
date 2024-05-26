@@ -84,7 +84,7 @@ public class CheckoutService: ICheckoutService
 
 		public string CreateCheckoutSession([FromBody] List<CreateCheckoutSessionStripeRequest> request)
 		{
-			var domain = "http://localhost:5173";
+			var domain = "https://demeter-beta.vercel.app/";
 
 			var lineItems = new List<SessionLineItemOptions>();
 

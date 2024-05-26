@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Demeter.Core.Entities.Accounts;
 
 namespace Demeter.Core.Entities;
 
@@ -11,9 +10,9 @@ public class Orders
     public Guid OrderId { get; set; }
     public int TotalPrice { get; set; }
     
-    [ForeignKey("Account")]
-    public Guid AccountId { get; set; }
-    public virtual Account? Account { get; set; }
+    [ForeignKey("User")]
+    public Guid UserId { get; set; }
+    public virtual User User { get; set; }
     
     public virtual ICollection<OrderItem>? Items { get; set; }
 }

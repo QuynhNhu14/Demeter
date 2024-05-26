@@ -1,8 +1,10 @@
 using System.Text;
+using Demeter.Core.Entities;
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Identity;
 using Demeter.Infrastructure.Jwt;
 using Demeter.Infrastructure.Persistence;
+using Demeter.Infrastructure.Repository;
 using Demeter.Infrastructure.Stripe;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Stripe;
-using Account = Demeter.Core.Entities.Accounts.Account;
+using User = Demeter.Core.Entities.User;
 
 namespace Demeter.Infrastructure.Extensions;
 
@@ -19,12 +21,9 @@ public static class ServiceCollections
 {
     public static IServiceCollection AddRepositories(this IServiceCollection services)
     {
-        // Configure and register your core services here
-        // services.AddTransient<IMyService, MyService>();
-
-        // You can also configure services using the configuration parameter
-        // var someConfigValue = configuration.GetValue<string>("SomeConfigKey");
-        // services.AddSingleton(new MyConfigService(someConfigValue));
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddScoped<IUserRoleRepository, UserRoleRepository>();
         return services;
     }
     
@@ -63,12 +62,12 @@ public static class ServiceCollections
             .Get<JwtSettings>();
 
         services.AddScoped<IJwtService, JwtService>();
-        services.AddScoped<IUserClaimsPrincipalFactory<Account>, AppUserClaimsPrincipleFactory>();
-        services.AddScoped<IUserStore<Account>, AccountStore>();
-        services.AddScoped<IAccountContext, AccountContext>();
+        services.AddScoped<IUserClaimsPrincipalFactory<User>, AppUserClaimsPrincipleFactory>();
+        services.AddScoped<IUserStore<User>, AppUserStore>();
+        services.AddScoped<IRoleStore<Role>, AppRoleStore>();
 
         services
-            .AddIdentityCore<Account>(options =>
+            .AddIdentityCore<User>(options =>
             {
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._+";
                 options.User.RequireUniqueEmail = false;
@@ -79,10 +78,11 @@ public static class ServiceCollections
                 options.Password.RequiredUniqueChars = 0;
                 options.Password.RequireUppercase = false;
             })
-            .AddRoles<IdentityRole<Guid>>()
-            .AddEntityFrameworkStores<CoreDbContext>()
-            .AddUserStore<AccountStore>()
-            .AddUserManager<AccountManager>();
+            .AddRoles<Role>()
+            .AddUserStore<AppUserStore>()
+            .AddRoleStore<AppRoleStore>()
+            .AddDefaultTokenProviders()
+            .AddUserManager<AppUserManager>();
 
         services.AddAuthentication(options =>
             {

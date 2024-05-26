@@ -1,29 +1,29 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Demeter.Core.Entities;
 using Demeter.Core.Models;
 using Demeter.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Account = Demeter.Core.Entities.Accounts.Account;
 
 namespace Demeter.Infrastructure.Jwt
 {
     public class JwtService : IJwtService
     {
-        private readonly IUserClaimsPrincipalFactory<Account> _claimsPrincipal;
+        private readonly IUserClaimsPrincipalFactory<User> _claimsPrincipal;
         private readonly JwtSettings _jwtSettings;
-        private readonly UserManager<Account> _accountManager;
+        private readonly UserManager<User> _UserManager;
 
-        public JwtService(IUserClaimsPrincipalFactory<Account> claimsPrincipal, IOptions<JwtSettings> jwtSettings, UserManager<Account> accountManager)
+        public JwtService(IUserClaimsPrincipalFactory<User> claimsPrincipal, IOptions<JwtSettings> jwtSettings, UserManager<User> UserManager)
         {
             _claimsPrincipal = claimsPrincipal;
             _jwtSettings = jwtSettings.Value;
-            _accountManager = accountManager;
+            _UserManager = UserManager;
         }
 
-        private async ValueTask<Token> _generateTokenAsync(Account entity)
+        private async ValueTask<Token> _generateTokenAsync(User entity)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -49,15 +49,21 @@ namespace Demeter.Infrastructure.Jwt
             };
         }
 
-        private async Task<IEnumerable<Claim>> _getClaimsAsync(Account account)
+        private async Task<IEnumerable<Claim>> _getClaimsAsync(User User)
         {
-            var result = await _claimsPrincipal.CreateAsync(account);
+            var result = await _claimsPrincipal.CreateAsync(User);
             return result.Claims;
         }
 
         public async ValueTask<Token> GenerateTokenFromUserName(string userName)
         {
-            return await _generateTokenAsync(await _accountManager.FindByNameAsync(userName));
+            var User = await _UserManager.FindByNameAsync(userName);
+            if (User == null)
+            {
+                throw new ArgumentException("Invalid user name", nameof(userName));
+            }
+
+            return await _generateTokenAsync(User);
         }
     }
 }

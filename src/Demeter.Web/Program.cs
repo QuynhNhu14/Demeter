@@ -1,6 +1,7 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Extensions;
 using Demeter.Infrastructure.Jwt;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,11 @@ builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(
 
 // Add services to the container.
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddRepositories();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddStripe(builder.Configuration);
 builder.Services.AddCoreServices();
+
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
@@ -35,7 +38,35 @@ builder.Services.AddControllers().AddNewtonsoftJson(options =>
         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MeteorFlow", Version = "v1" });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter 'Bearer' [space] and then your valid token in the text input below.\n\nExample: \"Bearer 12345abcdef\""
+    });
+
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] { }
+        }
+    });
+});
+
 
 
 var app = builder.Build();

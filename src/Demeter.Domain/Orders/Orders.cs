@@ -1,8 +1,9 @@
+
 namespace Demeter.Domain;
 
 public class Orders: BaseEntity<Guid>
 {
-    public Account Account { get; set; }
+    public User User { get; set; }
     public List<OrderItem> Items { get; set; }
     public int TotalPrice { get; set; }
 }

@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using Demeter.Core.Entities.Accounts;
 
 namespace Demeter.Core.Entities;
 
@@ -22,7 +21,7 @@ public class Products
     
     [ForeignKey("Vendor")]
     public Guid VendorId { get; set; }
-    public virtual Users? Vendor { get; set; }
+    public virtual User Vendor { get; set; }
     
     public ICollection<Voucher>? Vouchers { get; set; }
 

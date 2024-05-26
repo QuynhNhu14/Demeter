@@ -1,84 +1,75 @@
 using System.ComponentModel.DataAnnotations;
-using System.Security.Claims;
-using Demeter.Core.Services.Users;
 using Demeter.Domain;
 using Demeter.Infrastructure.Extensions;
-using Demeter.Web.Extensions;
+using Demeter.Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Demeter.Web.Controllers;
-
-[ApiController]
-[Route("api/auth")]
-public class AuthController: ControllerBase
+namespace Demeter.Web.Controllers
 {
-    private readonly IAccountService _accountService;
-    private readonly IJwtService _jwtService;
-    private readonly ILogger<AuthController> _logger;
+    [ApiController]
+    [Route("api/auth")]
+    public class AuthController : ControllerBase
+    {
+        private readonly IJwtService _jwtService;
+        private readonly ILogger<AuthController> _logger;
+        private readonly AppUserManager _manager;
 
-    public AuthController(IAccountService accountService, IJwtService jwtService, ILogger<AuthController> logger)
-    {
-        _accountService = accountService;
-        _jwtService = jwtService;
-        _logger = logger;
-    }
-    
-    [HttpPost("signup")]
-    public async ValueTask<IActionResult> Signup([FromBody] Account account)
-    {
-        try
+        public AuthController(IJwtService jwtService, ILogger<AuthController> logger, AppUserManager manager)
         {
-            var result = await _accountService.AddAsync(account);
-            return Ok(result);
+            _jwtService = jwtService;
+            _logger = logger;
+            _manager = manager;
         }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error while creating account");
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
 
-    [HttpPost("login")]
-    public async ValueTask<IActionResult> Login([Required] LoginInfo info)
-    {
-        try
+        [HttpPost("signup")]
+        public async Task<IActionResult> Signup([FromBody] User account)
         {
-            await _accountService.SignInAsync(info);
-            var token = await _jwtService.GenerateTokenFromUserName(info.Name);
-            return Ok(token);
-        }
-        catch (ValidationException ex)
-        {
-            return Unauthorized(ex.Message);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error while logging in");
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
+            try
+            {
+                // Ensure the User and User Ids are unique
+                account.Id = Guid.NewGuid();
 
-    [Authorize]
-    [HttpPost("logout")]
-    public async ValueTask<IActionResult> Logout()
-    {
-        try
-        {
-            await _accountService.SignOutAsync(User.Identity?.GetUserId());
-            return Ok();
+                var result = await _manager.CreateAsync(account);
+                if (result.Succeeded)
+                {
+                    var token = await _jwtService.GenerateTokenFromUserName(account.UserName);
+                    return Ok(new { token.AccessToken, token.ExpiresIn });
+                }
+                return BadRequest(result.Errors);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Signup failed");
+                return StatusCode(500, "Internal server error");
+            }
         }
-        catch (ValidationException ex)
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([Required] LoginInfo info)
         {
-            return BadRequest(ex.Message);
+            var account = await _manager.FindByNameAsync(info.UserName);
+            if (account == null)
+            {
+                return Unauthorized("Invalid login attempt");
+            }
+
+            var result = await _manager.CheckPasswordSignInAsync(account, info.Password, lockoutOnFailure: true);
+            if (result.Succeeded)
+            {
+                var token = await _jwtService.GenerateTokenFromUserName(account.UserName);
+                return Ok(new { token.AccessToken, token.ExpiresIn });
+            }
+
+            return Unauthorized("Invalid login attempt");
         }
-        catch (Exception)
+
+        [Authorize]
+        [HttpPost("logout")]
+        public IActionResult Logout()
         {
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            // Implement logout logic if needed (e.g., invalidating tokens)
+            return Ok("Logged out successfully");
         }
     }
 }

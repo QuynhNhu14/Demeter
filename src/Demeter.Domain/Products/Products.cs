@@ -1,3 +1,4 @@
+
 namespace Demeter.Domain;
 
 public class Products: BaseEntity<Guid>
@@ -12,7 +13,7 @@ public class Products: BaseEntity<Guid>
     public int Rate { get; set; }
     
     public Category Category { get; set; }
-    public Users Vendor { get; set; }
+    public User Vendor { get; set; }
     
     public ICollection<Voucher> Vouchers { get; set; }
 
