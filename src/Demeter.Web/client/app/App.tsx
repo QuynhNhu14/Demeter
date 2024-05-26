@@ -26,6 +26,8 @@ import { VoucherPage } from "./pages/VoucherPage";
 import AppSettingPage from "./pages/testapi/appsetting";
 import { FAQ } from "./pages/faq";
 import { Contact } from "./pages/contact";
+import { Orders } from "./customer/pages/Profile/Orders";
+import { Inventory } from "./admin/pages/Inventory";
 
 export default function App() {
   const location = useLocation();
@@ -67,20 +69,19 @@ export default function App() {
           <Route path="/shop-product" element={<ShopProduct/>} />
           <Route path="/setting" element={<AppSettingPage />} />
           <Route path="/contact" element={<Contact />} />
-          
-          {/*<Route path="/login" element={<SignInSignUp />} />
-          <Route path="/offer" element={<Offer />} />
-          
           <Route path="/orders" element={<Orders />} />
+          <Route path="/inventory" element={<Inventory />} />
+
+          {/*<Route path="/login" element={<SignInSignUp />} />
+          
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />
           <Route path="/allproduct" element={<AllProduct />} />
           <Route path="/manage_orders" element={<AdminOrders />} />
           <Route path="/allshop" element={<AllShop />} />
-          <Route path="/inventory" element={<Inventory />} />
           <Route path="/404" element={<ErrorPage variant="404"/>} />
           <Route path="/503" element={<ErrorPage variant="503"/>} />*/}
-            <Route path="/" element={<IntroPage />} />
+          <Route path="/" element={<IntroPage />} />
           </Routes>
         </AppShell.Main>
       </AppShell>

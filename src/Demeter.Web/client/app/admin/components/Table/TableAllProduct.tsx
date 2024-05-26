@@ -36,7 +36,7 @@ const generateData = (count: number) => {
   return data;
 };
 
-const dataSource = generateData(30);
+const dataSource = generateData(100);
 
 const FilterTable = () => {
   const [statusFilter, setStatusFilter] = useState("");
@@ -181,7 +181,7 @@ const FilterTable = () => {
           <Pagination
             type="primary"
             current={currentPage}
-            total={dataSource.length}
+            total={dataSource.length/pageSize}
             pageSize={pageSize}
             onChange={handleChangePage}
             showSizeChanger={false}

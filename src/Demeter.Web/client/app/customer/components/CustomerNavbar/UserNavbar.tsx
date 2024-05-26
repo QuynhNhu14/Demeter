@@ -49,12 +49,12 @@ const styles = stylex.create({
   navbar: {
     backgroundColor: "#fff",
     padding: "5px",
-    position: "fixed",
+    position: "sticky",
     left: "24px",
     top: "88px",
     borderRadius: "5px",
     border: "2px solid #e7e7e7",
-    width: "18%",
+    width: "80%",
   },
 });
 export default UserNavbar;

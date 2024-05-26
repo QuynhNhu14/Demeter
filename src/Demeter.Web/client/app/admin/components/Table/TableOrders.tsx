@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Avatar,
@@ -11,6 +11,8 @@ import {
 } from "@mantine/core";
 import { IconUser, IconEye, IconSearch } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
+import { Orders } from "../../../models/orders";
+import { getOrder } from "../../../services/orders";
 
 interface Order {
   key: string;
@@ -28,7 +30,7 @@ interface Order {
 
 const data: Order[] = [];
 
-for (let i = 1; i <= 30; i++) {
+for (let i = 1; i <= 100; i++) {
   const order: Order = {
     key: `${i}`,
     trackingNumber: 100000 + i,
@@ -49,8 +51,9 @@ for (let i = 1; i <= 30; i++) {
 const OrdersTable: React.FC = () => {
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
+  const [orders, setOrders] = useState<Orders|null>();
 
+  const pageSize = 10;
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = currentPage * pageSize;
 
@@ -92,6 +95,22 @@ const OrdersTable: React.FC = () => {
     </Table.Tr>
   ));
 
+  const fetchOrders = async () => {
+    const orders = await getOrder();
+
+    console.log(orders);
+    if (!orders) {
+      return;
+    }
+    setOrders(orders);
+  };
+  
+  useEffect(() => {
+    fetchOrders();
+  }, []);
+
+
+
   return (
     <div>
       <div {...stylex.props(styles.searchHeader)}>
@@ -124,7 +143,7 @@ const OrdersTable: React.FC = () => {
           <Pagination
             type="primary"
             current={currentPage}
-            total={data.length}
+            total={data.length/pageSize}
             pageSize={pageSize}
             onChange={handleChangePage}
             showSizeChanger={false}

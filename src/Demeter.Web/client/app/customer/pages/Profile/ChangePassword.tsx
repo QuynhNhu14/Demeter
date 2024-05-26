@@ -79,13 +79,14 @@ const styles = stylex.create({
     width: "100%",
     height: "100vh",
     paddingBottom: "30px",
+    paddingTop: "30px",
   },
   navbar: {
     flex: '3',
   },
   formContainer:{
     flex: "11", 
-    padding: "24px 24px 0 0",
+    padding: "0 24px 0 0",
   },
   inputGroup: {
     flex: "3", 
