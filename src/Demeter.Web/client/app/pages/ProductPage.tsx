@@ -1,7 +1,7 @@
-import { Flex, Pagination, Select, Badge, rem, Button } from "@mantine/core";
+import { Flex, Pagination, Select, Badge, rem, Button, Rating, UnstyledButton} from "@mantine/core";
 import { ProductList } from "../components/ProductList";
 import { NavLink, useParams} from "react-router-dom";
-import { IconArrowLeft, IconCircleCheck, IconHeart, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
+import { IconArrowLeft, IconCircleCheck, IconHeart, IconHeartFilled, IconMinus, IconPlus, IconStarFilled, IconThumbDown, IconThumbUp } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
 import { useState, useEffect } from "react";
 import { Product } from "../models/products";
@@ -105,6 +105,12 @@ const styles = stylex.create({
     padding: "20px 0",
     borderBottom: "1px solid #e7e7e7",
   },
+  elementLeftButton: {
+    padding: "0 45px 0 0",
+  },
+  elementRightButton: {
+    padding: "0 0 0 45px",
+  }
 })
 
 const reviews = [
@@ -134,9 +140,13 @@ export function ProductPage() {
   const handleLike = () => {
     setHeart(!heart);
   };
+  const [quantity, setQuantity] = useState<number>(0);
+  const handleAddProduct = () => {
+    setQuantity(quantity + 1);
+  };
 
-  const handleAdd = () => {
-    console.log("Add");
+  const handleSubProduct = () => {
+    setQuantity(quantity - 1);
   };
 
   const [data, setData] = useState<Product|null>();
@@ -154,7 +164,8 @@ export function ProductPage() {
   
   useEffect(() => {
     fetchData();
-  }, []);
+    setHeart(false);
+  }, [productId] );
 
 
   return (
@@ -180,15 +191,15 @@ export function ProductPage() {
                   <span {...stylex.props(styles.productTitle)}>
                     {data?.name}
                   </span>
-                  <Button {...stylex.props(styles.heart)} onClick={handleLike}> 
-                    <IconHeart color= "#009f7f" />
-                  </Button>
+                  <UnstyledButton onClick={handleLike}> 
+                    {heart ? <IconHeartFilled size={35} color="red"/> : <IconHeart size={35}/>}
+                  </UnstyledButton>
                 </Flex>
                 <Flex justify="space-between">
                   <span style={{ fontSize: "14px", opacity: "0.7" }}>
                   2 đánh giá
                   </span>
-                  <Badge color="#009f7f" style={{ fontSize: "14px", margin: "0" }}>
+                  <Badge variant="gradient" style={{ fontSize: "14px", margin: "0" }}>
                     {data?.rate} <IconStarFilled style={{ width: rem(12), height: rem(12) }} />
                   </Badge>
                 </Flex>
@@ -209,19 +220,37 @@ export function ProductPage() {
                   </span>
                 </Flex>
                 <Flex align="center" gap="lg">
-                  <Button
-                    style={{
-                      height: "50px",
-                      width: "fit-content",
-                      padding: "15px 20px",
-                      marginRight: "20px",
-                      fontWeight: "lighter",
-                      borderRadius: "10px",
-                      backgroundColor: "#009f7f",
-                      color: "#fff",
-                    }}                
-                    onClick={handleAdd}
-                  >Thêm vào giỏ hàng</Button>
+                  {quantity === 0 ? (
+                  <Button 
+                  justify="center"
+                  variant="gradient"
+                  size="compact-lg"
+                  radius="md" 
+                  leftSection={<IconMinus size={14}/>} 
+                  rightSection={<IconPlus size={14} />} 
+                  onClick={handleAddProduct} >
+                    Thêm vào giỏ hàng
+                  </Button>
+                  ) : (
+                  <Button 
+                  justify="center"
+                  variant="gradient"
+                  size="compact-lg"
+                  radius="md" 
+                  >
+                    <span
+                      {...stylex.props(styles.elementLeftButton)}
+                      onClick={handleSubProduct} >
+                    <IconMinus />
+                    </span>
+                    <span>{quantity}</span>
+                    <span
+                    {...stylex.props(styles.elementRightButton)}
+                      onClick={handleAddProduct}
+                    >
+                      <IconPlus/>
+                    </span>
+                  </Button> )}
                   <span style={{ fontSize: "16px", opacity: "0.7" }}>
                     còn lại 18 sản phẩm
                   </span>
@@ -261,7 +290,10 @@ export function ProductPage() {
           <span style={{ fontWeight: "bolder", fontSize: "20px" }}>
             Đánh giá & Nhận xét của {data?.name}
           </span>
-          {/* <Rating rate={data?.rate}/> */}
+          <Rating readOnly={true} value={data?.rate}/> 
+          <Flex align="center">
+          Đánh giá cho sản phẩm: {data?.rate} <IconStarFilled color="orange"/>
+          </Flex>
         </Flex>
         <Flex {...stylex.props(styles.review)} direction="column">
           <Flex {...stylex.props(styles.reviewTitle)} align="center">
@@ -273,7 +305,7 @@ export function ProductPage() {
                 paddingLeft: "20px",
               }}
             >
-              Product Reviews ({reviews.length})
+              Nhận xét ({reviews.length})
             </Flex>
             <Flex
               flex="1"
@@ -321,21 +353,12 @@ export function ProductPage() {
                   direction="column"
                   gap="sm"
                 >
-                  <Badge
-                    color="#009f7f"
-                    style={{
-                      fontSize: "16px",
-                      padding: "5px 10px",
-                      width: "fit-content",
-                      borderRadius: "20px",
-                    }}
-                  >
-                    {review.rating} 
-                    <IconStarFilled style={{ width: rem(12), height: rem(12) }} />
-                  </Badge>
+                  <span >
+                    <Rating readOnly={true} value={review.rating}/>
+                  </span>
                   <span style={{ fontSize: "12px", opacity: 0.8 }}>
                     bởi {review.by}
-                    <IconCircleCheck />
+                    <IconCircleCheck color="green" />
                   </span>
                   <span style={{ padding: "10px 0", fontSize: "16px" }}>
                     {review.comment}
@@ -378,7 +401,7 @@ export function ProductPage() {
           <span style={{ fontWeight: "bolder", fontSize: "20px" }}>
             Sản phẩm tương tự
           </span>
-          <ProductList categoryId={data?.category?.id.toString()} /> 
+          <ProductList/> 
         </Flex>
       </div>
     </div>

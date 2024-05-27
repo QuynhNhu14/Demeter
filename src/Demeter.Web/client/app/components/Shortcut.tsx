@@ -45,7 +45,6 @@ import * as stylex from '@stylexjs/stylex';
           borderRadius: '10px',
           cursor: 'pointer',
           gap: '10px',
-          // backgroundColor: theme.colors[item.color][0],
       }}>
         <item.icon color={theme.colors[item.color][6]} size="2.2rem" {...stylex.props(styles.marginTop)}/>
         <Text size="sm" mt={5} align="center" mb={10}>
