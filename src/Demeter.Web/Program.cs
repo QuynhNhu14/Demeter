@@ -22,13 +22,14 @@ builder.Services.AddCoreServices();
 
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: myAllowSpecificOrigins,
-        policy  =>
+    options.AddPolicy(myAllowSpecificOrigins,
+        opt =>
         {
-            policy.WithOrigins("http://localhost:3000/index.html",
-                "http://localhost:3000")
+            opt.WithOrigins(allowedOrigins)
                 .AllowAnyHeader()
                 .AllowAnyMethod();
         });
@@ -72,18 +73,10 @@ builder.Services.AddSwaggerGen(opt =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
-app.UseCors(x => x
-    .AllowAnyMethod()
-    .AllowAnyHeader()
-    .SetIsOriginAllowed(_ => true) // allow any origin
-    //.WithOrigins("https://localhost:44351")); // Allow only this origin can also have multiple origins separated with comma
-    .AllowCredentials()); // allow credentials
+app.UseCors(myAllowSpecificOrigins);
 
 app.UseHttpsRedirection();
 

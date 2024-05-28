@@ -1,110 +1,98 @@
-import axios, { AxiosError } from "axios";
 import { OrderItem, Orders, Vouchers } from "../models/orders";
+import { useHttp } from "../hooks";
 
-const baseUrl = "http://localhost:5029/api/orders";
+const https = useHttp();
+
+const baseUrl = "/orders";
 export async function getOrder() {
-    try {
-        const response = await axios.get<Orders[]>(baseUrl);
-        return response.data;
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.error("Error: ", error.message);
-        } else {
-          console.error("Error: ", error);
-        }
-      }
+  const { data, error } = await https.get<Orders[]>(baseUrl);
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function createOrder(order: Orders) {
-    try {
-      const response = await axios.post<Orders>(baseUrl, order);
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
+  const { data, error } = await https.post<Orders>(baseUrl, order);
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function deleteOrder(id: string) {
-    try {
-      const response = await axios.delete<Orders>(baseUrl, {data: {id}});
-      return response.data;
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
+  const { data, error } = await https.delete<Orders>(baseUrl, { data: { id } });
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function updateOrder(order: Orders) {
-    const url = `${baseUrl}/update`;
-    try {
-      await axios.post<Orders>(url, order);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
+  const url = `${baseUrl}/update`;
+  const { data, error } = await https.post<Orders>(url, order);
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function getVoucher() {
-    const url = `${baseUrl}/voucher`;
-    try {
-        const response = await axios.get<Vouchers[]>(url);
-        return response.data;
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          console.error("Error: ", error.message);
-        } else {
-          console.error("Error: ", error);
-        }
-      }
+  const url = `${baseUrl}/voucher`;
+  const { data, error } = await https.get<Vouchers[]>(url);
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function deleteVoucher(id: string) {
-    const url = `${baseUrl}/voucher`;
-    try {
-      await axios.delete<Vouchers>(url, {data: {id}});
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
+  const url = `${baseUrl}/voucher`;
+  const { data, error } = await https.delete<Vouchers>(url, { data: { id } });
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function getOrderItem() {
-    const url = `${baseUrl}/items`;
-    try {
-        const response = await axios.get<OrderItem[]>(url);
-        return response.data;
-    }
-    catch (error) {
-        if (error instanceof AxiosError) {
-            console.error("Error: ", error.message);
-          } else {
-            console.error("Error: ", error);
-          }
-    }
+  const url = `${baseUrl}/items`;
+  const { data, error } = await https.get<OrderItem[]>(url);
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
 
 export async function deleteOrderItem(id: string) {
-    const url = `${baseUrl}/items`;
-    try {
-      await axios.delete<OrderItem>(url, {data: {id}});
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        console.error("Error: ", error.message);
-      } else {
-        console.error("Error: ", error);
-      }
-    }
+  const url = `${baseUrl}/items`;
+  const { data, error } = await https.delete<OrderItem>(url, { data: { id } });
+
+  if (error) {
+    console.error("Error: ", error);
+    return;
+  }
+
+  return data;
 }
