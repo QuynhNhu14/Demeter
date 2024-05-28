@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +31,7 @@ jobs:
           name: demeter-app
           path: ${{ github.workspace }}/publish
 
-deploy:
+  deploy:
     needs: build
     runs-on: ubuntu-latest
 
