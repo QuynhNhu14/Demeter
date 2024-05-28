@@ -24,10 +24,42 @@ public class ProductsService : IProductsService
     
     public async ValueTask<Domain.Products?> GetById(string id)
     {
-        var entity = await _context.Products
+        var entity = await _context.Products.Include(t => t.Vouchers)
             .FirstOrDefaultAsync(s => s.Id.ToString() == id);
         return _mapper.Map<Domain.Products>(entity);
     }
+
+    private int? CalculateDiscount(Domain.Products product)
+    {
+        var activeVoucher = product.Vouchers
+            .Where(v => v.Active && v.StartDate <= DateTimeOffset.UtcNow && v.EndDate >= DateTimeOffset.UtcNow)
+            .MaxBy(v => v.Discount);
+
+        return (activeVoucher != null)
+            ? product.BaseUnitPrice * (100 - activeVoucher.Discount) / 100
+            : null;
+    }
+
+    public async ValueTask<(Domain.Products, int?)> GetByIdWithDiscount(string id)
+    {
+        var product = await GetById(id);
+        
+        if (product == null)
+        {
+            throw new ValidationException($"Invalid: {id} is not existed.");
+        }
+
+        return (product, CalculateDiscount(product));
+    }
+    
+    public async ValueTask<ICollection<(Domain.Products, int?)>> GetAllWithDiscount()
+    {
+        var products = await GetAllAsync();
+        return products
+            .Select(product => (product, CalculateDiscount(product)))
+            .ToList();
+    }
+
     public async ValueTask<ICollection<Domain.Products>> GetByName(string name)
     {
         var entities = await _context.Products.Include(t => t.Vouchers).ToListAsync();

@@ -1,13 +1,19 @@
-import { IconBell, IconShoppingCart } from "@tabler/icons-react";
+import { IconBell, IconShoppingCart, IconUser } from "@tabler/icons-react";
 import { Group, Image, ActionIcon, Tabs, Paper } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import headerLogo2 from "../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
-import { Login } from "./LogIn";
+import { useState } from "react";
 
 export function HeaderMegaMenu() {
   const navigate = useNavigate();
   const { tabValue } = useParams();
+
+  const [auth, setAuth] = useState(false);
+  const closeSetAuth = () => {
+      close();
+      setAuth(true);
+  }
 
   const hiddenRoutes = [
     "/admin",
@@ -70,7 +76,14 @@ export function HeaderMegaMenu() {
             >
               <IconBell/>
             </ActionIcon>
-            <Login />
+            <ActionIcon
+              onClick={() => auth ? navigate("/profile") : navigate("/login")}
+              size="lg"
+              variant="transparent"
+              c={auth ? "green" : "gray"}
+            >
+              <IconUser />
+            </ActionIcon>
           </Group>
         </Group>
       </Group>

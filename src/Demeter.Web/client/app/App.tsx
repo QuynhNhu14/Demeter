@@ -28,6 +28,7 @@ import { FAQ } from "./pages/faq";
 import { Contact } from "./pages/contact";
 import { Orders } from "./customer/pages/Profile/Orders";
 import { Inventory } from "./admin/pages/Inventory";
+import { Login } from "./components/LogIn";
 
 export default function App() {
   const location = useLocation();
@@ -71,6 +72,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/login" element={<Login />} />
 
           {/*<Route path="/login" element={<SignInSignUp />} />
           

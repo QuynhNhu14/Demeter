@@ -81,7 +81,7 @@ const InventoryTable = () => {
     <div>
       <div {...stylex.props(styles.searchHeader)}>
         <Text fw={500} size="lg">
-          Đơn Hàng
+          Kho
         </Text>
         <Input 
           placeholder="Nhập mã đơn hàng" 

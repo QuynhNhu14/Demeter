@@ -31,15 +31,29 @@ public class ProductsController: ControllerBase
     {
         try
         {
-            var products = await _productsService.GetAllAsync();
-            // var vouchers = await _voucherService.GetAllAsync();
-            // var productDto = products.Select(product => new ProductDto
-            // (
-            //     product,
-            //     vouchers.Where(v => v.AppliedProducts.Contains(product)).ToList()
-            // )).ToList();
+            var products = await _productsService.GetAllWithDiscount();
+            var result = new List<ProductDto>();
+            foreach (var (product, discountedPrice) in products)
+            {
+                result.Add(new ProductDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    BaseUnitPrice = product.BaseUnitPrice,
+                    DateCreated = product.DateCreated,
+                    DateModified = product.DateModified,
+                    ImageUrl = product.ImageUrl,
+                    Sale = product.Sale,
+                    Rate = product.Rate,
+                    Category = product.Category,
+                    Vendor = product.Vendor,
+                    Vouchers = product.Vouchers,
+                    DiscountedPrice = discountedPrice
+                });
+            }
             
-            return Ok(products);
+            return Ok(result);
         }
         catch (Exception)
         {
@@ -67,15 +81,37 @@ public class ProductsController: ControllerBase
     }
 
     [HttpGet]
-    [Route("{id}")] // api/products[]
-    public async Task<ActionResult<Domain.Products>> GetProductById(string id)
+    [Route("{id}")] // api/products/{id}
+    public async Task<ActionResult<ProductDto>> GetProductById(string id)
     {
         try
         {
-            var product = await _productsService.GetById(id);
-            return Ok(product);
+            var (product, discountedPrice) = await _productsService.GetByIdWithDiscount(id);
+
+            var result = new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                BaseUnitPrice = product.BaseUnitPrice,
+                DateCreated = product.DateCreated,
+                DateModified = product.DateModified,
+                ImageUrl = product.ImageUrl,
+                Sale = product.Sale,
+                Rate = product.Rate,
+                Category = product.Category,
+                Vendor = product.Vendor,
+                Vouchers = product.Vouchers,
+                DiscountedPrice = discountedPrice
+            };
+            
+            return Ok(result);
         }
-        catch (Exception)
+        catch (ValidationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
         {
             return StatusCode(StatusCodes.Status500InternalServerError);
         }

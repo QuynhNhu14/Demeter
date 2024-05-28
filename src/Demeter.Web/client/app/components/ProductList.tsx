@@ -54,7 +54,7 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <Card withBorder shadow="sm">
-      {product.vouchers && product.vouchers.length > 0 && <Badge variant="gradient" size="lg" pos={"absolute"} {...stylex.props(styles.voucher)}> - {product.vouchers[0].discount} %</Badge>}
+      {product.discountedPrice && <Badge variant="gradient" size="lg" pos={"absolute"} {...stylex.props(styles.voucher)}> - {product.vouchers[0]?.discount} %</Badge>}
       <div>
         <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate(`/products/${product.id}`)}/>
       </div>
@@ -69,14 +69,14 @@ export function ProductCard({ product }: ProductCardProps) {
           <div>
             <Flex gap="xs">
               <span {...stylex.props(styles.salePrice)}>
-                {product.vouchers && product.vouchers.length > 0 ? product.baseUnitPrice - product.baseUnitPrice * product.vouchers[0].discount / 100 + "đ" : product.baseUnitPrice + "đ"} 
+                {product.discountedPrice ? product.discountedPrice + "đ" : product.baseUnitPrice + "đ"} 
               </span>
-              <span
+              {product.discountedPrice && <span
                 {...stylex.props(styles.unitPrice)}
               >
                 {" "}
                 {product.baseUnitPrice + "đ"}
-              </span>
+              </span>}
               <span > 
                 <Badge color="#F9C127" pos="absolute" size="lg">
                 {product.rate ?? 0} <IconStarFilled size={16}/>

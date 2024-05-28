@@ -15,9 +15,10 @@ export interface Product {
   dateModified: Date | string;
   category: Category;
   vendor: ShopAccount;
-  vouchers?: Vouchers[];
+  vouchers: Vouchers[];
   sale?: number; 
   rate?: number;
+  discountedPrice?: number;
 }
 
 export interface Category {

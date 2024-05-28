@@ -212,12 +212,12 @@ export function ProductPage() {
                       color: "#009f7f",
                     }}
                   >
-                    {data.baseUnitPrice}
+                    {data.discountedPrice ? data.discountedPrice + "đ" : data.baseUnitPrice + "đ"}
                   </span>
-                  <span style={{ textDecoration: "line-through", opacity: "0.7" }}>
+                  {data.discountedPrice && <span style={{ textDecoration: "line-through", opacity: "0.7" }}>
                     {" "}
                     {data?.baseUnitPrice}
-                  </span>
+                  </span>}
                 </Flex>
                 <Flex align="center" gap="lg">
                   {quantity === 0 ? (
