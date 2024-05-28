@@ -16,17 +16,24 @@ jobs:
         with:
           dotnet-version: '8.0.x'  # Adjust the .NET Core version as needed
 
-      - name: Go to src
-        run: cd src
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: npm run unix:restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build ${{ github.workspace }}/src/Demeter.sln --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish -c Release -o ${{ github.workspace }}/publish --no-build
+        run: dotnet publish ${{ github.workspace }}/src/Demeter.sln -c Release -o ${{ github.workspace }}/publish --no-build
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

@@ -27,18 +27,18 @@ for project_dir in */; do
   fi
 done
 
-# Check if it's a directory
-if [ -d "Demeter.Web" ]; then
-  # Navigate to the Demeter.Web directory
-  cd "$root_dir/src/Demeter.Web"
-  # Run npm ci
-  echo "Running 'npm ci' in Demeter.Web"
-  npm ci
-fi
+# # Check if it's a directory
+# if [ -d "Demeter.Web" ]; then
+#   # Navigate to the Demeter.Web directory
+#   cd "$root_dir/src/Demeter.Web"
+#   # Run npm ci
+#   echo "Running 'npm ci' in Demeter.Web"
+#   npm ci
+# fi
 
-# Return to the original directory
-cd "$root_dir"
+# # Return to the original directory
+# cd "$root_dir"
 
-# Start Docker containers
-echo "Retrieving SQL Server Docker Image"
-docker-compose up -d
+# # Start Docker containers
+# echo "Retrieving SQL Server Docker Image"
+# docker-compose up -d

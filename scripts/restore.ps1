@@ -18,18 +18,18 @@ foreach ($projectDir in Get-ChildItem -Directory) {
     }
 }
 
-# Check if it's a directory
-if (Test-Path -Path "$parentDir/src/Demeter.Web" -PathType Container) {
-    # Navigate to the Demeter.Web directory
-    Set-Location -Path "$parentDir/src/Demeter.Web"
-    # Run npm ci
-    Write-Host "Running 'npm ci' in Demeter.Web"
-    npm ci
-}
+# # Check if it's a directory
+# if (Test-Path -Path "$parentDir/src/Demeter.Web" -PathType Container) {
+#     # Navigate to the Demeter.Web directory
+#     Set-Location -Path "$parentDir/src/Demeter.Web"
+#     # Run npm ci
+#     Write-Host "Running 'npm ci' in Demeter.Web"
+#     npm ci
+# }
 
-# Return to the original directory
-Set-Location -Path $parentDir
+# # Return to the original directory
+# Set-Location -Path $parentDir
 
-# Start Docker containers
-Write-Host "Retrieving SQL Server Docker Image"
-docker-compose up -d
+# # Start Docker containers
+# Write-Host "Retrieving SQL Server Docker Image"
+# docker-compose up -d
