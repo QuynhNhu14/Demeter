@@ -4,7 +4,7 @@ import { OrderItem, Orders, Vouchers } from "../models/orders";
 const baseUrl = "http://localhost:5029/api/orders";
 export async function getOrder() {
     try {
-        const response = await axios.get<Orders>(baseUrl);
+        const response = await axios.get<Orders[]>(baseUrl);
         return response.data;
       } catch (error) {
         if (error instanceof AxiosError) {
@@ -57,7 +57,7 @@ export async function updateOrder(order: Orders) {
 export async function getVoucher() {
     const url = `${baseUrl}/voucher`;
     try {
-        const response = await axios.get<Vouchers>(url);
+        const response = await axios.get<Vouchers[]>(url);
         return response.data;
       } catch (error) {
         if (error instanceof AxiosError) {
@@ -84,7 +84,7 @@ export async function deleteVoucher(id: string) {
 export async function getOrderItem() {
     const url = `${baseUrl}/items`;
     try {
-        const response = await axios.get<OrderItem>(url);
+        const response = await axios.get<OrderItem[]>(url);
         return response.data;
     }
     catch (error) {
