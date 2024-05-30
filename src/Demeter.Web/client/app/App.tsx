@@ -72,10 +72,8 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/inventory" element={<Inventory />} />
-          <Route path="/login" element={<Login />} />
-
-          {/*<Route path="/login" element={<SignInSignUp />} />
-          
+          <Route path="/auth" element={<Login />} />
+          {/*
           <Route path="/appsetting" element={<AppSettingPage />} />
           <Route path="/admin" element={<Dashboardadmin />} />
           <Route path="/allproduct" element={<AllProduct />} />

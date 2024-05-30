@@ -1,6 +1,5 @@
 import { ReactNode, ElementType } from "react";
 import { Vouchers } from "./orders";
-import { ShopAccount } from "./users";
 
 export interface Product {
   image: string | undefined;
@@ -14,7 +13,7 @@ export interface Product {
   dateCreated: Date | string;
   dateModified: Date | string;
   category: Category;
-  vendor: ShopAccount;
+  vendor: string;
   vouchers: Vouchers[];
   sale?: number; 
   rate?: number;

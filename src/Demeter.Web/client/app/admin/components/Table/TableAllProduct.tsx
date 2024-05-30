@@ -52,11 +52,11 @@ const FilterTable = () => {
   const uniqueProductTypes = Array.from(new Set(dataSource.map((item) => item.productType)));
   const typeOptions = ['Tất cả'].concat(uniqueProductTypes);
 
-  const handleStatusFilterChange = (value) => {
+  const handleStatusFilterChange = (value: any) => {
     setStatusFilter(value);
   };
 
-  const handleTypeFilterChange = (value) => {
+  const handleTypeFilterChange = (value: any) => {
     setTypeFilter(value);
   };
 
@@ -140,7 +140,7 @@ const FilterTable = () => {
           <Input 
             placeholder="Nhập mã sản phẩm" 
             leftSection={<IconSearch size={16} />}
-            onChange={(event) => setSearchText(event.currentTarget.value)}
+            onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
           <Select
             label="Lọc theo trạng thái"

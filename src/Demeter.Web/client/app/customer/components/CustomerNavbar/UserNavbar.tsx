@@ -3,6 +3,7 @@ import { NavLink } from '@mantine/core';
 import { IconUserCircle, IconPasswordUser, IconFileInvoice, IconHeart,IconReceiptRefund, IconReport, IconCreditCardPay,IconHelp, IconLogout } from '@tabler/icons-react';
 
 import * as stylex from "@stylexjs/stylex";
+import { useHttp } from "../../../hooks";
 
 const data = [
   { label: 'Hồ sơ', link: 'profile', icon: IconUserCircle},
@@ -13,19 +14,22 @@ const data = [
   { label: 'Báo cáo', link: 'profile' , icon: IconReport},
   { label: 'Phương thức thanh toán', link: 'profile' , icon: IconCreditCardPay},
   { label: 'Trợ giúp', link: 'profile' , icon: IconHelp},
-  { label: 'Đăng xuất', link: 'login' , icon: IconLogout},
+  { label: 'Đăng xuất', link: 'home' , icon: IconLogout},
 ];
-
 
 const UserNavbar: React.FC = () => {
   const [active, setActive] = useState<string>(
     localStorage.getItem("selectedMenuKey") || "0"
   );
-
+  const { token, setAuthToken } = useHttp();
+  
   const onClick = (index: number) => {
     const clickedKey = index.toString();
     localStorage.setItem("selectedMenuKey", clickedKey);
     setActive(clickedKey);
+    if (index === data.length - 1) {
+      setAuthToken("");
+    }
   };
 
   return (

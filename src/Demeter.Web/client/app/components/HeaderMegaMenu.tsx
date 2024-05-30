@@ -1,20 +1,27 @@
-import { IconBell, IconShoppingCart, IconUser } from "@tabler/icons-react";
-import { Group, Image, ActionIcon, Tabs, Paper } from "@mantine/core";
+
+import { Group, Image, Tabs, Paper } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import headerLogo2 from "../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
+import { Login } from "./LogIn";
+import { useHttp } from "../hooks";
 import { useState } from "react";
 
 export function HeaderMegaMenu() {
   const navigate = useNavigate();
   const { tabValue } = useParams();
-
-  const [auth, setAuth] = useState(false);
-  const closeSetAuth = () => {
-      close();
-      setAuth(true);
-  }
-
+  const { token, setAuthToken } = useHttp();
+  const [auth, setAuth] = useState(!!token);
+  
+  // const confirmAuth = async (values: any) => {
+  //   if(values && values.accessToken){
+  //     setAuthToken(values.accessToken);
+  //     setAuth(true);
+  //     navigate("/cart")
+  //   } else {
+  //     <Login/>
+  //   }
+  // }
   const hiddenRoutes = [
     "/admin",
     "/shop",
@@ -62,28 +69,7 @@ export function HeaderMegaMenu() {
             </Tabs.List>
           </Tabs>
           <Group gap={2} align="center">
-            <ActionIcon
-              onClick={() => navigate("/cart")}
-              size="lg"
-              variant="transparent"
-            >
-              <IconShoppingCart />
-            </ActionIcon>
-            <ActionIcon
-              onClick={() => navigate("/notification")}
-              size="lg"
-              variant="transparent"
-            >
-              <IconBell/>
-            </ActionIcon>
-            <ActionIcon
-              onClick={() => auth ? navigate("/profile") : navigate("/login")}
-              size="lg"
-              variant="transparent"
-              c={auth ? "green" : "gray"}
-            >
-              <IconUser />
-            </ActionIcon>
+            <Login />
           </Group>
         </Group>
       </Group>

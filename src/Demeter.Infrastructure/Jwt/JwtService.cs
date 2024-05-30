@@ -1,10 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AutoMapper;
 using Demeter.Core.Entities;
 using Demeter.Core.Models;
 using Demeter.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -15,15 +17,17 @@ namespace Demeter.Infrastructure.Jwt
         private readonly IUserClaimsPrincipalFactory<User> _claimsPrincipal;
         private readonly JwtSettings _jwtSettings;
         private readonly UserManager<User> _UserManager;
+        private readonly IMapper _mapper;
 
-        public JwtService(IUserClaimsPrincipalFactory<User> claimsPrincipal, IOptions<JwtSettings> jwtSettings, UserManager<User> UserManager)
+        public JwtService(IUserClaimsPrincipalFactory<User> claimsPrincipal, IOptions<JwtSettings> jwtSettings, UserManager<User> UserManager, IMapper mapper)
         {
             _claimsPrincipal = claimsPrincipal;
             _jwtSettings = jwtSettings.Value;
             _UserManager = UserManager;
+            _mapper = mapper;
         }
 
-        private async ValueTask<Token> _generateTokenAsync(User entity)
+        public async ValueTask<Token> GenerateTokenAsync(User entity)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -49,6 +53,12 @@ namespace Demeter.Infrastructure.Jwt
             };
         }
 
+        public async ValueTask<Token> GenerateTokenAsyncUser(Domain.User user)
+        {
+            var result = await GenerateTokenAsync(_mapper.Map<User>(user));
+            return result;
+        }
+
         private async Task<IEnumerable<Claim>> _getClaimsAsync(User User)
         {
             var result = await _claimsPrincipal.CreateAsync(User);
@@ -63,7 +73,7 @@ namespace Demeter.Infrastructure.Jwt
                 throw new ArgumentException("Invalid user name", nameof(userName));
             }
 
-            return await _generateTokenAsync(User);
+            return await GenerateTokenAsync(User);
         }
     }
 }
