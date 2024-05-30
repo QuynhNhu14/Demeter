@@ -1,14 +1,14 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
 import AllProductTable from "../../components/Table/TableAllProduct";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
+import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
-  shopProductPage: {
+  ShopAllProductPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -45,7 +45,7 @@ const ShopAllProduct: React.FC = () => {
         <Navbar_Shop />
       </div>
       <div  {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div {...stylex.props(styles.product)}>
           <AllProductTable />
         </div>

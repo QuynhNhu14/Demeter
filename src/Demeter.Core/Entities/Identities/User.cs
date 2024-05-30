@@ -29,15 +29,15 @@ public class User
     [MaxLength(Int32.MaxValue)]
     public string PasswordHash { get; set; }
 
-    [MaxLength(Int32.MaxValue)]
-    public string PhoneNumber { get; set; }
+    [MaxLength(Int32.MaxValue)] 
+    public string PhoneNumber { get; set; } = string.Empty;
 
     public bool PhoneNumberConfirmed { get; set; }
 
     public bool TwoFactorEnabled { get; set; }
 
-    [MaxLength(Int32.MaxValue)]
-    public string ConcurrencyStamp { get; set; }
+    [MaxLength(Int32.MaxValue)] 
+    public string ConcurrencyStamp { get; set; } = string.Empty;
 
     [MaxLength(Int32.MaxValue)]
     public string SecurityStamp { get; set; }
@@ -63,5 +63,5 @@ public class User
     [MaxLength(Int32.MaxValue)]
     public string AddressJson { get; set; } = string.Empty;
     [MaxLength(Int32.MaxValue)]
-    public string AdditionalPropertiesJson { get; set; } = string.Empty;
+    public string AdditionalPropertiesJson { get; set; }= string.Empty;
 }

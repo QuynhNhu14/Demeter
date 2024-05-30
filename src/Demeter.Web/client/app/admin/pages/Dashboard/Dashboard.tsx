@@ -1,10 +1,7 @@
 import { Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
-import Summary_Card from "../../components/Summary_Card/Summary_Card";
-import Summary_CardTwo from "../../components/Summary_Card/Summary_CardTwo";
-import SaleHistoryChart from "../../components/Table/TableChart";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
 import RecentOrdersTable from "../../components/Table/TableRecentOrders";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
+import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
 import ShopOverviewCard from "../../components/Summary_Card/ShopOverviewCard";
 import OrderStatusCard from "../../components/Summary_Card/OrderStatusCard";
@@ -55,7 +52,7 @@ const Dashboard: React.FC = () => {
         <Navbar_Shop />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div {...stylex.props(styles.dashboard)}>
           <div  {...stylex.props(styles.item)}>
               <ShopOverviewCard />

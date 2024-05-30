@@ -19,6 +19,7 @@ import {
 
 import logo from "../../assets/logo.png";
 import * as stylex from "@stylexjs/stylex";
+import { useNavigate } from "react-router-dom";
 
 const styles = stylex.create({
   footer: {
@@ -68,6 +69,12 @@ const data = [
 ];
 
 export const Footer = () => {
+  const navigate = useNavigate();
+  const hideNavbar = window.location.pathname.startsWith("/shop") || 
+                      window.location.pathname.startsWith("/admin");
+  if (hideNavbar) {
+    return null;    
+  }
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
       <Text key={index} component="a" href={link.link}>

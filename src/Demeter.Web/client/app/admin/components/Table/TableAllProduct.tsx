@@ -22,11 +22,11 @@ const generateData = (count: number) => {
   for (let i = 1; i <= count; i++) {
     data.push({
       key: i,
-      ID: i,
+      id: i,
       productImage: `https://pickbazar-react-admin.vercel.app/_next/image?url=https%3A%2F%2Fpickbazarlaravel.s3.ap-southeast-1.amazonaws.com%2F1%2Fconversions%2FApples-thumbnail.jpg&w=1920&q=75`,
       productName: `Product ${i}`,
       productType: `Loại ${i % 5}`,
-      pricePerUnit: `$${(Math.random() * 100).toFixed(2)}`,
+      pricePerUnit: `${(Math.random() * 100).toFixed(0)}.000 VNĐ`,
       quantity: Math.floor(Math.random() * 100),
       status: ["Hết hàng", "Đang bán", "Bị ẩn", "Ngừng bán"][
         Math.floor(Math.random() * 4)
@@ -50,13 +50,12 @@ const FilterTable = () => {
   const endIndex = currentPage * pageSize;
 
   const uniqueProductTypes = Array.from(new Set(dataSource.map((item) => item.productType)));
-  const typeOptions = ['Tất cả'].concat(uniqueProductTypes);
 
-  const handleStatusFilterChange = (value) => {
+  const handleStatusFilterChange = (value: any) => {
     setStatusFilter(value);
   };
 
-  const handleTypeFilterChange = (value) => {
+  const handleTypeFilterChange = (value: any) => {
     setTypeFilter(value);
   };
 
@@ -81,7 +80,7 @@ const FilterTable = () => {
 
   const rows = filteredData.map((item) => (
     <Table.Tr key={item.key}>
-      <Table.Td><Center>{item.ID}</Center></Table.Td>
+      <Table.Td><Center>{item.id}</Center></Table.Td>
       <Table.Td>
           <Flex align="center">
             <Image src={item.productImage} h={50} />
@@ -140,13 +139,12 @@ const FilterTable = () => {
           <Input 
             placeholder="Nhập mã sản phẩm" 
             leftSection={<IconSearch size={16} />}
-            onChange={(event) => setSearchText(event.currentTarget.value)}
+            onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
           <Select
             label="Lọc theo trạng thái"
             placeholder="Chọn trạng thái sản phẩm"
-            data={['Tất cả', 'Hết hàng', 'Đang bán', 'Bị ẩn', 'Ngừng bán']}
-            defaultValue="Tất cả"
+            data={['Hết hàng', 'Đang bán', 'Bị ẩn', 'Ngừng bán']}
             clearable
             onChange={handleStatusFilterChange}
             width={100}
@@ -154,18 +152,17 @@ const FilterTable = () => {
           <Select
             label="Lọc theo loại"
             placeholder="Chọn loại sản phẩm"
-            data={typeOptions}
-            defaultValue="Tất cả"
+            data={uniqueProductTypes}
             clearable
             onChange={handleTypeFilterChange}
           />
         </Flex>
       </div>
-      <div {...stylex.props(styles.orderTable)} >
+      <div {...stylex.props(styles.productTable)} >
         <Table>
           <Table.Thead>
               <Table.Tr>
-              <Table.Th><Center>ID</Center></Table.Th>
+              <Table.Th><Center>id</Center></Table.Th>
               <Table.Th>Sản phẩm</Table.Th>
               <Table.Th><Center>Loại sản phẩm</Center></Table.Th>
               <Table.Th><Center>Giá/Đơn vị</Center></Table.Th>
@@ -214,7 +211,7 @@ const styles = stylex.create({
     border: "2px solid #E5E7EB",
     boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
   },
-  orderTable: {          
+  productTable: {          
     overflowX: "auto",
     backgroundColor: "#FFFFFF",
     margin: "10px 0px 60px 0px",

@@ -1,7 +1,7 @@
 import OrdersTable from "../../components/Table/TableOrders";
 import { Flex } from "@mantine/core";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import Navbar_Shops from "../../components/NavbarShop/NavbarShop";
+import Header from "../../components/Header";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
 import * as stylex from "@stylexjs/stylex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -41,10 +41,10 @@ const ShopOrders: React.FC = () => {
   return (
     <Flex {...stylex.props(styles.shopOrderPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shops />
+        <Navbar_Shop />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div  {...stylex.props(styles.order)}>
           <OrdersTable />
         </div>

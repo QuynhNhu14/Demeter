@@ -45,28 +45,26 @@ const AdminDashboard: React.FC = () => {
   }, [loggedIn]);
   // Code của thành phần Navbar ở đây
   return (
-    <>
-      <Flex style={{ backgroundColor: "#f3f4f6" }}>
-        <div style={{ flex: "2", width: "100%" }}>
-          <NavbarAdmin />
-        </div>
-        <div style={{ flex: "9", width: "100%" }}>
-          <AdminHeader />
-          <div className={styles.Dashboard}>
-            <div className={styles.item}>
-              <Summary_Card />
-            </div>
-            <div className={styles.item}>
-              <Summary_CardTwo />
-            </div>
-            <div className={styles.item}>
-              <RecentOrdersTable />
-            </div>
+    <Flex {...stylex.props(styles.dashboardPage)}>
+      <div {...stylex.props(styles.navbar)}>
+        <Navbar_Admin />
+      </div>
+      <div {...stylex.props(styles.container)}>
+        <Header />
+        <div {...stylex.props(styles.dashboard)}>
+          <div  {...stylex.props(styles.item)}>
+              <ShopOverviewCard />
+          </div>
+          <div  {...stylex.props(styles.item)}>
+            <OrderStatusCard/>
+          </div>
+          <div  {...stylex.props(styles.item)}>
+            <RecentOrdersTable />
           </div>
         </div>
-      </Flex>
-    </>
+      </div>
+    </Flex>
   );
 };
 
-export default Dashboardadmin;
+export default AdminDashboard;

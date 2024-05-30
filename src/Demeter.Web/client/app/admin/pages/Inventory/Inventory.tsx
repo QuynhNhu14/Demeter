@@ -1,6 +1,6 @@
 import { Flex } from "@mantine/core";
-import Navbar_Shop from "../components/NavbarShop/NavbarShop";
-import InventoryTable from "../components/Table/TableInventory";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
+import InventoryTable from "../../components/Table/TableInventory";
 import * as stylex from "@stylexjs/stylex";
 import Header from "../../components/Header";
 import { useEffect } from "react";
@@ -51,7 +51,7 @@ export const Inventory: React.FC = () => {
         <Navbar_Shop />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div  {...stylex.props(styles.inventory)}>
           <InventoryTable />
         </div>

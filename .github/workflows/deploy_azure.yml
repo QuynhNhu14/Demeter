@@ -4,7 +4,7 @@ on:
   workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,18 +16,8 @@ jobs:
         with:
           dotnet-version: '8.0.x'  # Adjust the .NET Core version as needed
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 16
-
-      - name: Azure login
-        uses: azure/login@v2
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
       - name: Restore dependencies
-        run: npm run unix:restore
+        run: dotnet restore ${{ github.workspace }}/src/Demeter.sln
 
       - name: Build
         run: dotnet build ${{ github.workspace }}/src/Demeter.sln --configuration Release --no-restore
@@ -35,12 +25,34 @@ jobs:
       - name: Publish
         run: dotnet publish ${{ github.workspace }}/src/Demeter.sln -c Release -o ${{ github.workspace }}/publish --no-build
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: demeter-app
+          path: ${{ github.workspace }}/publish
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: demeter-app
+          path: ./publish
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ github.workspace }}/publish
+          package: ./publish
 
       - name: Azure logout
         if: always()

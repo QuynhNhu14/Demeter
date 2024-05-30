@@ -2,10 +2,9 @@ import { AppSettings } from "../models/settings";
 import { useHttp } from "../hooks";
 
 const baseUrl = "/settings";
-const https = useHttp();
 
 export async function getSettings() {
-  const { data, error } = await https.get<AppSettings[]>(baseUrl);
+  const { data, error } = await useHttp().get<AppSettings[]>(baseUrl);
 
   if (error) {
     console.error("Error: ", error);
@@ -16,7 +15,7 @@ export async function getSettings() {
 }
 
 export async function createSettings(setting: AppSettings) {
-  const { data, error } = await https.post<AppSettings[]>(baseUrl, setting);
+  const { data, error } = await useHttp().post<AppSettings[]>(baseUrl, setting);
 
   if (error) {
     console.error("Error: ", error);
@@ -28,7 +27,7 @@ export async function createSettings(setting: AppSettings) {
 
 export async function updateSettings(setting: AppSettings[]) {
   const url = `${baseUrl}/update`;
-  const { data, error } = await https.post<AppSettings[]>(url, setting);
+  const { data, error } = await useHttp().post<AppSettings[]>(url, setting);
 
   if (error) {
     console.error("Error: ", error);
@@ -40,7 +39,7 @@ export async function updateSettings(setting: AppSettings[]) {
 
 export async function deleteSettings(id: string) {
   const url = `${baseUrl}/delete`;
-  const { data, error } = await https.delete<AppSettings[]>(url, {
+  const { data, error } = await useHttp().delete<AppSettings[]>(url, {
     data: { id },
   });
 

@@ -1,7 +1,7 @@
 import { Flex } from "@mantine/core";
 import FormAddProduct from "../../components/Form/FormAddProduct";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
+import Header from "../../components/Header";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
 import { useForm } from "@mantine/form";
 import * as stylex from "@stylexjs/stylex";
 import { useEffect } from "react";
@@ -42,7 +42,7 @@ const AddProduct: React.FC = () => {
         <Navbar_Shop />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div  {...stylex.props(styles.order)}>
           <FormAddProduct form={form} onSubmit={handleSubmit} />
         </div>

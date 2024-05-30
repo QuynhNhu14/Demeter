@@ -83,7 +83,7 @@ export function Notification() {
   return (
     <Stack p={"xl"} align={"center"}>
         <Box>
-            Thông báo của tôi
+            <Title>Thông báo của tôi</Title>
             <Table.ScrollContainer minWidth={800}>
                 <Table verticalSpacing="md">
                     <Table.Tbody>{rows}</Table.Tbody>
@@ -113,3 +113,10 @@ export function Notification() {
     
   );
 }
+
+const styles = stylex.create({
+  pagination: {
+    margin: "16px", 
+    textAlign: "right",
+  }
+});

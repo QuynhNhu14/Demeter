@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Demeter.Core.Extensions;
 using Demeter.Domain;
 using Demeter.Infrastructure.Extensions;
 using Demeter.Infrastructure.Identity;
@@ -15,7 +16,6 @@ namespace Demeter.Web.Controllers
         private readonly IJwtService _jwtService;
         private readonly ILogger<AuthController> _logger;
         private readonly AppUserManager _manager;
-
         public AuthController(IJwtService jwtService, ILogger<AuthController> logger, AppUserManager manager)
         {
             _jwtService = jwtService;
@@ -24,17 +24,19 @@ namespace Demeter.Web.Controllers
         }
 
         [HttpPost("signup")]
-        public async Task<IActionResult> Signup([FromBody] User account)
+        public async Task<IActionResult> Signup([FromBody] SignupInfo account)
         {
             try
-            {
-                // Ensure the User and User Ids are unique
-                account.Id = Guid.NewGuid();
-
-                var result = await _manager.CreateAsync(account);
+            {   
+                var user = new User {
+                    UserName = account.UserName, 
+                    Email = account.Email, 
+                    Password = account.Password
+                };
+                var result = await _manager.CreateAsync(user);
                 if (result.Succeeded)
                 {
-                    var token = await _jwtService.GenerateTokenFromUserName(account.UserName);
+                    var token = await _jwtService.GenerateTokenAsyncUser(user);
                     return Ok(new { token.AccessToken, token.ExpiresIn });
                 }
                 return BadRequest(result.Errors);
