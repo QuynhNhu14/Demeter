@@ -43,38 +43,4 @@ public class UsersController: ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
-
-    [HttpGet("account")]
-    public async ValueTask<IActionResult> GetAllAccounts()
-    {
-        try
-        {
-            var accounts = await _usersService.GetAllAsync();
-            return Ok(accounts);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
-
-
-    
-    [HttpDelete("account")]
-    public async ValueTask<IActionResult> DeleteAccountAsync([Required] Guid id)
-    {
-        try
-        {
-            await _usersService.RemoveAsync(id);
-            return Ok();
-        }
-        catch (ValidationException ex)
-        {
-            return BadRequest(ex.Message);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError);
-        }
-    }
 }

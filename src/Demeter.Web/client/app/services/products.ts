@@ -2,10 +2,9 @@ import { Category, Price, Product } from "../models/products";
 import { useHttp } from "../hooks";
 
 const baseUrl = "/products";
-const https = useHttp();
 
 export async function getAllProducts() {
-  const { data, error } = await https.get<Product[]>(baseUrl);
+  const { data, error } = await useHttp().get<Product[]>(baseUrl);
 
   if (error) {
     console.error("Error: ", error);
@@ -16,7 +15,7 @@ export async function getAllProducts() {
 }
 
 export async function getProductById(productId: string) {
-  const { data, error } = await https.get<Product>(`${baseUrl}/${productId}`);
+  const { data, error } = await useHttp().get<Product>(`${baseUrl}/${productId}`);
 
   if (error) {
     console.error("Error: ", error);
@@ -27,7 +26,7 @@ export async function getProductById(productId: string) {
 }
 
 export async function getProductByName(productName: string) {
-  const { data, error } = await https.get<Product[]>(
+  const { data, error } = await useHttp().get<Product[]>(
     `${baseUrl}/search?name=${productName}`
   );
 
@@ -40,7 +39,7 @@ export async function getProductByName(productName: string) {
 }
 
 export async function createProduct(product: Product) {
-  const { data, error } = await https.post<Product[]>(baseUrl, product);
+  const { data, error } = await useHttp().post<Product[]>(baseUrl, product);
 
   if (error) {
     console.error("Error: ", error);
@@ -51,7 +50,7 @@ export async function createProduct(product: Product) {
 }
 
 export async function deleteProduct(id: string) {
-  const { data, error } = await https.delete<Product[]>(baseUrl, {
+  const { data, error } = await useHttp().delete<Product[]>(baseUrl, {
     data: { id },
   });
 
@@ -65,7 +64,7 @@ export async function deleteProduct(id: string) {
 
 export async function updateProduct(product: Product) {
   const url = `${baseUrl}/update`;
-  const { data, error } = await https.post<Product[]>(url, product);
+  const { data, error } = await useHttp().post<Product[]>(url, product);
 
   if (error) {
     console.error("Error: ", error);
@@ -77,7 +76,7 @@ export async function updateProduct(product: Product) {
 
 export async function getCategory() {
   const url = `${baseUrl}/categories`;
-  const { data, error } = await https.get<Category>(url);
+  const { data, error } = await useHttp().get<Category>(url);
 
   if (error) {
     console.error("Error: ", error);
@@ -89,7 +88,7 @@ export async function getCategory() {
 
 export async function deleteCategory(id: string) {
   const url = `${baseUrl}/update`;
-  const { data, error } = await https.delete<Category>(url, { data: { id } });
+  const { data, error } = await useHttp().delete<Category>(url, { data: { id } });
 
   if (error) {
     console.error("Error: ", error);
@@ -101,7 +100,7 @@ export async function deleteCategory(id: string) {
 
 export async function getPrice() {
   const url = `${baseUrl}/prices`;
-  const { data, error } = await https.get<Price>(url);
+  const { data, error } = await useHttp().get<Price>(url);
 
   if (error) {
     console.error("Error: ", error);
@@ -113,7 +112,7 @@ export async function getPrice() {
 
 export async function deletePrice(id: string) {
   const url = `${baseUrl}/prices`;
-  const { data, error } = await https.delete<Price>(url, { data: { id } });
+  const { data, error } = await useHttp().delete<Price>(url, { data: { id } });
 
   if (error) {
     console.error("Error: ", error);

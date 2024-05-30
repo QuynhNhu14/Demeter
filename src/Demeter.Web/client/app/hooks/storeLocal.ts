@@ -27,5 +27,5 @@ export const storeLocal = <T,>(key: string, initialValue: T) => {
     }
   };
 
-  return [ getStoredValue(), setStoredValue ];
+  return { value: getStoredValue(), setValue: setStoredValue };
 };
