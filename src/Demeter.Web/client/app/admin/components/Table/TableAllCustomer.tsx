@@ -15,7 +15,6 @@ import {
 } from "@mantine/core";
 import { IconEdit, IconEye, IconSearch } from "@tabler/icons-react";
 import * as stylex from "@stylexjs/stylex";
-import shopLogo from "../../../../assets/logo.png";
 
 const { Search } = Input;
 
@@ -25,10 +24,10 @@ const generateData = (count: number) => {
     data.push({
       key: i,
       id: i,
-      shopImage: shopLogo,
-      shopName: `Shop ${i}`,
-      productQuantity: `${Math.floor(Math.random() * 10)}`,
-      orderQuantity: `${Math.floor(Math.random() * 10)}`,
+      customerImage: `https://livewiredemos.com/images/avatar.png`,
+      customerName: `Customer ${i}`,
+      email: `customer${i}@example.com`,
+      gender: ["Nam", "Nữ"][Math.floor(Math.random() * 2)],
       address: `KTX khu A ĐHQG, Khu phố 6, Đông Hòa, Dĩ An, Bình Dương`,
       status: ["Hoạt động", "Ngừng hoạt động"][Math.floor(Math.random() * 2)],
     });
@@ -37,7 +36,7 @@ const generateData = (count: number) => {
 };
 const dataSource = generateData(100);
 
-const AllShopTable = () => {
+const AllCustomerTable = () => {
   const [statusFilter, setStatusFilter] = useState("");
   const [searchText, setSearchText] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,7 +56,7 @@ const AllShopTable = () => {
     (item) =>
     (statusFilter ? item.status === statusFilter : true) &&
     (searchText
-      ? item.shopName.toLowerCase().includes(searchText.toLowerCase()) ||
+      ? item.customerName.toLowerCase().includes(searchText.toLowerCase()) ||
       item.id.toString().includes(searchText)
       : true)
   ).slice(startIndex, endIndex);
@@ -66,16 +65,16 @@ const AllShopTable = () => {
 
   const rows = filteredData.map((item) => (
     <Table.Tr key={item.key}>
-      <Table.Td><Center>{item.id}</Center></Table.Td>
-      <Table.Td>
-          <Flex align="center" gap={12}>
-            <Image src={item.shopImage} h={50}  {...stylex.props(styles.shopLogo)}/>
-            <Text >{item.shopName}</Text>
-          </Flex>
-      </Table.Td>
-      <Table.Td><Center>{item.productQuantity}</Center></Table.Td>
-      <Table.Td><Center>{item.orderQuantity}</Center></Table.Td>
-      <Table.Td>
+        <Table.Td><Center>{item.id}</Center></Table.Td>
+        <Table.Td>
+            <Flex align="center" gap={12}>
+                <Image src={item.customerImage} h={50}  {...stylex.props(styles.customerAva)}/>
+                <Text >{item.customerName}</Text>
+            </Flex>
+        </Table.Td>
+        <Table.Td><Center>{item.email}</Center></Table.Td>
+        <Table.Td><Center>{item.gender}</Center></Table.Td>
+        <Table.Td>
             <Center>
                 {!item.address ? 'NONE' : 
                     item.address.length > MAX_LENGTH 
@@ -84,29 +83,29 @@ const AllShopTable = () => {
                 }
             </Center>
         </Table.Td>
-      <Table.Td>
-      <Center>
-          {(() => {
-            let color = "";
-            switch (item.status) {
-              case "Ngừng hoạt động":
-                color = "red";
-                break;
-              case "Hoạt động":
-                color = "green";
-                break;
-              default:
-                break;
-            }
-            return <Badge variant="outline" color={color}>{item.status}</Badge>;
-          })()}
-        </Center>
-      </Table.Td>
-      <Table.Td>
+        <Table.Td>
         <Center>
-          <IconEye color="green" />
-        </Center>
-      </Table.Td>
+            {(() => {
+                let color = "";
+                switch (item.status) {
+                case "Ngừng hoạt động":
+                    color = "red";
+                    break;
+                case "Hoạt động":
+                    color = "green";
+                    break;
+                default:
+                    break;
+                }
+                return <Badge variant="outline" color={color}>{item.status}</Badge>;
+            })()}
+            </Center>
+        </Table.Td>
+        <Table.Td>
+            <Center>
+            <IconEye color="green" />
+            </Center>
+        </Table.Td>
     </Table.Tr>
   ));
 
@@ -117,18 +116,18 @@ const AllShopTable = () => {
       <div {...stylex.props(styles.searchHeader)}>
         <Flex align="center">
           <Text fw={700} size="xl">
-          Tất cả cửa hàng
+          Tất cả khách hàng
           </Text>
         </Flex>
         <Flex align="flex-end" gap={4}>
           <Input 
-            placeholder="Nhập ID hoặc tên cửa hàng" 
+            placeholder="Nhập ID hoặc tên khách hàng" 
             leftSection={<IconSearch size={16} />}
             onChange={(event) => setSearchText(event.currentTarget.value)}
           />
           <Select
             label="Lọc theo trạng thái"
-            placeholder="Chọn trạng thái cửa hàng"
+            placeholder="Chọn trạng thái khách hàng"
             data={['Hoạt động', 'Ngừng hoạt động']}
             clearable
             onChange={handleStatusFilterChange}
@@ -136,14 +135,14 @@ const AllShopTable = () => {
           />
         </Flex>
       </div>
-      <div {...stylex.props(styles.shopTable)} >
+      <div {...stylex.props(styles.customerTable)} >
         <Table>
           <Table.Thead>
               <Table.Tr>
               <Table.Th><Center>ID</Center></Table.Th>
-              <Table.Th>Cửa hàng</Table.Th>
-              <Table.Th><Center>Số sản phẩm</Center></Table.Th>
-              <Table.Th><Center>Số đơn hàng</Center></Table.Th>
+              <Table.Th>Tên</Table.Th>
+              <Table.Th><Center>Email</Center></Table.Th>
+              <Table.Th><Center>Giới tính</Center></Table.Th>
               <Table.Th><Center>Địa chỉ</Center></Table.Th>
               <Table.Th><Center>Trạng thái</Center></Table.Th>
               <Table.Th><Center>Hành động</Center></Table.Th>
@@ -168,7 +167,7 @@ const AllShopTable = () => {
   );
 };
 
-export default AllShopTable;
+export default AllCustomerTable;
 
 const styles = stylex.create({
   searchHeader: {
@@ -181,10 +180,10 @@ const styles = stylex.create({
     border: "2px solid #E5E7EB",
     boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
   },
-  shopLogo: {
+  customerAva: {
     borderRadius: "90px",
   },
-  shopTable: {          
+  customerTable: {          
     overflowX: "auto",
     backgroundColor: "#FFFFFF",
     margin: "10px 0px 60px 0px",

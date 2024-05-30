@@ -5,7 +5,7 @@ import {
   NavLink,
 } from "react-router-dom";
 import "./App_admin.css";
-import NavbarAdmin from "../../components/NavbarShop/NavbarAdmin";
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin";
 import { Input, Button, Flex } from "@mantine/core";
 import {
   IconLogout,

@@ -80,7 +80,7 @@ const InventoryTable = () => {
   return (
     <div>
       <div {...stylex.props(styles.searchHeader)}>
-        <Text fw={500} size="lg">
+        <Text fw={700} size="lg">
           Kho
         </Text>
         <Input 
@@ -130,6 +130,7 @@ const styles = stylex.create({
     borderRadius: "8px",
     display: "flex",
     justifyContent: "space-between",
+    alignItems: "center",
     border: "2px solid #E5E7EB",
     boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
   },

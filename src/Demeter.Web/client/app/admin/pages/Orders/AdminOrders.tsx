@@ -1,11 +1,11 @@
 import OrdersTable from "../../components/Table/TableOrders";
 import { Flex } from "@mantine/core";
 import Header from "../../components/Header";
-import Navbar_Shop from "../../components/Navbar/NavbarShop";
+import Navbar_Admin from "../../components/Navbar/NavbarAdmin";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
-  shopOrderPage: {
+  adminOrderPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -26,12 +26,12 @@ const styles = stylex.create({
 });
 
 
-const ShopOrders: React.FC = () => {
+const AdminOrders: React.FC = () => {
   
   return (
-    <Flex {...stylex.props(styles.shopOrderPage)}>
+    <Flex {...stylex.props(styles.adminOrderPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <Navbar_Admin />
       </div>
       <div {...stylex.props(styles.container)}>
         <Header />
@@ -43,4 +43,4 @@ const ShopOrders: React.FC = () => {
   );
 };
 
-export default ShopOrders;
+export default AdminOrders;

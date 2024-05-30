@@ -2,8 +2,8 @@ import { Card, Text,  Button,  Divider,  Flex,} from "@mantine/core";
 import { IconEdit, IconMail, IconMapPin, IconPhone, 
   IconPremiumRights, IconInbox, IconReceipt, IconShoppingBag} from "@tabler/icons-react";
 
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import Navbar_Shops from "../../components/NavbarShop/NavbarShop";
+import Header from "../../components/Header";
+import Navbar_Shops from "../../components/Navbar/NavbarShop";
 
 import * as stylex from "@stylexjs/stylex";
 import {styles} from './ShopPreview.stylex';
@@ -38,7 +38,7 @@ const ShopProfile: React.FC = () => {
           <Navbar_Shops />
         </div>
         <div {...stylex.props(styles.container)}>
-          <ShopHeader />
+          <Header />
           <div {...stylex.props(styles.profileContainer)}>
             <div {...stylex.props(styles.profileImage)}>
               <img

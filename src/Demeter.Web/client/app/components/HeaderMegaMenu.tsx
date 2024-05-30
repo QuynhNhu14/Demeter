@@ -14,28 +14,13 @@ export function HeaderMegaMenu() {
       close();
       setAuth(true);
   }
-
-  const hiddenRoutes = [
-    "/admin",
-    "/shop",
-    "/dashboard",
-    "/allproduct",
-    "/shop_allproduct",
-    "/allshop",
-    "/shop_orders",
-    "/manage_orders",
-    "/shop_dashboard",
-    "/addproduct",
-    "/inventory",
-    "/shopprofile",
-  ];
-
-  const hideNavbar = hiddenRoutes.includes(location.pathname);
-
+  const hideNavbar = window.location.pathname.startsWith("/shop") ||
+                      window.location.pathname.startsWith("/admin");
+  console.log({hideNavbar})  
+  console.log(window.location.pathname)  
   if (hideNavbar) {
-    return null;
+    return null;    
   }
-  
   return (
     <Paper shadow="sm" variant="gradient">
       <Group

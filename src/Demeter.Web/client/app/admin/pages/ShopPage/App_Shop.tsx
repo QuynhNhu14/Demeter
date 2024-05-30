@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Flex } from "@mantine/core";
-import Navbar_Shop from "../../admin/components/NavbarShop/NavbarShop";
-import ShopHeader from "../ShopPage/ShopHeader";
+import Navbar_Shop from "../../components/Navbar/NavbarShop";
+import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
@@ -13,7 +13,7 @@ const styles = stylex.create({
     flex: "2", 
     width: "100%"
   },
-  shopheader: {
+  Header: {
     flex: "9",
     width: "100%"
   }
@@ -61,8 +61,8 @@ export default function App_Shop() {
         <div {...stylex.props(styles.navbarShop)}>
           <Navbar_Shop />
         </div>
-        <div {...stylex.props(styles.shopheader)}>
-          <ShopHeader />
+        <div {...stylex.props(styles.Header)}>
+          <Header />
         </div>
       </Flex>
     </>

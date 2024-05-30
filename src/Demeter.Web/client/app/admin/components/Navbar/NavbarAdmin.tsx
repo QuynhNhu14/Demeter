@@ -2,27 +2,28 @@ import { useState } from "react";
 import {
   IconLayoutDashboard,
   IconBox,
-  IconTablePlus,
+  IconCategory2,
   IconBuildingWarehouse,
   IconReceipt,
-  IconReceiptRefund,
-  IconInfoCircle,
+  IconBuildingStore,
   IconGiftCard,
-  IconStar,
+  IconUser,
+  IconUsersGroup,
+
 } from "@tabler/icons-react";
 import { NavLink, Text } from '@mantine/core';
 import * as stylex from "@stylexjs/stylex";
 
 const data = [
-  { group: 'Chính', label: 'Tổng quan ', icon: IconLayoutDashboard, link: 'shop'},
-  { group: 'Quản lý sản phẩm', label: 'Tất cả sản phẩm', icon: IconBox, link: 'shop_allproduct'},
-  { group: 'Quản lý sản phẩm', label: 'Thêm Sản phẩm', icon: IconTablePlus, link: 'addproduct' },
-  { group: 'Quản lý sản phẩm', label: 'Kho', icon: IconBuildingWarehouse, link: 'inventory' },
-  { group: 'Quản lý đơn hàng', label: 'Đơn hàng', icon: IconReceipt, link: 'shop_orders' },
-  { group: 'Quản lý đơn hàng', label: 'Hoàn tiền', icon: IconReceiptRefund, link: 'shop_orders' },
-  { group: 'Quản lý cửa hàng', label: 'Thông tin', icon: IconInfoCircle, link: 'shopprofile' },
-  { group: 'Quản lý cửa hàng', label: 'Voucher', icon: IconGiftCard, link: 'shopprofile' },
-  { group: 'Quản lý cửa hàng', label: 'Review', icon: IconStar, link: 'shopprofile' },
+  { group: 'Chính', label: 'Tổng quan ', icon: IconLayoutDashboard, link: 'admin'},
+  { group: 'Quản lý sản phẩm', label: 'Sản phẩm', icon: IconBox, link: 'admin_products'},
+  { group: 'Quản lý sản phẩm', label: 'Danh mục', icon: IconCategory2, link: 'admin_categories'},
+  { group: 'Quản lý sản phẩm', label: 'Voucher', icon: IconGiftCard, link: 'admin_voucher' },
+  { group: 'Quản lý sản phẩm', label: 'Kho', icon: IconBuildingWarehouse, link: 'admin_inventory' },
+  { group: 'Quản lý đơn hàng', label: 'Đơn hàng', icon: IconReceipt, link: 'admin_orders' },
+  { group: 'Quản lý tài khoản', label: 'Cửa hàng', icon: IconBuildingStore, link: 'admin_shopaccount' },
+  { group: 'Quản lý tài khoản', label: 'Khách hàng', icon: IconUser, link: 'admin_customeraccount' },
+  { group: 'Quản lý tài khoản', label: 'Nhân viên', icon: IconUsersGroup, link: 'admin_customeraccount' },
 ];
 
 const Navbar_Admin: React.FC = () => {
