@@ -3,7 +3,7 @@ import { useNavigate, useLocation, NavLink } from "react-router-dom";
 import * as stylex from "@stylexjs/stylex";
 import { Button, Flex, Text } from "@mantine/core";
 import headerLogo from "../../../assets/header_logo.jpg";
-import { IconLogout, IconHome } from "@tabler/icons-react";
+import { IconLogout, IconHome, IconBuildingStore, IconUser } from "@tabler/icons-react";
 import { FuzzySearch } from "../../components/Search";
 
 export default function Header() {
@@ -40,6 +40,7 @@ export default function Header() {
   const toggleNavbar = () => {
     setShowNavbar(!showNavbar);
   };
+  const role = window.location.pathname.startsWith("/shop") ? "shop" : "admin";
 
   return (
     <Flex {...stylex.props(styles.Header)}>
@@ -80,13 +81,13 @@ export default function Header() {
             justify="center"
             align="center"
           >
-            <IconHome />
+            {role === "shop" ? <IconBuildingStore /> : <IconUser />}
           </Flex>
           <Flex direction="column">
             <Text fw={500} size="sm">
               Demeter
             </Text>
-            <Text fw={500} size="xs" c="dimmed">Cửa hàng</Text>
+            <Text fw={500} size="xs" c="dimmed">{role === "shop" ? "Cửa hàng" : "Admin"}</Text>
           </Flex>
         </Flex>
         <Flex  {...stylex.props(styles.header__logout)} justify="center" align="center">
