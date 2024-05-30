@@ -76,8 +76,8 @@ export const Shops = () => {
         gap="md"
         justify="space-between"
       >
-        {shopList.map((shop) => (
-          <div {...stylex.props(styles.item)} onClick={handleClick}>
+        {shopList.map((shop, key) => (
+          <div {...stylex.props(styles.item)} onClick={handleClick} key={key}>
             <img
               src={shop.logo}
               alt="shop logo"

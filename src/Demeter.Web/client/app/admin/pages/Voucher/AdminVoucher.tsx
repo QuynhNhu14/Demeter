@@ -1,14 +1,14 @@
-import OrdersTable from "../../components/Table/TableOrders";
+import VouchersTable from "../../components/Table/TableVoucher";
 import { Flex } from "@mantine/core";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
-import Navbar_Shops from "../../components/NavbarShop/NavbarShop";
+import Header from "../../components/Header";
+import Navbar_Admin from "../../components/Navbar/NavbarAdmin";
 import * as stylex from "@stylexjs/stylex";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUserSession } from "../../../hooks/useUserSession";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const styles = stylex.create({
-  shopOrderPage: {
+  adminVoucherPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -19,7 +19,7 @@ const styles = stylex.create({
     flex: "9", 
     width: "100%",
   },
-  order: {
+  voucher: {
     display: "flex",
     flexGrow: 1,
     flexDirection: "column",
@@ -29,7 +29,7 @@ const styles = stylex.create({
 });
 
 
-const ShopOrders: React.FC = () => {
+const AdminVouchers: React.FC = () => {
   const { loggedIn } = useUserSession();
   const navigate = useNavigate();
   
@@ -39,18 +39,18 @@ const ShopOrders: React.FC = () => {
     }
   }, [loggedIn]);
   return (
-    <Flex {...stylex.props(styles.shopOrderPage)}>
+    <Flex {...stylex.props(styles.adminVoucherPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shops />
+        <Navbar_Admin />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
-        <div  {...stylex.props(styles.order)}>
-          <OrdersTable />
+        <Header />
+        <div  {...stylex.props(styles.voucher)}>
+          <VouchersTable />
         </div>
       </div>
     </Flex>
   );
 };
 
-export default ShopOrders;
+export default AdminVouchers;

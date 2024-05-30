@@ -8,6 +8,9 @@ import ShopHeader from "../../../pages/ShopPage/ShopHeader";
 import * as stylex from "@stylexjs/stylex";
 import ShopOverviewCard from "../../components/Summary_Card/ShopOverviewCard";
 import OrderStatusCard from "../../components/Summary_Card/OrderStatusCard";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   dashboardPage: {
@@ -37,6 +40,14 @@ const styles = stylex.create({
 });
 
 const Dashboard: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   // Code của thành phần Navbar ở đây
   return (
     <Flex {...stylex.props(styles.dashboardPage)}>

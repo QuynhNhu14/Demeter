@@ -58,7 +58,7 @@ public class AppUserStore : IUserStore<User>,
 
     public Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken)
     {
-        return _userRepository.Get(new UserQueryOptions { IncludeTokens = true })
+        return _userRepository.Get(new UserQueryOptions { IncludeTokens = true, IncludeRoles = true })
             .FirstOrDefaultAsync(x => x.Id == Guid.Parse(userId), cancellationToken: cancellationToken);
     }
 

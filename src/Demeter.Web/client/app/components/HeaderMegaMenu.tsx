@@ -3,34 +3,14 @@ import { Group, Image, ActionIcon, Tabs, Paper } from "@mantine/core";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import headerLogo2 from "../../assets/header_logo2.jpg";
 import { FuzzySearch } from "./Search";
-import { useState } from "react";
+import { Login } from "./LogIn";
 
 export function HeaderMegaMenu() {
   const navigate = useNavigate();
   const { tabValue } = useParams();
-
-  const [auth, setAuth] = useState(false);
-  const closeSetAuth = () => {
-      close();
-      setAuth(true);
-  }
-
-  const hiddenRoutes = [
-    "/admin",
-    "/shop",
-    "/dashboard",
-    "/allproduct",
-    "/shop_allproduct",
-    "/allshop",
-    "/shop_orders",
-    "/manage_orders",
-    "/shop_dashboard",
-    "/addproduct",
-    "/inventory",
-    "/shopprofile",
-  ];
-
-  const hideNavbar = hiddenRoutes.includes(location.pathname);
+  
+  const hideNavbar = window.location.pathname.startsWith("/shop") ||
+  window.location.pathname.startsWith("/admin");
 
   if (hideNavbar) {
     return null;
@@ -55,7 +35,7 @@ export function HeaderMegaMenu() {
         <Group gap={4} align="center" >
           <Tabs value={tabValue} onChange={(value) => navigate(`/${value}`)}>
             <Tabs.List>
-              <Tabs.Tab value="shops" h={60}>Cửa hàng</Tabs.Tab>
+              <Tabs.Tab value="vendors" h={60}>Cửa hàng</Tabs.Tab>
               <Tabs.Tab value="voucher" >Mã giảm giá</Tabs.Tab>
               <Tabs.Tab value="faq">FAQ</Tabs.Tab>
               <Tabs.Tab value="contact">Liên hệ</Tabs.Tab>

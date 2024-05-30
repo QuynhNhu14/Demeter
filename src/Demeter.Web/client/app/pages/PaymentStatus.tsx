@@ -1,10 +1,20 @@
 import { Text, Title, Button, Container } from "@mantine/core";
 
 import { IconCircleCheck, IconCircleX } from "@tabler/icons-react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../hooks/useUserSession";
 
 export function PaymentStatus({ success = false }: { success?: boolean }) {
   const navigate = useNavigate();
+  const { loggedIn } = useUserSession();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   return success ? (
     <Container py="xl">
       <Container align="center">

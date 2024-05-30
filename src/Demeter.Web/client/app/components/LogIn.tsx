@@ -14,9 +14,30 @@ import {
   Title,
 } from '@mantine/core';
 import { FacebookButton, GoogleButton } from './GoogleFacebookButton';
+import { login, signUp } from '../services/auth';
+import { useNavigate } from 'react-router-dom';
+import { useHttp } from '../hooks';
+import { IconBell, IconShoppingCart, IconUser } from '@tabler/icons-react';
+import { useUserSession } from '../hooks/useUserSession';
+import { Authorization } from '../models/users';
 
 export function Login(props: PaperProps) {
+  const { loggedIn, refresh } = useUserSession();
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const { setAuthToken } = useHttp();
+  const navigate = useNavigate();
   const [type, toggle] = useToggle(['Đăng nhập', 'Đăng ký']);
+
+   const handleAuth = async (data: Authorization | null) => {
+    if (data?.accessToken) {
+      setAuthToken(data.accessToken);
+      await refresh();
+      close();
+      navigate('/profile');
+    }
+  }
+
   const form = useForm({
     initialValues: {
       email: '',
@@ -30,6 +51,16 @@ export function Login(props: PaperProps) {
       password: (val) => (val.length <= 6 ? 'Mật khẩu phải có ít nhất 6 ký tự' : null),
     },
   });
+
+  const handleLogin = async (values: any) => {
+    const data = await login({username: values.name, password: values.password});
+    handleAuth(data);
+  };
+
+  const handleSignup = async (values: any) => {
+    const data = await signUp({username: values.name, email: values.email, password: values.password});
+    handleAuth(data);
+  };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '90vh'}}>
@@ -97,7 +128,34 @@ export function Login(props: PaperProps) {
             </Button>
           </Group>
         </form>
-      </Paper>
-    </div>
+      </Modal>
+      <ActionIcon
+        onClick={() => loggedIn ? navigate("/cart") : open()}
+        size="lg"
+        variant="transparent"
+        c={loggedIn ? "green" : "gray"}
+      >
+        <IconShoppingCart />
+      </ActionIcon>
+      <ActionIcon
+        onClick={() => loggedIn ? navigate("/notification"): open()}
+        size="lg"
+        variant="transparent"
+        c={loggedIn ? "green" : "gray"}
+      >
+        <IconBell/>
+      </ActionIcon>
+      <Button
+        onClick={() => loggedIn ? navigate("/profile") : open()}
+        size="lg"
+        p="0"
+        m="0"
+        variant="transparent"
+        c={loggedIn ? "green" : "gray"}
+        leftSection={<IconUser />}
+      >
+        {!loggedIn && "Đăng nhập"}
+      </Button>
+    </>
   );
 }

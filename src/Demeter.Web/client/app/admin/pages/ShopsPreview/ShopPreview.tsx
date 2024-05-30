@@ -7,8 +7,19 @@ import Navbar_Shops from "../../components/NavbarShop/NavbarShop";
 
 import * as stylex from "@stylexjs/stylex";
 import {styles} from './ShopPreview.stylex';
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const ShopProfile: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   // Dữ liệu giả mạo
   const UserData = {
     avatar:

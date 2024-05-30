@@ -3,8 +3,19 @@ import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import * as stylex from "@stylexjs/stylex";
 import { useDisclosure } from '@mantine/hooks';
 import { PasswordInput, Stack } from '@mantine/core';  
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 export const ChangePassword: React.FC<{ shopId?: string }> = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   const [visible, { toggle }] = useDisclosure(false);
 
   return (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Input,
   Button,
@@ -11,11 +11,22 @@ import {
 import { useForm } from "@mantine/form";
 import { Dropzone } from "@mantine/dropzone";
 import { IconUpload } from "@tabler/icons-react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 // import { IconUpload } from '@tabler/icons-react';
 
 const { Option } = Select;
 
 const ProductForm: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   const form = useForm({
     initialValues: { name: "", email: "", age: 0 },
 

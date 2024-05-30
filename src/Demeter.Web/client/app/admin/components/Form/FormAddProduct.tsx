@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   MultiSelect,
@@ -14,15 +14,26 @@ import { IconUpload } from "@tabler/icons-react";
 import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import * as stylex from "@stylexjs/stylex";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 interface FormValues {
   mainImage: File | null;
   subImages: File[];
 }
 
-const ProductForm: React.FC = () => {
+const FormAddProduct: React.FC = () => {
   const [featuredFileList, setFeaturedFileList] = useState<any[]>([]);
   const [galleryFileList, setGalleryFileList] = useState<any[]>([]);
+
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
 
   const form = useForm<FormValues>({
     initialValues: { mainImage: null, subImages: [] },
@@ -124,7 +135,7 @@ const ProductForm: React.FC = () => {
                   p={0}
                   maxFileSize={2048}
                   accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]}
-                  onDrop={(file) => form.setFieldValue('mainImage', file)}
+                  onDrop={(file) => form.setFieldValue('mainImage', file[0])}
                   onReject={() => form.setFieldError('subImages', 'Select images only')}
                   {...stylex.props(styles.dropzone)}
                 >
@@ -259,7 +270,7 @@ const ProductForm: React.FC = () => {
   );
 };
 
-export default ProductForm;
+export default FormAddProduct;
 
 const styles = stylex.create({
   productForm: {

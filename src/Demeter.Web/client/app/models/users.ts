@@ -17,6 +17,16 @@ export interface User {
   address: Address;
 }
 
+export interface CurrentUser {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  avatarUrl: string;
+  roles: string[];
+  phonenumber: string;
+}
+
 export interface Address {
   country?: string;
   addressLines?: string;

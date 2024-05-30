@@ -1,36 +1,57 @@
-import { Table, Group, Text, ActionIcon, Box, Flex, Pagination, Stack, Button } from '@mantine/core';
+import { Table, Group, Text, ActionIcon, Box, Flex, Pagination, Stack, Button, Modal } from '@mantine/core';
 import {
   IconTrash,
   IconReceipt,
 } from '@tabler/icons-react';
+import { useEffect, useState } from 'react';
+import ProductForm from '../admin/components/Form/FormAddProduct';
+import * as stylex from '@stylexjs/stylex';
+import {useUserSession} from "../hooks/useUserSession.ts";
+import { useNavigate } from 'react-router-dom';
 
-const data = [
-  {
-    day: '28/04/2024',
-    des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-    link: '/',
-  },
-  {
-    day: '27/04/2024',
-    des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-    link: '/home',
-  },
-  {
-    day: '26/04/2024',
-    des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-    link: '/',
-  },
-  {
-    day: '25/04/2024',
-    des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-    link: '/',
-  },
-];
+const generateData = (count: number) => {
+  const data = [];
+  for (let i = 0; i <= count; i++) {
+    data.push({
+      key: i,
+      day: `28/04/2024`,
+      des: `Đơn hàng ${906524241 + i} đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.`,
+      link: `/`,
+    });
+  }
+  return data;
+};
+
+const dataSource = generateData(50);
+
 
 export function Notification() {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
 
-  const rows = data.map((item) => (
-    <Table.Tr key={item.day}>
+  const [currentPage, setCurrentPage] = useState(1);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const pageSize = 10;
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = currentPage * pageSize;
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+
+
+  const handleChangePage = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const data = dataSource.slice(startIndex, endIndex);
+  
+  
+
+  const rows = data.map((item, key) => (
+    <Table.Tr key={key}>
       <Table.Td>
         <Text fz="sm">{item.day}</Text>
       </Table.Td>
@@ -69,7 +90,25 @@ export function Notification() {
                 </Table>
             </Table.ScrollContainer>
         </Box>
-        <Pagination total={10} radius="md" />
+        <Flex justify="center">
+          <Pagination
+            type="primary"
+            current={currentPage}
+            total={dataSource.length/pageSize}
+            pagesize={pageSize}
+            onChange={handleChangePage}
+            showsizechanger="false"
+            {...stylex.props(styles.pagination)}
+          />
+            <Modal 
+              centered size="xl"
+              opened={editModalVisible}  
+              onClose={() => setEditModalVisible(false)} 
+              zIndex={1001}
+              >
+                <ProductForm />
+            </Modal>
+        </Flex>
     </Stack>
     
   );

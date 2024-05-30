@@ -1,14 +1,15 @@
 import { Flex } from "@mantine/core";
-import Navbar_Shop from "../components/NavbarShop/NavbarShop";
-import InventoryTable from "../components/Table/TableInventory";
+
+import InventoryTable from "../../components/Table/TableInventory";
 import * as stylex from "@stylexjs/stylex";
 import Header from "../../components/Header";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserSession } from "../../../hooks/useUserSession";
+import { useEffect } from "react";
+import Navbar_Admin from "../../components/NavbarShop/NavbarShop";
 
 const styles = stylex.create({
-  shopInventoryPage:{
+  adminInventoryPage:{
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -35,7 +36,7 @@ const styles = stylex.create({
 
 });
 
-export const Inventory: React.FC = () => {
+export const AdminInventory: React.FC = () => {
   const { loggedIn } = useUserSession();
   const navigate = useNavigate();
   
@@ -46,12 +47,12 @@ export const Inventory: React.FC = () => {
   }, [loggedIn]);
   // Code của thành phần Navbar ở đây
   return (
-    <Flex {...stylex.props(styles.shopInventoryPage)}>
+    <Flex {...stylex.props(styles.adminInventoryPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <Navbar_Admin />
       </div>
       <div {...stylex.props(styles.container)}>
-        <ShopHeader />
+        <Header />
         <div  {...stylex.props(styles.inventory)}>
           <InventoryTable />
         </div>

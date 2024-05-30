@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
 import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
 
@@ -12,6 +12,7 @@ import { OrderForm } from '../../components/OrderForm';
 import {styles} from './Cart.stylex';
 import * as stylex from '@stylexjs/stylex';
 import { Vouchers } from '../../../models/orders';
+import { useUserSession } from '../../../hooks/useUserSession';
 
 
 interface cartInfoData {
@@ -176,6 +177,15 @@ const Cart: React.FC = () => {
 
   const [opened, { open, close }] = useDisclosure(false);
 
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -228,11 +238,6 @@ const Cart: React.FC = () => {
     }
     fetchData();
   }, []);
-
-
-  // useState(() => {
-  //   setVouchers(VoucherSample);
-  // });
 
   const handleApplyVoucher = () => {
     close();

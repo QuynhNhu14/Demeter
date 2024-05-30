@@ -1,13 +1,48 @@
 import {  Flex } from "@mantine/core";
 import NavbarAdmin from "../../components/NavbarShop/NavbarAdmin";
 import ShopOverviewCard from "../../components/Summary_Card/ShopOverviewCard";
-import Summary_Card from "../../components/Summary_Card/Summary_Card";
-import Summary_CardTwo from "../../components/Summary_Card/Summary_CardTwo";
-import SaleHistoryChart from "../../components/Table/TableChart";
-import RecentOrdersTable from "../../components/Table/TableRecentOrders";
-import AdminHeader from "../AdminPage/AdminHeader";
-import styles from "./Dashboard.module.css";
-const Dashboardadmin: React.FC = () => {
+import OrderStatusCard from "../../components/Summary_Card/OrderStatusCard";
+import TableAllProduct from "../../components/Table/TableAllProduct";
+import { useUserSession } from "../../../hooks/useUserSession";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
+const styles = stylex.create({
+  dashboardPage: {
+    backgroundColor: "#f3f4f6"
+  },
+  navbar:{
+    flex: "2", 
+    width: "100%",
+  },
+  container: {
+    flex: "9", 
+    width: "100%",
+  },
+  dashboard: {
+    display: "flex",
+    width: "100%",
+    flexDirection: "column",
+    padding: "10px 5%",
+    backgroundColor: "#f3f4f5",
+  },
+  item: {
+    margin: "10px 0",
+    border: "2px solid #e5e7eb",
+    borderRadius: "8px",
+    boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
+  }
+});
+
+const AdminDashboard: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   // Code của thành phần Navbar ở đây
   return (
     <>

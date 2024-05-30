@@ -1,14 +1,14 @@
-import {  Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
-import AllProductTable from "../../components/Table/TableAllProduct";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
+import CategoryTable from "../components/Table/TableCategory";
+import { Flex } from "@mantine/core";
+import Header from "../components/Header";
+import Navbar_Admin from "../components/Navbar/NavbarAdmin";
 import * as stylex from "@stylexjs/stylex";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserSession } from "../../../hooks/useUserSession";
+import { useUserSession } from "../../hooks/useUserSession";
 
 const styles = stylex.create({
-  shopProductPage: {
+  adminCategoryPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -19,7 +19,7 @@ const styles = stylex.create({
     flex: "9", 
     width: "100%",
   },
-  product: {
+  category: {
     display: "flex",
     flexGrow: 1,
     flexDirection: "column",
@@ -28,7 +28,8 @@ const styles = stylex.create({
   }
 });
 
-const ShopAllProduct: React.FC = () => {
+
+const AdminCategory: React.FC = () => {
   const { loggedIn } = useUserSession();
   const navigate = useNavigate();
   
@@ -37,22 +38,19 @@ const ShopAllProduct: React.FC = () => {
       navigate("/home");
     }
   }, [loggedIn]);
-  /* Code của thành phần Navbar ở đây*/ 
   return (
-  <>
-    <Flex {...stylex.props(styles.ShopAllProductPage)}>
+    <Flex {...stylex.props(styles.adminCategoryPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <Navbar_Admin />
       </div>
-      <div  {...stylex.props(styles.container)}>
-        <ShopHeader />
-        <div {...stylex.props(styles.product)}>
-          <AllProductTable />
+      <div {...stylex.props(styles.container)}>
+        <Header />
+        <div  {...stylex.props(styles.category)}>
+          <CategoryTable />
         </div>
       </div>
     </Flex>
-  </>
   );
 };
 
-export default ShopAllProduct;
+export default AdminCategory;

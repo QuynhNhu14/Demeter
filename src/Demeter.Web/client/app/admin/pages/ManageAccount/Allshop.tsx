@@ -1,14 +1,14 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/NavbarShop/NavbarShop";
-import AllProductTable from "../../components/Table/TableAllProduct";
-import ShopHeader from "../../../pages/ShopPage/ShopHeader";
+import NavbarAdmin from "../../components/Navbar/NavbarAdmin";
+import AllShopTable from "../../components/Table/TableAllShop";
+import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUserSession } from "../../../hooks/useUserSession";
+import { useEffect } from "react";
 
 const styles = stylex.create({
-  shopProductPage: {
+  adminManageShopPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -19,7 +19,7 @@ const styles = stylex.create({
     flex: "9", 
     width: "100%",
   },
-  product: {
+  shop: {
     display: "flex",
     flexGrow: 1,
     flexDirection: "column",
@@ -28,7 +28,7 @@ const styles = stylex.create({
   }
 });
 
-const ShopAllProduct: React.FC = () => {
+const AllShop: React.FC = () => {
   const { loggedIn } = useUserSession();
   const navigate = useNavigate();
   
@@ -37,22 +37,19 @@ const ShopAllProduct: React.FC = () => {
       navigate("/home");
     }
   }, [loggedIn]);
-  /* Code của thành phần Navbar ở đây*/ 
   return (
-  <>
-    <Flex {...stylex.props(styles.ShopAllProductPage)}>
+    <Flex {...stylex.props(styles.adminManageShopPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <NavbarAdmin />
       </div>
-      <div  {...stylex.props(styles.container)}>
-        <ShopHeader />
-        <div {...stylex.props(styles.product)}>
-          <AllProductTable />
+      <div {...stylex.props(styles.container)}>
+        <Header />
+        <div  {...stylex.props(styles.shop)}>
+          <AllShopTable />
         </div>
       </div>
     </Flex>
-  </>
   );
 };
 
-export default ShopAllProduct;
+export default AllShop;

@@ -2,6 +2,9 @@ import { Flex } from "@mantine/core";
 import { CustomerInfo } from "./CustomerInfo";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   ProfilePage: {
@@ -19,6 +22,14 @@ const styles = stylex.create({
 });
 
 export const Profile: React.FC<{ shopId?: string }> = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   return (
     <div {...stylex.props(styles.ProfilePage)}>
       <Flex>
