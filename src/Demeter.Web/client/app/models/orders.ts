@@ -1,5 +1,5 @@
 import { Product } from "./products";
-import { Account } from "./users";
+import { User } from "./users";
 
 export interface OrderItem {
   id: number;
@@ -10,7 +10,7 @@ export interface OrderItem {
 
 export interface Orders {
   id: string;
-  account: Account;
+  account: User;
   items?: OrderItem[];
   totalPrice: number;
 }

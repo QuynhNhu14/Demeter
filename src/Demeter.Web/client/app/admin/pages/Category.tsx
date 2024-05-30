@@ -1,11 +1,11 @@
-import OrdersTable from "../../components/Table/TableOrders";
+import CategoryTable from "../components/Table/TableCategory";
 import { Flex } from "@mantine/core";
-import Header from "../../components/Header";
-import Navbar_Shop from "../../components/Navbar/NavbarShop";
+import Header from "../components/Header";
+import Navbar_Admin from "../components/Navbar/NavbarAdmin";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
-  shopOrderPage: {
+  adminCategoryPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -16,7 +16,7 @@ const styles = stylex.create({
     flex: "9", 
     width: "100%",
   },
-  order: {
+  category: {
     display: "flex",
     flexGrow: 1,
     flexDirection: "column",
@@ -26,21 +26,21 @@ const styles = stylex.create({
 });
 
 
-const ShopOrders: React.FC = () => {
+const AdminCategory: React.FC = () => {
   
   return (
-    <Flex {...stylex.props(styles.shopOrderPage)}>
+    <Flex {...stylex.props(styles.adminCategoryPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <Navbar_Admin />
       </div>
       <div {...stylex.props(styles.container)}>
         <Header />
-        <div  {...stylex.props(styles.order)}>
-          <OrdersTable />
+        <div  {...stylex.props(styles.category)}>
+          <CategoryTable />
         </div>
       </div>
     </Flex>
   );
 };
 
-export default ShopOrders;
+export default AdminCategory;

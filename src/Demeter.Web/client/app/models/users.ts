@@ -1,14 +1,5 @@
-import { OrderItem } from "./orders";
-
-export interface Account {
-  id: string;
-  name: string;
-  password?: string;
-  user?: User;
-  carts?: OrderItem[];
-}
-
 export interface User {
+  accessToken: User | null | undefined;
   id: string;
   fullName?: string;
   gender: number;
@@ -25,10 +16,21 @@ export interface Address {
   postcode?: string;
 }
 
-export interface ShopAccount {
-  id: string;
-  name?: string;
-  password?: string;
-  user: User;
-  type: number
+export interface UserLogin {
+  username: string;
+  password: string;
+  email?: string;
+  terms?: boolean;
+}
+
+export interface Authorization{
+  accessToken: string;
+  expiresIn: number;
+}
+
+export interface signup{
+  username: string;
+  password: string;
+  email: string;
+  terms: boolean;
 }

@@ -6,11 +6,10 @@ import {
 import { useHttp } from "../hooks";
 
 const baseUrl = "/stripe";
-const https = useHttp();
 
 export async function addStripeCustomer(customer: AddStripeCustomer) {
   const url = `${baseUrl}/customer/add`;
-  const { data, error } = await https.post<AddStripeCustomer>(url, customer);
+  const { data, error } = await useHttp().post<AddStripeCustomer>(url, customer);
 
   if (error) {
     console.error("Error: ", error);
@@ -22,7 +21,7 @@ export async function addStripeCustomer(customer: AddStripeCustomer) {
 
 export async function addStripePayment() {
   const url = `${baseUrl}/payment/add`;
-  const { data, error } = await https.post<AddStripePayment>(url);
+  const { data, error } = await useHttp().post<AddStripePayment>(url);
 
   if (error) {
     console.error("Error: ", error);
@@ -35,7 +34,7 @@ export async function createCheckoutSession(
   request: CreateCheckoutSessionStripeRequest[]
 ) {
   const url = `${baseUrl}/create-checkout-session`;
-  const { data, error } = await https.post<string>(url, request);
+  const { data, error } = await useHttp().post<string>(url, request);
 
   if (error) {
     console.error("Error: ", error);

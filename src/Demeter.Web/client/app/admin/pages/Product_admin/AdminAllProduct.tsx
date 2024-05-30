@@ -1,11 +1,11 @@
 import {  Flex } from "@mantine/core";
-import Navbar_Shop from "../../components/Navbar/NavbarShop";
+import Navbar_Admin from "../../components/Navbar/NavbarAdmin";
 import AllProductTable from "../../components/Table/TableAllProduct";
 import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
 
 const styles = stylex.create({
-  ShopAllProductPage: {
+  AdminAllProductPage: {
     backgroundColor: "#f3f4f6"
   },
   navbar:{
@@ -25,11 +25,11 @@ const styles = stylex.create({
   }
 });
 
-const ShopAllProduct: React.FC = () => (
+const AdminAllProduct: React.FC = () => (
   /* Code của thành phần Navbar ở đây*/ <>
-    <Flex {...stylex.props(styles.ShopAllProductPage)}>
+    <Flex {...stylex.props(styles.AdminAllProductPage)}>
       <div {...stylex.props(styles.navbar)}>
-        <Navbar_Shop />
+        <Navbar_Admin />
       </div>
       <div  {...stylex.props(styles.container)}>
         <Header />
@@ -41,4 +41,4 @@ const ShopAllProduct: React.FC = () => (
   </>
 );
 
-export default ShopAllProduct;
+export default AdminAllProduct;

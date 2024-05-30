@@ -6,7 +6,7 @@ import headerLogo from "../../../assets/header_logo.jpg";
 import { IconLogout, IconHome } from "@tabler/icons-react";
 import { FuzzySearch } from "../../components/Search";
 
-export default function ShopHeader() {
+export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
   const [firstRender, setFirstRender] = useState(true);
@@ -42,7 +42,7 @@ export default function ShopHeader() {
   };
 
   return (
-    <Flex {...stylex.props(styles.ShopHeader)}>
+    <Flex {...stylex.props(styles.Header)}>
       <Flex {...stylex.props(styles.headerSection1)} >
         <img
           src={headerLogo}
@@ -76,7 +76,7 @@ export default function ShopHeader() {
           gap="sm"
         >
           <Flex
-             {...stylex.props(styles.shopLogo)}
+             {...stylex.props(styles.logo)}
             justify="center"
             align="center"
           >
@@ -101,7 +101,7 @@ export default function ShopHeader() {
 
 
 const styles = stylex.create({
-  ShopHeader: {
+  Header: {
     position: 'fixed',
     top: '0',
     left: '0',
@@ -139,7 +139,7 @@ const styles = stylex.create({
     borderRadius: '20px',
     fontWeight: '500',
   },
-  shopLogo:{
+  logo:{
     width: "40px",
     height: "40px",
     borderRadius: "100px",

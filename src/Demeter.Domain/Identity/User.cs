@@ -22,13 +22,13 @@ public class User : JsonBaseEntity<Guid>
 
     public bool EmailConfirmed { get; set; }
 
-    public string PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }= string.Empty;
 
     public bool PhoneNumberConfirmed { get; set; }
 
     public bool TwoFactorEnabled { get; set; }
 
-    public string ConcurrencyStamp { get; set; }
+    public string ConcurrencyStamp { get; set; } = string.Empty;
 
     public string SecurityStamp { get; set; }
 
