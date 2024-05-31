@@ -18,7 +18,6 @@ import { FacebookButton, GoogleButton } from './GoogleFacebookButton';
 import { login, signUp } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import { useHttp } from '../hooks';
-import { useState } from 'react';
 import { IconBell, IconShoppingCart, IconUser } from '@tabler/icons-react';
 
 export function Login(props: PaperProps) {

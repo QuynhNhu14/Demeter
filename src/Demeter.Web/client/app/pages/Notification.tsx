@@ -7,29 +7,6 @@ import { useState } from 'react';
 import ProductForm from '../admin/components/Form/FormAddProduct';
 import * as stylex from '@stylexjs/stylex';
 
-// const data = [
-//   {
-//     day: '28/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-//   {
-//     day: '27/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/home',
-//   },
-//   {
-//     day: '26/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-//   {
-//     day: '25/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-// ];
-
 const generateData = (count: number) => {
   const data = [];
   for (let i = 0; i <= count; i++) {
