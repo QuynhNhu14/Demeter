@@ -49,7 +49,7 @@ const AllShopTable = () => {
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   };
-  const handleStatusFilterChange = (value) => {
+  const handleStatusFilterChange = (value: any) => {
     setStatusFilter(value);
   };
 
@@ -124,7 +124,7 @@ const AllShopTable = () => {
           <Input 
             placeholder="Nhập ID hoặc tên cửa hàng" 
             leftSection={<IconSearch size={16} />}
-            onChange={(event) => setSearchText(event.currentTarget.value)}
+            onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
           <Select
             label="Lọc theo trạng thái"

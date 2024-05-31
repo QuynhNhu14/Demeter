@@ -3,6 +3,9 @@ import Navbar_Shop from "../../components/Navbar/NavbarShop";
 import InventoryTable from "../../components/Table/TableInventory";
 import * as stylex from "@stylexjs/stylex";
 import Header from "../../components/Header";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   shopInventoryPage:{
@@ -33,6 +36,14 @@ const styles = stylex.create({
 });
 
 export const Inventory: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   // Code của thành phần Navbar ở đây
   return (
     <Flex {...stylex.props(styles.shopInventoryPage)}>

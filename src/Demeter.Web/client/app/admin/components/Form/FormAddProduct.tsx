@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   MultiSelect,
@@ -9,48 +9,48 @@ import {
   CloseButton,
   Center,
   Flex,
+  Group,
+  rem
 } from "@mantine/core";
-import { IconUpload } from "@tabler/icons-react";
-import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
+import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
+import { Dropzone, MIME_TYPES, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import * as stylex from "@stylexjs/stylex";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 interface FormValues {
-  mainImage: File | null;
-  subImages: File[];
+  image: File[];
+  name: string;
+  categories: string[];
+  description: string;
+  price: number;
+  quantity: number;
 }
 
-const ProductForm: React.FC = () => {
-  const [featuredFileList, setFeaturedFileList] = useState<any[]>([]);
-  const [galleryFileList, setGalleryFileList] = useState<any[]>([]);
+const AddProductForm: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   const form = useForm<FormValues>({
-    initialValues: { mainImage: null, subImages: [] },
+    initialValues: { image: [], name: "", categories: [], description: "", price: 0, quantity: 0},
   });
 
-  const selectedMainImage = form.values.mainImage ? (
-    <Text key={form.values.mainImage.name}>
-      <b>{form.values.mainImage.name}</b> ({(form.values.mainImage.size / 1024).toFixed(2)} kb)
-      <CloseButton
-        size="xs"
-        onClick={() =>
-          form.setFieldValue(
-            'mainImage',
-            null
-          )
-        }
-      />
-    </Text>) : null
-
-  const selectedSubImages = form.values.subImages.map((file, index) => (
+  const selectedImages = form.values.image.map((file, index) => (
     <Text key={file.name}>
       <b>{file.name}</b> ({(file.size / 1024).toFixed(2)} kb)
       <CloseButton
         size="xs"
         onClick={() =>
           form.setFieldValue(
-            'subImages',
-            form.values.subImages.filter((_, i) => i !== index)
+            'image',
+            form.values.image.filter((_, i) => i !== index)
           )
         }
       />
@@ -60,38 +60,10 @@ const ProductForm: React.FC = () => {
   const handleOnSubmit = (values: any) => {
     // Xử lý logic khi submit form
     console.log("Submitted values:", values);
+    console.log("Submitted form:", form);
   };
 
-  const handleFeaturedFileChange = (info: any) => {
-    let fileList = [...info.fileList];
 
-    // Limit to only one uploaded file
-    fileList = fileList.slice(-1);
-
-    setFeaturedFileList(fileList);
-  };
-
-  const handleGalleryFileChange = (info: any) => {
-    let fileList = [...info.fileList];
-
-    // Limit the number of uploaded files to a maximum of 10
-    fileList = fileList.slice(0, 10);
-
-    setGalleryFileList(fileList);
-  };
-
-  // tslint:disable-unused-variable
-  const featuredUploaderProps = {
-    fileList: featuredFileList,
-    beforeUpload: () => false,
-    onChange: handleFeaturedFileChange,
-  };
-  // tslint:disable-unused-variable
-  const galleryUploaderProps = {
-    fileList: galleryFileList,
-    beforeUpload: () => false,
-    onChange: handleGalleryFileChange,
-  };
 
   return (
     <div {...stylex.props(styles.productForm)}>
@@ -106,7 +78,7 @@ const ProductForm: React.FC = () => {
             <Flex align="flex-start" justify="space-between">
               <div {...stylex.props(styles.importImageTitle)}>
                 <Text fw={700} size="xl">
-                  Hình ảnh nổi bật
+                  Hình ảnh sản phẩm
                 </Text>
                 <div>
                   <Text>
@@ -120,135 +92,100 @@ const ProductForm: React.FC = () => {
               </div>
               <div {...stylex.props(styles.importImageContainer)}>
                 <Dropzone
-                  h={120}
-                  p={0}
-                  maxFileSize={2048}
-                  accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]}
-                  onDrop={(file) => form.setFieldValue('mainImage', file)}
-                  onReject={() => form.setFieldError('subImages', 'Select images only')}
-                  {...stylex.props(styles.dropzone)}
-                >
-                  <Center h={120}>
-                    <Dropzone.Idle><IconUpload />Tải lên hình ảnh hoặc kéo và thả PNG, JPG</Dropzone.Idle>
-                    <Dropzone.Accept><IconUpload />Tải lên hình ảnh hoặc kéo và thả PNG, JPG</Dropzone.Accept>
-                    <Dropzone.Reject>Files are invalid</Dropzone.Reject>
-                  </Center>
-                </Dropzone>
+                    h={120}
+                    p={0}
+                    onDrop={(files) => form.setFieldValue('image', files)}
+                    onReject={(files) => console.log('rejected files', files)}
+                    maxSize={5 * 1024 ** 2}
+                    accept={IMAGE_MIME_TYPE}
+                    >
+                    <Group justify="center" gap="xl" h={120} style={{ pointerEvents: 'none' }}>
+                        <Dropzone.Accept>
+                        <IconUpload
+                            style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-blue-6)' }}
+                            stroke={1.5}
+                        />
+                        </Dropzone.Accept>
+                        <Dropzone.Reject>
+                        <IconX
+                            style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-red-6)' }}
+                            stroke={1.5}
+                        />
+                        </Dropzone.Reject>
+                        <Dropzone.Idle>
+                        <IconPhoto
+                            style={{ width: rem(52), height: rem(52), color: 'var(--mantine-color-dimmed)' }}
+                            stroke={1.5}
+                        />
+                        </Dropzone.Idle>
+
+                        <div>
+                        <Text size="xl" inline>
+                            Drag images here or click to select files
+                        </Text>
+                        <Text size="sm" c="dimmed" inline mt={7}>
+                            Attach as many files as you like, each file should not exceed 5mb
+                        </Text>
+                        </div>
+                    </Group>
+                    </Dropzone>
                   {form.errors.files && (
                     <Text c="red" mt={5}>
                       {form.errors.files}
                     </Text>
                   )}
 
-                  {form.values.mainImage && (
+                  {form.values.image && (
                     <>
-                      {selectedMainImage}
+                      {selectedImages}
                     </>
                   )}  
               </div>
             </Flex>
-            <Divider dashed />
-          
-            <Flex justify="space-between" align="flex-start">
-              <div {...stylex.props(styles.importImageTitle)}>
-                <Text fw={700} size="xl">
-                  Các ảnh khác
-                </Text>
-                <div>
-                  <Text>
-                    Tải lên hình ảnh đặc trưng sản phẩm của bạn ở đây. Kích thước
-                    hình ảnh không được vượt quá{" "}
-                    <Text fw={700}>
-                      2048 MB
-                    </Text>
-                  </Text>
-                </div>
-              </div>
-              <div {...stylex.props(styles.importImageContainer)}>
-                <Dropzone
-                  h={120}
-                  p={0}
-                  multiple
-                  maxFileSize={2048}
-                  accept={[MIME_TYPES.png, MIME_TYPES.jpeg, MIME_TYPES.svg]}
-                  onDrop={(file) => form.setFieldValue('subImages', file)}
-                  onReject={() => form.setFieldError('subImages', 'Select images only')}
-                  {...stylex.props(styles.dropzone)}
-                >
-                  <Center h={120}>
-                    <Dropzone.Idle><IconUpload />Tải lên hình ảnh hoặc kéo và thả PNG, JPG</Dropzone.Idle>
-                    <Dropzone.Accept><IconUpload />Tải lên hình ảnh hoặc kéo và thả PNG, JPG</Dropzone.Accept>
-                    <Dropzone.Reject>Files are invalid</Dropzone.Reject>
-                  </Center>
-                </Dropzone>
-                  {form.errors.files && (
-                    <Text c="red" mt={5}>
-                      {form.errors.files}
-                    </Text>
-                  )}
-
-                  {selectedSubImages.length > 0 && (
-                    <>
-                      {selectedSubImages}
-                    </>
-                  )}  
-              </div>
-            </Flex>
+        
             <Divider dashed />
           
             <TextInput
               label="Tên sản phẩm"
               name="productName"
               required
-              placeholder= "Enter product name"
+              placeholder= "Nhập tên sản phẩm"
+              onChange={(event: any) => form.setFieldValue('name', event.currentTarget.value)}
             />
             <Divider dashed />
 
             <MultiSelect
               label="Loại"
-              placeholder="Select categories"
-              data={['Category 1', 'Category 2']}
+              placeholder="Chọn danh mục sản phẩm"
+              data={[{value: '1', label: "Rau củ & Trái cây"}, {value: '2', label: "Thịt cá"}, {value: '3', label: "Ngũ cốc"}]}
+              onChange={(event) => form.setFieldValue('categories', event)}
             />
             
             <Divider dashed />
 
             <Textarea
-              placeholder="Edit your product description..."
-              label="Description"
+              placeholder="Nhập mô tả cho sản phẩm của bạn tại đây"
+              label="Mô tả"
               minRows={4}
+              onChange={(event: any) => form.setFieldValue('description', event.currentTarget.value)}
             />
             <Divider dashed />
 
-            <TextInput label="Status" name="status" placeholder="Status" />
-
             <TextInput
-              label="Price"
+              label="Giá"
               name="price"
               required
-              placeholder= "Please enter price"
+              placeholder= "Nhập giá trên 1 đơn vị sản phẩm"
+              onChange={(event: any) => form.setFieldValue('price', event.currentTarget.value)}
             />
 
-            <TextInput label="Sale Price" name="salePrice" placeholder="Sale Price" />
-
             <TextInput
-              label="Quantity"
+              label="Số lượng"
               name="quantity"
               required
-              placeholder= "Please enter quantity"
+              placeholder= "Nhập số lượng sản phẩm đang có"
+              onChange={(event: any) => form.setFieldValue('quantity', event.currentTarget.value)}
             />
-
-            <TextInput
-              label="Inventory"
-              name="inventory"
-              required
-              placeholder= "Please enter inventory"
-            />
-
-            <TextInput label="Width" name="width" placeholder="Width" />
-
-            <TextInput label="Height" name="height" placeholder="Height" />
-
-            <TextInput label="Length" name="length" placeholder="Length" />
           </Flex>
 
           <Button size="sm" color="#009f7f" type="submit" m={16}>
@@ -259,7 +196,7 @@ const ProductForm: React.FC = () => {
   );
 };
 
-export default ProductForm;
+export default AddProductForm;
 
 const styles = stylex.create({
   productForm: {

@@ -3,32 +3,11 @@ import {
   IconTrash,
   IconReceipt,
 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductForm from '../admin/components/Form/FormAddProduct';
 import * as stylex from '@stylexjs/stylex';
-
-// const data = [
-//   {
-//     day: '28/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-//   {
-//     day: '27/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/home',
-//   },
-//   {
-//     day: '26/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-//   {
-//     day: '25/04/2024',
-//     des: 'Đơn hàng 906524241 đã được bàn giao đến đối tác vận chuyển TED. Đơn hàng sẽ được giao trước 23:59 ngày 28/04/2023. Quý khách vui lòng giữ liên lạc qua điện thoại.',
-//     link: '/',
-//   },
-// ];
+import { useNavigate } from 'react-router-dom';
+import { useUserSession } from '../hooks/useUserSession';
 
 const generateData = (count: number) => {
   const data = [];
@@ -45,6 +24,15 @@ const generateData = (count: number) => {
 const dataSource = generateData(50);
 
 export function Notification() {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const pageSize = 10;
@@ -61,8 +49,8 @@ export function Notification() {
 
   const data = dataSource.slice(startIndex, endIndex);
 
-  const rows = data.map((item) => (
-    <Table.Tr key={item.day}>
+  const rows = data.map((item, key) => (
+    <Table.Tr key={key}>
       <Table.Td>
         <Text fz="sm">{item.day}</Text>
       </Table.Td>

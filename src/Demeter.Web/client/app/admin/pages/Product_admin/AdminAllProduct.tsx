@@ -3,6 +3,9 @@ import Navbar_Admin from "../../components/Navbar/NavbarAdmin";
 import AllProductTable from "../../components/Table/TableAllProduct";
 import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   AdminAllProductPage: {
@@ -25,7 +28,16 @@ const styles = stylex.create({
   }
 });
 
-const AdminAllProduct: React.FC = () => (
+const AdminAllProduct: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  return (
   /* Code của thành phần Navbar ở đây*/ <>
     <Flex {...stylex.props(styles.AdminAllProductPage)}>
       <div {...stylex.props(styles.navbar)}>
@@ -39,6 +51,8 @@ const AdminAllProduct: React.FC = () => (
       </div>
     </Flex>
   </>
-);
+  );
+}
+  
 
 export default AdminAllProduct;

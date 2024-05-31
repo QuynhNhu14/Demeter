@@ -22,6 +22,13 @@ public class UserRepository : IUserRepository
             query = query.Include(u => u.Tokens);
         }
 
+        if (options.IncludeRoles)
+        {
+            query = query
+                .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role);
+        }
+
         return query;
     }
 

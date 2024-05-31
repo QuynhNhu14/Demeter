@@ -5,6 +5,8 @@ import { IconEdit } from "@tabler/icons-react";
 import FormSetting from "./form";
 import * as stylex from "@stylexjs/stylex";
 import { Button, Table } from "@mantine/core";
+import { useUserSession } from "../../hooks/useUserSession";
+import { useNavigate } from "react-router-dom";
 
 const styles = stylex.create ({
   test: {
@@ -45,6 +47,15 @@ export default function AppSettingPage() {
   const [showForm, setShowForm] = useState(false);
   const [edit, setEdit] = useState<AppSettings>();
 
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   const handleSubmit = async () => {
     setEdit(undefined);
     setShowForm(false);

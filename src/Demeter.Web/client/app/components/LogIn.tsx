@@ -18,21 +18,27 @@ import { FacebookButton, GoogleButton } from './GoogleFacebookButton';
 import { login, signUp } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import { useHttp } from '../hooks';
-import { useState } from 'react';
 import { IconBell, IconShoppingCart, IconUser } from '@tabler/icons-react';
+import { useUserSession } from '../hooks/useUserSession';
+import { Authorization } from '../models/users';
 
 export function Login(props: PaperProps) {
+  const { loggedIn, refresh } = useUserSession();
   const [opened, { open, close }] = useDisclosure(false);
-  const { token, setAuthToken } = useHttp();
+
+  const { setAuthToken } = useHttp();
   const navigate = useNavigate();
   const [type, toggle] = useToggle(['Đăng nhập', 'Đăng ký']);
-  
-  const [auth, setAuth] = useState(!!token);
-  const closeSetAuth = () => {
-    close();
-    setAuth(true);
-  }
 
+   const handleAuth = async (data: Authorization | null | undefined) => {
+    if (data?.accessToken) {
+      setAuthToken(data.accessToken);
+      await refresh();
+      close();
+      navigate('/profile');
+    }
+  }
+  
   const form = useForm({
     initialValues: {
       email: '',
@@ -49,21 +55,12 @@ export function Login(props: PaperProps) {
 
   const handleLogin = async (values: any) => {
     const data = await login({username: values.name, password: values.password});
-    if (data && data.accessToken) {
-      setAuthToken(data.accessToken);
-      closeSetAuth();
-      navigate('/profile');
-    }
-
+    handleAuth(data);
   };
 
   const handleSignup = async (values: any) => {
     const data = await signUp({username: values.name, email: values.email, password: values.password});
-    if (data && data.accessToken) {
-      setAuthToken(data.accessToken);
-      closeSetAuth();
-      navigate('/profile');
-    }
+    handleAuth(data);
   };
 
   return (
@@ -135,29 +132,32 @@ export function Login(props: PaperProps) {
         </form>
       </Modal>
       <ActionIcon
-        onClick={() => auth ? navigate("/cart") : open()}
+        onClick={() => loggedIn ? navigate("/cart") : open()}
         size="lg"
         variant="transparent"
-        c={auth ? "green" : "gray"}
+        c={loggedIn ? "green" : "gray"}
       >
         <IconShoppingCart />
       </ActionIcon>
       <ActionIcon
-        onClick={() => auth ? navigate("/notification"): open()}
+        onClick={() => loggedIn ? navigate("/notification"): open()}
         size="lg"
         variant="transparent"
-        c={auth ? "green" : "gray"}
+        c={loggedIn ? "green" : "gray"}
       >
         <IconBell/>
       </ActionIcon>
-      <ActionIcon
-        onClick={() => auth ? navigate("/profile") : open()}
+      <Button
+        onClick={() => loggedIn ? navigate("/profile") : open()}
         size="lg"
+        p="0"
+        m="0"
         variant="transparent"
-        c={auth ? "green" : "gray"}
+        c={loggedIn ? "green" : "gray"}
+        leftSection={<IconUser />}
       >
-        <IconUser />
-      </ActionIcon>
+        {!loggedIn && "Đăng nhập"}
+      </Button>
     </>
   );
 }

@@ -2,6 +2,9 @@ import { Flex, Badge, Text } from "@mantine/core";
 import UserNavbar from "../../components/CustomerNavbar/UserNavbar";
 import { OrderDetail } from "../../components/OrderDetail/OrderDetail";
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   OrderPage: {
@@ -85,6 +88,14 @@ const orderList = [
   },
 ];
 export const Orders = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   return (
     <div  {...stylex.props(styles.OrderPage)}>
       <Flex>

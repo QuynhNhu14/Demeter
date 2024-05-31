@@ -7,7 +7,8 @@ export default defineConfig({
   root: 'client/app',
   publicDir: '../public',
   build: {
-    outDir: '../../dist'
+    outDir: '../../dist',
+    target: 'esnext',
   },
   plugins: [react(), styleX()],
 })

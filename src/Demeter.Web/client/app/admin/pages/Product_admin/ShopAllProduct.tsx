@@ -4,6 +4,10 @@ import AllProductTable from "../../components/Table/TableAllProduct";
 import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
 
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
+
 const styles = stylex.create({
   ShopAllProductPage: {
     backgroundColor: "#f3f4f6"
@@ -25,8 +29,17 @@ const styles = stylex.create({
   }
 });
 
-const ShopAllProduct: React.FC = () => (
-  /* Code của thành phần Navbar ở đây*/ <>
+const ShopAllProduct: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  /* Code của thành phần Navbar ở đây*/ 
+  return ( <>
     <Flex {...stylex.props(styles.ShopAllProductPage)}>
       <div {...stylex.props(styles.navbar)}>
         <Navbar_Shop />
@@ -39,6 +52,7 @@ const ShopAllProduct: React.FC = () => (
       </div>
     </Flex>
   </>
-);
+  );
+};
 
 export default ShopAllProduct;

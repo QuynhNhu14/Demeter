@@ -1,8 +1,20 @@
 import { Container, Flex, Image } from "@mantine/core";
 import { ShopInfo } from "../components/ShopInfo";
 import { ProductList } from "../components/ProductList";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../hooks/useUserSession";
 
 export const ShopProduct: React.FC<{ shopId?: string }> = ({ shopId }) => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   return (
     <div>
       <Flex>

@@ -3,6 +3,9 @@ import NavbarAdmin from "../../components/Navbar/NavbarAdmin";
 import AllCustomerTable from "../../components/Table/TableAllCustomer";
 import Header from "../../components/Header";
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const styles = stylex.create({
   adminManageCustomerPage: {
@@ -26,6 +29,14 @@ const styles = stylex.create({
 });
 
 const AllCustomer: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   return (
     <Flex {...stylex.props(styles.adminManageCustomerPage)}>
       <div {...stylex.props(styles.navbar)}>
