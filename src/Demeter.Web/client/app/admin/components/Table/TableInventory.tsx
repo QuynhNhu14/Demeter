@@ -43,7 +43,7 @@ const InventoryTable = () => {
     setCurrentPage(page);
   };
 
-  const handleSearch = (value) => {
+  const handleSearch = (value: string) => {
     setSearchText(value);
   };
 
@@ -86,7 +86,7 @@ const InventoryTable = () => {
         <Input 
           placeholder="Nhập mã đơn hàng" 
           leftSection={<IconSearch size={16} />}
-          onChange={(event) => setSearchText(event.currentTarget.value)}
+          onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
       </div>
 

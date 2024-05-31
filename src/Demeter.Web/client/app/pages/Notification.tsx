@@ -3,9 +3,11 @@ import {
   IconTrash,
   IconReceipt,
 } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductForm from '../admin/components/Form/FormAddProduct';
 import * as stylex from '@stylexjs/stylex';
+import { useNavigate } from 'react-router-dom';
+import { useUserSession } from '../hooks/useUserSession';
 
 const generateData = (count: number) => {
   const data = [];
@@ -22,6 +24,15 @@ const generateData = (count: number) => {
 const dataSource = generateData(50);
 
 export function Notification() {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+
   const [currentPage, setCurrentPage] = useState(1);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const pageSize = 10;
@@ -38,8 +49,8 @@ export function Notification() {
 
   const data = dataSource.slice(startIndex, endIndex);
 
-  const rows = data.map((item) => (
-    <Table.Tr key={item.day}>
+  const rows = data.map((item, key) => (
+    <Table.Tr key={key}>
       <Table.Td>
         <Text fz="sm">{item.day}</Text>
       </Table.Td>

@@ -1,4 +1,4 @@
-import {Authorization, User, UserLogin } from "../models/users";
+import {Authorization, UserLogin } from "../models/users";
 import { useHttp } from "../hooks";
 
 const baseUrl = "/auth";

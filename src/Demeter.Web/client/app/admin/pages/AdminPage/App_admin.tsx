@@ -90,7 +90,7 @@ export default function App_Shop() {
                 <Input.Search
                   placeholder="Nhập từ khóa tìm kiếm"
                   value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onChange={(e: any) => setSearchTerm(e.target.value)}
                   style={{ width: "600px", height: "35px", marginLeft: "85px" }}
                   enterButton={
                     <Button onClick={onSearchClick} icon={<IconSearch />} />

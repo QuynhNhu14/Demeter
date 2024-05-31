@@ -15,4 +15,5 @@ public interface IUserRepository
 public class UserQueryOptions
 {
     public bool IncludeTokens { get; set; }
+    public bool IncludeRoles { get; set; }
 }

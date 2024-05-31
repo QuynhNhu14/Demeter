@@ -3,6 +3,7 @@ using Demeter.Core.Extensions;
 using Demeter.Domain;
 using Demeter.Infrastructure.Extensions;
 using Demeter.Infrastructure.Identity;
+using Demeter.Web.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -72,6 +73,24 @@ namespace Demeter.Web.Controllers
         {
             // Implement logout logic if needed (e.g., invalidating tokens)
             return Ok("Logged out successfully");
+        }
+
+        [Authorize]
+        [HttpGet("me")]
+        public async Task<IActionResult> Me()
+        {
+            var user = await _manager.GetUserAsync(User);
+            var result = new CurrentUserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                RoleName = user.UserRoles.Select(t => t.Role.Name).ToList(),
+                Name = user.FullName,
+                PhoneNumber = user.PhoneNumber,
+                Avatar = user.AvatarUrl
+            };
+            return Ok(result);
         }
     }
 }

@@ -1,13 +1,23 @@
-import React from "react";
+
 import { Flex } from "@mantine/core";
 import FormAddProduct from "../../components/Form/FormAddProduct";
 import Header from "../../components/Header";
 import Navbar_Shop from "../../components/Navbar/NavbarShop";
-import { useForm } from "@mantine/form";
+
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 const AddProduct: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   return (
     <Flex {...stylex.props(styles.addProductPage)}>
       <div  {...stylex.props(styles.navbar)}>

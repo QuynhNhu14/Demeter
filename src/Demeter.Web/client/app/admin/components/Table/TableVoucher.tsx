@@ -48,7 +48,7 @@ const FilterTable = () => {
   const handleChangePage = (page: number) => {
     setCurrentPage(page);
   };
-  const handleStatusFilterChange = (value) => {
+  const handleStatusFilterChange = (value: any) => {
     setStatusFilter(value)
   };
   const filteredData = data.filter(
@@ -120,7 +120,7 @@ const FilterTable = () => {
           <Input 
             placeholder="Nhập id hoặc mã voucher" 
             leftSection={<IconSearch size={16} />}
-            onChange={(event) => setSearchText(event.currentTarget.value)}
+            onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
           <Select
             label="Lọc theo trạng thái"

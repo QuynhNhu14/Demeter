@@ -161,7 +161,7 @@ const FilterTable = () => {
         <Input 
           placeholder="Nhập id hoặc danh mục" 
           leftSection={<IconSearch size={16} />}
-          onChange={(event) => setSearchText(event.currentTarget.value)}
+          onChange={(event: any) => setSearchText(event.currentTarget.value)}
           />
       </div>
       <div {...stylex.props(styles.categoryTable)} >

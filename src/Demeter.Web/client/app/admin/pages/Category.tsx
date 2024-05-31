@@ -3,6 +3,9 @@ import { Flex } from "@mantine/core";
 import Header from "../components/Header";
 import Navbar_Admin from "../components/Navbar/NavbarAdmin";
 import * as stylex from "@stylexjs/stylex";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../hooks/useUserSession";
 
 const styles = stylex.create({
   adminCategoryPage: {
@@ -27,7 +30,14 @@ const styles = stylex.create({
 
 
 const AdminCategory: React.FC = () => {
-  
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
   return (
     <Flex {...stylex.props(styles.adminCategoryPage)}>
       <div {...stylex.props(styles.navbar)}>

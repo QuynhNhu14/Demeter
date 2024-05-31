@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   MultiSelect,
@@ -16,6 +16,8 @@ import { IconUpload, IconPhoto, IconX } from "@tabler/icons-react";
 import { Dropzone, MIME_TYPES, DropzoneProps, IMAGE_MIME_TYPE } from "@mantine/dropzone";
 import { useForm } from "@mantine/form";
 import * as stylex from "@stylexjs/stylex";
+import { useNavigate } from "react-router-dom";
+import { useUserSession } from "../../../hooks/useUserSession";
 
 interface FormValues {
   image: File[];
@@ -27,6 +29,15 @@ interface FormValues {
 }
 
 const AddProductForm: React.FC = () => {
+  const { loggedIn } = useUserSession();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loggedIn) {
+      navigate("/home");
+    }
+  }, [loggedIn]);
+  
   const form = useForm<FormValues>({
     initialValues: { image: [], name: "", categories: [], description: "", price: 0, quantity: 0},
   });
@@ -139,7 +150,7 @@ const AddProductForm: React.FC = () => {
               name="productName"
               required
               placeholder= "Nhập tên sản phẩm"
-              onChange={(event) => form.setFieldValue('name', event.currentTarget.value)}
+              onChange={(event: any) => form.setFieldValue('name', event.currentTarget.value)}
             />
             <Divider dashed />
 
@@ -156,7 +167,7 @@ const AddProductForm: React.FC = () => {
               placeholder="Nhập mô tả cho sản phẩm của bạn tại đây"
               label="Mô tả"
               minRows={4}
-              onChange={(event) => form.setFieldValue('description', event.currentTarget.value)}
+              onChange={(event: any) => form.setFieldValue('description', event.currentTarget.value)}
             />
             <Divider dashed />
 
@@ -165,7 +176,7 @@ const AddProductForm: React.FC = () => {
               name="price"
               required
               placeholder= "Nhập giá trên 1 đơn vị sản phẩm"
-              onChange={(event) => form.setFieldValue('price', event.currentTarget.value)}
+              onChange={(event: any) => form.setFieldValue('price', event.currentTarget.value)}
             />
 
             <TextInput
@@ -173,7 +184,7 @@ const AddProductForm: React.FC = () => {
               name="quantity"
               required
               placeholder= "Nhập số lượng sản phẩm đang có"
-              onChange={(event) => form.setFieldValue('quantity', event.currentTarget.value)}
+              onChange={(event: any) => form.setFieldValue('quantity', event.currentTarget.value)}
             />
           </Flex>
 
