@@ -21,7 +21,7 @@ export interface Product {
 }
 
 const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts }) => {
-  const [products, setProducts] = useState<Product[]>(initialProducts);
+  const [products, setProducts] = useState(initialProducts);
 
   const handleProductCheckboxChange = (productId: number, shop: string, checked: boolean) => {
     console.log({productId})
@@ -70,6 +70,13 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
     setProducts(updatedProducts);
     
     updateSelectedProducts(updatedProducts);
+
+    if(localStorage.getItem('cart')){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      const index = cart.findIndex(ele => ele.id === productId);
+      cart[index].quantity++;
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   };
 
   const decreaseQuantity = (productId: number) => {
@@ -82,6 +89,18 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
     setProducts(updatedProducts);
     
     updateSelectedProducts(updatedProducts);
+
+    if(localStorage.getItem('cart')){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      const index = cart.findIndex(ele => ele.id === productId);
+      if(cart[index].quantity === 1) {
+        cart = cart.filter(item => item.id !== productId)
+      }
+      else{
+        cart[index].quantity--;
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   };
 
   const deleteProduct = (productId: number) => {
@@ -89,6 +108,11 @@ const ProductCart: React.FC<Props> = ({ initialProducts, updateSelectedProducts 
     setProducts(updatedProducts);
     
     updateSelectedProducts(updatedProducts);
+    if(localStorage.getItem('cart')){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      cart = cart.filter(item => item.id !== productId)
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   };
 
   const groupedProducts = products.reduce((acc: { [key: string]: Product[] }, product: Product) => {

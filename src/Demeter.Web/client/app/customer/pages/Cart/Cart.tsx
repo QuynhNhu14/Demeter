@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useDisclosure } from '@mantine/hooks';
-import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text } from '@mantine/core';
+import { Divider,ScrollArea,Radio, Button, Modal, Flex, Text, CloseButton } from '@mantine/core';
 
 import logo from '../../../../assets/logo.png';
 
@@ -103,73 +103,74 @@ const infoData: cartInfoData = {
   link: logo,
 };
 
-const initialProducts: Product[] = [
-  {
-    id: 1,
-    name: 'Sản phẩm 1',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 1,
-    shop: 'Cửa hàng A',
-    selected: false,
-  },
-  {
-    id: 2,
-    name: 'Sản phẩm 2',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 2,
-    shop: 'Cửa hàng b',
-    selected: false,
-  },
-  {
-    id: 3,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 3,
-    shop: 'Cửa hàng c',
-    selected: false,
-  },
-  {
-    id: 4,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 3,
-    shop: 'Cửa hàng c',
-    selected: false,
-  },
-  {
-    id: 5,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 3,
-    shop: 'Cửa hàng c',
-    selected: false,
-  },
-  {
-    id: 6,
-    name: 'Sản phẩm 3',
-    image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
-    newPrice: 16000,
-    oldPrice: 20000,
-    quantity: 3,
-    shop: 'Cửa hàng c',
-    selected: false,
-  },
-  // ... Add more products as needed
-];
-
+// const initialProducts: Product[] = [
+//   {
+//     id: 1,
+//     name: 'Sản phẩm 1',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 1,
+//     shop: 'Cửa hàng A',
+//     selected: false,
+//   },
+//   {
+//     id: 2,
+//     name: 'Sản phẩm 2',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 2,
+//     shop: 'Cửa hàng b',
+//     selected: false,
+//   },
+//   {
+//     id: 3,
+//     name: 'Sản phẩm 3',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 3,
+//     shop: 'Cửa hàng c',
+//     selected: false,
+//   },
+//   {
+//     id: 4,
+//     name: 'Sản phẩm 3',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 3,
+//     shop: 'Cửa hàng c',
+//     selected: false,
+//   },
+//   {
+//     id: 5,
+//     name: 'Sản phẩm 3',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 3,
+//     shop: 'Cửa hàng c',
+//     selected: false,
+//   },
+//   {
+//     id: 6,
+//     name: 'Sản phẩm 3',
+//     image:'https://suckhoedoisong.qltns.mediacdn.vn/Images/nguyenkhanh/2020/09/07/ca_rot_vi_thuoc_chua_2.jpg',
+//     newPrice: 16000,
+//     oldPrice: 20000,
+//     quantity: 3,
+//     shop: 'Cửa hàng c',
+//     selected: false,
+//   },
+//   // ... Add more products as needed
+// ];
 
 const Cart: React.FC = () => {
-  const [selectedProducts, setSelectedProducts] = useState<Product[]>(initialProducts);
+  const initialProducts = JSON.parse(localStorage.getItem('cart'));
+
+  const [selectedProducts, setSelectedProducts] = useState(initialProducts);
 
   const [selectedVoucher, setSelectedVoucher] = useState<string>();
   const [selectedVoucherData, setSelectedVoucherData] = useState<VoucherType>();
@@ -179,6 +180,10 @@ const Cart: React.FC = () => {
   const { loggedIn } = useUserSession();
   const navigate = useNavigate();
 
+  if(!localStorage.getItem('cart')){
+    localStorage.setItem('cart', '[]');
+  }
+  
   useEffect(() => {
     if (!loggedIn) {
       navigate("/home");
@@ -219,12 +224,12 @@ const Cart: React.FC = () => {
     voucherDiscount: selectedVoucherData ? (voucherDiscountValue <= selectedVoucherData.usageLimit*1000 ? voucherDiscountValue : selectedVoucherData.usageLimit*1000) : 0, // Giá trị voucherDiscount ban đầu của bạn
   };
    // Hàm để tính giá trị mới của TOTAL
-   const calculateTotal = (): number => {
+  const calculateTotal = (): number => {
     return totaldata.totalamount + totaldata.totalship - totaldata.voucherDiscount;
   };
-
   const newTotal = calculateTotal(); // Tính giá trị mới của TOTAL
   totaldata.TOTAL = newTotal;
+
 
 
   useEffect(() => {
@@ -349,7 +354,17 @@ const Cart: React.FC = () => {
 
               {selectedVoucher && (
                   <div {...stylex.props(styles.box, styles.voucherApplyBox)}>
-                    <Text fw={500} size="sm"> Voucher được áp dụng: {selectedVoucherData?.code}</Text>
+                    <Text fw={500} size="sm"> 
+                      Voucher được áp dụng: {selectedVoucherData?.code}
+                      {selectedVoucherData ?       
+                      <CloseButton
+                        size="xs"
+                        onClick={() => {
+                          setSelectedVoucherData(undefined);
+                          setSelectedVoucher(undefined);}
+                        }
+                      /> : <></>}
+                    </Text>
                   </div>
                 )}
             <Button size="lg" color="#009F7F" onClick={showModal}>

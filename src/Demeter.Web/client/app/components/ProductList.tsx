@@ -15,19 +15,6 @@ const styles = stylex.create({
     top: "10px", 
     right: "10px"
   },
-  salePrice: {
-    fontWeight: "500", 
-    fontSize: "18px"
-  },
-  unitPrice: {
-    textDecoration: "line-through",
-    opacity: "0.5",
-    fontSize: "14px",
-  },
-  card: {
-    padding: "20px", 
-    width: "100%"
-  },
   productName: {
     opacity: "0.8", 
     fontSize: "20px",
@@ -38,6 +25,15 @@ const styles = stylex.create({
   },
   elementRightButton: {
     padding: "0 0 0 45px",
+  },
+  productImage: {
+    width: "100%",
+    aspectRatio: "1/1",
+  },
+  card: {
+    width: "20%",
+    display: "flex",
+    gap: "10px",
   }
 });
 
@@ -46,53 +42,85 @@ export function ProductCard({ product }: ProductCardProps) {
   const navigate = useNavigate();
   const handleAddProduct = () => {
     setQuantity(quantity + 1);
+    if(localStorage.getItem('cart')){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      const index = cart.findIndex(ele => ele.id === product.id);
+      if(index !== -1){
+        cart[index].quantity++;
+      }
+      else{
+        const cartItem = {
+          id: product.id,
+          name: product.name,
+          image: product.imageUrl, 
+          oldPrice: product.baseUnitPrice,
+          newPrice: product.discountedPrice,
+          shop: product.vendor,
+          selected: false,
+          quantity: 1,
+        }
+        cart.push(cartItem);
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   };
 
   const handleSubProduct = () => {
     setQuantity(quantity - 1);
+    if(localStorage.getItem('cart')){
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      const index = cart.findIndex(ele => ele.id === product.id);
+      if(index !== -1){
+        if(cart[index].quantity === 1) {
+          cart = cart.filter(item => item.id !== product.id)
+        }
+        else{
+          cart[index].quantity--;
+        }
+      }
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   };
 
   return (
-    <Card withBorder shadow="sm">
+    <Card withBorder shadow="sm" {...stylex.props(styles.card)}>
       {product.discountedPrice && <Badge variant="gradient" size="lg" pos={"absolute"} {...stylex.props(styles.voucher)}> - {product.vouchers[0]?.discount} %</Badge>}
-      <div>
-        <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" width={"150"} height={"120"} onClick={()=> navigate(`/products/${product.id}`)}/>
-      </div>
+      <Image fallbackSrc="https://placehold.co/600x400?text=Placeholder" src={product.imageUrl} alt="product image" {...stylex.props(styles.productImage)} onClick={()=> navigate(`/products/${product.id}`)}/>
       <Flex
         gap="sm"
-        justify="flex-start"
         align="center"
         direction="column"
-        wrap="wrap"
-        {...stylex.props(styles.card)}
       >
-          <div>
-            <Flex gap="xs">
-              <span {...stylex.props(styles.salePrice)}>
-                {product.discountedPrice ? product.discountedPrice + "đ" : product.baseUnitPrice + "đ"} 
-              </span>
-              {product.discountedPrice && <span
-                {...stylex.props(styles.unitPrice)}
-              >
+        <Flex gap="xs" justify="space-around" align="center">
+          <Flex align="center" gap={2}>
+            <Text fw="500" size="xl">
+              {product.discountedPrice ? product.discountedPrice + "đ" : product.baseUnitPrice + "đ"} 
+            </Text>
+            {
+              product.discountedPrice && 
+              <Text size="sm" c="dimmed" td="line-through">
                 {" "}
                 {product.baseUnitPrice + "đ"}
-              </span>}
-              <span > 
-                <Badge color="#F9C127" pos="absolute" size="lg">
-                {product.rate ?? 0} <IconStarFilled size={16}/>
-                </Badge>
-              </span>
+              </Text>
+            }
+          </Flex>
+          <div>
+            
+          <Badge color="#F9C127" size="lg">
+            <Flex align="center" gap={1}>
+              {product.rate ?? 0} <IconStarFilled size={12}/>
             </Flex>
+          </Badge>
           </div>
+        </Flex>
         <Text {...stylex.props(styles.productName)}>{product.name}</Text>
         {quantity === 0 ? (
           <Button 
+          fullWidth
           justify="center"
           variant="gradient"
           size="compact-lg"
           radius="md" 
-          leftSection={<IconMinus size={14}/>} 
-          rightSection={<IconPlus size={14} />} 
           onClick={handleAddProduct}>
             <Text size="lg"> Thêm vào giỏ</Text>
           </Button>
@@ -132,6 +160,11 @@ type ProductListProps = {
 export const ProductList: React.FC<ProductListProps> = ({search}: ProductListProps) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Product[]>([]);
+
+  if(!localStorage.getItem('cart')){
+    localStorage.setItem('cart', '[]');
+  }
+
   const fetchData = async () => {
     if (search) {
       const data = await getProductByName(search);
@@ -155,18 +188,13 @@ export const ProductList: React.FC<ProductListProps> = ({search}: ProductListPro
     fetchData();
   }, [search]);
 
+  console.log({data})
   return (
     <Skeleton visible={loading}>
-      <Flex
-        gap="large"
-        align="center"
-        justify="space-between"
-      >
-        <Flex m={30} wrap="wrap" gap={30} justify={"flex-start"}>
-          { data.map((product) => (
-            <ProductCard product={product}/>
-          ))}
-        </Flex>
+      <Flex gap="lg" m={30} wrap="wrap" justify="space-around" >
+        { data.map((product) => (
+          <ProductCard product={product}/>
+        ))}
       </Flex>
     </Skeleton>
   );
