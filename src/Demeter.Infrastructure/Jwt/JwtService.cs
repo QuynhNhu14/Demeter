@@ -6,7 +6,6 @@ using Demeter.Core.Entities;
 using Demeter.Core.Models;
 using Demeter.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

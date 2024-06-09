@@ -1,14 +1,11 @@
 using System.Text;
 using Demeter.Core.Entities;
-using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Identity;
 using Demeter.Infrastructure.Jwt;
-using Demeter.Infrastructure.Persistence;
 using Demeter.Infrastructure.Repository;
 using Demeter.Infrastructure.Stripe;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -40,17 +37,6 @@ public static class ServiceCollections
         services.AddTransient<ChargeService>();
         services.AddTransient<TokenService>();
         services.AddScoped<ICheckoutService,CheckoutService>();
-        return services;
-    }
-
-    public static IServiceCollection AddPersistence(this IServiceCollection services,
-        IConfiguration configuration)
-    {
-        services.AddDbContext<CoreDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString(Constant.PersistenceDb),
-                b => b.MigrationsAssembly(typeof(CoreDbContext).Assembly.FullName)), ServiceLifetime.Transient);
-
-        services.AddScoped<ICoreDbContext>(provider => provider.GetService<CoreDbContext>());
         return services;
     }
 

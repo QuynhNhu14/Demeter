@@ -20,6 +20,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Demeter.Core\Demeter.Core.csproj" />
       <ProjectReference Include="..\Demeter.Infrastructure\Demeter.Infrastructure.csproj" />
+      <ProjectReference Include="..\Demeter.Migrator\Demeter.Migrator.csproj" />
     </ItemGroup>
 
 </Project>

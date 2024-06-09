@@ -1,6 +1,6 @@
 using Demeter.Core.Entities;
 
-namespace Demeter.Infrastructure.Identity
+namespace Demeter.Infrastructure.Repository
 {
     public interface IUserRoleRepository
     {

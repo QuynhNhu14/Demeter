@@ -1,6 +1,7 @@
 using Demeter.Core.Extensions;
 using Demeter.Infrastructure.Extensions;
 using Demeter.Infrastructure.Jwt;
+using Demeter.Migrator;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +15,7 @@ builder.Configuration
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
 // Add services to the container.
-builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddMigrator(builder.Configuration);
 builder.Services.AddRepositories();
 builder.Services.AddIdentityServices(builder.Configuration);
 builder.Services.AddStripe(builder.Configuration);
