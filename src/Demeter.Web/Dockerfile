@@ -1,20 +1,19 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+﻿FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS publish
+ARG configuration=Release
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["Demeter.csproj", "./"]
-RUN dotnet restore "Demeter.csproj"
-COPY . .
-WORKDIR "/src/"
-RUN dotnet build "Demeter.csproj" -c Release -o /app/build
+COPY src .
 
-FROM build AS publish
-RUN dotnet publish "Demeter.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG TARGETOS TARGETARCH
+RUN dotnet publish Demeter.Web -c $configuration --os=$TARGETOS --arch=$TARGETARCH --property:PublishDir=/src/published
 
-FROM base AS final
+# =====================================================================================
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-jammy-chiseled AS runtime
+USER app
 WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Demeter.dll"]
+COPY --from=publish /src/published .
+
+EXPOSE 8080
+
+ENTRYPOINT [ "dotnet", "Demeter.Web.dll" ]

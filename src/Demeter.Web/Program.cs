@@ -10,7 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     // Add configuration from app settings.json
-    .AddJsonFile(File.Exists("appsettings.cloud.json") ? "appsettings.cloud.json" : "appsettings.json");
+    .AddJsonFile(File.Exists("appsettings.cloud.json") ? "appsettings.cloud.json" : "appsettings.json")
+    .AddEnvironmentVariables();
 
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
 
@@ -22,19 +23,6 @@ builder.Services.AddStripe(builder.Configuration);
 builder.Services.AddCoreServices();
 
 
-const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(myAllowSpecificOrigins,
-        opt =>
-        {
-            opt.WithOrigins(allowedOrigins)
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = 
         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -76,10 +64,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
-
-app.UseCors(myAllowSpecificOrigins);
-
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
