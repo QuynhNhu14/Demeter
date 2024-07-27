@@ -92,8 +92,10 @@ public class ProductsService : IProductsService
         }
     }
 
-    public async ValueTask AddAsync(Domain.Products product)
+    public async ValueTask AddAsync(Domain.ProductsInfo product)
     {
+        Console.WriteLine("Hello World!");
+
         if (string.IsNullOrWhiteSpace(product.Name))
         {
             throw new ValidationException($"Invalid: {nameof(Domain.Products.Name)} should not be empty.");

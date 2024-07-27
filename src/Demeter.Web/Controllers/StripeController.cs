@@ -27,7 +27,8 @@ public class StripeController: ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
     }
 
@@ -41,7 +42,8 @@ public class StripeController: ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
     }
 

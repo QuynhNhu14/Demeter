@@ -4,9 +4,10 @@ using Demeter.Core.Services.Products;
 using Demeter.Domain;
 using Demeter.Web.DTO;
 using Microsoft.AspNetCore.Mvc;
+using Demeter.Infrastructure.Extensions;
 
-namespace Demeter.Web.Controllers;
-
+namespace Demeter.Web.Controllers
+{
 [ApiController]
 [Route("api/products")]
 public class ProductsController: ControllerBase
@@ -29,6 +30,7 @@ public class ProductsController: ControllerBase
     [HttpGet]
     public async Task<ActionResult<ICollection<Domain.Products>>> GetProducts()
     {
+        System.Console.WriteLine("Hello World!");
         try
         {
             var products = await _productsService.GetAllWithDiscount();
@@ -46,8 +48,8 @@ public class ProductsController: ControllerBase
                     ImageUrl = product.ImageUrl,
                     Sale = product.Sale,
                     Rate = product.Rate,
-                    Category = product.Category,
-                    Vendor = product.Vendor,
+                    CategoryId = product.CategoryId,
+                    VendorId = product.VendorId,
                     Vouchers = product.Vouchers,
                     DiscountedPrice = discountedPrice
                 });
@@ -99,8 +101,8 @@ public class ProductsController: ControllerBase
                 ImageUrl = product.ImageUrl,
                 Sale = product.Sale,
                 Rate = product.Rate,
-                Category = product.Category,
-                Vendor = product.Vendor,
+                CategoryId = product.CategoryId,
+                VendorId = product.VendorId,
                 Vouchers = product.Vouchers,
                 DiscountedPrice = discountedPrice
             };
@@ -109,7 +111,9 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! GetProductById");
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
@@ -145,9 +149,31 @@ public class ProductsController: ControllerBase
         }
     }
 
+//     [HttpPost]
+//     public async ValueTask<IActionResult> AddNewProductAsync([FromBody] Domain.Products product)
+//     {
+
+//         try
+//         {
+//             await _productsService.AddAsync(product);
+//             return Ok();
+//         }
+//         catch (ValidationException ex)
+//         {
+//             System.Console.WriteLine("Hello World! AddNewProductAsync");
+//             System.Console.WriteLine("Hello World! hihihihihi");
+// return BadRequest(ex.Message);
+//         }
+//         catch (Exception)
+//         {
+//             return StatusCode(StatusCodes.Status500InternalServerError);
+//         }
+//     }
     [HttpPost]
-    public async ValueTask<IActionResult> AddNewProductAsync([FromBody] Domain.Products product)
+    public async ValueTask<IActionResult> AddNewProductAsync([FromBody] ProductsInfo product)
     {
+
+            System.Console.WriteLine("Hello World! hihihihihi");
         try
         {
             await _productsService.AddAsync(product);
@@ -155,6 +181,7 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
+            System.Console.WriteLine("Hello World! AddNewProductAsync");
             return BadRequest(ex.Message);
         }
         catch (Exception)
@@ -162,7 +189,6 @@ public class ProductsController: ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
-
     [HttpPost("update")]
     public async ValueTask<IActionResult> UpdateProductsAsync([FromBody] ICollection<Domain.Products> products)
     {
@@ -173,7 +199,10 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! UpdateProductsAsync");
+
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -191,7 +220,10 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! DeleteProductAsync");
+
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -209,7 +241,10 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! DeletePricesAsync");
+
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -227,7 +262,9 @@ public class ProductsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! DeleteCategoriesAsync");
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -235,4 +272,6 @@ public class ProductsController: ControllerBase
         }
     }
     
+}
+
 }

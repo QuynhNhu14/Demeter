@@ -16,16 +16,19 @@ import {
 } from '@mantine/core';
 import { FacebookButton, GoogleButton } from './GoogleFacebookButton';
 import { login, signUp } from '../services/auth';
+import {User } from "../models/users";
 import { useNavigate } from 'react-router-dom';
 import { useHttp } from '../hooks';
 import { IconBell, IconShoppingCart, IconUser } from '@tabler/icons-react';
 import { useUserSession } from '../hooks/useUserSession';
 import { Authorization } from '../models/users';
+import { useEffect, useState } from 'react';
 
 export function Login(props: PaperProps) {
-  const { loggedIn, refresh } = useUserSession();
+  const { loggedIn, user, refresh } = useUserSession();
   const [opened, { open, close }] = useDisclosure(false);
 
+  console.log({user});
   const { setAuthToken } = useHttp();
   const navigate = useNavigate();
   const [type, toggle] = useToggle(['Đăng nhập', 'Đăng ký']);

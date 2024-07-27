@@ -24,6 +24,7 @@ public class AutoMapperProfile : Profile
         CreateMap<Entities.Voucher, Domain.Voucher>();
         
         CreateMap<Domain.Products, Entities.Products>();
+        CreateMap<Domain.ProductsInfo, Entities.Products>();
         CreateMap<Entities.Products, Domain.Products>();
         CreateMap<Domain.Category, Entities.Category>();
         CreateMap<Entities.Category, Domain.Category>();

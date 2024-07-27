@@ -43,7 +43,8 @@ public class AppSettingsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -61,7 +62,8 @@ public class AppSettingsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -79,7 +81,8 @@ public class AppSettingsController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            return BadRequest(ex.Message);
+            System.Console.WriteLine("Hello World! hihihihihi");
+return BadRequest(ex.Message);
         }
         catch (Exception)
         {
