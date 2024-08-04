@@ -7,14 +7,15 @@ namespace Demeter.Web.Controllers;
 
 [ApiController]
 [Route("api/orders")]
-public class OrdersController: ControllerBase
+public class OrdersController : ControllerBase
 {
     private readonly ILogger<OrdersController> _logger;
     private readonly IOrdersService _ordersService;
     private readonly IVoucherService _voucherService;
     private readonly IOrderItemService _orderItemService;
-    
-    public OrdersController(ILogger<OrdersController> logger, IOrdersService ordersService, IVoucherService voucherService, IOrderItemService orderItemService) {
+
+    public OrdersController(ILogger<OrdersController> logger, IOrdersService ordersService, IVoucherService voucherService, IOrderItemService orderItemService)
+    {
         _logger = logger;
         _ordersService = ordersService;
         _voucherService = voucherService;
@@ -64,7 +65,7 @@ public class OrdersController: ControllerBase
     }
 
     [HttpPost]
-    public async ValueTask<IActionResult> AddNewOrderAsync([FromBody] Domain.Orders order)
+    public async ValueTask<IActionResult> AddNewOrderAsync([FromBody] Domain.OrdersInfo order)
     {
         try
         {
@@ -73,8 +74,7 @@ public class OrdersController: ControllerBase
         }
         catch (ValidationException ex)
         {
-            System.Console.WriteLine("Hello World! hihihihihi");
-return BadRequest(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -92,8 +92,7 @@ return BadRequest(ex.Message);
         }
         catch (ValidationException ex)
         {
-            System.Console.WriteLine("Hello World! hihihihihi");
-return BadRequest(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -112,7 +111,7 @@ return BadRequest(ex.Message);
         catch (ValidationException ex)
         {
             System.Console.WriteLine("Hello World! hihihihihi");
-return BadRequest(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -131,7 +130,7 @@ return BadRequest(ex.Message);
         catch (ValidationException ex)
         {
             System.Console.WriteLine("Hello World! hihihihihi");
-return BadRequest(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {
@@ -150,7 +149,7 @@ return BadRequest(ex.Message);
         catch (ValidationException ex)
         {
             System.Console.WriteLine("Hello World! hihihihihi");
-return BadRequest(ex.Message);
+            return BadRequest(ex.Message);
         }
         catch (Exception)
         {

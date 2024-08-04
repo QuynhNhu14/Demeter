@@ -15,14 +15,16 @@ public class AutoMapperProfile : Profile
         CreateMap<Entities.User, Domain.User>()
             .ForMember(dest => dest.Address,
                 act => act.MapFrom(src => JsonConvert.DeserializeObject<Domain.Address>(src.AddressJson)));
-        
+
         CreateMap<Domain.Orders, Entities.Orders>();
+        CreateMap<Domain.OrdersInfo, Entities.Orders>();
         CreateMap<Entities.Orders, Domain.Orders>();
+        CreateMap<Entities.Orders, Domain.OrdersInfo>();
         CreateMap<Domain.OrderItem, Entities.OrderItem>();
         CreateMap<Entities.OrderItem, Domain.OrderItem>();
         CreateMap<Domain.Voucher, Entities.Voucher>();
         CreateMap<Entities.Voucher, Domain.Voucher>();
-        
+
         CreateMap<Domain.Products, Entities.Products>();
         CreateMap<Domain.ProductsInfo, Entities.Products>();
         CreateMap<Entities.Products, Domain.Products>();
@@ -30,6 +32,6 @@ public class AutoMapperProfile : Profile
         CreateMap<Entities.Category, Domain.Category>();
         CreateMap<Domain.Prices, Entities.Prices>();
         CreateMap<Entities.Prices, Domain.Prices>();
-        
+
     }
 }

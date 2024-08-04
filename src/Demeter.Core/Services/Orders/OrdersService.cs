@@ -17,10 +17,10 @@ public class OrdersService : IOrdersService
     }
 
 
-    public async ValueTask<ICollection<Domain.Orders>> GetAllAsync()
+    public async ValueTask<ICollection<Domain.OrdersInfo>> GetAllAsync()
     {
         var entities = await _context.Orders.ToListAsync();
-        return _mapper.Map<IList<Domain.Orders>>(entities);
+        return _mapper.Map<IList<Domain.OrdersInfo>>(entities);
     }
 
     public async ValueTask UpdateAsync(ICollection<Domain.Orders> orders)
@@ -40,15 +40,39 @@ public class OrdersService : IOrdersService
         }
     }
 
-    public async ValueTask AddAsync(Domain.Orders order)
+    public async ValueTask AddAsync(Domain.OrdersInfo order)
     {
-        if (string.IsNullOrWhiteSpace(order.Id.ToString()))
-        {
-            throw new ValidationException($"Invalid: {nameof(Domain.Orders.Id)} should not be empty.");
-        }
 
-        _context.Orders.Add(_mapper.Map<Entities.Orders>(order));
-        await _context.SaveChangesAsync();
+        if (string.IsNullOrWhiteSpace(order.OrderId.ToString()))
+        {
+            throw new ValidationException($"Invalid: {nameof(Domain.OrdersInfo.OrderId)} should not be empty.");
+        }
+        System.Console.WriteLine("Hello World! AddAsync");
+        try
+        {
+            var orderEntity = _mapper.Map<Entities.Orders>(order);
+            _context.Orders.Add(orderEntity);
+
+            foreach (var item in order.Items)
+            {
+                var orderItemEntity = new Entities.OrderItem
+                {
+                    Quantity = item.Quantity,
+                    DateCreated = DateTimeOffset.UtcNow,
+                    ProductId = item.ProductId,
+                    OrderId = orderEntity.OrderId
+                };
+
+                _context.OrderItems.Add(orderItemEntity);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            System.Console.WriteLine(e);
+            throw;
+        }
     }
 
     public async ValueTask Remove(string id)

@@ -21,7 +21,7 @@ public class ProductsService : IProductsService
         var entities = await _context.Products.Include(t => t.Vouchers).ToListAsync();
         return _mapper.Map<IList<Domain.Products>>(entities);
     }
-    
+
     public async ValueTask<Domain.Products?> GetById(string id)
     {
         var entity = await _context.Products.Include(t => t.Vouchers)
@@ -43,7 +43,7 @@ public class ProductsService : IProductsService
     public async ValueTask<(Domain.Products, int?)> GetByIdWithDiscount(string id)
     {
         var product = await GetById(id);
-        
+
         if (product == null)
         {
             throw new ValidationException($"Invalid: {id} is not existed.");
@@ -51,7 +51,7 @@ public class ProductsService : IProductsService
 
         return (product, CalculateDiscount(product));
     }
-    
+
     public async ValueTask<ICollection<(Domain.Products, int?)>> GetAllWithDiscount()
     {
         var products = await GetAllAsync();

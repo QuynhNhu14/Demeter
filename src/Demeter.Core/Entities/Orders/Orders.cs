@@ -9,10 +9,12 @@ public class Orders
     [Key]
     public Guid OrderId { get; set; }
     public int TotalPrice { get; set; }
-    
+    public int TotalQuantity { get; set; }
+    public int Status { get; set; }
+
     [ForeignKey("User")]
     public Guid UserId { get; set; }
     public virtual User User { get; set; }
-    
-    public virtual ICollection<OrderItem>? Items { get; set; }
+
+    // public virtual ICollection<OrderItem>? Items { get; set; }
 }
